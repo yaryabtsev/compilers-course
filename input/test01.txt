@@ -1,0 +1,19 @@
+k <-- n
+b <-- #1
+c <-- a
+ifTrue k = #0 goto L4
+L1: t1 <-- %mod, k, #2
+ifFalse t1 = #0 goto L2
+k <-- %div, k, #2
+c <-- *, c, c
+goto L3
+b <-- *, b, c
+c <-- *, b, c
+L2: k <-- -, k, #1
+k <-- %div, k, #2
+c <-- *, c, c
+b <-- *, b, c
+L3: goto L1
+c <-- *, c, c
+k <-- %div, k, #4
+L4: return c

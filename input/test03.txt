@@ -1,0 +1,23 @@
+param a
+param b
+param c
+param d
+i <-- #1
+L1: a <-- #0
+b <-- #0
+ifTrue a = #0 goto L2
+b <-- #0
+c <-- #0
+d <-- #0
+goto L5
+L2: a <-- #0
+d <-- #0
+ifTrue a = #0 goto L3
+d <-- #0
+goto L4
+L3: c <-- #0
+L4: b <-- #0
+L5: y <-- +, a, b
+z <-- +, c, d
+i <-- +, i, i
+ifTrue a = #0 goto L1

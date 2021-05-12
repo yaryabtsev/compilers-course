@@ -19,7 +19,7 @@ class Display:
 
     @staticmethod
     def show_code(lexemes: list, title: str, block_name: str = 'A') -> None:
-        print(f'<h1 class="code-title">{title}</h1>')
+        Display.show_title(title, 'code-title')
         line = 1
         print('<div class="code">')
         for i in range(len(lexemes)):
@@ -118,13 +118,43 @@ class Display:
         name = ''.join([word[0] for word in title.lower().split()])
         graph.draw(f'{self.out_dir}/{name}.png')
 
-        print(f'<h1 class="image-title">{title}</h1>')
+        Display.show_title(title, 'image-title')
         print(f'<img src="{name}.png" width="189" height="255" alt="{title}">')
 
     @staticmethod
-    def name(i, n, block_name):
+    def name(i: int, n: int, block_name: str = 'A') -> str:
+        if i == -1:
+            return 'None'
         if i == 0:
             return 'Entry'
         if i == n - 1:
             return 'Exit'
         return block_name[:-1] + chr(ord(block_name[-1]) + i - 1)
+
+    @staticmethod
+    def show_block_table(table: list, columns: list, n: int, title: str, block_name: str = 'A'):
+        Display.show_title(title, 'block-table-title')
+        print('<table>')
+        print('<thead><tr>')
+        print(f'<th>{columns[0]}</th>')
+        for column in columns[1:]:
+            print(f'<th>{Display.name(column, n, block_name)}</th>')
+        print('</tr></thead>')
+        print('<thead>')
+        for row in table:
+            print('<tr>')
+            print(f'<td class="first-column">{row[0]}</td>')
+            for td in row[1:]:
+                if not td and td != 0:
+                    print(f'<td class="none">None</td>')
+                elif type(td) is int:
+                    print(f'<td>{Display.name(td, n, block_name)}</td>')
+                else:
+                    print(f'<td>{", ".join([Display.name(node, n, block_name) for node in sorted(td)])}</td>')
+            print('</tr>')
+        print('</thead>')
+        print('</table>')
+
+    @staticmethod
+    def show_title(title: str, class_name: str) -> None:
+        print(f'<h1 class="{class_name}">{title}</h1>')

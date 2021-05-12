@@ -47,3 +47,65 @@
 <div class="block-name">Exit</div>
 </div><h1 class="image-title">Control Flow Graph</h1>
 <img src="cfg.png" width="189" height="255" alt="Control Flow Graph">
+<h1 class="block-table-title">Pred / Dom / Idom / DF</h1>
+<table>
+<thead><tr>
+<th>node =</th>
+<th>Entry</th>
+<th>A</th>
+<th>B</th>
+<th>C</th>
+<th>E</th>
+<th>F</th>
+<th>H</th>
+<th>Exit</th>
+</tr></thead>
+<thead>
+<tr>
+<td class="first-column">Pred(node)</td>
+<td class="none">None</td>
+<td>Entry</td>
+<td>A, F</td>
+<td>B</td>
+<td>B</td>
+<td>C, E</td>
+<td>A</td>
+<td>H</td>
+</tr>
+<tr>
+<td class="first-column">Dom(node)</td>
+<td>Entry</td>
+<td>Entry, A</td>
+<td>Entry, A, B</td>
+<td>Entry, A, B, C</td>
+<td>Entry, A, B, E</td>
+<td>Entry, A, B, F</td>
+<td>Entry, A, H</td>
+<td>Entry, A, H, Exit</td>
+</tr>
+<tr>
+<td class="first-column">Idom(node)</td>
+<td>None</td>
+<td>Entry</td>
+<td>A</td>
+<td>B</td>
+<td>B</td>
+<td>B</td>
+<td>A</td>
+<td>H</td>
+</tr>
+<tr>
+<td class="first-column">DF(node)</td>
+<td class="none">None</td>
+<td class="none">None</td>
+<td>B</td>
+<td>F</td>
+<td>F</td>
+<td>B</td>
+<td class="none">None</td>
+<td class="none">None</td>
+</tr>
+</thead>
+</table>
+<h1 class="image-title">Dominator Tree</h1>
+<img src="dt.png" width="189" height="255" alt="Dominator Tree">

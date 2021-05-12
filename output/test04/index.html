@@ -1,0 +1,94 @@
+<h1 class="code-title">Base Code</h1>
+<div class="code">
+<div class="block-name">Entry</div>
+<font class="new-block">Block</font> <font class="block-name">A</font> <font class="count-lines">[6]</font>
+<ol start="1">
+<li><w20>param</w20>&nbsp;<w0>a</w0>&nbsp;</li>
+<li><w20>param</w20>&nbsp;<w0>b</w0>&nbsp;</li>
+<li><w0>j</w0>&nbsp;<w22>&larr;</w22>&nbsp;<w23>+</w23>,&nbsp;<w3>#2</w3>,&nbsp;<w0>a</w0>&nbsp;</li>
+<li><w0>c</w0>&nbsp;<w22>&larr;</w22>&nbsp;<w23>-</w23>,&nbsp;<w3>#1</w3>,&nbsp;<w0>j</w0>&nbsp;</li>
+<li><w0>j</w0>&nbsp;<w22>&larr;</w22>&nbsp;<w23>-</w23>,&nbsp;<w3>#1</w3>,&nbsp;<w0>j</w0>&nbsp;</li>
+<li><w5>ifTrue</w5>&nbsp;<w4>@flag</w4>&nbsp;<w6>goto</w6>&nbsp;<w1>L4</w1>&nbsp;</li>
+</ol>
+<font class="new-block">Block</font> <font class="block-name">B</font> <font class="count-lines">[3]</font>
+<ol start="7">
+<li><w1>L1</w1>:&nbsp;<w0>a</w0>&nbsp;<w22>&larr;</w22>&nbsp;<w23>+</w23>,&nbsp;<w3>#1</w3>,&nbsp;<w0>c</w0>&nbsp;</li>
+<li><w0>b</w0>&nbsp;<w22>&larr;</w22>&nbsp;<w23>+</w23>,&nbsp;<w3>#1</w3>,&nbsp;<w0>a</w0>&nbsp;</li>
+<li><w5>ifTrue</w5>&nbsp;<w4>@flag</w4>&nbsp;<w6>goto</w6>&nbsp;<w1>L3</w1>&nbsp;</li>
+</ol>
+<font class="new-block">Block</font> <font class="block-name">C</font> <font class="count-lines">[2]</font>
+<ol start="10">
+<li><w1>L2</w1>:&nbsp;<w0>a</w0>&nbsp;<w22>&larr;</w22>&nbsp;<w23>+</w23>,&nbsp;<w0>a</w0>,&nbsp;<w0>b</w0>&nbsp;</li>
+<li><w5>ifTrue</w5>&nbsp;<w4>@flag</w4>&nbsp;<w6>goto</w6>&nbsp;<w1>L2</w1>&nbsp;</li>
+</ol>
+<font class="new-block">Block</font> <font class="block-name">D</font> <font class="count-lines">[3]</font>
+<ol start="12">
+<li><w1>L3</w1>:&nbsp;<w0>a</w0>&nbsp;<w22>&larr;</w22>&nbsp;<w23>+</w23>,&nbsp;<w0>a</w0>,&nbsp;<w0>b</w0>&nbsp;</li>
+<li><w0>b</w0>&nbsp;<w22>&larr;</w22>&nbsp;<w23>-</w23>,&nbsp;<w3>#1</w3>,&nbsp;<w0>a</w0>&nbsp;</li>
+<li><w5>ifTrue</w5>&nbsp;<w4>@flag</w4>&nbsp;<w6>goto</w6>&nbsp;<w1>L1</w1>&nbsp;</li>
+</ol>
+<font class="new-block">Block</font> <font class="block-name">E</font> <font class="count-lines">[2]</font>
+<ol start="15">
+<li><w1>L4</w1>:&nbsp;<w0>a</w0>&nbsp;<w22>&larr;</w22>&nbsp;<w23>+</w23>,&nbsp;<w0>a</w0>,&nbsp;<w0>c</w0>&nbsp;</li>
+<li><w0>b</w0>&nbsp;<w22>&larr;</w22>&nbsp;<w23>+</w23>,&nbsp;<w0>a</w0>,&nbsp;<w0>b</w0>&nbsp;</li>
+</ol>
+<div class="block-name">Exit</div>
+</div><h1 class="image-title">Control Flow Graph</h1>
+<img src="cfg.png" width="189" height="255" alt="Control Flow Graph">
+<h1 class="block-table-title">Pred / Dom / Idom / DF</h1>
+<table>
+<thead><tr>
+<th>node =</th>
+<th>Entry</th>
+<th>A</th>
+<th>B</th>
+<th>C</th>
+<th>D</th>
+<th>E</th>
+<th>Exit</th>
+</tr></thead>
+<thead>
+<tr>
+<td class="first-column">Pred(node)</td>
+<td class="none">None</td>
+<td>Entry</td>
+<td>A, D</td>
+<td>B, C</td>
+<td>B, C</td>
+<td>A, D</td>
+<td>E</td>
+</tr>
+<tr>
+<td class="first-column">Dom(node)</td>
+<td>Entry</td>
+<td>Entry, A</td>
+<td>Entry, A, B</td>
+<td>Entry, A, B, C</td>
+<td>Entry, A, B, D</td>
+<td>Entry, A, E</td>
+<td>Entry, A, E, Exit</td>
+</tr>
+<tr>
+<td class="first-column">Idom(node)</td>
+<td>None</td>
+<td>Entry</td>
+<td>A</td>
+<td>B</td>
+<td>B</td>
+<td>A</td>
+<td>E</td>
+</tr>
+<tr>
+<td class="first-column">DF(node)</td>
+<td class="none">None</td>
+<td class="none">None</td>
+<td>B, E</td>
+<td>C, D</td>
+<td>B, E</td>
+<td class="none">None</td>
+<td class="none">None</td>
+</tr>
+</thead>
+</table>
+<h1 class="image-title">Dominator Tree</h1>
+<img src="dt.png" width="189" height="255" alt="Dominator Tree">

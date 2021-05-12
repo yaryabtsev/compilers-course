@@ -15,7 +15,7 @@ def solve(input: str, output: str):
     dominator = Dominator(parser.edges)
     # TODO: task2-spoilers
     table, columns = dominator.get_table()
-    display.show_block_table(table, columns, n, 'Pred / Dom / Idom / DF')
+    display.show_block_table(table, columns, n, ' / '.join(['Pred', 'Dom', 'Idom', 'DF']))
     display.show_graph(dominator.dom_edges, 'Dominator Tree')
     # TODO: task3:
     ...

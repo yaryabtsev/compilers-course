@@ -1,0 +1,16 @@
+param a
+param b
+j <-- +, #2, a
+c <-- -, #1, j
+j <-- -, #1, j
+ifTrue @flag goto L4
+L1: a <-- +, #1, c
+b <-- +, #1, a
+ifTrue @flag goto L3
+L2: a <-- +, a, b
+ifTrue @flag goto L2
+L3: a <-- +, a, b
+b <-- -, #1, a
+ifTrue @flag goto L1
+L4: a <-- +, a, c
+b <-- +, a, b

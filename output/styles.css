@@ -1,7 +1,203 @@
 * {
   margin: 0;
   padding: 0;
+}* {
+  margin: 0;
+  padding: 0;
 }
+
+html {
+  font-family: monospace;
+  font-size: 125%;
+  scroll-behavior: smooth;
+}
+
+body {
+  line-height: 1.5rem;
+  padding-top: 9rem;
+}
+
+.wrapper {
+  display: flex;
+  justify-content: center;
+}
+
+.code {
+  display: inline-block;
+  background-color: #eee;
+  padding: 2rem;
+  border-radius: 0.5rem;
+}
+
+ol {
+  margin-left: 4rem;
+}
+
+.new-block {
+  margin: 1rem 0 0.25rem;
+  display: inline-block;
+  font-style: italic;
+}
+
+.block-name {
+  margin: 1rem 0 0.25rem;
+  color: darkblue;
+}
+
+font, .block-name {
+  font-weight: 700;
+}
+
+.count-lines {
+  font-style: normal;
+}
+
+w5 {
+  font-style: italic;
+}
+
+w25::first-letter {
+  color: red;
+}
+
+li {
+  color: #999;
+}
+
+li > span {
+  color: #333;
+}
+
+header {
+  background-color: #D1A48C;
+  color: white;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 6rem;
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 4rem;
+  font-family: sans-serif;
+  z-index: 10;
+  box-shadow: rgba(149, 157, 165, 0.2) 0 0.4rem 1.2rem;
+}
+
+header a {
+  text-decoration: none;
+  color: white;
+  position: relative;
+  font-weight: bold;
+}
+
+header a::after {
+  content: "";
+  position: absolute;
+  height: 0.125rem;
+  width: 100%;
+  display: block;
+  bottom: -0.125rem;
+  left: 0;
+  background-color: white;
+  transition: 300ms;
+  transform: scaleX(0);
+  opacity: 0;
+}
+
+header a:hover::after {
+  transform: scaleX(1);
+  opacity: 1;
+}
+
+header span {
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: 2.5rem;
+  user-select: none;
+}
+
+header h1 {
+  font-size: 1.5rem;
+}
+
+h2 {
+  font-family: sans-serif;
+  font-size: 2rem;
+  margin: 6rem 0 3rem 3rem;
+}
+
+h2:nth-child(2) {
+  margin-top: 0rem;
+}
+
+h2::before {
+  display: block; 
+  content: " "; 
+  margin-top: -7rem; 
+  height: 7rem; 
+  visibility: hidden; 
+  pointer-events: none;
+}
+
+img {
+  display: block;
+  margin: 0 auto;
+  width: 15rem;
+}
+
+footer {
+  background-color: #565A56;
+  height: 8rem;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0 2rem;
+  display: flex;
+  align-items: center;
+  margin-top: 5rem;
+}
+
+h {
+  color: darkorange;
+}
+
+w22 {
+  color: darkblue;
+}
+
+table {
+  margin: 0 auto;
+  border-collapse: collapse;
+  font-family: sans-serif;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+th, td {
+  border: 0.125rem solid black;
+  padding: 0.75rem;
+}
+
+tr {
+  background-color: cornsilk;
+}
+
+th, .first-column {
+  background-color: burlywood;
+}
+
+.first-column {
+  font-weight: bold;
+}
+
+.none {
+  font-style: italic;
+  opacity: 0.5;
+  font-weight: normal;
+}
+
 
 html {
   font-family: monospace;

@@ -12,16 +12,21 @@ class Display:
         self.orig_stdout = sys.stdout
         self.output = open(os.path.join(out_dir, 'index.html'), 'w')
         sys.stdout = self.output
+        print('<!DOCTYPE html><html lang="en"><head><link rel="icon"'
+              ' type="image/png" sizes="32x32" href="../coding.png"><'
+              'link rel="stylesheet" href="../styles.css"><title>Som'
+              'e Code</title></head><body>')
 
     def __del__(self):
+        print('<footer></footer></body></html>')
         sys.stdout = self.orig_stdout
         self.output.close()
 
     @staticmethod
-    def show_code(lexemes: list, title: str, block_name: str = 'A') -> None:
-        Display.show_title(title, 'code-title')
+    def show_code(lexemes: list, title: str, title_id: int, block_name: str = 'A') -> None:
+        Display.show_title(title, 'code-title', title_id)
         line = 1
-        print('<div class="code">')
+        print('<div class="wrapper"><div class="code">')
         for i in range(len(lexemes)):
             if lexemes[i]:
                 print(f'<font class="new-block">Block</font> ', end='')
@@ -34,13 +39,13 @@ class Display:
                 print(f'<div class="block-name">Entry</div>')
             elif i == len(lexemes) - 1:
                 print(f'<div class="block-name">Exit</div>')
-        print('</div>', end='')
+        print('</div></div>', end='')
 
     @staticmethod
     def show_line(block: list, line_num: int):
         print(f'<ol start="{line_num}">')
         for j in range(len(block)):
-            print('<li>', end='')
+            print('<li><span>', end='')
             for k in range(len(block[j])):
                 if block[j][k][0] == 0:
                     if block[j][k][4]:
@@ -69,28 +74,30 @@ class Display:
                     if k == 0:
                         print(':', end='')
                 elif block[j][k][0] == 2:
-
                     print(f'<w{block[j][k][0]}'
                           f'{block[j][k][2]}>', end='')
-                    special_character = {'<--': '&larr;', '<=': '&le;',
+                    special_character = {'<--': '&xlarr;', '<=': '&le;',
                                          '>=': '&ge;', '==': '&equiv;'}
                     if block[j][k][1] in special_character.keys():
                         print(special_character[block[j][k][1]], end='')
+                    elif block[j][k][2] == 5:
+                        print(f'<h>%</h>{block[j][k][1]}', end='')
                     else:
                         print(f'{block[j][k][1]}', end='')
                     print(f'</w{block[j][k][0]}'
                           f'{block[j][k][2]}>', end='')
                 elif block[j][k][0] == 3:
                     print(f'<w{block[j][k][0]}>'
-                          f'#{block[j][k][1]}</'
+                          f'<h>#</h>{block[j][k][1]}</'
                           f'w{block[j][k][0]}>', end='')
                 elif block[j][k][0] == 4:
                     print(f'<w{block[j][k][0]}>'
-                          f'@{block[j][k][1]}</'
+                          f'<h>@</h>{block[j][k][1]}</'
                           f'w{block[j][k][0]}>', end='')
                 elif block[j][k][0] == 5:
-                    print(f'<w{block[j][k][0]}>'
-                          f'if{block[j][k][1]}<'
+                    print(f'<if>if</if>'
+                          f'<w{block[j][k][0]}>'
+                          f'{block[j][k][1]}<'
                           f'/w{block[j][k][0]}>', end='')
                 elif block[j][k][0] == 6:
                     print(f'<w{block[j][k][0]}>'
@@ -98,10 +105,10 @@ class Display:
                 if block[j][k][0] in [0, 2, 3] and block[j][k][-1]:
                     print(',', end='')
                 print('&nbsp;', end='')
-            print('</li>')
+            print('</span></li>')
         print('</ol>')
 
-    def show_graph(self, edges: list, title: str, block_name: str = 'A'):
+    def show_graph(self, edges: list, title: str, title_id: int, block_name: str = 'A'):
         multi_graph = []
         for i in range(len(edges)):
             for node in edges[i]:
@@ -118,7 +125,7 @@ class Display:
         name = ''.join([word[0] for word in title.lower().split()])
         graph.draw(f'{self.out_dir}/{name}.png')
 
-        Display.show_title(title, 'image-title')
+        Display.show_title(title, 'image-title', title_id)
         print(f'<img src="{name}.png" width="189" height="255" alt="{title}">')
 
     @staticmethod
@@ -132,8 +139,8 @@ class Display:
         return block_name[:-1] + chr(ord(block_name[-1]) + i - 1)
 
     @staticmethod
-    def show_block_table(table: list, columns: list, n: int, title: str, block_name: str = 'A'):
-        Display.show_title(title, 'block-table-title')
+    def show_block_table(table: list, columns: list, n: int, title: str, title_id: int, block_name: str = 'A'):
+        Display.show_title(title, 'block-table-title', title_id)
         print('<table>')
         print('<thead><tr>')
         print(f'<th>{columns[0]}</th>')
@@ -156,5 +163,17 @@ class Display:
         print('</table>')
 
     @staticmethod
-    def show_title(title: str, class_name: str) -> None:
-        print(f'<h1 class="{class_name}">{title}</h1>')
+    def show_title(title: str, class_name: str, title_id: int) -> None:
+        print(f'<h1 class="{class_name}" id="title-{title_id}">{title}</h1>')
+
+    @staticmethod
+    def show_hyperlinks(titles):
+        print(f'<header>')
+        for id in range(len(titles)):
+            Display.show_href(titles[id], "content", id)
+        print(f'</header>')
+
+    @staticmethod
+    def show_href(title: str, class_name: str, title_id: int):
+        print(f'<a class="{class_name}" href="#title-{title_id}">{title}</a>')
+

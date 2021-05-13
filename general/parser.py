@@ -95,7 +95,7 @@ class Parser:
             elif lex in ['>', '<', '=', '>=', '<=', '==']:
                 line.append([2, lex, 4])
             elif lex[0] == '%' and len(lex) > 1:
-                line.append([2, lex, 5])
+                line.append([2, lex[1:], 5])
             elif lex[0] in '*+-' and len(lex) == 1:
                 line.append([2, lex, 3])
             elif lex[0].islower():

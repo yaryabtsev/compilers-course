@@ -1,41 +1,48 @@
-<h1 class="code-title">Base Code</h1>
-<div class="code">
+<!DOCTYPE html><html lang="en"><head><link rel="icon" type="image/png" sizes="32x32" href="../coding.png"><link rel="stylesheet" href="../styles.css"><title>Some Code</title></head><body>
+<header>
+<a class="content" href="#title-0">Base Code</a>
+<a class="content" href="#title-1">Control Flow Graph</a>
+<a class="content" href="#title-2">Pred / Dom / Idom / DF</a>
+<a class="content" href="#title-3">Dominator Tree</a>
+</header>
+<h1 class="code-title" id="title-0">Base Code</h1>
+<div class="wrapper"><div class="code">
 <div class="block-name">Entry</div>
 <font class="new-block">Block</font> <font class="block-name">A</font> <font class="count-lines">[6]</font>
 <ol start="1">
-<li><w20>param</w20>&nbsp;<w0>a</w0>&nbsp;</li>
-<li><w20>param</w20>&nbsp;<w0>b</w0>&nbsp;</li>
-<li><w0>j</w0>&nbsp;<w22>&larr;</w22>&nbsp;<w23>+</w23>,&nbsp;<w3>#2</w3>,&nbsp;<w0>a</w0>&nbsp;</li>
-<li><w0>c</w0>&nbsp;<w22>&larr;</w22>&nbsp;<w23>-</w23>,&nbsp;<w3>#1</w3>,&nbsp;<w0>j</w0>&nbsp;</li>
-<li><w0>j</w0>&nbsp;<w22>&larr;</w22>&nbsp;<w23>-</w23>,&nbsp;<w3>#1</w3>,&nbsp;<w0>j</w0>&nbsp;</li>
-<li><w5>ifTrue</w5>&nbsp;<w4>@flag</w4>&nbsp;<w6>goto</w6>&nbsp;<w1>L4</w1>&nbsp;</li>
+<li><span><w20>param</w20>&nbsp;<w0>a</w0>&nbsp;</span></li>
+<li><span><w20>param</w20>&nbsp;<w0>b</w0>&nbsp;</span></li>
+<li><span><w0>j</w0>&nbsp;<w22>&xlarr;</w22>&nbsp;<w23>+</w23>,&nbsp;<w3><h>#</h>2</w3>,&nbsp;<w0>a</w0>&nbsp;</span></li>
+<li><span><w0>c</w0>&nbsp;<w22>&xlarr;</w22>&nbsp;<w23>-</w23>,&nbsp;<w3><h>#</h>1</w3>,&nbsp;<w0>j</w0>&nbsp;</span></li>
+<li><span><w0>j</w0>&nbsp;<w22>&xlarr;</w22>&nbsp;<w23>-</w23>,&nbsp;<w3><h>#</h>1</w3>,&nbsp;<w0>j</w0>&nbsp;</span></li>
+<li><span><if>if</if><w5>True</w5>&nbsp;<w4><h>@</h>flag</w4>&nbsp;<w6>goto</w6>&nbsp;<w1>L4</w1>&nbsp;</span></li>
 </ol>
 <font class="new-block">Block</font> <font class="block-name">B</font> <font class="count-lines">[3]</font>
 <ol start="7">
-<li><w1>L1</w1>:&nbsp;<w0>a</w0>&nbsp;<w22>&larr;</w22>&nbsp;<w23>+</w23>,&nbsp;<w3>#1</w3>,&nbsp;<w0>c</w0>&nbsp;</li>
-<li><w0>b</w0>&nbsp;<w22>&larr;</w22>&nbsp;<w23>+</w23>,&nbsp;<w3>#1</w3>,&nbsp;<w0>a</w0>&nbsp;</li>
-<li><w5>ifTrue</w5>&nbsp;<w4>@flag</w4>&nbsp;<w6>goto</w6>&nbsp;<w1>L3</w1>&nbsp;</li>
+<li><span><w1>L1</w1>:&nbsp;<w0>a</w0>&nbsp;<w22>&xlarr;</w22>&nbsp;<w23>+</w23>,&nbsp;<w3><h>#</h>1</w3>,&nbsp;<w0>c</w0>&nbsp;</span></li>
+<li><span><w0>b</w0>&nbsp;<w22>&xlarr;</w22>&nbsp;<w23>+</w23>,&nbsp;<w3><h>#</h>1</w3>,&nbsp;<w0>a</w0>&nbsp;</span></li>
+<li><span><if>if</if><w5>True</w5>&nbsp;<w4><h>@</h>flag</w4>&nbsp;<w6>goto</w6>&nbsp;<w1>L3</w1>&nbsp;</span></li>
 </ol>
 <font class="new-block">Block</font> <font class="block-name">C</font> <font class="count-lines">[2]</font>
 <ol start="10">
-<li><w1>L2</w1>:&nbsp;<w0>a</w0>&nbsp;<w22>&larr;</w22>&nbsp;<w23>+</w23>,&nbsp;<w0>a</w0>,&nbsp;<w0>b</w0>&nbsp;</li>
-<li><w5>ifTrue</w5>&nbsp;<w4>@flag</w4>&nbsp;<w6>goto</w6>&nbsp;<w1>L2</w1>&nbsp;</li>
+<li><span><w1>L2</w1>:&nbsp;<w0>a</w0>&nbsp;<w22>&xlarr;</w22>&nbsp;<w23>+</w23>,&nbsp;<w0>a</w0>,&nbsp;<w0>b</w0>&nbsp;</span></li>
+<li><span><if>if</if><w5>True</w5>&nbsp;<w4><h>@</h>flag</w4>&nbsp;<w6>goto</w6>&nbsp;<w1>L2</w1>&nbsp;</span></li>
 </ol>
 <font class="new-block">Block</font> <font class="block-name">D</font> <font class="count-lines">[3]</font>
 <ol start="12">
-<li><w1>L3</w1>:&nbsp;<w0>a</w0>&nbsp;<w22>&larr;</w22>&nbsp;<w23>+</w23>,&nbsp;<w0>a</w0>,&nbsp;<w0>b</w0>&nbsp;</li>
-<li><w0>b</w0>&nbsp;<w22>&larr;</w22>&nbsp;<w23>-</w23>,&nbsp;<w3>#1</w3>,&nbsp;<w0>a</w0>&nbsp;</li>
-<li><w5>ifTrue</w5>&nbsp;<w4>@flag</w4>&nbsp;<w6>goto</w6>&nbsp;<w1>L1</w1>&nbsp;</li>
+<li><span><w1>L3</w1>:&nbsp;<w0>a</w0>&nbsp;<w22>&xlarr;</w22>&nbsp;<w23>+</w23>,&nbsp;<w0>a</w0>,&nbsp;<w0>b</w0>&nbsp;</span></li>
+<li><span><w0>b</w0>&nbsp;<w22>&xlarr;</w22>&nbsp;<w23>-</w23>,&nbsp;<w3><h>#</h>1</w3>,&nbsp;<w0>a</w0>&nbsp;</span></li>
+<li><span><if>if</if><w5>True</w5>&nbsp;<w4><h>@</h>flag</w4>&nbsp;<w6>goto</w6>&nbsp;<w1>L1</w1>&nbsp;</span></li>
 </ol>
 <font class="new-block">Block</font> <font class="block-name">E</font> <font class="count-lines">[2]</font>
 <ol start="15">
-<li><w1>L4</w1>:&nbsp;<w0>a</w0>&nbsp;<w22>&larr;</w22>&nbsp;<w23>+</w23>,&nbsp;<w0>a</w0>,&nbsp;<w0>c</w0>&nbsp;</li>
-<li><w0>b</w0>&nbsp;<w22>&larr;</w22>&nbsp;<w23>+</w23>,&nbsp;<w0>a</w0>,&nbsp;<w0>b</w0>&nbsp;</li>
+<li><span><w1>L4</w1>:&nbsp;<w0>a</w0>&nbsp;<w22>&xlarr;</w22>&nbsp;<w23>+</w23>,&nbsp;<w0>a</w0>,&nbsp;<w0>c</w0>&nbsp;</span></li>
+<li><span><w0>b</w0>&nbsp;<w22>&xlarr;</w22>&nbsp;<w23>+</w23>,&nbsp;<w0>a</w0>,&nbsp;<w0>b</w0>&nbsp;</span></li>
 </ol>
 <div class="block-name">Exit</div>
-</div><h1 class="image-title">Control Flow Graph</h1>
+</div></div><h1 class="image-title" id="title-1">Control Flow Graph</h1>
 <img src="cfg.png" width="189" height="255" alt="Control Flow Graph">
-<h1 class="block-table-title">Pred / Dom / Idom / DF</h1>
+<h1 class="block-table-title" id="title-2">Pred / Dom / Idom / DF</h1>
 <table>
 <thead><tr>
 <th>node =</th>
@@ -90,5 +97,6 @@
 </tr>
 </thead>
 </table>
-<h1 class="image-title">Dominator Tree</h1>
+<h1 class="image-title" id="title-3">Dominator Tree</h1>
 <img src="dt.png" width="189" height="255" alt="Dominator Tree">
+<footer></footer></body></html>

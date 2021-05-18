@@ -192,7 +192,33 @@ class Display:
         print(f'<a class="{class_name}" href="#title-{title_id}">{title}</a>')
 
     def show_spoiler(self, html):
-        print(html)
+        if not html:
+            return
+        print('<div class="wrapper"><div class="code">')
+        for item in html:
+            if type(item) is list:
+                if item[0] == 'tab':
+                    print('<br>' + '&nbsp ' * 4 * item[1], end='')
+                elif item[0] == 'set':
+                    print('{', end='')
+                    print(',&nbsp'.join([f'<w0>{var}</w0>' for var in item[1]]), end='')
+                    print('}', end='')
+                elif item[0] == 'block':
+                    print(f'<font class="block-name">{self.name(item[1])}</font>')
+                elif item[0] == 'line':
+                    self.show_line(item[1], item[2])
+                elif item[0] == 'block-set':
+                    print('{', end='')
+                    print(',&nbsp'.join([f'<font class="block-name">{self.name(node)}</font>' for node in item[1]]),
+                          end='')
+                    print('}', end='')
+                elif item[0] == 'phi':
+                    print(f'<phi>&phi;(<h>*</h><w0>{item[1]}</w0>)</phi>', end='')
+                else:
+                    print(str(item))
+            else:
+                print(item, end='')
+        print('</div></div>')
 
     def show_phi_table(self, param):
         pass

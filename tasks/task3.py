@@ -25,7 +25,7 @@ class Phi:
             spoiler += [['tab', 1], '<gb2>def<sub>',
                         ['block', node], '</sub>&nbsp;:&nbsp;</gb2>', ['set', def_block]]
             for line in self.code_blocks[node]:
-                spoiler.append([['tab', 2], ['line', [line], line_num]])
+                spoiler += [['tab', 2], ['line', [line], line_num]]
                 for word in line:
                     if word[0] == 0 and not word[3] and word[1] not in def_block:
                         self.globs.add(word[1])
@@ -53,7 +53,7 @@ class Phi:
             while item < n:
                 for df in self.graph.df_list[work_list[item]]:
                     if var not in self.phi_args[df]:
-                        spoiler += [['tab', 1], '<l3>insert<l3>&nbsp;', ['phi', f'*{var}'],
+                        spoiler += [['tab', 1], '<l3>insert<l3>&nbsp;', ['phi', f'{var}'],
                                     '&nbsp;in&nbsp;', ['block', df], '<gb1>-block:</gb1>']
                         self.phi_args[df].add(var)
                     if df not in work_list:

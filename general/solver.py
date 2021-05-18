@@ -37,13 +37,13 @@ def solve(input: str, output: str, block_name: str = 'B1'):
 
     # TODO: task3 (spoilers, rename, add_phi)
     phi = Phi(parser.lexemes, dominator)
-    display.show_spoiler(phi.globals_blocks())
-    display.show_block_table(*phi.table_gb())
-    display.show_spoiler(phi.locate())
-    display.show_block_table(*phi.table_new_phi())
-    display.show_spoiler(phi.rename(0))
+    spoilers = phi.globals_blocks()
+    display.show_block_table(*phi.table_gb(), spoilers)
+    spoilers = phi.locate()
+    display.show_block_table(*phi.table_new_phi(), spoilers)
+    spoilers = phi.rename(0)
     phi.add_phi()
-    display.show_code(phi.code_blocks)
+    display.show_code(phi.code_blocks, spoilers)
     # TODO: task4:
     ...
     del display

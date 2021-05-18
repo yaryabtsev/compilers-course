@@ -27,8 +27,10 @@ class Display:
         sys.stdout = self.orig_stdout
         self.output.close()
 
-    def show_code(self, lexemes: list) -> None:
+    def show_code(self, lexemes: list, spoilers: list = []) -> None:
         self.show_title('code-title')
+        if spoilers:
+            self.show_spoiler(spoilers)
         line = 1
         print('<div class="wrapper"><div class="code">')
         for i in range(len(lexemes)):
@@ -142,8 +144,10 @@ class Display:
             return 'Exit'
         return self.block_name[:-1] + chr(ord(self.block_name[-1]) + i - 1)
 
-    def show_block_table(self, table: list, columns: list):
+    def show_block_table(self, table: list, columns: list, spoilers: list = []):
         self.show_title('block-table-title')
+        if spoilers:
+            self.show_spoiler(spoilers)
         print('<table>')
         print('<thead><tr>')
         print(f'<th>{columns[0]}</th>')
@@ -194,7 +198,7 @@ class Display:
     def show_spoiler(self, html):
         if not html:
             return
-        print('<div class="wrapper"><div class="code">')
+        print('<div class="spoilers"><div class="code">')
         for item in html:
             if type(item) is list:
                 if item[0] == 'tab':

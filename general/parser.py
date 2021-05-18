@@ -5,14 +5,12 @@ class Parser:
     def __init__(self, code: list):
         self.code = code
         self.blocks = [[]]
-        self.lexemes = [[]]
-        self.split_blocks()
+        self.lexemes = []
         self.N = len(self.blocks)
-        self.edges = [set() for _ in range(self.N)]
-        self.graph()
+        self.edges = []
 
     def split_blocks(self):
-        block, lex_block = [], []
+        block = []
         self.code.append('\n')
         n = len(self.code)
         for i in range(n):
@@ -23,10 +21,17 @@ class Parser:
                     ':' in code_line or 'goto' in block[-1]
                     or 'return' in block[-1] or 'if' in block[-1])):
                 self.blocks.append(block)
-                self.lexemes.append(lex_block)
                 block, lex_block = [], []
             block.append(code_line)
-            lex_block.append(self.lexer(code_line, i + 1))
+        self.N = len(self.blocks)
+
+    def lex_blocks(self):
+        i = 0
+        for block in self.blocks:
+            self.lexemes.append([])
+            for line in block:
+                self.lexemes[-1].append(self.lexer(line, i + 1))
+                i += 1
 
     @staticmethod
     def lexer(code_line: str, line_num: int) -> list:
@@ -44,13 +49,8 @@ class Parser:
                     name: str;
                 2 - operation:
                     value: str,
-                    class:
-                        0 - {param},
-                        1 - {return},
-                        2 - {<--},
-                        3 - {+, -, *, ...},
-                        4 - {>, <, =, ...},
-                        5 - {%div, %mod, ...};
+                    class: 0 - {param}, 1 - {return}, 2 - {<--}, 3 - {+, -, *, ...},
+                    4 - {>, <, =, ...}, 5 - {%div, %mod, ...};
                     comma: bool;
                 3 - number:
                     value: int,
@@ -59,7 +59,10 @@ class Parser:
                     name: str;
                 5 - condition:
                     is_true: bool;
-                6 - goto.
+                6 - goto:
+                    none;
+                7 - pass:
+                    none.
         ]
         """
         line = []
@@ -108,6 +111,7 @@ class Parser:
         return line
 
     def graph(self):
+        self.edges = [set() for _ in range(self.N)]
         labels = {}
         for i in range(self.N):
             if self.lexemes[i]:

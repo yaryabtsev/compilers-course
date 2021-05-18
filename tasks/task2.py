@@ -1,3 +1,6 @@
+from typing import List
+
+
 class Dominator:
     def __init__(self, edges):
         self.N = len(edges)
@@ -20,7 +23,7 @@ class Dominator:
         self.dom_tree()
 
     @staticmethod
-    def dfs(edges: list, start: int, visited: list = None) -> list:
+    def dfs(edges: list, start: int, visited: list = None) -> List[bool]:
         if visited is None:
             visited = [False] * len(edges)
         visited[start] = True

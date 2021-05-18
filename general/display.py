@@ -148,21 +148,29 @@ class Display:
         print('<thead><tr>')
         print(f'<th>{columns[0]}</th>')
         for column in columns[1:]:
-            print(f'<th>{self.name(column)}</th>')
+            if type(column) is int:
+                print(f'<th>{self.name(column)}</th>')
+            else:
+                print(f'<th>{column}</th>')
         print('</tr></thead>')
         print('<tbody>')
         for row in table:
             print('<tr>')
             print(f'<td class="first-column">{row[0]}</td>')
             for td in row[1:]:
-                if not td and td != 0:
+                if type(td) is bool:
+                    if td:
+                        print(f'<td class="true">+</td>')
+                    else:
+                        print(f'<td class="false">-</td>')
+                elif not td and td != 0:
                     print(f'<td class="none">None</td>')
                 elif type(td) is int:
                     name = self.name(td)
                     class_name = ''
                     if name == 'None':
                         class_name = ' class="none"'
-                    print(f'<td{class_name}>{name}</td>')
+                    print(f'<td {class_name}>{name}</td>')
                 else:
                     print(f'<td>{", ".join([self.name(node) for node in sorted(td)])}</td>')
             print('</tr>')
@@ -184,7 +192,7 @@ class Display:
         print(f'<a class="{class_name}" href="#title-{title_id}">{title}</a>')
 
     def show_spoiler(self, html):
-        pass
+        print(html)
 
     def show_phi_table(self, param):
         pass

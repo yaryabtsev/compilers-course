@@ -5,16 +5,9 @@
 <a class="content" href="#title-2">Table of Values</a>
 <a class="content" href="#title-3">Pred / Dom / Idom / DF</a>
 <a class="content" href="#title-4">Dominator Tree</a>
-<a class="content" href="#title-5">Base Code</a>
-<a class="content" href="#title-6">Control Flow Graph</a>
-<a class="content" href="#title-7">Table of Values</a>
-<a class="content" href="#title-8">Pred / Dom / Idom / DF</a>
-<a class="content" href="#title-9">Dominator Tree</a>
-<a class="content" href="#title-10">Base Code</a>
-<a class="content" href="#title-11">Control Flow Graph</a>
-<a class="content" href="#title-12">Table of Values</a>
-<a class="content" href="#title-13">Pred / Dom / Idom / DF</a>
-<a class="content" href="#title-14">Dominator Tree</a>
+<a class="content" href="#title-5">Globals & Blocks</a>
+<a class="content" href="#title-6">Needs a phi-function</a>
+<a class="content" href="#title-7">Partially Truncated SSA-Form</a>
 </header>
 <h2 class="code-title" id="title-0">Base Code</h2>
 <div class="wrapper"><div class="code">
@@ -383,13 +376,13 @@
 </tr>
 <tr>
 <td class="first-column">Idom(node)</td>
-<td class="none">None</td>
-<td>Entry</td>
-<td>B1</td>
-<td>B2</td>
-<td>B2</td>
-<td>B1</td>
-<td>B5</td>
+<td  class="none">None</td>
+<td >Entry</td>
+<td >B1</td>
+<td >B2</td>
+<td >B2</td>
+<td >B1</td>
+<td >B5</td>
 </tr>
 <tr>
 <td class="first-column">DF(node)</td>
@@ -405,7 +398,91 @@
 </table>
 <h2 class="image-title" id="title-4">Dominator Tree</h2>
 <img src="pdid.png" alt="Dominator Tree">
-<h2 class="code-title" id="title-5">Base Code</h2>
+[['block', 0], '<gb1>-block:</gb1>', ['tab', 1], '<gb2>def<sub>', ['block', 0], '</sub>&nbsp;:&nbsp;</gb2>', ['set', set()], ['tab', 0], ['block', 1], '<gb1>-block:</gb1>', ['tab', 1], '<gb2>def<sub>', ['block', 1], '</sub>&nbsp;:&nbsp;</gb2>', ['set', {'j', 'c'}], [['tab', 2], ['line', [[[2, 'param', 0, False], [0, 'a', [], False, False, False]]], 1]], ['tab', 3], '<gb3>Globals&nbsp;:&nbsp;</gb3>', ['set', {'a', 'c', 'b'}], [['tab', 2], ['line', [[[2, 'param', 0, False], [0, 'b', [], False, False, False]]], 2]], ['tab', 3], '<gb3>Globals&nbsp;:&nbsp;</gb3>', ['set', {'a', 'c', 'b'}], [['tab', 2], ['line', [[[0, 'j', [], True, False, False], [2, '<--', 2, False], [2, '+', 3, True], [3, 2, True], [0, 'a', [], False, False, False]]], 3]], ['tab', 3], '<gb3>Globals&nbsp;:&nbsp;</gb3>', ['set', {'a', 'c', 'b'}], ['tab', 3], '<gb2>def<sub>', ['block', 1], '</sub>&nbsp;:&nbsp;</gb2>', ['set', {'j', 'c'}], ['tab', 3], '<gb4>Blocks(<gb5>', 'j', '</gb5>)&nbsp;:&nbsp;</gb4>', ['block-set', {1}], [['tab', 2], ['line', [[[0, 'c', [], True, False, False], [2, '<--', 2, False], [2, '-', 3, True], [3, 1, True], [0, 'j', [], False, False, False]]], 4]], ['tab', 3], '<gb2>def<sub>', ['block', 1], '</sub>&nbsp;:&nbsp;</gb2>', ['set', {'j', 'c'}], ['tab', 3], '<gb4>Blocks(<gb5>', 'c', '</gb5>)&nbsp;:&nbsp;</gb4>', ['block-set', {1}], [['tab', 2], ['line', [[[0, 'j', [], True, False, False], [2, '<--', 2, False], [2, '-', 3, True], [3, 1, True], [0, 'j', [], False, False, False]]], 5]], ['tab', 3], '<gb2>def<sub>', ['block', 1], '</sub>&nbsp;:&nbsp;</gb2>', ['set', {'j', 'c'}], ['tab', 3], '<gb4>Blocks(<gb5>', 'j', '</gb5>)&nbsp;:&nbsp;</gb4>', ['block-set', {1}], [['tab', 2], ['line', [[[5, True], [4, 'flag'], [6], [1, 'L4']]], 6]], ['tab', 0], ['block', 2], '<gb1>-block:</gb1>', ['tab', 1], '<gb2>def<sub>', ['block', 2], '</sub>&nbsp;:&nbsp;</gb2>', ['set', {'a', 'b'}], [['tab', 2], ['line', [[[1, 'L1'], [0, 'a', [], True, False, False], [2, '<--', 2, False], [2, '+', 3, True], [3, 1, True], [0, 'c', [], False, False, False]]], 7]], ['tab', 3], '<gb3>Globals&nbsp;:&nbsp;</gb3>', ['set', {'a', 'c', 'b'}], ['tab', 3], '<gb2>def<sub>', ['block', 2], '</sub>&nbsp;:&nbsp;</gb2>', ['set', {'a', 'b'}], ['tab', 3], '<gb4>Blocks(<gb5>', 'a', '</gb5>)&nbsp;:&nbsp;</gb4>', ['block-set', {2, 3, 4, 5}], [['tab', 2], ['line', [[[0, 'b', [], True, False, False], [2, '<--', 2, False], [2, '+', 3, True], [3, 1, True], [0, 'a', [], False, False, False]]], 8]], ['tab', 3], '<gb2>def<sub>', ['block', 2], '</sub>&nbsp;:&nbsp;</gb2>', ['set', {'a', 'b'}], ['tab', 3], '<gb4>Blocks(<gb5>', 'b', '</gb5>)&nbsp;:&nbsp;</gb4>', ['block-set', {2, 4, 5}], [['tab', 2], ['line', [[[5, True], [4, 'flag'], [6], [1, 'L3']]], 9]], ['tab', 0], ['block', 3], '<gb1>-block:</gb1>', ['tab', 1], '<gb2>def<sub>', ['block', 3], '</sub>&nbsp;:&nbsp;</gb2>', ['set', {'a'}], [['tab', 2], ['line', [[[1, 'L2'], [0, 'a', [], True, False, False], [2, '<--', 2, False], [2, '+', 3, True], [0, 'a', [], False, False, True], [0, 'b', [], False, False, False]]], 10]], ['tab', 3], '<gb3>Globals&nbsp;:&nbsp;</gb3>', ['set', {'a', 'c', 'b'}], ['tab', 3], '<gb3>Globals&nbsp;:&nbsp;</gb3>', ['set', {'a', 'c', 'b'}], ['tab', 3], '<gb2>def<sub>', ['block', 3], '</sub>&nbsp;:&nbsp;</gb2>', ['set', {'a'}], ['tab', 3], '<gb4>Blocks(<gb5>', 'a', '</gb5>)&nbsp;:&nbsp;</gb4>', ['block-set', {2, 3, 4, 5}], [['tab', 2], ['line', [[[5, True], [4, 'flag'], [6], [1, 'L2']]], 11]], ['tab', 0], ['block', 4], '<gb1>-block:</gb1>', ['tab', 1], '<gb2>def<sub>', ['block', 4], '</sub>&nbsp;:&nbsp;</gb2>', ['set', {'a', 'b'}], [['tab', 2], ['line', [[[1, 'L3'], [0, 'a', [], True, False, False], [2, '<--', 2, False], [2, '+', 3, True], [0, 'a', [], False, False, True], [0, 'b', [], False, False, False]]], 12]], ['tab', 3], '<gb3>Globals&nbsp;:&nbsp;</gb3>', ['set', {'a', 'c', 'b'}], ['tab', 3], '<gb3>Globals&nbsp;:&nbsp;</gb3>', ['set', {'a', 'c', 'b'}], ['tab', 3], '<gb2>def<sub>', ['block', 4], '</sub>&nbsp;:&nbsp;</gb2>', ['set', {'a', 'b'}], ['tab', 3], '<gb4>Blocks(<gb5>', 'a', '</gb5>)&nbsp;:&nbsp;</gb4>', ['block-set', {2, 3, 4, 5}], [['tab', 2], ['line', [[[0, 'b', [], True, False, False], [2, '<--', 2, False], [2, '-', 3, True], [3, 1, True], [0, 'a', [], False, False, False]]], 13]], ['tab', 3], '<gb2>def<sub>', ['block', 4], '</sub>&nbsp;:&nbsp;</gb2>', ['set', {'a', 'b'}], ['tab', 3], '<gb4>Blocks(<gb5>', 'b', '</gb5>)&nbsp;:&nbsp;</gb4>', ['block-set', {2, 4, 5}], [['tab', 2], ['line', [[[5, True], [4, 'flag'], [6], [1, 'L1']]], 14]], ['tab', 0], ['block', 5], '<gb1>-block:</gb1>', ['tab', 1], '<gb2>def<sub>', ['block', 5], '</sub>&nbsp;:&nbsp;</gb2>', ['set', {'a', 'b'}], [['tab', 2], ['line', [[[1, 'L4'], [0, 'a', [], True, False, False], [2, '<--', 2, False], [2, '+', 3, True], [0, 'a', [], False, False, True], [0, 'c', [], False, False, False]]], 15]], ['tab', 3], '<gb3>Globals&nbsp;:&nbsp;</gb3>', ['set', {'a', 'c', 'b'}], ['tab', 3], '<gb3>Globals&nbsp;:&nbsp;</gb3>', ['set', {'a', 'c', 'b'}], ['tab', 3], '<gb2>def<sub>', ['block', 5], '</sub>&nbsp;:&nbsp;</gb2>', ['set', {'a', 'b'}], ['tab', 3], '<gb4>Blocks(<gb5>', 'a', '</gb5>)&nbsp;:&nbsp;</gb4>', ['block-set', {2, 3, 4, 5}], [['tab', 2], ['line', [[[0, 'b', [], True, False, False], [2, '<--', 2, False], [2, '+', 3, True], [0, 'a', [], False, False, True], [0, 'b', [], False, False, False]]], 16]], ['tab', 3], '<gb3>Globals&nbsp;:&nbsp;</gb3>', ['set', {'a', 'c', 'b'}], ['tab', 3], '<gb2>def<sub>', ['block', 5], '</sub>&nbsp;:&nbsp;</gb2>', ['set', {'a', 'b'}], ['tab', 3], '<gb4>Blocks(<gb5>', 'b', '</gb5>)&nbsp;:&nbsp;</gb4>', ['block-set', {2, 4, 5}], ['tab', 0], ['block', 6], '<gb1>-block:</gb1>', ['tab', 1], '<gb2>def<sub>', ['block', 6], '</sub>&nbsp;:&nbsp;</gb2>', ['set', set()]]
+<h2 class="block-table-title" id="title-5">Globals & Blocks</h2>
+<table>
+<thead><tr>
+<th>var =</th>
+<th>a</th>
+<th>b</th>
+<th>c</th>
+<th>j</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="first-column">Blocks(var)</td>
+<td>B2, B3, B4, B5</td>
+<td>B2, B4, B5</td>
+<td>B1</td>
+<td>B1</td>
+</tr>
+<tr>
+<td class="first-column">is Global</td>
+<td class="true">+</td>
+<td class="true">+</td>
+<td class="true">+</td>
+<td class="false">-</td>
+</tr>
+</tbody>
+</table>
+['<l1>variable</l1>&nbsp;<w0>a</w0>:', ['tab', 1], '<l2>WorkList<l2>', ['block-set', [2, 3, 4, 5]], ['tab', 1], '<l3>insert<l3>&nbsp;', ['phi', '*a'], '&nbsp;in&nbsp;', ['block', 2], '<gb1>-block:</gb1>', ['tab', 1], '<l3>insert<l3>&nbsp;', ['phi', '*a'], '&nbsp;in&nbsp;', ['block', 5], '<gb1>-block:</gb1>', ['tab', 1], '<l3>insert<l3>&nbsp;', ['phi', '*a'], '&nbsp;in&nbsp;', ['block', 3], '<gb1>-block:</gb1>', ['tab', 1], '<l3>insert<l3>&nbsp;', ['phi', '*a'], '&nbsp;in&nbsp;', ['block', 4], '<gb1>-block:</gb1>', ['tab', 0], '<l1>variable</l1>&nbsp;<w0>c</w0>:', ['tab', 1], '<l2>WorkList<l2>', ['block-set', [1]], ['tab', 0], '<l1>variable</l1>&nbsp;<w0>b</w0>:', ['tab', 1], '<l2>WorkList<l2>', ['block-set', [2, 4, 5]], ['tab', 1], '<l3>insert<l3>&nbsp;', ['phi', '*b'], '&nbsp;in&nbsp;', ['block', 2], '<gb1>-block:</gb1>', ['tab', 1], '<l3>insert<l3>&nbsp;', ['phi', '*b'], '&nbsp;in&nbsp;', ['block', 5], '<gb1>-block:</gb1>']
+<h2 class="block-table-title" id="title-6">Needs a phi-function</h2>
+<table>
+<thead><tr>
+<th>block =</th>
+<th>Entry</th>
+<th>B1</th>
+<th>B2</th>
+<th>B3</th>
+<th>B4</th>
+<th>B5</th>
+<th>Exit</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="first-column">a</td>
+<td class="false">-</td>
+<td class="false">-</td>
+<td class="true">+</td>
+<td class="true">+</td>
+<td class="true">+</td>
+<td class="true">+</td>
+<td class="false">-</td>
+</tr>
+<tr>
+<td class="first-column">b</td>
+<td class="false">-</td>
+<td class="false">-</td>
+<td class="true">+</td>
+<td class="false">-</td>
+<td class="false">-</td>
+<td class="true">+</td>
+<td class="false">-</td>
+</tr>
+<tr>
+<td class="first-column">c</td>
+<td class="false">-</td>
+<td class="false">-</td>
+<td class="false">-</td>
+<td class="false">-</td>
+<td class="false">-</td>
+<td class="false">-</td>
+<td class="false">-</td>
+</tr>
+<tr>
+<td class="first-column">j</td>
+<td class="false">-</td>
+<td class="false">-</td>
+<td class="false">-</td>
+<td class="false">-</td>
+<td class="false">-</td>
+<td class="false">-</td>
+<td class="false">-</td>
+</tr>
+</tbody>
+</table>
+None
+<h2 class="code-title" id="title-7">Partially Truncated SSA-Form</h2>
 <div class="wrapper"><div class="code">
 <div class="block-name">Entry</div>
 <font class="new-block">Block</font> <font class="block-name">B1</font> <font class="count-lines">[6]</font>

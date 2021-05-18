@@ -35,6 +35,7 @@ class LocalOptimization:
                     self.table[self.find(line[idx + 1][1]) - 1][-1].append(
                         [line[idx - 1][1], self.last_index(line[idx - 1][1])[0] + 1])
                 new_block[-1][idx - 1][2].append(self.last_index(line[idx - 1][1])[0])
+        # TODO: 4 optimizations
         return new_block, self.table
 
     def find(self, var: str) -> int:

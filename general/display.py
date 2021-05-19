@@ -117,6 +117,7 @@ class Display:
         print('</ol>')
 
     def show_graph(self, edges: list):
+        self.show_title('image-title')
         multi_graph = []
         for i in range(len(edges)):
             for node in edges[i]:
@@ -132,7 +133,6 @@ class Display:
         name = ''.join([word[0] for word in self.titles[self.title_id - 1].lower().split()]).replace('/', '')
         graph.draw(f'{self.out_dir}/{name}.png')
 
-        self.show_title('image-title')
         print(f'<img src="{name}.png" alt="{self.titles[self.title_id - 1]}">')
 
     def name(self, i: int) -> str:

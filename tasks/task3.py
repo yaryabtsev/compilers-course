@@ -55,17 +55,17 @@ class Phi:
         for var in self.globs:
             spoiler += [['tab', 0], f'<l1>variable</l1>&nbsp;<w0>{var}</w0>:']
             work_list = list(self.blocks[var])
-            spoiler += [['tab', 1], '<l2>WorkList<l2> : ', ['block-set', copy.deepcopy(work_list)]]
+            spoiler += [['tab', 1], '<l2>WorkList</l2> : ', ['block-set', copy.deepcopy(work_list)]]
             item = 0
             n = len(work_list)
             while item < n:
                 for df in self.graph.df_list[work_list[item]]:
                     if var not in self.phi_args[df]:
-                        spoiler += [['tab', 1], '<l3>insert<l3>&nbsp;', ['phi', f'{var}'],
+                        spoiler += [['tab', 1], '<l3>insert</l3>&nbsp;', ['phi', f'{var}'],
                                     '&nbsp;in&nbsp;', ['block', df], '<gb1>-block:</gb1>']
                         self.phi_args[df].add(var)
                     if df not in work_list:
-                        spoiler += [['tab', 1], '<l2>WorkList<l2> : ', ['block-set', copy.deepcopy(work_list)],
+                        spoiler += [['tab', 1], '<l2>WorkList</l2> : ', ['block-set', copy.deepcopy(work_list)],
                                     '&nbsp;<disj>&#8744;</disj>&nbsp;', ['set', {df}]]
                         work_list.append(df)
                         n += 1
@@ -95,7 +95,7 @@ class Phi:
             self.fill(successor, tabs, spoiler)
         for successor in self.graph.dom_edges[block]:
             spoiler += self.rename(successor, tabs + 1)
-            spoiler += [['tab', tabs + 2], '<r2>return to ', ['block', block], ';']
+            spoiler += [['tab', tabs + 2], '<r2>return to ', ['block', block], ';</r2>']
         # show_table(self.stack_table())
         self.clean(block, tabs, spoiler)
         # show_table(self.stack_table())

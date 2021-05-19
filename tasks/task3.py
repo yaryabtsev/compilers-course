@@ -16,8 +16,8 @@ class Phi:
         self.blocks = defaultdict(set)
         self.phi_args = [set() for _ in range(self.N)]
         self.phis: list
-        self.counter = defaultdict(0)
-        self.stack = defaultdict([])
+        self.counter = defaultdict(int)
+        self.stack = defaultdict(list)
 
     def globals_blocks(self):
         spoiler = []
@@ -95,7 +95,7 @@ class Phi:
             self.fill(successor, tabs, spoiler)
         for successor in self.graph.dom_edges[block]:
             spoiler += self.rename(successor, tabs + 1)
-            spoiler += [['tab', tabs + 2], '<r2>return to', ['block', block], ';']
+            spoiler += [['tab', tabs + 2], '<r2>return to ', ['block', block], ';']
         # show_table(self.stack_table())
         self.clean(block, tabs, spoiler)
         # show_table(self.stack_table())
@@ -122,9 +122,9 @@ class Phi:
         # TODO: rename_phi()
         pass
 
-    def rename_instructions(self, block, tabs, spoiler):
+    def rename_instructions(self, block, tabs, spoiler) -> list:
         # TODO: rename_instructions()
-        pass
+        return []
 
     def clean(self, block, tabs, spoiler):
         # TODO: clean()

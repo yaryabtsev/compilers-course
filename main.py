@@ -13,8 +13,14 @@ if __name__ == '__main__':
     parser.add_argument(
         '--output',
         type=str,
-        default='output/test01/',
-        help='provide an the path to the output directory (default: output/test01/)'
+        default='output/',
+        help='provide an path to the output directory (default: output/test01/)'
+    )
+    parser.add_argument(
+        '--node',
+        type=str,
+        default='A',
+        help='specify the name of the first block (default: A)'
     )
     args = parser.parse_args()
     input, output = args.input, args.output

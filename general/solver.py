@@ -7,7 +7,7 @@ from tasks.task2 import Dominator
 from tasks.task3 import Phi
 
 
-def solve(input: str, output: str, block_name: str = 'B1'):
+def solve(input: str, output: str, block_name: str = 'A'):
     display = Display(output)
     display.block_name = block_name
     with open(input, 'r') as fin:
@@ -42,7 +42,6 @@ def solve(input: str, output: str, block_name: str = 'B1'):
     spoilers = phi.locate()
     display.show_block_table(*phi.table_new_phi(), spoilers)
     spoilers = phi.rename(0)
-    phi.add_phi()
     display.show_code(phi.code_blocks, spoilers)
     # TODO: task4:
     ...

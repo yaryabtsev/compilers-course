@@ -202,7 +202,7 @@ class Display:
         for item in html:
             if type(item) is list:
                 if item[0] == 'tab':
-                    print('<br>' + '&nbsp ' * 4 * item[1], end='')
+                    print('<br>' + '&nbsp' * (4 * item[1] - 1), end='')
                 elif item[0] == 'set':
                     print('{', end='')
                     print(',&nbsp'.join([f'<w0>{var}</w0>' for var in item[1]]), end='')

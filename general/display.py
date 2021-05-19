@@ -45,7 +45,7 @@ class Display:
                 print(f'<div class="block-name">Entry</div>')
             elif i == len(lexemes) - 1:
                 print(f'<div class="block-name">Exit</div>')
-        print('</div></div>', end='')
+        print('</div></div></details>', end='')
 
     @staticmethod
     def show_line(block: list, line_num: int):
@@ -133,7 +133,7 @@ class Display:
         name = ''.join([word[0] for word in self.titles[self.title_id - 1].lower().split()]).replace('/', '')
         graph.draw(f'{self.out_dir}/{name}.png')
 
-        print(f'<img src="{name}.png" alt="{self.titles[self.title_id - 1]}">')
+        print(f'<img src="{name}.png" alt="{self.titles[self.title_id - 1]}"></details>')
 
     def name(self, i: int) -> str:
         if i == -1:
@@ -179,10 +179,11 @@ class Display:
                     print(f'<td>{", ".join([self.name(node) for node in sorted(td)])}</td>')
             print('</tr>')
         print('</tbody>')
-        print('</table>')
+        print('</table></details>')
 
     def show_title(self, class_name: str) -> None:
-        print(f'<h2 class="{class_name}" id="title-{self.title_id}">{self.titles[self.title_id]}</h2>')
+        print(f'<details><summary><h2 class="{class_name}" id="title-{self.title_id}'
+              f'">{self.titles[self.title_id]}</h2></summary>')
         self.title_id += 1
 
     def show_hyperlinks(self):
@@ -198,7 +199,7 @@ class Display:
     def show_spoiler(self, html):
         if not html:
             return
-        print('<div class="spoilers"><div class="code">')
+        print('<details><summary>Spoiler</summary><div class="code">')
         for item in html:
             if type(item) is list:
                 if item[0] == 'tab':
@@ -222,7 +223,7 @@ class Display:
                     print(str(item))
             else:
                 print(item, end='')
-        print('</div></div>')
+        print('</div></details>')
 
     def show_phi_table(self, param):
         pass
@@ -251,7 +252,7 @@ class Display:
                 print('</td>')
                 print('</tr>')
         print('</tbody>')
-        print('</table>')
+        print('</table></details>')
 
     def var_table(self, table: list) -> None:
         if not table:

@@ -13,7 +13,7 @@ if __name__ == '__main__':
     parser.add_argument(
         '--output',
         type=str,
-        default='output/',
+        default='output/test01/',
         help='provide an path to the output directory (default: output/test01/)'
     )
     parser.add_argument(

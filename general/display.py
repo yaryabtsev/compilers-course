@@ -8,6 +8,8 @@ class Display:
     def __init__(self, out_dir: str):
         if not os.path.exists(out_dir):
             os.makedirs(out_dir)
+        if not os.path.exists(out_dir + 'regions/'):
+            os.makedirs(out_dir + 'regions/')
         self.out_dir = out_dir
         self.orig_stdout = sys.stdout
         self.output = open(os.path.join(out_dir, 'index.html'), 'w')
@@ -294,3 +296,44 @@ class Display:
             print('</tr>')
         print('</tbody>')
         print('</table>')
+
+    def show_graphs(self, nx_multi_graphs):
+        self.show_title('block-graphs-title')
+        print('<div class="CSS_slideshow" data-show-indicators="true" data-indicators-position="in" data-show-'
+              'buttons="true" data-show-wrap-buttons="true" data-animation-style="slide" style="-moz-transitio'
+              'n-duration: 0.3s; -webkit-transition-duration: 0.3s; transition-duration: 0.3s;"><div class="CS'
+              'S_slideshow_wrapper">')
+        for i in range(len(nx_multi_graphs)):
+            nx_multi_graphs[i].graph['edge'] = {'arrowsize': '0.6', 'splines': 'curved'}
+            nx_multi_graphs[i].graph['graph'] = {'scale': '3'}
+            graph = to_agraph(nx_multi_graphs[i])
+            graph.layout('dot')
+
+            graph.draw(f'{self.out_dir}/regions/{i}.png')
+            print(f'<input type="radio" name="css3slideshow" id="slide{i + 1}" ', end='')
+            if i == 0:
+                print('checked ', end='')
+            print('/>')
+            print(f'<label for="slide{i + 1}"><img src="regions/{i}.png" alt="{self.titles[self.title_id - 1]}" '
+                  f'height="100%" /></label>')
+        print('</div></div></details>')
+
+    def show_control_tree(self, graph):
+        self.show_title('block-graphs-title')
+        control_tree = []
+        for edge in graph:
+            if type(edge[1]) is int:
+                control_tree.append((edge[0], self.name(edge[1])))
+            else:
+                control_tree.append(edge)
+        nx_control_tree = nx.MultiDiGraph(control_tree)
+        nx_control_tree.graph['edge'] = {'arrowsize': '0.6', 'splines': 'curved'}
+        nx_control_tree.graph['graph'] = {'scale': '3'}
+
+        graph = to_agraph(nx_control_tree)
+        graph.layout('dot')
+
+        name = ''.join([word[0] for word in self.titles[self.title_id - 1].lower().split()]).replace('/', '')
+        graph.draw(f'{self.out_dir}/{name}.png')
+
+        print(f'<img src="{name}.png" alt="{self.titles[self.title_id - 1]}"></details>')

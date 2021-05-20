@@ -3,12 +3,12 @@ from collections import defaultdict
 
 
 class Phi:
-    def __init__(self, code_blocks, graph):
-        self.graph = graph
+    def __init__(self, code_blocks, dominator):
+        self.dominator = dominator
         self.code_blocks = []
         self.N = len(code_blocks)
         for i in range(self.N):
-            if not graph.available[i]:
+            if not dominator.available[i]:
                 self.code_blocks.append([])
             else:
                 self.code_blocks.append(copy.deepcopy(code_blocks[i]))
@@ -58,7 +58,7 @@ class Phi:
             item = 0
             n = len(work_list)
             while item < n:
-                for df in self.graph.df_list[work_list[item]]:
+                for df in self.dominator.df_list[work_list[item]]:
                     if var not in self.phi_args[df]:
                         self.insert(df, var)
                         spoiler += [['tab', 1], '<l id="3">insert</l>&nbsp;', ['phi', f'{var}'],
@@ -71,7 +71,7 @@ class Phi:
                         work_list.append(df)
                         n += 1
                 item += 1
-        # self.phis = [{var: [0, []] for var in sorted(self.phi_args[block])} for block in range(self.graph.N)]
+        # self.phis = [{var: [0, []] for var in sorted(self.phi_args[block])} for block in range(self.dominator.N)]
         return spoiler[1:]
 
     def table_new_phi(self):
@@ -91,9 +91,9 @@ class Phi:
         spoiler = [['tab', tabs], '<r id="1">Rename(', ['block', block], ')</r>:']
         self.rename_phi(block, tabs, spoiler)
         self.rename_instructions(block, tabs, spoiler)
-        for successor in self.graph.edges[block]:
+        for successor in self.dominator.edges[block]:
             self.fill(successor, tabs, spoiler)
-        for successor in self.graph.dom_edges[block]:
+        for successor in self.dominator.dom_edges[block]:
             spoiler += self.rename(successor, tabs + 1)
             spoiler += [['tab', tabs + 2], '<r id="2">return to ', ['block', block], ';</r>']
         # show_table(self.stack_table())
@@ -170,8 +170,8 @@ class Phi:
 
     def is_phi_line(self, node, i):
         return i < len(self.code_blocks[node]) and self.code_blocks[node][i] and \
-               self.code_blocks[node][i] and self.code_blocks[node][i][-1][0] == 0 \
-               and self.code_blocks[node][i][-1][0] == 0 and self.code_blocks[node][i][-1][4]
+               self.code_blocks[node][i][-1] and self.code_blocks[node][i][-1][0] == 0 \
+               and self.code_blocks[node][i][-1][4]
 
     def fill(self, successor, tabs, spoiler):
         spoiler += [['tab', tabs + 1], '<r id="3">fill(', ['block', successor], ')</r>:']

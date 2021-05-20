@@ -3,21 +3,32 @@ from general.parser import Parser
 from tasks.task1 import LocalOptimization
 from tasks.task2 import Dominator
 from tasks.task3 import Phi
+from tasks.task4 import Regions
 
 
-def solve(input: str, output: str, block_name: str = 'A'):
+def solve(input: str, output: str, block_name: str = 'A', blocks=None, edges=None):
     display = Display(output)
     display.block_name = block_name
-    with open(input, 'r') as fin:
-        parser = Parser(fin.read().split('\n'))
-    parser.split_blocks()  # or parser.blocks = [[], ..., []] you can fill in the data yourself
+    if input:
+        with open(input, 'r') as fin:
+            parser = Parser(fin.read().split('\n'))
+    else:
+        parser = Parser([''])
+    if blocks:
+        parser.blocks = blocks
+    else:
+        parser.split_blocks()
     parser.lex_blocks()
-    parser.graph()  # or parser.edges = [{1}, ..., {}] you can fill in the data yourself
+    if edges:
+        parser.edges = edges
+    else:
+        parser.graph()
     n = len(parser.lexemes)
     display.n = n
     display.titles = ['Base Code', 'Control Flow Graph', 'Table of Values',
                       ' / '.join(['Pred', 'Dom', 'Idom', 'DF']),
-                      'Dominator Tree', 'Globals & Blocks', 'Insert a phi-function', 'Partially Truncated SSA-Form']
+                      'Dominator Tree', 'Globals & Blocks', 'Insert a phi-function', 'Partially Truncated SSA-Form',
+                      'Regions', 'Control Tree']
     display.show_hyperlinks()
     display.show_code(parser.lexemes)
     display.show_graph(parser.edges)
@@ -33,7 +44,7 @@ def solve(input: str, output: str, block_name: str = 'A'):
     display.show_block_table(*dominator.get_table())
     display.show_graph(dominator.dom_edges)
 
-    # TODO: task3 (spoilers, rename, add_phi)
+    # TODO: task3-stack
     phi = Phi(parser.lexemes, dominator)
     spoilers = phi.globals_blocks()
     display.show_block_table(*phi.table_gb(), spoilers)
@@ -43,5 +54,7 @@ def solve(input: str, output: str, block_name: str = 'A'):
     spoilers = phi.rename(0)
     display.show_code(phi.code_blocks, spoilers)
     # TODO: task4:
-    ...
+    regions = Regions(dominator)
+    display.show_graphs(list(regions.find_regions()))
+    display.show_control_tree(regions.control_tree)
     del display

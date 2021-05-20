@@ -107,7 +107,6 @@ class Parser:
                 raise Exception(f'Not recognized word "{lex}" in line {line_num}.')
             if line[-1][0] in [0, 2, 3]:  # variable, operation, number
                 line[-1].append(word[-1] == ',')
-            # TODO: is variable - mutable?
         return line
 
     def graph(self):

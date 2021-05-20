@@ -27,7 +27,7 @@ class Display:
         sys.stdout = self.orig_stdout
         self.output.close()
 
-    def show_code(self, lexemes: list, spoilers: list = []) -> None:
+    def show_code(self, lexemes: list, spoilers=None) -> None:
         self.show_title('code-title')
         if spoilers:
             self.show_spoiler(spoilers)
@@ -56,19 +56,27 @@ class Display:
                 if block[j][k][0] == 0:
                     if block[j][k][4]:
                         print('<phi>&phi;(', end='')
-                        print(', '.join([f'<w{block[j][k][0]}'
-                                         f'>{block[j][k][1]}<'
-                                         f'/w{block[j][k][0]}'
-                                         f'><sub>{idx}</sub>' for idx
-                                         in block[j][k][2]]), end='')
+                        if len(block[j][k][2]) > 0:
+                            print(', '.join([f'<w{block[j][k][0]}'
+                                             f'>{block[j][k][1]}<'
+                                             f'/w{block[j][k][0]}'
+                                             f'><sub>{idx}</sub>' for idx
+                                             in block[j][k][2]]), end='')
+                        else:
+                            print(f'<w{block[j][k][0]}'
+                                  f'><h>*</h>{block[j][k][1]}<'
+                                  f'/w{block[j][k][0]}>')
                         print(')</phi>', end='')
                     else:
                         print(f'<w{block[j][k][0]}>'
                               f'{block[j][k][1]}</w'
                               f'{block[j][k][0]}>', end='')
-                        if len(block[j][k][2]) == 1:
-                            print(f'<sup>{block[j][k][2][0]}'
+                        if type(block[j][k][2]) is int:
+                            print(f'<sup>{block[j][k][2]}'
                                   f'</sup>', end='')
+                        elif len(block[j][k][2]) == 1:
+                            print(f'<sub>{block[j][k][2][0]}'
+                                  f'</sub>', end='')
                         elif len(block[j][k][2]) > 1:
                             raise Exception(f'Too many indexes for not phi '
                                             f'variable: {block[j][k]}.')
@@ -144,7 +152,7 @@ class Display:
             return 'Exit'
         return self.block_name[:-1] + chr(ord(self.block_name[-1]) + i - 1)
 
-    def show_block_table(self, table: list, columns: list, spoilers: list = []):
+    def show_block_table(self, table: list, columns: list, spoilers=None):
         self.show_title('block-table-title')
         if spoilers:
             self.show_spoiler(spoilers)
@@ -182,14 +190,14 @@ class Display:
         print('</table></details>')
 
     def show_title(self, class_name: str) -> None:
-        print(f'<details><summary><h2 class="{class_name}" id="title-{self.title_id}'
-              f'">{self.titles[self.title_id]}</h2></summary>')
+        print(f'<details id="title-{self.title_id}"><summary><h2 class="{class_name}"'
+              f'>{self.titles[self.title_id]}</h2></summary>')
         self.title_id += 1
 
     def show_hyperlinks(self):
         print(f'<header>')
-        for id in range(len(self.titles)):
-            Display.show_href(self.titles[id], "content", id)
+        for _id in range(len(self.titles)):
+            Display.show_href(self.titles[_id], "content", _id)
         print(f'</header>')
 
     @staticmethod
@@ -199,28 +207,28 @@ class Display:
     def show_spoiler(self, html):
         if not html:
             return
-        print('<details><summary>Spoiler</summary><div class="code">')
+        print('<details><summary><p class="summary-span">Code</p></summary><div class="code">')
         for item in html:
             if type(item) is list:
                 if item[0] == 'tab':
-                    print('<br>' + '&nbsp' * (4 * item[1] - 1), end='')
+                    print('<br>' + '&nbsp;' * (4 * item[1] - 1), end='')
                 elif item[0] == 'set':
                     print('{', end='')
-                    print(',&nbsp'.join([f'<w0>{var}</w0>' for var in item[1]]), end='')
+                    print(',&nbsp;'.join([f'<w0>{var}</w0>' for var in item[1]]), end='')
                     print('}', end='')
                 elif item[0] == 'block':
-                    print(f'<font class="block-name">{self.name(item[1])}</font>')
+                    print(f'<font class="block-name">{self.name(item[1])}</font>', end='')
                 elif item[0] == 'line':
                     self.show_line(item[1], item[2])
                 elif item[0] == 'block-set':
                     print('{', end='')
-                    print(',&nbsp'.join([f'<font class="block-name">{self.name(node)}</font>' for node in item[1]]),
+                    print(',&nbsp;'.join([f'<font class="block-name">{self.name(node)}</font>' for node in item[1]]),
                           end='')
                     print('}', end='')
                 elif item[0] == 'phi':
                     print(f'<phi>&phi;(<h>*</h><w0>{item[1]}</w0>)</phi>', end='')
                 else:
-                    print(str(item))
+                    print(str(item), end='')
             else:
                 print(item, end='')
         print('</div></details>')
@@ -254,7 +262,8 @@ class Display:
         print('</tbody>')
         print('</table></details>')
 
-    def var_table(self, table: list) -> None:
+    @staticmethod
+    def var_table(table: list) -> None:
         if not table:
             return
         print('<table>')
@@ -274,13 +283,13 @@ class Display:
             if columns - len(table[i]) > 0:
                 print(f'<td colspan="{columns - len(table[i])}"></td>')
             print('<td>')
-            vars = []
+            _vars = []
             for var in table[i][-1]:
                 if type(var[0]) is int:
-                    vars.append(f'<w3><h>#</h>{var[0]}</w3>')
+                    _vars.append(f'<w3><h>#</h>{var[0]}</w3>')
                 else:
-                    vars.append(f'<w0>{var[0]}</w0><sup>{var[1]}</sup>')
-            print(',&nbsp'.join(vars))
+                    _vars.append(f'<w0>{var[0]}</w0><sup>{var[1]}</sup>')
+            print(',&nbsp;'.join(_vars))
             print('</td>')
             print('</tr>')
         print('</tbody>')

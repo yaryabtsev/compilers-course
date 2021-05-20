@@ -1,9 +1,6 @@
 * {
   margin: 0;
   padding: 0;
-}* {
-  margin: 0;
-  padding: 0;
 }
 
 html {
@@ -20,13 +17,6 @@ body {
 .wrapper {
   display: flex;
   justify-content: center;
-}
-
-.code {
-  display: inline-block;
-  background-color: #eee;
-  padding: 2rem;
-  border-radius: 0.5rem;
 }
 
 ol {
@@ -78,8 +68,7 @@ header {
   width: 100%;
   box-sizing: border-box;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  justify-content: space-evenly;
   padding: 0 4rem;
   font-family: sans-serif;
   z-index: 10;
@@ -91,25 +80,16 @@ header a {
   color: white;
   position: relative;
   font-weight: bold;
+  text-align: center;
+  transition: 400ms;
+  padding: 0.5rem;
+  border-radius: 0.75rem;
 }
 
-header a::after {
-  content: "";
-  position: absolute;
-  height: 0.125rem;
-  width: 100%;
+header a:hover {
   display: block;
-  bottom: -0.125rem;
-  left: 0;
   background-color: white;
-  transition: 300ms;
-  transform: scaleX(0);
-  opacity: 0;
-}
-
-header a:hover::after {
-  transform: scaleX(1);
-  opacity: 1;
+  color: #D1A48C;
 }
 
 header span {
@@ -126,25 +106,60 @@ header h1 {
 h2 {
   font-family: sans-serif;
   font-size: 2rem;
-  margin: 6rem 0 3rem 3rem;
+  user-select: none;
 }
 
-h2:nth-child(2) {
-  margin-top: 0rem;
+summary {
+  list-style: none;
+  margin-left: 3rem;
+  margin-right: 3rem;
 }
 
-h2::before {
-  display: block; 
-  content: " "; 
-  margin-top: -7rem; 
-  height: 7rem; 
-  visibility: hidden; 
+body > details {
+  margin: 6rem 0 3rem;
+}
+
+body > details::before {
+  display: block;
+  content: " ";
+  margin-top: -7rem;
+  height: 7rem;
+  visibility: hidden;
   pointer-events: none;
+}
+
+body > details:first-of-type {
+  margin-top: 3rem;
+}
+
+details details {
+  margin-left: 3rem;
+  width: 50rem;
+}
+
+details details .code {
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+}
+
+.summary-span {
+  font-family: sans-serif;
+  font-size: 1.5rem;
+  margin-top: 2rem;
+  background-color: hsla(0, 0%, 96%);
+  padding: 1rem 1.5rem;
+  border-radius: 0.5rem;
+  user-select: none;
+  cursor: pointer;
+}
+
+h2:hover {
+  cursor: pointer;
 }
 
 img {
   display: block;
-  margin: 0 auto;
+  margin: 4rem auto 0;
   width: 15rem;
 }
 
@@ -168,7 +183,7 @@ w22 {
 }
 
 table {
-  margin: 0 auto;
+  margin: 4rem auto 0;
   border-collapse: collapse;
   font-family: sans-serif;
   font-size: 1rem;
@@ -218,7 +233,7 @@ body {
   display: inline-block;
   background-color: #eee;
   padding: 2rem;
-  margin: 4rem;
+  margin: 4rem 3rem;
   border-radius: 0.5rem;
 }
 
@@ -301,31 +316,8 @@ footer {
 footer p {
   font-family: sans-serif;
   color: white;
+  font-size: 1.25rem;
   margin-bottom: 0.5rem;
-}
-
-footer a {
-  font-family: sans-serif;
-  color: white;
-  text-decoration: none;
-  position: relative;
-}
-
-footer a::after {
-  content: "";
-  position: absolute;
-  height: 0.125rem;
-  width: 100%;
-  display: block;
-  bottom: -0.125rem;
-  left: 0;
-  background-color: white;
-  transition: 300ms;
-  transform: scaleX(0);
-}
-
-footer a:hover::after {
-  transform: scaleX(1);
 }
 
 h {

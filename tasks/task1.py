@@ -18,7 +18,7 @@ class LocalOptimization:
                 for var in new_block[-1]:
                     if var[0] == 0:
                         self.find(var[1])
-                        var[2].append(self.last_index(var[1])[0])
+                        var[2] = (self.last_index(var[1])[0])
             elif line[idx][2] == 2:
                 if line[idx - 1][0] == 0:
                     line[idx - 1][3] = True
@@ -27,14 +27,14 @@ class LocalOptimization:
                 for var in new_block[-1][idx:]:
                     if var[0] == 0:
                         self.find(var[1])
-                        var[2].append(self.last_index(var[1])[0])
+                        var[2] = (self.last_index(var[1])[0])
                 if line[idx + 1][0] == 2 and line[idx + 1][2] in [3, 5]:
                     key = [line[idx + 1][1], *[self.find(i[1]) for i in line[idx:] if i[0] in [0, 3]]]
                     self.key_append(key, line[idx - 1][1])
                 elif line[idx + 1][0] in [0, 3]:
                     self.table[self.find(line[idx + 1][1]) - 1][-1].append(
                         [line[idx - 1][1], self.last_index(line[idx - 1][1])[0] + 1])
-                new_block[-1][idx - 1][2].append(self.last_index(line[idx - 1][1])[0])
+                new_block[-1][idx - 1][2] = (self.last_index(line[idx - 1][1])[0])
         # TODO: 4 optimizations
         return new_block, self.table
 

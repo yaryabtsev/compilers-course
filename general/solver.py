@@ -1,36 +1,47 @@
 from general.display import Display
 from general.parser import Parser
+from tasks.task1 import LocalOptimization
 from tasks.task2 import Dominator
 from tasks.task3 import Phi
 
 
-def solve(input: str, output: str):
+def solve(input: str, output: str, block_name: str = 'A'):
     display = Display(output)
+    display.block_name = block_name
     with open(input, 'r') as fin:
         parser = Parser(fin.read().split('\n'))
+    parser.split_blocks()  # or parser.blocks = [[], ..., []] you can fill in the data yourself
+    parser.lex_blocks()
+    parser.graph()  # or parser.edges = [{1}, ..., {}] you can fill in the data yourself
     n = len(parser.lexemes)
-    titles = ['Base Code', 'Control Flow Graph', ' / '.join(['Pred', 'Dom', 'Idom', 'DF']), 'Dominator Tree']
-    display.show_hyperlinks(titles)
-    title_id = 0
-    display.show_code(parser.lexemes, titles[title_id], title_id)
-    title_id += 1
-    display.show_graph(parser.edges, titles[title_id], title_id)
-    title_id += 1
-    # TODO: task1:
-    ...
+    display.n = n
+    display.titles = ['Base Code', 'Control Flow Graph', 'Table of Values',
+                      ' / '.join(['Pred', 'Dom', 'Idom', 'DF']),
+                      'Dominator Tree', 'Globals & Blocks', 'Insert a phi-function', 'Partially Truncated SSA-Form']
+    display.show_hyperlinks()
+    display.show_code(parser.lexemes)
+    display.show_graph(parser.edges)
 
+    table = []
+    for i in range(n):
+        lo_block = LocalOptimization(parser.lexemes[i])
+        table.append(lo_block.make_table())
+    display.show_var_table(table)
+    # TODO: task1-Input/Output
     dominator = Dominator(parser.edges)
     # TODO: task2-spoilers
-    table, columns = dominator.get_table()
-    display.show_block_table(table, columns, n, titles[title_id], title_id)
-    title_id += 1
-    display.show_graph(dominator.dom_edges, titles[title_id], title_id)
-    title_id += 1
+    display.show_block_table(*dominator.get_table())
+    display.show_graph(dominator.dom_edges)
 
-    # TODO: task3:
-    ...
-    Phi(parser.lexemes, dominator.dom_edges)
-
+    # TODO: task3 (spoilers, rename, add_phi)
+    phi = Phi(parser.lexemes, dominator)
+    spoilers = phi.globals_blocks()
+    display.show_block_table(*phi.table_gb(), spoilers)
+    spoilers = phi.locate()
+    display.show_code(phi.code_blocks, spoilers)
+    # display.show_block_table(*phi.table_new_phi(), spoilers)
+    spoilers = phi.rename(0)
+    display.show_code(phi.code_blocks, spoilers)
     # TODO: task4:
     ...
     del display

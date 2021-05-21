@@ -28,7 +28,7 @@ def solve(input: str, output: str, block_name: str = 'A', blocks=None, edges=Non
     display.titles = ['Base Code', 'Control Flow Graph', 'Table of Values',
                       ' / '.join(['Pred', 'Dom', 'Idom', 'DF']),
                       'Dominator Tree', 'Globals & Blocks', 'Insert a phi-function', 'Partially Truncated SSA-Form',
-                      'Regions', 'Control Tree']
+                      'Regions', 'Control Tree', 'Classification', 'Gen-Kill']
     display.show_hyperlinks()
     display.show_code(parser.lexemes)
     display.show_graph(parser.edges)
@@ -54,7 +54,9 @@ def solve(input: str, output: str, block_name: str = 'A', blocks=None, edges=Non
     spoilers = phi.rename(0)
     display.show_code(phi.code_blocks, spoilers)
     # TODO: task4:
-    regions = Regions(dominator)
+    regions = Regions(dominator, parser.lexemes)
     display.show_graphs(list(regions.find_regions()))
     display.show_control_tree(regions.control_tree)
+    display.show_block_table([['Region'] + regions.classification], ['Class', 'Area-Node', 'Area-Body', 'Area-Loop'])
+    display.show_block_table(*regions.gen_kill())
     del display

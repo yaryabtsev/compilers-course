@@ -2,7 +2,13 @@ import networkx as nx
 
 
 class Regions:
-    def __init__(self, dominator):
+    def __init__(self, dominator, code_blocks):
+        self.gen = [set() for _ in range(dominator.N)]
+        self.kill = [set() for _ in range(dominator.N)]
+        self.code_blocks = code_blocks
+        self.instructions = []
+        self.parse_instructions()
+        self.classification = [['Re'], [], []]
         self.dominator = dominator
         self.multi_graph = [set() for _ in range(dominator.N)]
         # self.reverse_graph = [set() for _ in range(dominator.N)]
@@ -29,6 +35,7 @@ class Regions:
                         self.control_tree.append((f'R{self.N - 1}', f'R{i}'))
                     elif i == self.N - 1:
                         self.control_tree.append((f'R{self.N - 1}', 'Re'))
+                self.classification[1].append(f'R{self.N - 1}')
                 return
             self.replace_loop(loops[0])
             yield self.graph_object()
@@ -63,17 +70,19 @@ class Regions:
                 for node in self.dominator.edges[i]:
                     self.multi_graph[self.keys[i]].add(self.keys[node])
         for i in range(self.dominator.N):
-            if i == 0:
-                self.control_tree.append(('R0', 'Entry'))
-            elif i == self.dominator.N - 1:
+            if i == self.dominator.N - 1:
                 self.control_tree.append(('Re', 'Exit'))
             elif self.nodes[i] != -2:
+                self.classification[0].append(f'R{i}')
                 self.control_tree.append((f'R{i}', self.nodes[i]))
 
     def replace_loop(self, loop):
         self.multi_graph.append(set())
         if len(loop) != 1:
+            self.classification[1].append(f'R{self.N - 1}')
             self.multi_graph[self.N - 1].add(self.N - 1)
+        else:
+            self.classification[2].append(f'R{self.N - 1}')
         reverse_graph = self.reverse()
         i = 1
         n = len(loop)
@@ -102,3 +111,35 @@ class Regions:
             for node in self.multi_graph[i]:
                 graph[node].add(i)
         return graph
+
+    def gen_kill(self):
+        # TODO: gen-kill
+        # self.gen = [{1, 2, 3}, {4}, {5}, {6}, set()]
+        # self.kill = [{4, 5, 6}, {1}, {3}, {2}, set()]
+        # self.calc_gen_kill()
+        columns = ['block'] + [i for i in range(self.dominator.N)]
+        table = [['gen<sub>block<sub>'] + [{f'd<sub>{i}</sub>' for i in block} for block in self.gen],
+                 ['kill<sub>block<sub>'] + [{f'd<sub>{i}</sub>' for i in block} for block in self.kill]]
+        return table, columns
+
+    def parse_instructions(self):
+        i = 0
+        j = 0
+        for block in self.code_blocks:
+            for line in block:
+                self.instructions.append([])
+                for word in line:
+                    if word[0] == 0 and word[3]:
+                        self.instructions[i] = [j, word[1]]
+                        self.gen[j].add(i)
+                i += 1
+            j += 1
+        n = len(self.instructions)
+        for i in range(n):
+            if self.instructions[i]:
+                for j in range(i + 1, n):
+                    if self.instructions[j]:
+                        if self.instructions[i][0] != self.instructions[j][0] and self.instructions[i][1] == \
+                                self.instructions[j][1]:
+                            self.kill[self.instructions[i][0]].add(j)
+                            self.kill[self.instructions[j][0]].add(i)

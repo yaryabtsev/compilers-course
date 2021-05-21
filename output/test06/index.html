@@ -10,6 +10,8 @@
 <a class="content" href="#title-7">Partially Truncated SSA-Form</a>
 <a class="content" href="#title-8">Regions</a>
 <a class="content" href="#title-9">Control Tree</a>
+<a class="content" href="#title-10">Classification</a>
+<a class="content" href="#title-11">Gen-Kill</a>
 </header>
 <details id="title-0"><summary><h2 class="code-title">Base Code</h2></summary>
 <div class="wrapper"><div class="code">
@@ -169,4 +171,65 @@
 </div></div></details>
 <details id="title-9"><summary><h2 class="block-graphs-title">Control Tree</h2></summary>
 <img src="ct.png" alt="Control Tree"></details>
+<details id="title-10"><summary><h2 class="block-table-title">Classification</h2></summary>
+<table>
+<thead><tr>
+<th>Class</th>
+<th>Area-Node</th>
+<th>Area-Body</th>
+<th>Area-Loop</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="first-column">Region</td>
+<td>R0, R1, R2, R3, R4, R5, R6, R7, R8, Re</td>
+<td>R11, R13, R15, R9</td>
+<td>R10, R12, R14</td>
+</tr>
+</tbody>
+</table></details>
+<details id="title-11"><summary><h2 class="block-table-title">Gen-Kill</h2></summary>
+<table>
+<thead><tr>
+<th>block</th>
+<th>Entry</th>
+<th>B1</th>
+<th>B2</th>
+<th>B3</th>
+<th>B4</th>
+<th>B5</th>
+<th>B6</th>
+<th>B7</th>
+<th>B8</th>
+<th>Exit</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="first-column">gen<sub>block<sub></td>
+<td class="none">None</td>
+<td class="none">None</td>
+<td class="none">None</td>
+<td class="none">None</td>
+<td class="none">None</td>
+<td class="none">None</td>
+<td class="none">None</td>
+<td class="none">None</td>
+<td class="none">None</td>
+<td class="none">None</td>
+</tr>
+<tr>
+<td class="first-column">kill<sub>block<sub></td>
+<td class="none">None</td>
+<td class="none">None</td>
+<td class="none">None</td>
+<td class="none">None</td>
+<td class="none">None</td>
+<td class="none">None</td>
+<td class="none">None</td>
+<td class="none">None</td>
+<td class="none">None</td>
+<td class="none">None</td>
+</tr>
+</tbody>
+</table></details>
 <footer></footer></body></html>

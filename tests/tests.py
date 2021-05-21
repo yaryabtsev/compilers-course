@@ -34,6 +34,17 @@ class MyTestCase(unittest.TestCase):
         edges = [{8}, {8}, {7}, {2}, {3, 6}, {2}, {4, 5}, {6, 1}, {7, 9}, set()]
         assert solve('', 'output/test07/', 'B1', blocks, edges) is None
 
+    @staticmethod
+    def test_task4():
+        blocks = [[],
+                  ['i <-- -, m, #1', 'j <-- n', 'a <-- u1'],
+                  ['i <-- +, i, #1'],
+                  ['a <-- u2'],
+                  ['j <-- u3'],
+                  [], []]
+        edges = [{1}, {2}, {3, 4}, {4, 5}, {2, 5}, {6}, set()]
+        assert solve('', 'output/test08/', 'B1', blocks, edges) is None
+
 
 if __name__ == '__main__':
     unittest.main()

@@ -158,8 +158,13 @@ class Regions:
                 tf += [f'f<sub>{self.control_tree[i][0]}, In[{self.control_tree[j][1]}]</sub> = ']
                 lst = []
                 for pred in self.preds(self.control_tree[j][1]):
-                    lst += [' &and; ',f'f<sub>{self.control_tree[i][0]}, Out[', [pred], ']</sub>']
-                tf += lst[1:]
+                    lst += [' &and; ', f'f<sub>{self.control_tree[i][0]}, Out[', [pred], ']</sub>']
+                if not lst:
+                    tf += ['I']
+                elif self.control_tree[i][0] in self.classification[1]:
+                    tf += lst[1:]
+                elif self.control_tree[i][0] in self.classification[2]:
+                    tf += ['('] + lst[1:] + [')*']
                 tf += ['<br>']
                 h = self.find(self.control_tree[j][1])
                 while h < len(self.control_tree) and self.control_tree[h][0] == self.control_tree[j][1]:

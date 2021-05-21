@@ -252,7 +252,7 @@
 </tr>
 <tr>
 <td class="first-column">R10</td>
-<td><div class="code">f<sub>R10, In[R9]</sub> = f<sub>R10, Out[B2]</sub> &and; f<sub>R10, Out[B5]</sub><br>f<sub>R10, Out[R4]</sub> = f<sub>R9, Out[R4]</sub> &#176; f<sub>R10, In[R9]</sub>  <br>f<sub>R10, Out[R6]</sub> = f<sub>R9, Out[R6]</sub> &#176; f<sub>R10, In[R9]</sub>  <br></div></td>
+<td><div class="code">f<sub>R10, In[R9]</sub> = (f<sub>R10, Out[B2]</sub> &and; f<sub>R10, Out[B5]</sub>)*<br>f<sub>R10, Out[R4]</sub> = f<sub>R9, Out[R4]</sub> &#176; f<sub>R10, In[R9]</sub>  <br>f<sub>R10, Out[R6]</sub> = f<sub>R9, Out[R6]</sub> &#176; f<sub>R10, In[R9]</sub>  <br></div></td>
 <td><div class="code"></div></td>
 <td><div class="code"></div></td>
 </tr>
@@ -264,7 +264,7 @@
 </tr>
 <tr>
 <td class="first-column">R12</td>
-<td><div class="code">f<sub>R12, In[R11]</sub> = f<sub>R12, Out[B1]</sub> &and; f<sub>R12, Out[B7]</sub><br>f<sub>R12, Out[R2]</sub> = f<sub>R11, Out[R2]</sub> &#176; f<sub>R12, In[R11]</sub>  <br>f<sub>R12, Out[R10]</sub> = f<sub>R11, Out[R10]</sub> &#176; f<sub>R12, In[R11]</sub>  <br>f<sub>R12, Out[R5]</sub> = f<sub>R11, Out[R5]</sub> &#176; f<sub>R12, In[R11]</sub>  <br>f<sub>R12, Out[R7]</sub> = f<sub>R11, Out[R7]</sub> &#176; f<sub>R12, In[R11]</sub>  <br>f<sub>R12, Out[R8]</sub> = f<sub>R11, Out[R8]</sub> &#176; f<sub>R12, In[R11]</sub>  <br></div></td>
+<td><div class="code">f<sub>R12, In[R11]</sub> = (f<sub>R12, Out[B1]</sub> &and; f<sub>R12, Out[B7]</sub>)*<br>f<sub>R12, Out[R2]</sub> = f<sub>R11, Out[R2]</sub> &#176; f<sub>R12, In[R11]</sub>  <br>f<sub>R12, Out[R10]</sub> = f<sub>R11, Out[R10]</sub> &#176; f<sub>R12, In[R11]</sub>  <br>f<sub>R12, Out[R5]</sub> = f<sub>R11, Out[R5]</sub> &#176; f<sub>R12, In[R11]</sub>  <br>f<sub>R12, Out[R7]</sub> = f<sub>R11, Out[R7]</sub> &#176; f<sub>R12, In[R11]</sub>  <br>f<sub>R12, Out[R8]</sub> = f<sub>R11, Out[R8]</sub> &#176; f<sub>R12, In[R11]</sub>  <br></div></td>
 <td><div class="code"></div></td>
 <td><div class="code"></div></td>
 </tr>
@@ -276,13 +276,13 @@
 </tr>
 <tr>
 <td class="first-column">R14</td>
-<td><div class="code">f<sub>R14, In[R13]</sub> = f<sub>R14, Out[Entry]</sub> &and; f<sub>R14, Out[B8]</sub><br>f<sub>R14, Out[R1]</sub> = f<sub>R13, Out[R1]</sub> &#176; f<sub>R14, In[R13]</sub>  <br>f<sub>R14, Out[R12]</sub> = f<sub>R13, Out[R12]</sub> &#176; f<sub>R14, In[R13]</sub>  <br>f<sub>R14, Out[R3]</sub> = f<sub>R13, Out[R3]</sub> &#176; f<sub>R14, In[R13]</sub>  <br></div></td>
+<td><div class="code">f<sub>R14, In[R13]</sub> = (f<sub>R14, Out[Entry]</sub> &and; f<sub>R14, Out[B8]</sub>)*<br>f<sub>R14, Out[R1]</sub> = f<sub>R13, Out[R1]</sub> &#176; f<sub>R14, In[R13]</sub>  <br>f<sub>R14, Out[R12]</sub> = f<sub>R13, Out[R12]</sub> &#176; f<sub>R14, In[R13]</sub>  <br>f<sub>R14, Out[R3]</sub> = f<sub>R13, Out[R3]</sub> &#176; f<sub>R14, In[R13]</sub>  <br></div></td>
 <td><div class="code"></div></td>
 <td><div class="code"></div></td>
 </tr>
 <tr>
 <td class="first-column">R15</td>
-<td><div class="code">f<sub>R15, In[R0]</sub> = <br>f<sub>R15, Out[0]</sub> = f<sub>R0, Out[0]</sub> &#176; f<sub>R15, In[R0]</sub>  <br>f<sub>R15, In[R14]</sub> = f<sub>R15, Out[Entry]</sub> &and; f<sub>R15, Out[B8]</sub><br>f<sub>R15, Out[R13]</sub> = f<sub>R14, Out[R13]</sub> &#176; f<sub>R15, In[R14]</sub>  <br>f<sub>R15, In[Re]</sub> = f<sub>R15, Out[B1]</sub><br>f<sub>R15, Out[Exit]</sub> = f<sub>Re, Out[Exit]</sub> &#176; f<sub>R15, In[Re]</sub>  <br></div></td>
+<td><div class="code">f<sub>R15, In[R0]</sub> = I<br>f<sub>R15, Out[0]</sub> = f<sub>R0, Out[0]</sub> &#176; f<sub>R15, In[R0]</sub>  <br>f<sub>R15, In[R14]</sub> = f<sub>R15, Out[Entry]</sub> &and; f<sub>R15, Out[B8]</sub><br>f<sub>R15, Out[R13]</sub> = f<sub>R14, Out[R13]</sub> &#176; f<sub>R15, In[R14]</sub>  <br>f<sub>R15, In[Re]</sub> = f<sub>R15, Out[B1]</sub><br>f<sub>R15, Out[Exit]</sub> = f<sub>Re, Out[Exit]</sub> &#176; f<sub>R15, In[Re]</sub>  <br></div></td>
 <td><div class="code"></div></td>
 <td><div class="code"></div></td>
 </tr>

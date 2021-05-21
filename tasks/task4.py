@@ -36,6 +36,7 @@ class Regions:
                     elif i == self.N - 1:
                         self.control_tree.append((f'R{self.N - 1}', 'Re'))
                 self.classification[1].append(f'R{self.N - 1}')
+                # print(sorted(self.control_tree))
                 return
             self.replace_loop(loops[0])
             yield self.graph_object()
@@ -113,14 +114,11 @@ class Regions:
         return graph
 
     def gen_kill(self):
-        # TODO: gen-kill
-        # self.gen = [{1, 2, 3}, {4}, {5}, {6}, set()]
-        # self.kill = [{4, 5, 6}, {1}, {3}, {2}, set()]
-        # self.calc_gen_kill()
         columns = ['block'] + [i for i in range(self.dominator.N)]
-        table = [['gen<sub>block<sub>'] + [{f'd<sub>{i}</sub>' for i in block} for block in self.gen],
-                 ['kill<sub>block<sub>'] + [{f'd<sub>{i}</sub>' for i in block} for block in self.kill]]
-        return table, columns
+        table = [['gen<sub>block</sub>'] + [{f'd<sub>{i + 1}</sub>' for i in block} for block in self.gen],
+                 ['kill<sub>block</sub>'] + [{f'd<sub>{i + 1}</sub>' for i in block} for block in self.kill]]
+        return table, columns, [
+            '<comment>The instruction index corresponds to the line number in the original code.</comment>']
 
     def parse_instructions(self):
         i = 0
@@ -130,6 +128,7 @@ class Regions:
                 self.instructions.append([])
                 for word in line:
                     if word[0] == 0 and word[3]:
+                        # and [j, word[1]] not in self.instructions:  # for unique instructions
                         self.instructions[i] = [j, word[1]]
                         self.gen[j].add(i)
                 i += 1
@@ -143,3 +142,60 @@ class Regions:
                                 self.instructions[j][1]:
                             self.kill[self.instructions[i][0]].add(j)
                             self.kill[self.instructions[j][0]].add(i)
+
+    def transfer_function(self):
+        spoilers = []
+        table = []
+        i = 0
+        while self.control_tree[i][0] != 'Re':
+            i += 1
+        i += 1
+        while i < len(self.control_tree):
+            row = [self.control_tree[i][0]]
+            tf = '<div class="code">'
+            j = i
+            while j < len(self.control_tree) and self.control_tree[i][0] == self.control_tree[j][0]:
+                tf += f'f<sub>{self.control_tree[i][0]}, In[{self.control_tree[j][1]}]</sub> = '
+                lst = []
+                for pred in self.preds(self.control_tree[j][1]):
+                    lst.append(f'f<sub>{self.control_tree[i][0]}, Out[{pred}]</sub>')
+                tf += ' &and; '.join(lst)
+                tf += '<br>'
+                h = self.find(self.control_tree[j][1])
+                while h < len(self.control_tree) and self.control_tree[h][0] == self.control_tree[j][1]:
+                    tf += f'f<sub>{self.control_tree[i][0]}, Out[{self.control_tree[h][1]}]</sub> = '
+                    tf += f'f<sub>{self.control_tree[j][1]}, Out[{self.control_tree[h][1]}]</sub> &#176; '
+                    tf += f'f<sub>{self.control_tree[i][0]}, In[{self.control_tree[j][1]}]</sub>  '
+                    h += 1
+                tf += '<br>'
+                j += 1
+            row.append([tf + '</div'])
+            gen = '<div class="code">'
+
+            row.append([gen + '</div'])
+            kill = '<div class="code">'
+
+            row.append([kill + '</div'])
+            table.append(row)
+            i += 1
+        return table, ['region', 'Transfer Function', 'gen', 'kill'], []
+
+    def preds(self, name):
+        if name == 'Exit':
+            return self.dominator.pred_list[-1]
+        if name == 'Entry':
+            return self.dominator.pred_list[0]
+        if type(name) is int:
+            return self.dominator.pred_list[name]
+        for edge in self.control_tree:
+            if edge[0] == name:
+                return self.preds(edge[1])
+        return []
+
+    def find(self, name):
+        i = 0
+        for edge in self.control_tree:
+            if edge[0] == name:
+                return i
+            i += 1
+        return 0

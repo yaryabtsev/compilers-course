@@ -186,13 +186,24 @@ class Display:
                         class_name = ' class="none"'
                     print(f'<td {class_name}>{name}</td>')
                 else:
-                    _td = []
-                    for node in sorted(td):
-                        if type(node) is int:
-                            _td.append(self.name(node))
-                        else:
-                            _td.append(node)
-                    print(f'<td>{", ".join(_td)}</td>')
+
+                    try:
+                        _td = []
+                        for node in sorted(td):
+                            if type(node) is int:
+                                _td.append(self.name(node))
+                            else:
+                                _td.append(node)
+                        print(f'<td>{", ".join(_td)}</td>')
+                    except:
+                        _td = ""
+                        for node in td:
+                            if type(node) is list:
+                                _td += self.name(node[0])
+                            else:
+                                _td += node
+                        print(f'<td>{_td}</td>')
+
             print('</tr>')
         print('</tbody>')
         print('</table></details>')

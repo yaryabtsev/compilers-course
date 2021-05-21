@@ -152,24 +152,24 @@ class Regions:
         i += 1
         while i < len(self.control_tree):
             row = [self.control_tree[i][0]]
-            tf = '<div class="code">'
+            tf = ['<div class="code">']
             j = i
             while j < len(self.control_tree) and self.control_tree[i][0] == self.control_tree[j][0]:
-                tf += f'f<sub>{self.control_tree[i][0]}, In[{self.control_tree[j][1]}]</sub> = '
+                tf += [f'f<sub>{self.control_tree[i][0]}, In[{self.control_tree[j][1]}]</sub> = ']
                 lst = []
                 for pred in self.preds(self.control_tree[j][1]):
-                    lst.append(f'f<sub>{self.control_tree[i][0]}, Out[{pred}]</sub>')
-                tf += ' &and; '.join(lst)
-                tf += '<br>'
+                    lst += [' &and; ',f'f<sub>{self.control_tree[i][0]}, Out[', [pred], ']</sub>']
+                tf += lst[1:]
+                tf += ['<br>']
                 h = self.find(self.control_tree[j][1])
                 while h < len(self.control_tree) and self.control_tree[h][0] == self.control_tree[j][1]:
-                    tf += f'f<sub>{self.control_tree[i][0]}, Out[{self.control_tree[h][1]}]</sub> = '
-                    tf += f'f<sub>{self.control_tree[j][1]}, Out[{self.control_tree[h][1]}]</sub> &#176; '
-                    tf += f'f<sub>{self.control_tree[i][0]}, In[{self.control_tree[j][1]}]</sub>  '
+                    tf += [f'f<sub>{self.control_tree[i][0]}, Out[{self.control_tree[h][1]}]</sub> = ']
+                    tf += [f'f<sub>{self.control_tree[j][1]}, Out[{self.control_tree[h][1]}]</sub> &#176; ']
+                    tf += [f'f<sub>{self.control_tree[i][0]}, In[{self.control_tree[j][1]}]</sub>  ']
                     h += 1
-                tf += '<br>'
+                    tf += ['<br>']
                 j += 1
-            row.append([tf + '</div>'])
+            row.append(tf + ['</div>'])
             gen = '<div class="code">'
 
             row.append([gen + '</div>'])
@@ -177,7 +177,7 @@ class Regions:
 
             row.append([kill + '</div>'])
             table.append(row)
-            i += 1
+            i = j
         return table, ['region', 'Transfer Function', 'gen', 'kill'], []
 
     def preds(self, name):

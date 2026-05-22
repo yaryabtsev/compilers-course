@@ -175,12 +175,8 @@ class Regions:
                     tf += ['<br>']
                 j += 1
             row.append(tf + ['</div>'])
-            gen = '<div class="code">'
-
-            row.append([gen + '</div>'])
-            kill = '<div class="code">'
-
-            row.append([kill + '</div>'])
+            row.append(['<span class="placeholder">not computed</span>'])
+            row.append(['<span class="placeholder">not computed</span>'])
             table.append(row)
             i = j
         return table, ['region', 'Transfer Function', 'gen', 'kill'], []

@@ -1,16 +1,20 @@
 import networkx as nx
 from networkx.drawing.nx_agraph import to_agraph
+import json
 import os
+import subprocess
 import sys
 
 
 class Display:
     def __init__(self, out_dir: str):
-        if not os.path.exists(out_dir):
-            os.makedirs(out_dir)
-        if not os.path.exists(out_dir + 'regions/'):
-            os.makedirs(out_dir + 'regions/')
         self.out_dir = out_dir
+        os.makedirs(self.out_dir, exist_ok=True)
+        regions_dir = os.path.join(self.out_dir, 'regions')
+        os.makedirs(regions_dir, exist_ok=True)
+        for file_name in os.listdir(regions_dir):
+            if file_name.endswith('.png'):
+                os.remove(os.path.join(regions_dir, file_name))
         self.orig_stdout = sys.stdout
         self.output = open(os.path.join(out_dir, 'index.html'), 'w')
         sys.stdout = self.output
@@ -19,39 +23,85 @@ class Display:
         self.titles = []
         self.n = -1
 
-        print('<!DOCTYPE html><html lang="en"><head><link rel="icon"'
-              ' type="image/png" sizes="32x32" href="../coding.png">'
-              '<link rel="stylesheet" href="../styles.css"><title>So'
-              'me Code</title></head><body>')
+        print('<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">'
+              '<meta name="viewport" content="width=device-width, initial-scale=1">'
+              '<link rel="icon" type="image/png" sizes="32x32" href="../coding.png">'
+              '<link rel="stylesheet" href="../styles.css">'
+              '<title>Compiler Analysis Report</title></head><body><div class="app-shell">')
 
     def __del__(self):
-        print('<footer></footer></body></html>')
+        print('</main></div><footer><p>Generated compiler-analysis report</p></footer>'
+              '<script>'
+              'const allDetails=()=>Array.from(document.querySelectorAll("main > details"));'
+              'document.querySelector("[data-expand]")?.addEventListener("click",()=>allDetails().forEach(d=>d.open=true));'
+              'document.querySelector("[data-collapse]")?.addEventListener("click",()=>allDetails().forEach(d=>d.open=false));'
+              '</script></body></html>')
         sys.stdout = self.orig_stdout
         self.output.close()
+
+    @staticmethod
+    def line_count_text(count: int) -> str:
+        return f'{count} line' if count == 1 else f'{count} lines'
+
+    @staticmethod
+    def draw_graph(nx_graph, path: str) -> None:
+        try:
+            graph = to_agraph(nx_graph)
+            graph.layout('dot')
+            graph.draw(path)
+        except ImportError:
+            Display.draw_graph_with_dot(nx_graph, path)
+
+    @staticmethod
+    def draw_graph_with_dot(nx_graph, path: str) -> None:
+        def quote(value) -> str:
+            return json.dumps(str(value))
+
+        lines = [
+            'digraph G {',
+            '  graph [rankdir=TB, splines=curved, bgcolor="transparent"];',
+            '  node [shape=ellipse, style="filled", fillcolor="white", color="#94a3b8", fontname="Arial"];',
+            '  edge [arrowsize=0.6, color="#64748b", fontname="Arial"];',
+        ]
+        for node in nx_graph.nodes:
+            lines.append(f'  {quote(node)};')
+        if nx_graph.is_multigraph():
+            edges = ((source, target) for source, target, _ in nx_graph.edges(keys=True))
+        else:
+            edges = nx_graph.edges()
+        for source, target in edges:
+            lines.append(f'  {quote(source)} -> {quote(target)};')
+        lines.append('}')
+        subprocess.run(['dot', '-Tpng', '-o', path], input='\n'.join(lines),
+                       text=True, check=True)
 
     def show_code(self, lexemes: list, spoilers=None) -> None:
         self.show_title('code-title')
         if spoilers:
             self.show_spoiler(spoilers)
         line = 1
-        print('<div class="wrapper"><div class="code">')
+        print('<div class="code-panel">')
         for i in range(len(lexemes)):
             if lexemes[i]:
-                print(f'<font class="new-block">Block</font> ', end='')
-                print(f'<font class="block-name">{self.name(i)}', end='')
-                print(f'</font> <font class="count-lines">[{len(lexemes[i])}]</font>')
+                print('<article class="mir-block">')
+                print('<div class="block-heading">')
+                print('<span class="new-block">Block</span> ', end='')
+                print(f'<span class="block-name">{self.name(i)}</span> ', end='')
+                print(f'<span class="count-lines">{Display.line_count_text(len(lexemes[i]))}</span>')
+                print('</div>')
 
                 Display.show_line(lexemes[i], line)
                 line += len(lexemes[i])
+                print('</article>')
             elif i == 0:
-                print(f'<div class="block-name">Entry</div>')
+                print('<div class="boundary-block"><span class="block-name">Entry</span></div>')
             elif i == len(lexemes) - 1:
-                print(f'<div class="block-name">Exit</div>')
-        print('</div></div></details>', end='')
+                print('<div class="boundary-block"><span class="block-name">Exit</span></div>')
+        print('</div></details>', end='')
 
     @staticmethod
     def show_line(block: list, line_num: int):
-        print(f'<ol start="{line_num}">')
+        print(f'<ol class="mir-lines" start="{line_num}">')
         for j in range(len(block)):
             print('<li><span>', end='')
             for k in range(len(block[j])):
@@ -67,7 +117,7 @@ class Display:
                         else:
                             print(f'<w{block[j][k][0]}'
                                   f'><h>*</h>{block[j][k][1]}<'
-                                  f'/w{block[j][k][0]}>')
+                                  f'/w{block[j][k][0]}>', end='')
                         print(')</phi>', end='')
                     else:
                         print(f'<w{block[j][k][0]}>'
@@ -111,6 +161,7 @@ class Display:
                           f'w{block[j][k][0]}>', end='')
                 elif block[j][k][0] == 5:
                     print(f'<if>if</if>'
+                          f'&nbsp;'
                           f'<w{block[j][k][0]}>'
                           f'{block[j][k][1]}<'
                           f'/w{block[j][k][0]}>', end='')
@@ -137,13 +188,12 @@ class Display:
         nx_multi_graph.graph['edge'] = {'arrowsize': '0.6', 'splines': 'curved'}
         nx_multi_graph.graph['graph'] = {'scale': '3'}
 
-        graph = to_agraph(nx_multi_graph)
-        graph.layout('dot')
-
         name = ''.join([word[0] for word in self.titles[self.title_id - 1].lower().split()]).replace('/', '')
-        graph.draw(f'{self.out_dir}/{name}.png')
+        Display.draw_graph(nx_multi_graph, os.path.join(self.out_dir, f'{name}.png'))
 
-        print(f'<img src="{name}.png" alt="{self.titles[self.title_id - 1]}"></details>')
+        print('<div class="graph-panel">')
+        print(f'<img src="{name}.png" alt="{self.titles[self.title_id - 1]}">')
+        print('</div></details>')
 
     def name(self, i: int) -> str:
         if i == -1:
@@ -158,7 +208,7 @@ class Display:
         self.show_title('block-table-title')
         if spoilers:
             self.show_spoiler(spoilers)
-        print('<table>')
+        print('<div class="table-scroll"><table>')
         print('<thead><tr>')
         print(f'<th>{columns[0]}</th>')
         for column in columns[1:]:
@@ -184,9 +234,8 @@ class Display:
                     class_name = ''
                     if name == 'None':
                         class_name = ' class="none"'
-                    print(f'<td {class_name}>{name}</td>')
+                    print(f'<td{class_name}>{name}</td>')
                 else:
-
                     try:
                         _td = []
                         for node in sorted(td):
@@ -206,7 +255,7 @@ class Display:
 
             print('</tr>')
         print('</tbody>')
-        print('</table></details>')
+        print('</table></div></details>')
 
     def show_title(self, class_name: str) -> None:
         print(f'<details id="title-{self.title_id}"><summary><h2 class="{class_name}"'
@@ -214,23 +263,39 @@ class Display:
         self.title_id += 1
 
     def show_hyperlinks(self):
-        print(f'<header>')
+        print('<aside class="sidebar">')
+        print('<div class="brand"><span class="brand-mark">CA</span>'
+              '<div><p>Compiler Analysis</p><small>Static report</small></div></div>')
+        print('<div class="sidebar-actions">'
+              '<button type="button" data-expand>Expand all</button>'
+              '<button type="button" data-collapse>Collapse all</button>'
+              '</div>')
+        print('<nav aria-label="Report sections">')
         for _id in range(len(self.titles)):
             Display.show_href(self.titles[_id], "content", _id)
-        print(f'</header>')
+        print('</nav></aside>')
+        print('<main class="report-main">')
+        print('<header class="report-header">'
+              '<div><p class="eyebrow">Pipeline report</p>'
+              '<h1>Compiler analysis walkthrough</h1>'
+              '<p>Generated from the current MIR input and analysis stages.</p></div>'
+              f'<dl><div><dt>Blocks</dt><dd>{self.n}</dd></div>'
+              f'<div><dt>Sections</dt><dd>{len(self.titles)}</dd></div></dl>'
+              '</header>')
 
     @staticmethod
     def show_href(title: str, class_name: str, title_id: int):
-        print(f'<a class="{class_name}" href="#title-{title_id}">{title}</a>')
+        print(f'<a class="{class_name}" href="#title-{title_id}">'
+              f'<span>{title_id + 1:02d}</span>{title}</a>')
 
     def show_spoiler(self, html):
         if not html:
             return
-        print('<details><summary><p class="summary-span">Code</p></summary><div class="code">')
+        print('<details class="trace"><summary><p class="summary-span">Trace</p></summary><div class="trace-code">')
         for item in html:
             if type(item) is list:
                 if item[0] == 'tab':
-                    print('<br>' + '&nbsp;' * (4 * item[1] - 1), end='')
+                    print('<br>' + '&nbsp;' * max(0, 4 * item[1] - 1), end='')
                 elif item[0] == 'set':
                     print('{', end='')
                     print(',&nbsp;'.join([f'<w0>{var}</w0>' for var in item[1]]), end='')
@@ -252,40 +317,49 @@ class Display:
                 print(item, end='')
         print('</div></details>')
 
+    def show_placeholder(self, text: str) -> None:
+        self.show_title('placeholder-title')
+        print('<div class="placeholder-note">')
+        print('<strong>Pending stage</strong>')
+        print(f'<p>{text}</p>')
+        print('</div></details>')
+
     def show_phi_table(self, param):
         pass
 
     def show_var_table(self, table: list) -> None:
         self.show_title('var-table')
         num_line = 1
-        print('<table>')
-        print('<tbody>')
+        print('<div class="value-grid">')
         for i in range(self.n):
-            print('<tr>')
-            print(f'<td colspan="2"><font class="new-block">Block</font> ', end='')
-            print(f'<font class="block-name">{self.name(i)}', end='')
-            print(f'</font> <font class="count-lines">[{len(table[i][0])}]</font></td>')
-            print('</tr>')
-
+            print('<article class="value-card">')
+            print('<div class="block-heading">')
+            print('<span class="new-block">Block</span> ', end='')
+            print(f'<span class="block-name">{self.name(i)}</span> ', end='')
+            print(f'<span class="count-lines">{Display.line_count_text(len(table[i][0]))}</span>')
+            print('</div>')
             if len(table[i][0]):
-                print('<tr>')
-                print('<td><div class="wrapper"><div class="code">')
+                print('<div class="value-card-body">')
+                print('<div class="code compact-code">')
                 self.show_line(table[i][0], num_line)
                 num_line += len(table[i][0])
-                print('</div></div></td>')
+                print('</div>')
 
-                print('<td>')
+                print('<div class="table-scroll">')
                 self.var_table(table[i][1])
-                print('</td>')
-                print('</tr>')
-        print('</tbody>')
-        print('</table></details>')
+                print('</div>')
+                print('</div>')
+            else:
+                print('<p class="empty-state">No instructions in this block.</p>')
+            print('</article>')
+        print('</div></details>')
 
     @staticmethod
     def var_table(table: list) -> None:
         if not table:
+            print('<p class="empty-state">No value rows.</p>')
             return
-        print('<table>')
+        print('<table class="value-table">')
         print('<tbody>')
         columns = len(max(table, key=lambda x: len(x)))
         for i in range(len(table)):
@@ -316,24 +390,16 @@ class Display:
 
     def show_graphs(self, nx_multi_graphs):
         self.show_title('block-graphs-title')
-        print('<div class="CSS_slideshow" data-show-indicators="true" data-indicators-position="in" data-show-'
-              'buttons="true" data-show-wrap-buttons="true" data-animation-style="slide" style="-moz-transitio'
-              'n-duration: 0.3s; -webkit-transition-duration: 0.3s; transition-duration: 0.3s;"><div class="CS'
-              'S_slideshow_wrapper">')
+        print('<div class="region-gallery">')
         for i in range(len(nx_multi_graphs)):
             nx_multi_graphs[i].graph['edge'] = {'arrowsize': '0.6', 'splines': 'curved'}
             nx_multi_graphs[i].graph['graph'] = {'scale': '3'}
-            graph = to_agraph(nx_multi_graphs[i])
-            graph.layout('dot')
-
-            graph.draw(f'{self.out_dir}/regions/{i}.png')
-            print(f'<input type="radio" name="css3slideshow" id="slide{i + 1}" ', end='')
-            if i == 0:
-                print('checked ', end='')
-            print('/>')
-            print(f'<label for="slide{i + 1}"><img src="regions/{i}.png" alt="{self.titles[self.title_id - 1]}" '
-                  f'height="100%" /></label>')
-        print('</div></div></details>')
+            Display.draw_graph(nx_multi_graphs[i], os.path.join(self.out_dir, 'regions', f'{i}.png'))
+            print('<figure>')
+            print(f'<img src="regions/{i}.png" alt="{self.titles[self.title_id - 1]} step {i + 1}">')
+            print(f'<figcaption>Step {i + 1}</figcaption>')
+            print('</figure>')
+        print('</div></details>')
 
     def show_control_tree(self, graph):
         self.show_title('block-graphs-title')
@@ -347,10 +413,9 @@ class Display:
         nx_control_tree.graph['edge'] = {'arrowsize': '0.6', 'splines': 'curved'}
         nx_control_tree.graph['graph'] = {'scale': '3'}
 
-        graph = to_agraph(nx_control_tree)
-        graph.layout('dot')
-
         name = ''.join([word[0] for word in self.titles[self.title_id - 1].lower().split()]).replace('/', '')
-        graph.draw(f'{self.out_dir}/{name}.png')
+        Display.draw_graph(nx_control_tree, os.path.join(self.out_dir, f'{name}.png'))
 
-        print(f'<img src="{name}.png" alt="{self.titles[self.title_id - 1]}"></details>')
+        print('<div class="graph-panel">')
+        print(f'<img src="{name}.png" alt="{self.titles[self.title_id - 1]}">')
+        print('</div></details>')

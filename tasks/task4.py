@@ -115,8 +115,8 @@ class Regions:
 
     def gen_kill(self):
         columns = ['block'] + [i for i in range(self.dominator.N)]
-        table = [['gen<sub>block</sub>'] + [{f'd<sub>{i + 1}</sub>' for i in block} for block in self.gen],
-                 ['kill<sub>block</sub>'] + [{f'd<sub>{i + 1}</sub>' for i in block} for block in self.kill]]
+        table = [['gen<sub>block</sub>'] + [self.format_defs(block) for block in self.gen],
+                 ['kill<sub>block</sub>'] + [self.format_defs(block) for block in self.kill]]
         return table, columns, [
             '<comment>The instruction index corresponds to the line number in the original code.</comment>']
 
@@ -146,6 +146,7 @@ class Regions:
     def transfer_function(self):
         spoilers = []
         table = []
+        children = self.children()
         i = 0
         while self.control_tree[i][0] != 'Re':
             i += 1
@@ -175,11 +176,53 @@ class Regions:
                     tf += ['<br>']
                 j += 1
             row.append(tf + ['</div>'])
-            row.append(['<span class="placeholder">not computed</span>'])
-            row.append(['<span class="placeholder">not computed</span>'])
+            region_gen, region_kill = self.region_gen_kill(row[0], children)
+            row.append(self.format_defs(region_gen))
+            row.append(self.format_defs(region_kill))
             table.append(row)
             i = j
         return table, ['region', 'Transfer Function', 'gen', 'kill'], []
+
+    @staticmethod
+    def definition_name(idx):
+        return f'd<sub>{idx + 1}</sub>'
+
+    def format_defs(self, defs):
+        return [Regions.definition_name(idx) for idx in sorted(defs)]
+
+    def children(self):
+        children = {}
+        for parent, child in self.control_tree:
+            if parent not in children:
+                children[parent] = []
+            children[parent].append(child)
+        return children
+
+    def region_blocks(self, name, children, seen=None):
+        if seen is None:
+            seen = set()
+        if type(name) is int:
+            return {name}
+        if name == 'Entry':
+            return {0}
+        if name == 'Exit':
+            return {self.dominator.N - 1}
+        if name in seen:
+            return set()
+        seen.add(name)
+        blocks = set()
+        for child in children.get(name, []):
+            blocks |= self.region_blocks(child, children, seen)
+        return blocks
+
+    def region_gen_kill(self, name, children):
+        gen = set()
+        kill = set()
+        for block in self.region_blocks(name, children):
+            if 0 <= block < self.dominator.N:
+                gen |= self.gen[block]
+                kill |= self.kill[block]
+        return gen, kill
 
     def preds(self, name):
         if name == 'Exit':

@@ -35,8 +35,44 @@ class LocalOptimization:
                     self.table[self.find(line[idx + 1][1]) - 1][-1].append(
                         [line[idx - 1][1], self.last_index(line[idx - 1][1])[0] + 1])
                 new_block[-1][idx - 1][2] = (self.last_index(line[idx - 1][1])[0])
-        # TODO: 4 optimizations
+        # Optimizing rewrites are intentionally omitted; the value table is the report artifact.
         return new_block, self.table
+
+    @staticmethod
+    def input_output_table(blocks: list) -> (list, list, list):
+        input_sets = []
+        output_sets = []
+        for block in blocks:
+            defined = set()
+            input_set = set()
+            output_set = set()
+            for line in block:
+                assignment = LocalOptimization.assignment_target(line)
+                for idx in range(len(line)):
+                    word = line[idx]
+                    if word[0] != 0:
+                        continue
+                    if idx == assignment:
+                        defined.add(word[1])
+                        output_set.add(word[1])
+                    elif word[1] not in defined:
+                        input_set.add(word[1])
+            input_sets.append(input_set)
+            output_sets.append(output_set)
+        return [
+            ['Input(block)'] + input_sets,
+            ['Output(block)'] + output_sets
+        ], ['block'] + list(range(len(blocks))), [
+            '<comment>Input contains variables read before a local definition; '
+            'Output contains variables assigned in the block.</comment>'
+        ]
+
+    @staticmethod
+    def assignment_target(line: list) -> int:
+        for idx in range(1, len(line)):
+            if line[idx][0] == 2 and line[idx][2] == 2 and line[idx - 1][0] == 0:
+                return idx - 1
+        return -1
 
     def find(self, var: str) -> int:
         _, row = self.last_index(var)

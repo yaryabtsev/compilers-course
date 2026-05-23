@@ -1,7 +1,7 @@
 from general.display import Display
 from general.parser import Parser
 from tasks.task1 import LocalOptimization
-from tasks.task2 import Dominator
+from tasks.task2 import Dominator, PostDominator
 from tasks.task3 import Phi
 from tasks.task4 import Regions
 
@@ -40,13 +40,12 @@ def solve(input: str, output: str, block_name: str = 'A', blocks=None, edges=Non
         lo_block = LocalOptimization(parser.lexemes[i])
         table.append(lo_block.make_table())
     display.show_var_table(table)
-    display.show_placeholder('The lectures define basic-block Input and Output sets for local optimization, '
-                             'but this project currently builds only per-block value tables.')
+    display.show_block_table(*LocalOptimization.input_output_table(parser.lexemes))
     dominator = Dominator(parser.edges)
     display.show_block_table(*dominator.get_table())
     display.show_graph(dominator.dom_edges)
-    display.show_placeholder('Postdominators, reverse dominance frontiers, and control-dependence tables are '
-                             'lecture topics that are not implemented yet.')
+    post_dominator = PostDominator(parser.edges)
+    display.show_block_table(*post_dominator.get_table())
 
     phi = Phi(parser.lexemes, dominator)
     spoilers = phi.globals_blocks()
@@ -56,8 +55,7 @@ def solve(input: str, output: str, block_name: str = 'A', blocks=None, edges=Non
     display.show_code(phi.code_blocks)
     spoilers = phi.rename(0)
     display.show_code(phi.code_blocks, spoilers)
-    display.show_placeholder('The report does not currently validate SSA invariants such as unique definitions '
-                             'for every SSA name or predecessor-ordered phi arguments.')
+    display.show_block_table(*phi.checks())
 
     regions = Regions(dominator, parser.lexemes)
     display.show_graphs(list(regions.find_regions()))

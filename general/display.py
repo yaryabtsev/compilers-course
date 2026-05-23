@@ -235,10 +235,14 @@ class Display:
                     if name == 'None':
                         class_name = ' class="none"'
                     print(f'<td{class_name}>{name}</td>')
+                elif type(td) is str:
+                    class_name = ' class="none"' if td == 'None' else ''
+                    print(f'<td{class_name}>{td}</td>')
                 else:
                     try:
                         _td = []
-                        for node in sorted(td):
+                        nodes = td if type(td) is list else sorted(td)
+                        for node in nodes:
                             if type(node) is int:
                                 _td.append(self.name(node))
                             else:
@@ -324,8 +328,8 @@ class Display:
         print(f'<p>{text}</p>')
         print('</div></details>')
 
-    def show_phi_table(self, param):
-        pass
+    def show_phi_table(self, table: list, columns: list, spoilers=None) -> None:
+        self.show_block_table(table, columns, spoilers)
 
     def show_var_table(self, table: list) -> None:
         self.show_title('var-table')

@@ -93,3 +93,82 @@ class Dominator:
                     row.append(fields[key.lower() + '_list'][i])
             table.append(row)
         return table, columns
+
+
+class PostDominator:
+    def __init__(self, edges):
+        self.N = len(edges)
+        self.edges = edges
+        self.reverse_edges = [set() for _ in range(self.N)]
+        self.calc_reverse_edges()
+        self.available = Dominator.dfs(self.reverse_edges, self.N - 1)
+
+        self.pdom_list = [set() for _ in range(self.N)]
+        self.calc_pdom()
+
+        self.ipdom_list = [-1] * self.N
+        self.calc_ipdom()
+
+        self.cd_list = [set() for _ in range(self.N)]
+        self.calc_control_dependence()
+
+    def calc_reverse_edges(self) -> None:
+        for node in range(self.N):
+            for child in self.edges[node]:
+                self.reverse_edges[child].add(node)
+
+    def calc_pdom(self) -> None:
+        nodes = {node for node in range(self.N) if self.available[node]}
+        for node in nodes:
+            self.pdom_list[node] = set(nodes)
+        self.pdom_list[self.N - 1] = {self.N - 1}
+        changed = True
+        while changed:
+            changed = False
+            for node in range(self.N - 2, -1, -1):
+                if not self.available[node]:
+                    continue
+                successors = [child for child in self.edges[node] if self.available[child]]
+                if successors:
+                    common = set(self.pdom_list[successors[0]])
+                    for child in successors[1:]:
+                        common &= self.pdom_list[child]
+                else:
+                    common = set()
+                new_pdom = {node} | common
+                if new_pdom != self.pdom_list[node]:
+                    self.pdom_list[node] = new_pdom
+                    changed = True
+
+    def calc_ipdom(self) -> None:
+        for node in range(self.N):
+            strict_pdom = self.pdom_list[node] - {node}
+            if strict_pdom:
+                self.ipdom_list[node] = max(strict_pdom, key=lambda child: len(self.pdom_list[child]))
+
+    def calc_control_dependence(self) -> None:
+        for node in range(self.N):
+            if not self.available[node]:
+                continue
+            for child in self.edges[node]:
+                if not self.available[child]:
+                    continue
+                runner = child
+                while runner != -1 and runner != self.ipdom_list[node]:
+                    self.cd_list[runner].add(node)
+                    runner = self.ipdom_list[runner]
+
+    def get_table(self):
+        columns = ["node ="]
+        for node in range(self.N):
+            if self.available[node]:
+                columns.append(node)
+        table = []
+        fields = vars(self)
+        for key in ['Pdom', 'Ipdom', 'CD']:
+            row = [key + '(node)']
+            for i in range(self.N):
+                if self.available[i]:
+                    row.append(fields[key.lower() + '_list'][i])
+            table.append(row)
+        return table, columns

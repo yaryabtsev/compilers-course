@@ -1,62 +1,147 @@
-<!DOCTYPE html><html lang="en"><head><link rel="icon" type="image/png" sizes="32x32" href="../coding.png"><link rel="stylesheet" href="../styles.css"><title>Some Code</title></head><body>
-<header>
-<a class="content" href="#title-0">Base Code</a>
-<a class="content" href="#title-1">Control Flow Graph</a>
-<a class="content" href="#title-2">Table of Values</a>
-<a class="content" href="#title-3">Pred / Dom / Idom / DF</a>
-<a class="content" href="#title-4">Dominator Tree</a>
-<a class="content" href="#title-5">Globals & Blocks</a>
-<a class="content" href="#title-6">Insert a phi-function</a>
-<a class="content" href="#title-7">Partially Truncated SSA-Form</a>
-<a class="content" href="#title-8">Regions</a>
-<a class="content" href="#title-9">Control Tree</a>
-<a class="content" href="#title-10">Classification</a>
-<a class="content" href="#title-11">Gen-Kill</a>
-<a class="content" href="#title-12">Transfer function</a>
-</header>
-<details id="title-0"><summary><h2 class="code-title">Base Code</h2></summary>
-<div class="wrapper"><div class="code">
-<div class="block-name">Entry</div>
-<div class="block-name">Exit</div>
-</div></div></details><details id="title-1"><summary><h2 class="image-title">Control Flow Graph</h2></summary>
-<img src="cfg.png" alt="Control Flow Graph"></details>
-<details id="title-2"><summary><h2 class="var-table">Table of Values</h2></summary>
-<table>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" type="image/png" sizes="32x32" href="../coding.png"><link rel="stylesheet" href="../styles.css"><title>Compiler Analysis Report</title></head><body><div class="app-shell">
+<aside class="sidebar">
+<div class="brand"><span class="brand-mark">CA</span><div><p>Compiler Analysis</p><small>Static report</small></div></div>
+<div class="sidebar-actions"><button type="button" data-expand>Expand all</button><button type="button" data-collapse>Collapse all</button></div>
+<nav aria-label="Report sections">
+<a class="content" href="#title-0"><span>01</span>Base MIR</a>
+<a class="content" href="#title-1"><span>02</span>Control Flow Graph</a>
+<a class="content" href="#title-2"><span>03</span>Local Value Tables</a>
+<a class="content" href="#title-3"><span>04</span>Input / Output Sets</a>
+<a class="content" href="#title-4"><span>05</span>Pred / Dom / Idom / DF</a>
+<a class="content" href="#title-5"><span>06</span>Dominator Tree</a>
+<a class="content" href="#title-6"><span>07</span>Postdominators & Control Dependence</a>
+<a class="content" href="#title-7"><span>08</span>Globals & Blocks</a>
+<a class="content" href="#title-8"><span>09</span>Phi Placement</a>
+<a class="content" href="#title-9"><span>10</span>Phi-Inserted Code</a>
+<a class="content" href="#title-10"><span>11</span>Partially Truncated SSA Form</a>
+<a class="content" href="#title-11"><span>12</span>SSA Checks</a>
+<a class="content" href="#title-12"><span>13</span>Region Reduction</a>
+<a class="content" href="#title-13"><span>14</span>Control Tree</a>
+<a class="content" href="#title-14"><span>15</span>Region Classification</a>
+<a class="content" href="#title-15"><span>16</span>Gen / Kill</a>
+<a class="content" href="#title-16"><span>17</span>Region Transfer Functions</a>
+</nav></aside>
+<main class="report-main">
+<header class="report-header"><div><p class="eyebrow">Pipeline report</p><h1>Compiler analysis walkthrough</h1><p>Generated from the current MIR input and analysis stages.</p></div><dl><div><dt>Blocks</dt><dd>10</dd></div><div><dt>Sections</dt><dd>17</dd></div></dl></header>
+<details id="title-0"><summary><h2 class="code-title">Base MIR</h2></summary>
+<div class="code-panel">
+<div class="boundary-block"><span class="block-name">Entry</span></div>
+<div class="boundary-block"><span class="block-name">Exit</span></div>
+</div></details><details id="title-1"><summary><h2 class="image-title">Control Flow Graph</h2></summary>
+<div class="graph-panel">
+<img src="cfg.png" alt="Control Flow Graph">
+</div></details>
+<details id="title-2"><summary><h2 class="var-table">Local Value Tables</h2></summary>
+<div class="value-grid">
+<article class="value-card">
+<div class="block-heading">
+<span class="new-block">Block</span> <span class="block-name">Entry</span> <span class="count-lines">0 lines</span>
+</div>
+<p class="empty-state">No instructions in this block.</p>
+</article>
+<article class="value-card">
+<div class="block-heading">
+<span class="new-block">Block</span> <span class="block-name">B1</span> <span class="count-lines">0 lines</span>
+</div>
+<p class="empty-state">No instructions in this block.</p>
+</article>
+<article class="value-card">
+<div class="block-heading">
+<span class="new-block">Block</span> <span class="block-name">B2</span> <span class="count-lines">0 lines</span>
+</div>
+<p class="empty-state">No instructions in this block.</p>
+</article>
+<article class="value-card">
+<div class="block-heading">
+<span class="new-block">Block</span> <span class="block-name">B3</span> <span class="count-lines">0 lines</span>
+</div>
+<p class="empty-state">No instructions in this block.</p>
+</article>
+<article class="value-card">
+<div class="block-heading">
+<span class="new-block">Block</span> <span class="block-name">B4</span> <span class="count-lines">0 lines</span>
+</div>
+<p class="empty-state">No instructions in this block.</p>
+</article>
+<article class="value-card">
+<div class="block-heading">
+<span class="new-block">Block</span> <span class="block-name">B5</span> <span class="count-lines">0 lines</span>
+</div>
+<p class="empty-state">No instructions in this block.</p>
+</article>
+<article class="value-card">
+<div class="block-heading">
+<span class="new-block">Block</span> <span class="block-name">B6</span> <span class="count-lines">0 lines</span>
+</div>
+<p class="empty-state">No instructions in this block.</p>
+</article>
+<article class="value-card">
+<div class="block-heading">
+<span class="new-block">Block</span> <span class="block-name">B7</span> <span class="count-lines">0 lines</span>
+</div>
+<p class="empty-state">No instructions in this block.</p>
+</article>
+<article class="value-card">
+<div class="block-heading">
+<span class="new-block">Block</span> <span class="block-name">B8</span> <span class="count-lines">0 lines</span>
+</div>
+<p class="empty-state">No instructions in this block.</p>
+</article>
+<article class="value-card">
+<div class="block-heading">
+<span class="new-block">Block</span> <span class="block-name">Exit</span> <span class="count-lines">0 lines</span>
+</div>
+<p class="empty-state">No instructions in this block.</p>
+</article>
+</div></details>
+<details id="title-3"><summary><h2 class="block-table-title">Input / Output Sets</h2></summary>
+<details class="trace"><summary><p class="summary-span">Trace</p></summary><div class="trace-code">
+<comment>Input contains variables read before a local definition; Output contains variables assigned in the block.</comment></div></details>
+<div class="table-scroll"><table>
+<thead><tr>
+<th>block</th>
+<th>Entry</th>
+<th>B1</th>
+<th>B2</th>
+<th>B3</th>
+<th>B4</th>
+<th>B5</th>
+<th>B6</th>
+<th>B7</th>
+<th>B8</th>
+<th>Exit</th>
+</tr></thead>
 <tbody>
 <tr>
-<td colspan="2"><font class="new-block">Block</font> <font class="block-name">Entry</font> <font class="count-lines">[0]</font></td>
+<td class="first-column">Input(block)</td>
+<td class="none">None</td>
+<td class="none">None</td>
+<td class="none">None</td>
+<td class="none">None</td>
+<td class="none">None</td>
+<td class="none">None</td>
+<td class="none">None</td>
+<td class="none">None</td>
+<td class="none">None</td>
+<td class="none">None</td>
 </tr>
 <tr>
-<td colspan="2"><font class="new-block">Block</font> <font class="block-name">B1</font> <font class="count-lines">[0]</font></td>
-</tr>
-<tr>
-<td colspan="2"><font class="new-block">Block</font> <font class="block-name">B2</font> <font class="count-lines">[0]</font></td>
-</tr>
-<tr>
-<td colspan="2"><font class="new-block">Block</font> <font class="block-name">B3</font> <font class="count-lines">[0]</font></td>
-</tr>
-<tr>
-<td colspan="2"><font class="new-block">Block</font> <font class="block-name">B4</font> <font class="count-lines">[0]</font></td>
-</tr>
-<tr>
-<td colspan="2"><font class="new-block">Block</font> <font class="block-name">B5</font> <font class="count-lines">[0]</font></td>
-</tr>
-<tr>
-<td colspan="2"><font class="new-block">Block</font> <font class="block-name">B6</font> <font class="count-lines">[0]</font></td>
-</tr>
-<tr>
-<td colspan="2"><font class="new-block">Block</font> <font class="block-name">B7</font> <font class="count-lines">[0]</font></td>
-</tr>
-<tr>
-<td colspan="2"><font class="new-block">Block</font> <font class="block-name">B8</font> <font class="count-lines">[0]</font></td>
-</tr>
-<tr>
-<td colspan="2"><font class="new-block">Block</font> <font class="block-name">Exit</font> <font class="count-lines">[0]</font></td>
+<td class="first-column">Output(block)</td>
+<td class="none">None</td>
+<td class="none">None</td>
+<td class="none">None</td>
+<td class="none">None</td>
+<td class="none">None</td>
+<td class="none">None</td>
+<td class="none">None</td>
+<td class="none">None</td>
+<td class="none">None</td>
+<td class="none">None</td>
 </tr>
 </tbody>
-</table></details>
-<details id="title-3"><summary><h2 class="block-table-title">Pred / Dom / Idom / DF</h2></summary>
-<table>
+</table></div></details>
+<details id="title-4"><summary><h2 class="block-table-title">Pred / Dom / Idom / DF</h2></summary>
+<div class="table-scroll"><table>
 <thead><tr>
 <th>node =</th>
 <th>Entry</th>
@@ -99,16 +184,16 @@
 </tr>
 <tr>
 <td class="first-column">Idom(node)</td>
-<td  class="none">None</td>
-<td >Entry</td>
-<td >B1</td>
-<td >B2</td>
-<td >B3</td>
-<td >B3</td>
-<td >B5</td>
-<td >B3</td>
-<td >B2</td>
-<td >B1</td>
+<td class="none">None</td>
+<td>Entry</td>
+<td>B1</td>
+<td>B2</td>
+<td>B3</td>
+<td>B3</td>
+<td>B5</td>
+<td>B3</td>
+<td>B2</td>
+<td>B1</td>
 </tr>
 <tr>
 <td class="first-column">DF(node)</td>
@@ -124,13 +209,72 @@
 <td class="none">None</td>
 </tr>
 </tbody>
-</table></details>
-<details id="title-4"><summary><h2 class="image-title">Dominator Tree</h2></summary>
-<img src="dt.png" alt="Dominator Tree"></details>
-<details id="title-5"><summary><h2 class="block-table-title">Globals & Blocks</h2></summary>
-<details><summary><p class="summary-span">Code</p></summary><div class="code">
+</table></div></details>
+<details id="title-5"><summary><h2 class="image-title">Dominator Tree</h2></summary>
+<div class="graph-panel">
+<img src="dt.png" alt="Dominator Tree">
+</div></details>
+<details id="title-6"><summary><h2 class="block-table-title">Postdominators & Control Dependence</h2></summary>
+<div class="table-scroll"><table>
+<thead><tr>
+<th>node =</th>
+<th>Entry</th>
+<th>B1</th>
+<th>B2</th>
+<th>B3</th>
+<th>B4</th>
+<th>B5</th>
+<th>B6</th>
+<th>B7</th>
+<th>B8</th>
+<th>Exit</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="first-column">Pdom(node)</td>
+<td>Entry, B1, Exit</td>
+<td>B1, Exit</td>
+<td>B1, B2, B8, Exit</td>
+<td>B1, B2, B3, B7, B8, Exit</td>
+<td>B1, B2, B4, B7, B8, Exit</td>
+<td>B1, B2, B5, B7, B8, Exit</td>
+<td>B1, B2, B6, B7, B8, Exit</td>
+<td>B1, B2, B7, B8, Exit</td>
+<td>B1, B8, Exit</td>
+<td>Exit</td>
+</tr>
+<tr>
+<td class="first-column">Ipdom(node)</td>
+<td>B1</td>
+<td>Exit</td>
+<td>B8</td>
+<td>B7</td>
+<td>B7</td>
+<td>B7</td>
+<td>B7</td>
+<td>B2</td>
+<td>B1</td>
+<td class="none">None</td>
+</tr>
+<tr>
+<td class="first-column">CD(node)</td>
+<td class="none">None</td>
+<td>B1</td>
+<td>B1, B2</td>
+<td>B2, B5</td>
+<td>B3</td>
+<td>B3</td>
+<td>B5</td>
+<td>B2</td>
+<td>B1</td>
+<td class="none">None</td>
+</tr>
+</tbody>
+</table></div></details>
+<details id="title-7"><summary><h2 class="block-table-title">Globals & Blocks</h2></summary>
+<details class="trace"><summary><p class="summary-span">Trace</p></summary><div class="trace-code">
 <font class="block-name">Entry</font><gb1>-block:</gb1><br>&nbsp;&nbsp;&nbsp;<gb2>def<sub><font class="block-name">Entry</font></sub>&nbsp;:&nbsp;</gb2>{}<br><font class="block-name">B1</font><gb1>-block:</gb1><br>&nbsp;&nbsp;&nbsp;<gb2>def<sub><font class="block-name">B1</font></sub>&nbsp;:&nbsp;</gb2>{}<br><font class="block-name">B2</font><gb1>-block:</gb1><br>&nbsp;&nbsp;&nbsp;<gb2>def<sub><font class="block-name">B2</font></sub>&nbsp;:&nbsp;</gb2>{}<br><font class="block-name">B3</font><gb1>-block:</gb1><br>&nbsp;&nbsp;&nbsp;<gb2>def<sub><font class="block-name">B3</font></sub>&nbsp;:&nbsp;</gb2>{}<br><font class="block-name">B4</font><gb1>-block:</gb1><br>&nbsp;&nbsp;&nbsp;<gb2>def<sub><font class="block-name">B4</font></sub>&nbsp;:&nbsp;</gb2>{}<br><font class="block-name">B5</font><gb1>-block:</gb1><br>&nbsp;&nbsp;&nbsp;<gb2>def<sub><font class="block-name">B5</font></sub>&nbsp;:&nbsp;</gb2>{}<br><font class="block-name">B6</font><gb1>-block:</gb1><br>&nbsp;&nbsp;&nbsp;<gb2>def<sub><font class="block-name">B6</font></sub>&nbsp;:&nbsp;</gb2>{}<br><font class="block-name">B7</font><gb1>-block:</gb1><br>&nbsp;&nbsp;&nbsp;<gb2>def<sub><font class="block-name">B7</font></sub>&nbsp;:&nbsp;</gb2>{}<br><font class="block-name">B8</font><gb1>-block:</gb1><br>&nbsp;&nbsp;&nbsp;<gb2>def<sub><font class="block-name">B8</font></sub>&nbsp;:&nbsp;</gb2>{}<br><font class="block-name">Exit</font><gb1>-block:</gb1><br>&nbsp;&nbsp;&nbsp;<gb2>def<sub><font class="block-name">Exit</font></sub>&nbsp;:&nbsp;</gb2>{}</div></details>
-<table>
+<div class="table-scroll"><table>
 <thead><tr>
 <th>var =</th>
 </tr></thead>
@@ -142,38 +286,114 @@
 <td class="first-column">is Global</td>
 </tr>
 </tbody>
-</table></details>
-<details id="title-6"><summary><h2 class="code-title">Insert a phi-function</h2></summary>
-<div class="wrapper"><div class="code">
-<div class="block-name">Entry</div>
-<div class="block-name">Exit</div>
-</div></div></details><details id="title-7"><summary><h2 class="code-title">Partially Truncated SSA-Form</h2></summary>
-<details><summary><p class="summary-span">Code</p></summary><div class="code">
-<br><r id="1">Rename(<font class="block-name">Entry</font>)</r>:<br>&nbsp;&nbsp;&nbsp;<r id="5">rename &phi;-functions:</r><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="4">no &phi;-functions</r><br>&nbsp;&nbsp;&nbsp;rename instructions:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="4">no instructions</r><br>&nbsp;&nbsp;&nbsp;<r id="3">fill(<font class="block-name">B1</font>)</r>:<r id="4">no &phi;-functions</r><br>&nbsp;&nbsp;&nbsp;<r id="1">Rename(<font class="block-name">B1</font>)</r>:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="5">rename &phi;-functions:</r><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="4">no &phi;-functions</r><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rename instructions:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="4">no instructions</r><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="3">fill(<font class="block-name">Exit</font>)</r>:<r id="4">no &phi;-functions</r><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="3">fill(<font class="block-name">B2</font>)</r>:<r id="4">no &phi;-functions</r><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="1">Rename(<font class="block-name">Exit</font>)</r>:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="5">rename &phi;-functions:</r><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="4">no &phi;-functions</r><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rename instructions:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="4">no instructions</r><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;clean():<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="2">return to <font class="block-name">B1</font>;</r><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="1">Rename(<font class="block-name">B2</font>)</r>:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="5">rename &phi;-functions:</r><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="4">no &phi;-functions</r><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rename instructions:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="4">no instructions</r><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="3">fill(<font class="block-name">B8</font>)</r>:<r id="4">no &phi;-functions</r><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="3">fill(<font class="block-name">B3</font>)</r>:<r id="4">no &phi;-functions</r><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="1">Rename(<font class="block-name">B8</font>)</r>:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="5">rename &phi;-functions:</r><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="4">no &phi;-functions</r><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rename instructions:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="4">no instructions</r><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="3">fill(<font class="block-name">B1</font>)</r>:<r id="4">no &phi;-functions</r><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;clean():<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="2">return to <font class="block-name">B2</font>;</r><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="1">Rename(<font class="block-name">B3</font>)</r>:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="5">rename &phi;-functions:</r><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="4">no &phi;-functions</r><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rename instructions:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="4">no instructions</r><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="3">fill(<font class="block-name">B4</font>)</r>:<r id="4">no &phi;-functions</r><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="3">fill(<font class="block-name">B5</font>)</r>:<r id="4">no &phi;-functions</r><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="1">Rename(<font class="block-name">B4</font>)</r>:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="5">rename &phi;-functions:</r><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="4">no &phi;-functions</r><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rename instructions:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="4">no instructions</r><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="3">fill(<font class="block-name">B7</font>)</r>:<r id="4">no &phi;-functions</r><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;clean():<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="2">return to <font class="block-name">B3</font>;</r><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="1">Rename(<font class="block-name">B5</font>)</r>:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="5">rename &phi;-functions:</r><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="4">no &phi;-functions</r><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rename instructions:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="4">no instructions</r><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="3">fill(<font class="block-name">B3</font>)</r>:<r id="4">no &phi;-functions</r><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="3">fill(<font class="block-name">B6</font>)</r>:<r id="4">no &phi;-functions</r><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="1">Rename(<font class="block-name">B6</font>)</r>:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="5">rename &phi;-functions:</r><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="4">no &phi;-functions</r><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rename instructions:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="4">no instructions</r><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="3">fill(<font class="block-name">B7</font>)</r>:<r id="4">no &phi;-functions</r><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;clean():<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="2">return to <font class="block-name">B5</font>;</r><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;clean():<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="2">return to <font class="block-name">B3</font>;</r><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="1">Rename(<font class="block-name">B7</font>)</r>:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="5">rename &phi;-functions:</r><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="4">no &phi;-functions</r><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rename instructions:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="4">no instructions</r><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="3">fill(<font class="block-name">B2</font>)</r>:<r id="4">no &phi;-functions</r><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;clean():<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="2">return to <font class="block-name">B3</font>;</r><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;clean():<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="2">return to <font class="block-name">B2</font>;</r><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;clean():<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="2">return to <font class="block-name">B1</font>;</r><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;clean():<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="2">return to <font class="block-name">Entry</font>;</r><br>&nbsp;&nbsp;&nbsp;clean():</div></details>
-<div class="wrapper"><div class="code">
-<div class="block-name">Entry</div>
-<div class="block-name">Exit</div>
-</div></div></details><details id="title-8"><summary><h2 class="block-graphs-title">Regions</h2></summary>
-<div class="CSS_slideshow" data-show-indicators="true" data-indicators-position="in" data-show-buttons="true" data-show-wrap-buttons="true" data-animation-style="slide" style="-moz-transition-duration: 0.3s; -webkit-transition-duration: 0.3s; transition-duration: 0.3s;"><div class="CSS_slideshow_wrapper">
-<input type="radio" name="css3slideshow" id="slide1" checked />
-<label for="slide1"><img src="regions/0.png" alt="Regions" height="100%" /></label>
-<input type="radio" name="css3slideshow" id="slide2" />
-<label for="slide2"><img src="regions/1.png" alt="Regions" height="100%" /></label>
-<input type="radio" name="css3slideshow" id="slide3" />
-<label for="slide3"><img src="regions/2.png" alt="Regions" height="100%" /></label>
-<input type="radio" name="css3slideshow" id="slide4" />
-<label for="slide4"><img src="regions/3.png" alt="Regions" height="100%" /></label>
-<input type="radio" name="css3slideshow" id="slide5" />
-<label for="slide5"><img src="regions/4.png" alt="Regions" height="100%" /></label>
-<input type="radio" name="css3slideshow" id="slide6" />
-<label for="slide6"><img src="regions/5.png" alt="Regions" height="100%" /></label>
-<input type="radio" name="css3slideshow" id="slide7" />
-<label for="slide7"><img src="regions/6.png" alt="Regions" height="100%" /></label>
-</div></div></details>
-<details id="title-9"><summary><h2 class="block-graphs-title">Control Tree</h2></summary>
-<img src="ct.png" alt="Control Tree"></details>
-<details id="title-10"><summary><h2 class="block-table-title">Classification</h2></summary>
-<table>
+</table></div></details>
+<details id="title-8"><summary><h2 class="block-table-title">Phi Placement</h2></summary>
+<div class="table-scroll"><table>
+<thead><tr>
+<th>block =</th>
+<th>Entry</th>
+<th>B1</th>
+<th>B2</th>
+<th>B3</th>
+<th>B4</th>
+<th>B5</th>
+<th>B6</th>
+<th>B7</th>
+<th>B8</th>
+<th>Exit</th>
+</tr></thead>
+<tbody>
+</tbody>
+</table></div></details>
+<details id="title-9"><summary><h2 class="code-title">Phi-Inserted Code</h2></summary>
+<div class="code-panel">
+<div class="boundary-block"><span class="block-name">Entry</span></div>
+<div class="boundary-block"><span class="block-name">Exit</span></div>
+</div></details><details id="title-10"><summary><h2 class="code-title">Partially Truncated SSA Form</h2></summary>
+<details class="trace"><summary><p class="summary-span">Trace</p></summary><div class="trace-code">
+<br><r id="1">Rename(<font class="block-name">Entry</font>)</r>:<br>&nbsp;&nbsp;&nbsp;<r id="5">rename &phi;-functions:</r><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="4">no &phi;-functions</r><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="6">stack</r> : empty<br>&nbsp;&nbsp;&nbsp;rename instructions:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="4">no instructions</r><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="6">stack</r> : empty<br>&nbsp;&nbsp;&nbsp;<r id="3">fill(<font class="block-name">B1</font>)</r>:<r id="4">no &phi;-functions</r><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="6">stack</r> : empty<br>&nbsp;&nbsp;&nbsp;<r id="1">Rename(<font class="block-name">B1</font>)</r>:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="5">rename &phi;-functions:</r><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="4">no &phi;-functions</r><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="6">stack</r> : empty<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rename instructions:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="4">no instructions</r><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="6">stack</r> : empty<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="3">fill(<font class="block-name">Exit</font>)</r>:<r id="4">no &phi;-functions</r><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="6">stack</r> : empty<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="3">fill(<font class="block-name">B2</font>)</r>:<r id="4">no &phi;-functions</r><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="6">stack</r> : empty<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="1">Rename(<font class="block-name">Exit</font>)</r>:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="5">rename &phi;-functions:</r><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="4">no &phi;-functions</r><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="6">stack</r> : empty<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rename instructions:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="4">no instructions</r><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="6">stack</r> : empty<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;clean():nothing to clean<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="6">stack</r> : empty<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="2">return to <font class="block-name">B1</font>;</r><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="1">Rename(<font class="block-name">B2</font>)</r>:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="5">rename &phi;-functions:</r><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="4">no &phi;-functions</r><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="6">stack</r> : empty<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rename instructions:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="4">no instructions</r><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="6">stack</r> : empty<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="3">fill(<font class="block-name">B8</font>)</r>:<r id="4">no &phi;-functions</r><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="6">stack</r> : empty<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="3">fill(<font class="block-name">B3</font>)</r>:<r id="4">no &phi;-functions</r><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="6">stack</r> : empty<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="1">Rename(<font class="block-name">B8</font>)</r>:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="5">rename &phi;-functions:</r><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="4">no &phi;-functions</r><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="6">stack</r> : empty<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rename instructions:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="4">no instructions</r><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="6">stack</r> : empty<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="3">fill(<font class="block-name">B1</font>)</r>:<r id="4">no &phi;-functions</r><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="6">stack</r> : empty<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;clean():nothing to clean<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="6">stack</r> : empty<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="2">return to <font class="block-name">B2</font>;</r><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="1">Rename(<font class="block-name">B3</font>)</r>:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="5">rename &phi;-functions:</r><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="4">no &phi;-functions</r><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="6">stack</r> : empty<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rename instructions:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="4">no instructions</r><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="6">stack</r> : empty<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="3">fill(<font class="block-name">B4</font>)</r>:<r id="4">no &phi;-functions</r><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="6">stack</r> : empty<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="3">fill(<font class="block-name">B5</font>)</r>:<r id="4">no &phi;-functions</r><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="6">stack</r> : empty<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="1">Rename(<font class="block-name">B4</font>)</r>:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="5">rename &phi;-functions:</r><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="4">no &phi;-functions</r><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="6">stack</r> : empty<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rename instructions:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="4">no instructions</r><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="6">stack</r> : empty<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="3">fill(<font class="block-name">B7</font>)</r>:<r id="4">no &phi;-functions</r><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="6">stack</r> : empty<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;clean():nothing to clean<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="6">stack</r> : empty<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="2">return to <font class="block-name">B3</font>;</r><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="1">Rename(<font class="block-name">B5</font>)</r>:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="5">rename &phi;-functions:</r><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="4">no &phi;-functions</r><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="6">stack</r> : empty<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rename instructions:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="4">no instructions</r><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="6">stack</r> : empty<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="3">fill(<font class="block-name">B3</font>)</r>:<r id="4">no &phi;-functions</r><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="6">stack</r> : empty<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="3">fill(<font class="block-name">B6</font>)</r>:<r id="4">no &phi;-functions</r><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="6">stack</r> : empty<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="1">Rename(<font class="block-name">B6</font>)</r>:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="5">rename &phi;-functions:</r><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="4">no &phi;-functions</r><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="6">stack</r> : empty<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rename instructions:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="4">no instructions</r><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="6">stack</r> : empty<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="3">fill(<font class="block-name">B7</font>)</r>:<r id="4">no &phi;-functions</r><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="6">stack</r> : empty<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;clean():nothing to clean<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="6">stack</r> : empty<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="2">return to <font class="block-name">B5</font>;</r><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;clean():nothing to clean<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="6">stack</r> : empty<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="2">return to <font class="block-name">B3</font>;</r><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="1">Rename(<font class="block-name">B7</font>)</r>:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="5">rename &phi;-functions:</r><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="4">no &phi;-functions</r><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="6">stack</r> : empty<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rename instructions:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="4">no instructions</r><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="6">stack</r> : empty<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="3">fill(<font class="block-name">B2</font>)</r>:<r id="4">no &phi;-functions</r><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="6">stack</r> : empty<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;clean():nothing to clean<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="6">stack</r> : empty<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="2">return to <font class="block-name">B3</font>;</r><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;clean():nothing to clean<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="6">stack</r> : empty<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="2">return to <font class="block-name">B2</font>;</r><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;clean():nothing to clean<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="6">stack</r> : empty<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="2">return to <font class="block-name">B1</font>;</r><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;clean():nothing to clean<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="6">stack</r> : empty<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="2">return to <font class="block-name">Entry</font>;</r><br>&nbsp;&nbsp;&nbsp;clean():nothing to clean<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="6">stack</r> : empty</div></details>
+<div class="code-panel">
+<div class="boundary-block"><span class="block-name">Entry</span></div>
+<div class="boundary-block"><span class="block-name">Exit</span></div>
+</div></details><details id="title-11"><summary><h2 class="block-table-title">SSA Checks</h2></summary>
+<details class="trace"><summary><p class="summary-span">Trace</p></summary><div class="trace-code">
+<comment>Checks are scoped to variables selected by phi placement; other variables remain in the original MIR naming style.</comment></div></details>
+<div class="table-scroll"><table>
+<thead><tr>
+<th>check</th>
+<th>status</th>
+<th>details</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="first-column">SSA rename scope</td>
+<td>none</td>
+<td class="none">None</td>
+</tr>
+<tr>
+<td class="first-column">Untracked variables</td>
+<td>not renamed</td>
+<td class="none">None</td>
+</tr>
+<tr>
+<td class="first-column">Tracked definitions named</td>
+<td class="true">+</td>
+<td>ok</td>
+</tr>
+<tr>
+<td class="first-column">Tracked uses named</td>
+<td class="true">+</td>
+<td>ok</td>
+</tr>
+<tr>
+<td class="first-column">Unique tracked definitions</td>
+<td class="true">+</td>
+<td>ok</td>
+</tr>
+<tr>
+<td class="first-column">Phi arity matches predecessors</td>
+<td class="true">+</td>
+<td>ok</td>
+</tr>
+</tbody>
+</table></div></details>
+<details id="title-12"><summary><h2 class="block-graphs-title">Region Reduction</h2></summary>
+<div class="region-gallery">
+<figure>
+<img src="regions/0.png" alt="Region Reduction step 1">
+<figcaption>Step 1</figcaption>
+</figure>
+<figure>
+<img src="regions/1.png" alt="Region Reduction step 2">
+<figcaption>Step 2</figcaption>
+</figure>
+<figure>
+<img src="regions/2.png" alt="Region Reduction step 3">
+<figcaption>Step 3</figcaption>
+</figure>
+<figure>
+<img src="regions/3.png" alt="Region Reduction step 4">
+<figcaption>Step 4</figcaption>
+</figure>
+<figure>
+<img src="regions/4.png" alt="Region Reduction step 5">
+<figcaption>Step 5</figcaption>
+</figure>
+<figure>
+<img src="regions/5.png" alt="Region Reduction step 6">
+<figcaption>Step 6</figcaption>
+</figure>
+<figure>
+<img src="regions/6.png" alt="Region Reduction step 7">
+<figcaption>Step 7</figcaption>
+</figure>
+</div></details>
+<details id="title-13"><summary><h2 class="block-graphs-title">Control Tree</h2></summary>
+<div class="graph-panel">
+<img src="ct.png" alt="Control Tree">
+</div></details>
+<details id="title-14"><summary><h2 class="block-table-title">Region Classification</h2></summary>
+<div class="table-scroll"><table>
 <thead><tr>
 <th>Class</th>
 <th>Area-Node</th>
@@ -183,16 +403,16 @@
 <tbody>
 <tr>
 <td class="first-column">Region</td>
-<td>R0, R1, R2, R3, R4, R5, R6, R7, R8, Re</td>
-<td>R11, R13, R15, R9</td>
+<td>Re, R0, R1, R2, R3, R4, R5, R6, R7, R8</td>
+<td>R9, R11, R13, R15</td>
 <td>R10, R12, R14</td>
 </tr>
 </tbody>
-</table></details>
-<details id="title-11"><summary><h2 class="block-table-title">Gen-Kill</h2></summary>
-<details><summary><p class="summary-span">Code</p></summary><div class="code">
+</table></div></details>
+<details id="title-15"><summary><h2 class="block-table-title">Gen / Kill</h2></summary>
+<details class="trace"><summary><p class="summary-span">Trace</p></summary><div class="trace-code">
 <comment>The instruction index corresponds to the line number in the original code.</comment></div></details>
-<table>
+<div class="table-scroll"><table>
 <thead><tr>
 <th>block</th>
 <th>Entry</th>
@@ -234,9 +454,9 @@
 <td class="none">None</td>
 </tr>
 </tbody>
-</table></details>
-<details id="title-12"><summary><h2 class="block-table-title">Transfer function</h2></summary>
-<table>
+</table></div></details>
+<details id="title-16"><summary><h2 class="block-table-title">Region Transfer Functions</h2></summary>
+<div class="table-scroll"><table>
 <thead><tr>
 <th>region</th>
 <th>Transfer Function</th>
@@ -247,45 +467,45 @@
 <tr>
 <td class="first-column">R9</td>
 <td><div class="code">f<sub>R9, In[R4]</sub> = f<sub>R9, Out[B2]</sub> &and; f<sub>R9, Out[B5]</sub><br>f<sub>R9, Out[3]</sub> = f<sub>R4, Out[3]</sub> &#176; f<sub>R9, In[R4]</sub>  <br>f<sub>R9, In[R6]</sub> = f<sub>R9, Out[B3]</sub><br>f<sub>R9, Out[5]</sub> = f<sub>R6, Out[5]</sub> &#176; f<sub>R9, In[R6]</sub>  <br></div></td>
-<td><div class="code"></div></td>
-<td><div class="code"></div></td>
+<td class="none">None</td>
+<td class="none">None</td>
 </tr>
 <tr>
 <td class="first-column">R10</td>
 <td><div class="code">f<sub>R10, In[R9]</sub> = (f<sub>R10, Out[B2]</sub> &and; f<sub>R10, Out[B5]</sub>)*<br>f<sub>R10, Out[R4]</sub> = f<sub>R9, Out[R4]</sub> &#176; f<sub>R10, In[R9]</sub>  <br>f<sub>R10, Out[R6]</sub> = f<sub>R9, Out[R6]</sub> &#176; f<sub>R10, In[R9]</sub>  <br></div></td>
-<td><div class="code"></div></td>
-<td><div class="code"></div></td>
+<td class="none">None</td>
+<td class="none">None</td>
 </tr>
 <tr>
 <td class="first-column">R11</td>
-<td><div class="code">f<sub>R11, In[R2]</sub> = f<sub>R11, Out[B1]</sub> &and; f<sub>R11, Out[B7]</sub><br>f<sub>R11, Out[2]</sub> = f<sub>R2, Out[2]</sub> &#176; f<sub>R11, In[R2]</sub>  <br>f<sub>R11, In[R10]</sub> = f<sub>R11, Out[B2]</sub> &and; f<sub>R11, Out[B5]</sub><br>f<sub>R11, Out[R9]</sub> = f<sub>R10, Out[R9]</sub> &#176; f<sub>R11, In[R10]</sub>  <br>f<sub>R11, In[R5]</sub> = f<sub>R11, Out[B3]</sub><br>f<sub>R11, Out[4]</sub> = f<sub>R5, Out[4]</sub> &#176; f<sub>R11, In[R5]</sub>  <br>f<sub>R11, In[R7]</sub> = f<sub>R11, Out[B4]</sub> &and; f<sub>R11, Out[B6]</sub><br>f<sub>R11, Out[7]</sub> = f<sub>R7, Out[7]</sub> &#176; f<sub>R11, In[R7]</sub>  <br>f<sub>R11, In[R8]</sub> = f<sub>R11, Out[B5]</sub><br>f<sub>R11, Out[6]</sub> = f<sub>R8, Out[6]</sub> &#176; f<sub>R11, In[R8]</sub>  <br></div></td>
-<td><div class="code"></div></td>
-<td><div class="code"></div></td>
+<td><div class="code">f<sub>R11, In[R2]</sub> = f<sub>R11, Out[B1]</sub> &and; f<sub>R11, Out[B7]</sub><br>f<sub>R11, Out[2]</sub> = f<sub>R2, Out[2]</sub> &#176; f<sub>R11, In[R2]</sub>  <br>f<sub>R11, In[R10]</sub> = f<sub>R11, Out[B2]</sub> &and; f<sub>R11, Out[B5]</sub><br>f<sub>R11, Out[R9]</sub> = f<sub>R10, Out[R9]</sub> &#176; f<sub>R11, In[R10]</sub>  <br>f<sub>R11, In[R8]</sub> = f<sub>R11, Out[B5]</sub><br>f<sub>R11, Out[6]</sub> = f<sub>R8, Out[6]</sub> &#176; f<sub>R11, In[R8]</sub>  <br>f<sub>R11, In[R7]</sub> = f<sub>R11, Out[B4]</sub> &and; f<sub>R11, Out[B6]</sub><br>f<sub>R11, Out[7]</sub> = f<sub>R7, Out[7]</sub> &#176; f<sub>R11, In[R7]</sub>  <br>f<sub>R11, In[R5]</sub> = f<sub>R11, Out[B3]</sub><br>f<sub>R11, Out[4]</sub> = f<sub>R5, Out[4]</sub> &#176; f<sub>R11, In[R5]</sub>  <br></div></td>
+<td class="none">None</td>
+<td class="none">None</td>
 </tr>
 <tr>
 <td class="first-column">R12</td>
-<td><div class="code">f<sub>R12, In[R11]</sub> = (f<sub>R12, Out[B1]</sub> &and; f<sub>R12, Out[B7]</sub>)*<br>f<sub>R12, Out[R2]</sub> = f<sub>R11, Out[R2]</sub> &#176; f<sub>R12, In[R11]</sub>  <br>f<sub>R12, Out[R10]</sub> = f<sub>R11, Out[R10]</sub> &#176; f<sub>R12, In[R11]</sub>  <br>f<sub>R12, Out[R5]</sub> = f<sub>R11, Out[R5]</sub> &#176; f<sub>R12, In[R11]</sub>  <br>f<sub>R12, Out[R7]</sub> = f<sub>R11, Out[R7]</sub> &#176; f<sub>R12, In[R11]</sub>  <br>f<sub>R12, Out[R8]</sub> = f<sub>R11, Out[R8]</sub> &#176; f<sub>R12, In[R11]</sub>  <br></div></td>
-<td><div class="code"></div></td>
-<td><div class="code"></div></td>
+<td><div class="code">f<sub>R12, In[R11]</sub> = (f<sub>R12, Out[B1]</sub> &and; f<sub>R12, Out[B7]</sub>)*<br>f<sub>R12, Out[R2]</sub> = f<sub>R11, Out[R2]</sub> &#176; f<sub>R12, In[R11]</sub>  <br>f<sub>R12, Out[R10]</sub> = f<sub>R11, Out[R10]</sub> &#176; f<sub>R12, In[R11]</sub>  <br>f<sub>R12, Out[R8]</sub> = f<sub>R11, Out[R8]</sub> &#176; f<sub>R12, In[R11]</sub>  <br>f<sub>R12, Out[R7]</sub> = f<sub>R11, Out[R7]</sub> &#176; f<sub>R12, In[R11]</sub>  <br>f<sub>R12, Out[R5]</sub> = f<sub>R11, Out[R5]</sub> &#176; f<sub>R12, In[R11]</sub>  <br></div></td>
+<td class="none">None</td>
+<td class="none">None</td>
 </tr>
 <tr>
 <td class="first-column">R13</td>
 <td><div class="code">f<sub>R13, In[R1]</sub> = f<sub>R13, Out[Entry]</sub> &and; f<sub>R13, Out[B8]</sub><br>f<sub>R13, Out[1]</sub> = f<sub>R1, Out[1]</sub> &#176; f<sub>R13, In[R1]</sub>  <br>f<sub>R13, In[R12]</sub> = f<sub>R13, Out[B1]</sub> &and; f<sub>R13, Out[B7]</sub><br>f<sub>R13, Out[R11]</sub> = f<sub>R12, Out[R11]</sub> &#176; f<sub>R13, In[R12]</sub>  <br>f<sub>R13, In[R3]</sub> = f<sub>R13, Out[B2]</sub><br>f<sub>R13, Out[8]</sub> = f<sub>R3, Out[8]</sub> &#176; f<sub>R13, In[R3]</sub>  <br></div></td>
-<td><div class="code"></div></td>
-<td><div class="code"></div></td>
+<td class="none">None</td>
+<td class="none">None</td>
 </tr>
 <tr>
 <td class="first-column">R14</td>
 <td><div class="code">f<sub>R14, In[R13]</sub> = (f<sub>R14, Out[Entry]</sub> &and; f<sub>R14, Out[B8]</sub>)*<br>f<sub>R14, Out[R1]</sub> = f<sub>R13, Out[R1]</sub> &#176; f<sub>R14, In[R13]</sub>  <br>f<sub>R14, Out[R12]</sub> = f<sub>R13, Out[R12]</sub> &#176; f<sub>R14, In[R13]</sub>  <br>f<sub>R14, Out[R3]</sub> = f<sub>R13, Out[R3]</sub> &#176; f<sub>R14, In[R13]</sub>  <br></div></td>
-<td><div class="code"></div></td>
-<td><div class="code"></div></td>
+<td class="none">None</td>
+<td class="none">None</td>
 </tr>
 <tr>
 <td class="first-column">R15</td>
 <td><div class="code">f<sub>R15, In[R0]</sub> = I<br>f<sub>R15, Out[0]</sub> = f<sub>R0, Out[0]</sub> &#176; f<sub>R15, In[R0]</sub>  <br>f<sub>R15, In[R14]</sub> = f<sub>R15, Out[Entry]</sub> &and; f<sub>R15, Out[B8]</sub><br>f<sub>R15, Out[R13]</sub> = f<sub>R14, Out[R13]</sub> &#176; f<sub>R15, In[R14]</sub>  <br>f<sub>R15, In[Re]</sub> = f<sub>R15, Out[B1]</sub><br>f<sub>R15, Out[Exit]</sub> = f<sub>Re, Out[Exit]</sub> &#176; f<sub>R15, In[Re]</sub>  <br></div></td>
-<td><div class="code"></div></td>
-<td><div class="code"></div></td>
+<td class="none">None</td>
+<td class="none">None</td>
 </tr>
 </tbody>
-</table></details>
-<footer></footer></body></html>
+</table></div></details>
+</main></div><footer><p>Generated compiler-analysis report</p></footer><script>const allDetails=()=>Array.from(document.querySelectorAll("main > details"));document.querySelector("[data-expand]")?.addEventListener("click",()=>allDetails().forEach(d=>d.open=true));document.querySelector("[data-collapse]")?.addEventListener("click",()=>allDetails().forEach(d=>d.open=false));</script></body></html>

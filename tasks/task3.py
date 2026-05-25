@@ -117,6 +117,76 @@ class Phi:
         table.append(row)
         return table, columns
 
+    def checks(self):
+        tracked = set(self.phis)
+        all_vars = set()
+        missing_defs = []
+        missing_uses = []
+        duplicate_defs = []
+        phi_arity = []
+        definitions = defaultdict(list)
+
+        for block in range(self.N):
+            for line_idx in range(len(self.code_blocks[block])):
+                line = self.code_blocks[block][line_idx]
+                if self.is_phi_line(block, line_idx):
+                    var = line[-1]
+                    args = self.indexes(var)
+                    expected = len(self.dominator.pred_list[block])
+                    if len(args) != expected:
+                        phi_arity.append(f'{var[1]} in block {block}: {len(args)} / {expected}')
+                for word in line:
+                    if word[0] != 0:
+                        continue
+                    all_vars.add(word[1])
+                    if word[1] not in tracked:
+                        continue
+                    indexes = self.indexes(word)
+                    location = f'block {block}, line {line_idx + 1}'
+                    if word[3]:
+                        if not indexes:
+                            missing_defs.append(f'{word[1]} at {location}')
+                        for idx in indexes:
+                            definitions[(word[1], idx)].append(location)
+                    elif not word[4] and not indexes:
+                        missing_uses.append(f'{word[1]} at {location}')
+
+        for (var, idx), locations in definitions.items():
+            if len(locations) > 1:
+                duplicate_defs.append(f'{var}<sub>{idx}</sub>: {", ".join(locations)}')
+
+        untracked = sorted(all_vars - tracked)
+        rows = [
+            ['SSA rename scope', 'partial' if tracked else 'none', self.format_names(tracked)],
+            ['Untracked variables', 'not renamed', self.format_names(untracked)],
+            ['Tracked definitions named', not missing_defs, self.format_notes(missing_defs)],
+            ['Tracked uses named', not missing_uses, self.format_notes(missing_uses)],
+            ['Unique tracked definitions', not duplicate_defs, self.format_notes(duplicate_defs)],
+            ['Phi arity matches predecessors', not phi_arity, self.format_notes(phi_arity)],
+        ]
+        return rows, ['check', 'status', 'details'], [
+            '<comment>Checks are scoped to variables selected by phi placement; '
+            'other variables remain in the original MIR naming style.</comment>'
+        ]
+
+    @staticmethod
+    def indexes(word):
+        if type(word[2]) is int:
+            return [word[2]]
+        return list(word[2])
+
+    @staticmethod
+    def format_names(names):
+        if not names:
+            return 'None'
+        return ', '.join([f'<w0>{name}</w0>' for name in sorted(names)])
+
+    @staticmethod
+    def format_notes(notes):
+        if not notes:
+            return 'ok'
+        return '<br>'.join(notes)
+
     def rename_phi(self, block, tabs, spoiler):
         spoiler += [['tab', tabs + 1], '<r id="5">rename &phi;-functions:</r>']
         i = 0
@@ -127,7 +197,7 @@ class Phi:
             i += 1
         if i == 0:
             spoiler += [['tab', tabs + 2], '<r id="4">no &phi;-functions</r>']
-        # TODO: table<stack>
+        self.stack_snapshot(tabs + 2, spoiler)
 
     def rename_instructions(self, block, tabs, spoiler):
         spoiler += [['tab', tabs + 1], 'rename instructions:']
@@ -149,24 +219,19 @@ class Phi:
             i += 1
         if not flag:
             spoiler += [['tab', tabs + 2], '<r id="4">no instructions</r>']
-        # TODO:table<code_lines|stack>
+        self.stack_snapshot(tabs + 2, spoiler)
 
     def clean(self, block, tabs, spoiler):
         spoiler += [['tab', tabs + 1], 'clean():']
-        i = 0
-        while self.is_phi_line(block, i):
-            var = self.code_blocks[block][i][-1]
-            if self.stack[var[1]]:
-                self.stack[var[1]].pop()
-            i += 1
-        while i < len(self.code_blocks):
-            for word in self.code_blocks[i]:
+        cleaned = False
+        for line in self.code_blocks[block]:
+            for word in line:
                 if word[0] == 0 and word[3] and self.stack[word[1]]:
                     self.stack[word[1]].pop()
-            i += 1
-        if i == 0:
+                    cleaned = True
+        if not cleaned:
             spoiler += ['nothing to clean']
-        # TODO: table<stack>
+        self.stack_snapshot(tabs + 2, spoiler)
 
     def is_phi_line(self, node, i):
         return i < len(self.code_blocks[node]) and self.code_blocks[node][i] and \
@@ -188,7 +253,17 @@ class Phi:
             i += 1
         if i == 0:
             spoiler += ['<r id="4">no &phi;-functions</r>']
-        # TODO: table<code_lines|stack>
+        self.stack_snapshot(tabs + 2, spoiler)
+
+    def stack_snapshot(self, tabs, spoiler):
+        active = []
+        for var in sorted(self.stack):
+            if self.stack[var]:
+                active.append(f'<w0>{var}</w0>:[{", ".join(map(str, self.stack[var]))}]')
+        if not active:
+            spoiler += [['tab', tabs], '<r id="6">stack</r> : empty']
+        else:
+            spoiler += [['tab', tabs], '<r id="6">stack</r> : ', ',&nbsp;'.join(active)]
 
     def new_name(self, var):
         idx = self.counter[var]

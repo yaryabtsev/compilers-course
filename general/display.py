@@ -32,6 +32,27 @@ class Display:
     def __del__(self):
         print('</main></div><footer><p>Generated compiler-analysis report</p></footer>'
               '<script>'
+              'const themeKey="compiler-analysis-theme";'
+              'const themeMedia=window.matchMedia("(prefers-color-scheme: dark)");'
+              'const resolveTheme=(mode)=>mode==="dark"||(mode==="system"&&themeMedia.matches)?"dark":"light";'
+              'const updateThemeButtons=(mode)=>document.querySelectorAll("[data-theme-choice]").forEach('
+              'button=>button.setAttribute("aria-pressed",String(button.dataset.themeChoice===mode)));'
+              'const applyTheme=(mode,store=true)=>{'
+              'const selected=mode||"system";'
+              'document.documentElement.dataset.theme=resolveTheme(selected);'
+              'document.documentElement.dataset.themeMode=selected;'
+              'updateThemeButtons(selected);'
+              'if(store)localStorage.setItem(themeKey,selected);'
+              '};'
+              'document.querySelectorAll("[data-theme-choice]").forEach('
+              'button=>button.addEventListener("click",()=>applyTheme(button.dataset.themeChoice)));'
+              'themeMedia.addEventListener("change",()=>{'
+              'if((localStorage.getItem(themeKey)||"system")==="system")applyTheme("system",false);'
+              '});'
+              'window.addEventListener("message",(event)=>{'
+              'if(event.data&&event.data.type==="compiler-theme")applyTheme(event.data.mode,false);'
+              '});'
+              'applyTheme(localStorage.getItem(themeKey)||"system",false);'
               'const allDetails=()=>Array.from(document.querySelectorAll("main > details"));'
               'document.querySelector("[data-expand]")?.addEventListener("click",()=>allDetails().forEach(d=>d.open=true));'
               'document.querySelector("[data-collapse]")?.addEventListener("click",()=>allDetails().forEach(d=>d.open=false));'
@@ -44,22 +65,32 @@ class Display:
         return f'{count} line' if count == 1 else f'{count} lines'
 
     @staticmethod
-    def draw_graph(nx_graph, path: str) -> None:
+    def draw_graph(nx_graph, path: str, engine: str = 'dot') -> None:
         try:
             graph = to_agraph(nx_graph)
-            graph.layout('dot')
+            graph.layout(engine)
             graph.draw(path)
         except ImportError:
-            Display.draw_graph_with_dot(nx_graph, path)
+            Display.draw_graph_with_graphviz(nx_graph, path, engine)
 
     @staticmethod
     def draw_graph_with_dot(nx_graph, path: str) -> None:
+        Display.draw_graph_with_graphviz(nx_graph, path)
+
+    @staticmethod
+    def draw_graph_with_graphviz(nx_graph, path: str, engine: str = 'dot') -> None:
         def quote(value) -> str:
             return json.dumps(str(value))
 
+        graph_attrs = 'rankdir=TB, splines=curved'
+        background = 'transparent'
+        if engine != 'dot':
+            graph_attrs = 'splines=curved, overlap=false, outputorder=edgesfirst'
+            background = 'white'
+
         lines = [
             'digraph G {',
-            '  graph [rankdir=TB, splines=curved, bgcolor="transparent"];',
+            f'  graph [{graph_attrs}, bgcolor="{background}"];',
             '  node [shape=ellipse, style="filled", fillcolor="white", color="#94a3b8", fontname="Arial"];',
             '  edge [arrowsize=0.6, color="#64748b", fontname="Arial"];',
         ]
@@ -72,7 +103,7 @@ class Display:
         for source, target in edges:
             lines.append(f'  {quote(source)} -> {quote(target)};')
         lines.append('}')
-        subprocess.run(['dot', '-Tpng', '-o', path], input='\n'.join(lines),
+        subprocess.run([engine, '-Tpng', '-o', path], input='\n'.join(lines),
                        text=True, check=True)
 
     def show_code(self, lexemes: list, spoilers=None) -> None:
@@ -274,6 +305,11 @@ class Display:
               '<button type="button" data-expand>Expand all</button>'
               '<button type="button" data-collapse>Collapse all</button>'
               '</div>')
+        print('<div class="theme-toggle" aria-label="Theme">'
+              '<button type="button" data-theme-choice="light">Light</button>'
+              '<button type="button" data-theme-choice="dark">Dark</button>'
+              '<button type="button" data-theme-choice="system">System</button>'
+              '</div>')
         print('<nav aria-label="Report sections">')
         for _id in range(len(self.titles)):
             Display.show_href(self.titles[_id], "content", _id)
@@ -398,7 +434,8 @@ class Display:
         for i in range(len(nx_multi_graphs)):
             nx_multi_graphs[i].graph['edge'] = {'arrowsize': '0.6', 'splines': 'curved'}
             nx_multi_graphs[i].graph['graph'] = {'scale': '3'}
-            Display.draw_graph(nx_multi_graphs[i], os.path.join(self.out_dir, 'regions', f'{i}.png'))
+            Display.draw_graph(nx_multi_graphs[i], os.path.join(self.out_dir, 'regions', f'{i}.png'),
+                               engine='neato')
             print('<figure>')
             print(f'<img src="regions/{i}.png" alt="{self.titles[self.title_id - 1]} step {i + 1}">')
             print(f'<figcaption>Step {i + 1}</figcaption>')

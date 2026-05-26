@@ -1,0 +1,12 @@
+{
+  "id": "test04",
+  "label": "test04",
+  "source": "input/test04.txt",
+  "block_name": "A",
+  "blocks": 7,
+  "sections": 17,
+  "region_steps": 4,
+  "processed_at": "2026-05-26T10:33:01Z",
+  "dumped_at": "2026-05-26T10:33:01Z",
+  "report": "index.html"
+}

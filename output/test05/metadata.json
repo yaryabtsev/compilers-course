@@ -1,0 +1,12 @@
+{
+  "id": "test05",
+  "label": "test05",
+  "source": "synthetic blocks / edges",
+  "block_name": "R1",
+  "blocks": 7,
+  "sections": 17,
+  "region_steps": 2,
+  "processed_at": "2026-05-26T10:33:04Z",
+  "dumped_at": "2026-05-26T10:33:04Z",
+  "report": "index.html"
+}

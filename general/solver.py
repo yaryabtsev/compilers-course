@@ -4,6 +4,7 @@ from tasks.task1 import LocalOptimization
 from tasks.task2 import Dominator, PostDominator
 from tasks.task3 import Phi
 from tasks.task4 import Regions
+from general.viewer import now_iso, write_dataset_metadata
 
 
 def solve(input: str, output: str, block_name: str = 'A', blocks=None, edges=None):
@@ -63,4 +64,7 @@ def solve(input: str, output: str, block_name: str = 'A', blocks=None, edges=Non
     display.show_block_table([['Region'] + regions.classification], ['Class', 'Area-Node', 'Area-Body', 'Area-Loop'])
     display.show_block_table(*regions.gen_kill())
     display.show_block_table(*regions.transfer_function())
+    processed_at = now_iso()
+    sections_count = len(display.titles)
     del display
+    write_dataset_metadata(output, input, block_name, n, sections_count, processed_at)

@@ -2,6 +2,7 @@
 <aside class="sidebar">
 <div class="brand"><span class="brand-mark">CA</span><div><p>Compiler Analysis</p><small>Static report</small></div></div>
 <div class="sidebar-actions"><button type="button" data-expand>Expand all</button><button type="button" data-collapse>Collapse all</button></div>
+<div class="theme-toggle" aria-label="Theme"><button type="button" data-theme-choice="light">Light</button><button type="button" data-theme-choice="dark">Dark</button><button type="button" data-theme-choice="system">System</button></div>
 <nav aria-label="Report sections">
 <a class="content" href="#title-0"><span>01</span>Base MIR</a>
 <a class="content" href="#title-1"><span>02</span>Control Flow Graph</a>
@@ -616,10 +617,10 @@
 <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb3>Globals&nbsp;:&nbsp;</gb3>{<w0>a</w0>}&nbsp;<disj>&#8744;</disj>&nbsp;{<w0>b</w0>}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<ol class="mir-lines" start="3">
 <li><span><w20>param</w20>&nbsp;<w0>c</w0>&nbsp;</span></li>
 </ol>
-<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb3>Globals&nbsp;:&nbsp;</gb3>{<w0>b</w0>,&nbsp;<w0>a</w0>}&nbsp;<disj>&#8744;</disj>&nbsp;{<w0>c</w0>}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<ol class="mir-lines" start="4">
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb3>Globals&nbsp;:&nbsp;</gb3>{<w0>a</w0>,&nbsp;<w0>b</w0>}&nbsp;<disj>&#8744;</disj>&nbsp;{<w0>c</w0>}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<ol class="mir-lines" start="4">
 <li><span><w20>param</w20>&nbsp;<w0>d</w0>&nbsp;</span></li>
 </ol>
-<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb3>Globals&nbsp;:&nbsp;</gb3>{<w0>b</w0>,&nbsp;<w0>a</w0>,&nbsp;<w0>c</w0>}&nbsp;<disj>&#8744;</disj>&nbsp;{<w0>d</w0>}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<ol class="mir-lines" start="5">
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb3>Globals&nbsp;:&nbsp;</gb3>{<w0>a</w0>,&nbsp;<w0>c</w0>,&nbsp;<w0>b</w0>}&nbsp;<disj>&#8744;</disj>&nbsp;{<w0>d</w0>}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<ol class="mir-lines" start="5">
 <li><span><w0>i</w0>&nbsp;<w22>&xlarr;</w22>&nbsp;<w3><h>#</h>1</w3>&nbsp;</span></li>
 </ol>
 <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb2>def<sub><font class="block-name">A</font></sub>&nbsp;:&nbsp;</gb2>{}&nbsp;<disj>&#8744;</disj>&nbsp;{<w0>i</w0>}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb4>Blocks(<gb5>i</gb5>)&nbsp;:&nbsp;</gb4>{}&nbsp;<disj>&#8744;</disj>&nbsp;{<font class="block-name">A</font>}<br><font class="block-name">B</font><gb1>-block:</gb1><br>&nbsp;&nbsp;&nbsp;<gb2>def<sub><font class="block-name">B</font></sub>&nbsp;:&nbsp;</gb2>{}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<ol class="mir-lines" start="6">
@@ -640,7 +641,7 @@
 <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb2>def<sub><font class="block-name">C</font></sub>&nbsp;:&nbsp;</gb2>{<w0>b</w0>}&nbsp;<disj>&#8744;</disj>&nbsp;{<w0>c</w0>}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb4>Blocks(<gb5>c</gb5>)&nbsp;:&nbsp;</gb4>{}&nbsp;<disj>&#8744;</disj>&nbsp;{<font class="block-name">C</font>}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<ol class="mir-lines" start="11">
 <li><span><w0>d</w0>&nbsp;<w22>&xlarr;</w22>&nbsp;<w3><h>#</h>0</w3>&nbsp;</span></li>
 </ol>
-<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb2>def<sub><font class="block-name">C</font></sub>&nbsp;:&nbsp;</gb2>{<w0>b</w0>,&nbsp;<w0>c</w0>}&nbsp;<disj>&#8744;</disj>&nbsp;{<w0>d</w0>}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb4>Blocks(<gb5>d</gb5>)&nbsp;:&nbsp;</gb4>{}&nbsp;<disj>&#8744;</disj>&nbsp;{<font class="block-name">C</font>}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<ol class="mir-lines" start="12">
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb2>def<sub><font class="block-name">C</font></sub>&nbsp;:&nbsp;</gb2>{<w0>c</w0>,&nbsp;<w0>b</w0>}&nbsp;<disj>&#8744;</disj>&nbsp;{<w0>d</w0>}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb4>Blocks(<gb5>d</gb5>)&nbsp;:&nbsp;</gb4>{}&nbsp;<disj>&#8744;</disj>&nbsp;{<font class="block-name">C</font>}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<ol class="mir-lines" start="12">
 <li><span><w6>goto</w6>&nbsp;<w1>L5</w1>&nbsp;</span></li>
 </ol>
 <br><font class="block-name">D</font><gb1>-block:</gb1><br>&nbsp;&nbsp;&nbsp;<gb2>def<sub><font class="block-name">D</font></sub>&nbsp;:&nbsp;</gb2>{}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<ol class="mir-lines" start="13">
@@ -667,16 +668,16 @@
 <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb2>def<sub><font class="block-name">G</font></sub>&nbsp;:&nbsp;</gb2>{}&nbsp;<disj>&#8744;</disj>&nbsp;{<w0>b</w0>}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb4>Blocks(<gb5>b</gb5>)&nbsp;:&nbsp;</gb4>{<font class="block-name">B</font>,&nbsp;<font class="block-name">C</font>}&nbsp;<disj>&#8744;</disj>&nbsp;{<font class="block-name">G</font>}<br><font class="block-name">H</font><gb1>-block:</gb1><br>&nbsp;&nbsp;&nbsp;<gb2>def<sub><font class="block-name">H</font></sub>&nbsp;:&nbsp;</gb2>{}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<ol class="mir-lines" start="20">
 <li><span><w1>L5</w1>:&nbsp;<w0>y</w0>&nbsp;<w22>&xlarr;</w22>&nbsp;<w23>+</w23>,&nbsp;<w0>a</w0>,&nbsp;<w0>b</w0>&nbsp;</span></li>
 </ol>
-<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb3>Globals&nbsp;:&nbsp;</gb3>{<w0>d</w0>,&nbsp;<w0>b</w0>,&nbsp;<w0>a</w0>,&nbsp;<w0>c</w0>}&nbsp;<disj>&#8744;</disj>&nbsp;{<w0>a</w0>}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb3>Globals&nbsp;:&nbsp;</gb3>{<w0>d</w0>,&nbsp;<w0>b</w0>,&nbsp;<w0>a</w0>,&nbsp;<w0>c</w0>}&nbsp;<disj>&#8744;</disj>&nbsp;{<w0>b</w0>}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb2>def<sub><font class="block-name">H</font></sub>&nbsp;:&nbsp;</gb2>{}&nbsp;<disj>&#8744;</disj>&nbsp;{<w0>y</w0>}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb4>Blocks(<gb5>y</gb5>)&nbsp;:&nbsp;</gb4>{}&nbsp;<disj>&#8744;</disj>&nbsp;{<font class="block-name">H</font>}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<ol class="mir-lines" start="21">
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb3>Globals&nbsp;:&nbsp;</gb3>{<w0>a</w0>,&nbsp;<w0>c</w0>,&nbsp;<w0>b</w0>,&nbsp;<w0>d</w0>}&nbsp;<disj>&#8744;</disj>&nbsp;{<w0>a</w0>}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb3>Globals&nbsp;:&nbsp;</gb3>{<w0>a</w0>,&nbsp;<w0>c</w0>,&nbsp;<w0>b</w0>,&nbsp;<w0>d</w0>}&nbsp;<disj>&#8744;</disj>&nbsp;{<w0>b</w0>}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb2>def<sub><font class="block-name">H</font></sub>&nbsp;:&nbsp;</gb2>{}&nbsp;<disj>&#8744;</disj>&nbsp;{<w0>y</w0>}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb4>Blocks(<gb5>y</gb5>)&nbsp;:&nbsp;</gb4>{}&nbsp;<disj>&#8744;</disj>&nbsp;{<font class="block-name">H</font>}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<ol class="mir-lines" start="21">
 <li><span><w0>z</w0>&nbsp;<w22>&xlarr;</w22>&nbsp;<w23>+</w23>,&nbsp;<w0>c</w0>,&nbsp;<w0>d</w0>&nbsp;</span></li>
 </ol>
-<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb3>Globals&nbsp;:&nbsp;</gb3>{<w0>d</w0>,&nbsp;<w0>b</w0>,&nbsp;<w0>a</w0>,&nbsp;<w0>c</w0>}&nbsp;<disj>&#8744;</disj>&nbsp;{<w0>c</w0>}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb3>Globals&nbsp;:&nbsp;</gb3>{<w0>d</w0>,&nbsp;<w0>b</w0>,&nbsp;<w0>a</w0>,&nbsp;<w0>c</w0>}&nbsp;<disj>&#8744;</disj>&nbsp;{<w0>d</w0>}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb2>def<sub><font class="block-name">H</font></sub>&nbsp;:&nbsp;</gb2>{<w0>y</w0>}&nbsp;<disj>&#8744;</disj>&nbsp;{<w0>z</w0>}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb4>Blocks(<gb5>z</gb5>)&nbsp;:&nbsp;</gb4>{}&nbsp;<disj>&#8744;</disj>&nbsp;{<font class="block-name">H</font>}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<ol class="mir-lines" start="22">
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb3>Globals&nbsp;:&nbsp;</gb3>{<w0>a</w0>,&nbsp;<w0>c</w0>,&nbsp;<w0>b</w0>,&nbsp;<w0>d</w0>}&nbsp;<disj>&#8744;</disj>&nbsp;{<w0>c</w0>}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb3>Globals&nbsp;:&nbsp;</gb3>{<w0>a</w0>,&nbsp;<w0>c</w0>,&nbsp;<w0>b</w0>,&nbsp;<w0>d</w0>}&nbsp;<disj>&#8744;</disj>&nbsp;{<w0>d</w0>}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb2>def<sub><font class="block-name">H</font></sub>&nbsp;:&nbsp;</gb2>{<w0>y</w0>}&nbsp;<disj>&#8744;</disj>&nbsp;{<w0>z</w0>}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb4>Blocks(<gb5>z</gb5>)&nbsp;:&nbsp;</gb4>{}&nbsp;<disj>&#8744;</disj>&nbsp;{<font class="block-name">H</font>}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<ol class="mir-lines" start="22">
 <li><span><w0>i</w0>&nbsp;<w22>&xlarr;</w22>&nbsp;<w23>+</w23>,&nbsp;<w0>i</w0>,&nbsp;<w0>i</w0>&nbsp;</span></li>
 </ol>
-<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb3>Globals&nbsp;:&nbsp;</gb3>{<w0>d</w0>,&nbsp;<w0>b</w0>,&nbsp;<w0>a</w0>,&nbsp;<w0>c</w0>}&nbsp;<disj>&#8744;</disj>&nbsp;{<w0>i</w0>}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb3>Globals&nbsp;:&nbsp;</gb3>{<w0>d</w0>,&nbsp;<w0>i</w0>,&nbsp;<w0>a</w0>,&nbsp;<w0>c</w0>,&nbsp;<w0>b</w0>}&nbsp;<disj>&#8744;</disj>&nbsp;{<w0>i</w0>}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb2>def<sub><font class="block-name">H</font></sub>&nbsp;:&nbsp;</gb2>{<w0>z</w0>,&nbsp;<w0>y</w0>}&nbsp;<disj>&#8744;</disj>&nbsp;{<w0>i</w0>}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb4>Blocks(<gb5>i</gb5>)&nbsp;:&nbsp;</gb4>{<font class="block-name">A</font>}&nbsp;<disj>&#8744;</disj>&nbsp;{<font class="block-name">H</font>}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<ol class="mir-lines" start="23">
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb3>Globals&nbsp;:&nbsp;</gb3>{<w0>a</w0>,&nbsp;<w0>c</w0>,&nbsp;<w0>b</w0>,&nbsp;<w0>d</w0>}&nbsp;<disj>&#8744;</disj>&nbsp;{<w0>i</w0>}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb3>Globals&nbsp;:&nbsp;</gb3>{<w0>i</w0>,&nbsp;<w0>c</w0>,&nbsp;<w0>b</w0>,&nbsp;<w0>a</w0>,&nbsp;<w0>d</w0>}&nbsp;<disj>&#8744;</disj>&nbsp;{<w0>i</w0>}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb2>def<sub><font class="block-name">H</font></sub>&nbsp;:&nbsp;</gb2>{<w0>y</w0>,&nbsp;<w0>z</w0>}&nbsp;<disj>&#8744;</disj>&nbsp;{<w0>i</w0>}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb4>Blocks(<gb5>i</gb5>)&nbsp;:&nbsp;</gb4>{<font class="block-name">A</font>}&nbsp;<disj>&#8744;</disj>&nbsp;{<font class="block-name">H</font>}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<ol class="mir-lines" start="23">
 <li><span><if>if</if>&nbsp;<w5>True</w5>&nbsp;<w0>a</w0>&nbsp;<w24>=</w24>&nbsp;<w3><h>#</h>0</w3>&nbsp;<w6>goto</w6>&nbsp;<w1>L1</w1>&nbsp;</span></li>
 </ol>
-<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb3>Globals&nbsp;:&nbsp;</gb3>{<w0>d</w0>,&nbsp;<w0>i</w0>,&nbsp;<w0>a</w0>,&nbsp;<w0>c</w0>,&nbsp;<w0>b</w0>}&nbsp;<disj>&#8744;</disj>&nbsp;{<w0>a</w0>}<br><font class="block-name">Exit</font><gb1>-block:</gb1><br>&nbsp;&nbsp;&nbsp;<gb2>def<sub><font class="block-name">Exit</font></sub>&nbsp;:&nbsp;</gb2>{}</div></details>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb3>Globals&nbsp;:&nbsp;</gb3>{<w0>i</w0>,&nbsp;<w0>c</w0>,&nbsp;<w0>b</w0>,&nbsp;<w0>a</w0>,&nbsp;<w0>d</w0>}&nbsp;<disj>&#8744;</disj>&nbsp;{<w0>a</w0>}<br><font class="block-name">Exit</font><gb1>-block:</gb1><br>&nbsp;&nbsp;&nbsp;<gb2>def<sub><font class="block-name">Exit</font></sub>&nbsp;:&nbsp;</gb2>{}</div></details>
 <div class="table-scroll"><table>
 <thead><tr>
 <th>var =</th>
@@ -713,7 +714,7 @@
 </table></div></details>
 <details id="title-8"><summary><h2 class="block-table-title">Phi Placement</h2></summary>
 <details class="trace"><summary><p class="summary-span">Trace</p></summary><div class="trace-code">
-<l id="1">variable</l>&nbsp;<w0>d</w0>:<br>&nbsp;&nbsp;&nbsp;<l id="2">WorkList</l> : {<font class="block-name">C</font>,&nbsp;<font class="block-name">D</font>,&nbsp;<font class="block-name">E</font>}<br>&nbsp;&nbsp;&nbsp;<l id="3">insert</l>&nbsp;<phi>&phi;(<h>*</h><w0>d</w0>)</phi>&nbsp;in&nbsp;<font class="block-name">H</font><gb1>-block:</gb1><br>&nbsp;&nbsp;&nbsp;<l id="2">WorkList</l> : {<font class="block-name">C</font>,&nbsp;<font class="block-name">D</font>,&nbsp;<font class="block-name">E</font>}&nbsp;<disj>&#8744;</disj>&nbsp;{<w0>8</w0>}<br>&nbsp;&nbsp;&nbsp;<l id="3">insert</l>&nbsp;<phi>&phi;(<h>*</h><w0>d</w0>)</phi>&nbsp;in&nbsp;<font class="block-name">G</font><gb1>-block:</gb1><br>&nbsp;&nbsp;&nbsp;<l id="2">WorkList</l> : {<font class="block-name">C</font>,&nbsp;<font class="block-name">D</font>,&nbsp;<font class="block-name">E</font>,&nbsp;<font class="block-name">H</font>}&nbsp;<disj>&#8744;</disj>&nbsp;{<w0>7</w0>}<br>&nbsp;&nbsp;&nbsp;<l id="3">insert</l>&nbsp;<phi>&phi;(<h>*</h><w0>d</w0>)</phi>&nbsp;in&nbsp;<font class="block-name">B</font><gb1>-block:</gb1><br>&nbsp;&nbsp;&nbsp;<l id="2">WorkList</l> : {<font class="block-name">C</font>,&nbsp;<font class="block-name">D</font>,&nbsp;<font class="block-name">E</font>,&nbsp;<font class="block-name">H</font>,&nbsp;<font class="block-name">G</font>}&nbsp;<disj>&#8744;</disj>&nbsp;{<w0>2</w0>}<br><l id="1">variable</l>&nbsp;<w0>i</w0>:<br>&nbsp;&nbsp;&nbsp;<l id="2">WorkList</l> : {<font class="block-name">H</font>,&nbsp;<font class="block-name">A</font>}<br>&nbsp;&nbsp;&nbsp;<l id="3">insert</l>&nbsp;<phi>&phi;(<h>*</h><w0>i</w0>)</phi>&nbsp;in&nbsp;<font class="block-name">B</font><gb1>-block:</gb1><br>&nbsp;&nbsp;&nbsp;<l id="2">WorkList</l> : {<font class="block-name">H</font>,&nbsp;<font class="block-name">A</font>}&nbsp;<disj>&#8744;</disj>&nbsp;{<w0>2</w0>}<br><l id="1">variable</l>&nbsp;<w0>a</w0>:<br>&nbsp;&nbsp;&nbsp;<l id="2">WorkList</l> : {<font class="block-name">B</font>,&nbsp;<font class="block-name">D</font>}<br>&nbsp;&nbsp;&nbsp;<l id="3">insert</l>&nbsp;<phi>&phi;(<h>*</h><w0>a</w0>)</phi>&nbsp;in&nbsp;<font class="block-name">B</font><gb1>-block:</gb1><br>&nbsp;&nbsp;&nbsp;<l id="3">insert</l>&nbsp;<phi>&phi;(<h>*</h><w0>a</w0>)</phi>&nbsp;in&nbsp;<font class="block-name">H</font><gb1>-block:</gb1><br>&nbsp;&nbsp;&nbsp;<l id="2">WorkList</l> : {<font class="block-name">B</font>,&nbsp;<font class="block-name">D</font>}&nbsp;<disj>&#8744;</disj>&nbsp;{<w0>8</w0>}<br><l id="1">variable</l>&nbsp;<w0>c</w0>:<br>&nbsp;&nbsp;&nbsp;<l id="2">WorkList</l> : {<font class="block-name">C</font>,&nbsp;<font class="block-name">F</font>}<br>&nbsp;&nbsp;&nbsp;<l id="3">insert</l>&nbsp;<phi>&phi;(<h>*</h><w0>c</w0>)</phi>&nbsp;in&nbsp;<font class="block-name">H</font><gb1>-block:</gb1><br>&nbsp;&nbsp;&nbsp;<l id="2">WorkList</l> : {<font class="block-name">C</font>,&nbsp;<font class="block-name">F</font>}&nbsp;<disj>&#8744;</disj>&nbsp;{<w0>8</w0>}<br>&nbsp;&nbsp;&nbsp;<l id="3">insert</l>&nbsp;<phi>&phi;(<h>*</h><w0>c</w0>)</phi>&nbsp;in&nbsp;<font class="block-name">G</font><gb1>-block:</gb1><br>&nbsp;&nbsp;&nbsp;<l id="2">WorkList</l> : {<font class="block-name">C</font>,&nbsp;<font class="block-name">F</font>,&nbsp;<font class="block-name">H</font>}&nbsp;<disj>&#8744;</disj>&nbsp;{<w0>7</w0>}<br>&nbsp;&nbsp;&nbsp;<l id="3">insert</l>&nbsp;<phi>&phi;(<h>*</h><w0>c</w0>)</phi>&nbsp;in&nbsp;<font class="block-name">B</font><gb1>-block:</gb1><br>&nbsp;&nbsp;&nbsp;<l id="2">WorkList</l> : {<font class="block-name">C</font>,&nbsp;<font class="block-name">F</font>,&nbsp;<font class="block-name">H</font>,&nbsp;<font class="block-name">G</font>}&nbsp;<disj>&#8744;</disj>&nbsp;{<w0>2</w0>}<br><l id="1">variable</l>&nbsp;<w0>b</w0>:<br>&nbsp;&nbsp;&nbsp;<l id="2">WorkList</l> : {<font class="block-name">B</font>,&nbsp;<font class="block-name">C</font>,&nbsp;<font class="block-name">G</font>}<br>&nbsp;&nbsp;&nbsp;<l id="3">insert</l>&nbsp;<phi>&phi;(<h>*</h><w0>b</w0>)</phi>&nbsp;in&nbsp;<font class="block-name">B</font><gb1>-block:</gb1><br>&nbsp;&nbsp;&nbsp;<l id="3">insert</l>&nbsp;<phi>&phi;(<h>*</h><w0>b</w0>)</phi>&nbsp;in&nbsp;<font class="block-name">H</font><gb1>-block:</gb1><br>&nbsp;&nbsp;&nbsp;<l id="2">WorkList</l> : {<font class="block-name">B</font>,&nbsp;<font class="block-name">C</font>,&nbsp;<font class="block-name">G</font>}&nbsp;<disj>&#8744;</disj>&nbsp;{<w0>8</w0>}</div></details>
+<l id="1">variable</l>&nbsp;<w0>i</w0>:<br>&nbsp;&nbsp;&nbsp;<l id="2">WorkList</l> : {<font class="block-name">H</font>,&nbsp;<font class="block-name">A</font>}<br>&nbsp;&nbsp;&nbsp;<l id="3">insert</l>&nbsp;<phi>&phi;(<h>*</h><w0>i</w0>)</phi>&nbsp;in&nbsp;<font class="block-name">B</font><gb1>-block:</gb1><br>&nbsp;&nbsp;&nbsp;<l id="2">WorkList</l> : {<font class="block-name">H</font>,&nbsp;<font class="block-name">A</font>}&nbsp;<disj>&#8744;</disj>&nbsp;{<w0>2</w0>}<br><l id="1">variable</l>&nbsp;<w0>c</w0>:<br>&nbsp;&nbsp;&nbsp;<l id="2">WorkList</l> : {<font class="block-name">C</font>,&nbsp;<font class="block-name">F</font>}<br>&nbsp;&nbsp;&nbsp;<l id="3">insert</l>&nbsp;<phi>&phi;(<h>*</h><w0>c</w0>)</phi>&nbsp;in&nbsp;<font class="block-name">H</font><gb1>-block:</gb1><br>&nbsp;&nbsp;&nbsp;<l id="2">WorkList</l> : {<font class="block-name">C</font>,&nbsp;<font class="block-name">F</font>}&nbsp;<disj>&#8744;</disj>&nbsp;{<w0>8</w0>}<br>&nbsp;&nbsp;&nbsp;<l id="3">insert</l>&nbsp;<phi>&phi;(<h>*</h><w0>c</w0>)</phi>&nbsp;in&nbsp;<font class="block-name">G</font><gb1>-block:</gb1><br>&nbsp;&nbsp;&nbsp;<l id="2">WorkList</l> : {<font class="block-name">C</font>,&nbsp;<font class="block-name">F</font>,&nbsp;<font class="block-name">H</font>}&nbsp;<disj>&#8744;</disj>&nbsp;{<w0>7</w0>}<br>&nbsp;&nbsp;&nbsp;<l id="3">insert</l>&nbsp;<phi>&phi;(<h>*</h><w0>c</w0>)</phi>&nbsp;in&nbsp;<font class="block-name">B</font><gb1>-block:</gb1><br>&nbsp;&nbsp;&nbsp;<l id="2">WorkList</l> : {<font class="block-name">C</font>,&nbsp;<font class="block-name">F</font>,&nbsp;<font class="block-name">H</font>,&nbsp;<font class="block-name">G</font>}&nbsp;<disj>&#8744;</disj>&nbsp;{<w0>2</w0>}<br><l id="1">variable</l>&nbsp;<w0>b</w0>:<br>&nbsp;&nbsp;&nbsp;<l id="2">WorkList</l> : {<font class="block-name">B</font>,&nbsp;<font class="block-name">C</font>,&nbsp;<font class="block-name">G</font>}<br>&nbsp;&nbsp;&nbsp;<l id="3">insert</l>&nbsp;<phi>&phi;(<h>*</h><w0>b</w0>)</phi>&nbsp;in&nbsp;<font class="block-name">B</font><gb1>-block:</gb1><br>&nbsp;&nbsp;&nbsp;<l id="3">insert</l>&nbsp;<phi>&phi;(<h>*</h><w0>b</w0>)</phi>&nbsp;in&nbsp;<font class="block-name">H</font><gb1>-block:</gb1><br>&nbsp;&nbsp;&nbsp;<l id="2">WorkList</l> : {<font class="block-name">B</font>,&nbsp;<font class="block-name">C</font>,&nbsp;<font class="block-name">G</font>}&nbsp;<disj>&#8744;</disj>&nbsp;{<w0>8</w0>}<br><l id="1">variable</l>&nbsp;<w0>a</w0>:<br>&nbsp;&nbsp;&nbsp;<l id="2">WorkList</l> : {<font class="block-name">B</font>,&nbsp;<font class="block-name">D</font>}<br>&nbsp;&nbsp;&nbsp;<l id="3">insert</l>&nbsp;<phi>&phi;(<h>*</h><w0>a</w0>)</phi>&nbsp;in&nbsp;<font class="block-name">B</font><gb1>-block:</gb1><br>&nbsp;&nbsp;&nbsp;<l id="3">insert</l>&nbsp;<phi>&phi;(<h>*</h><w0>a</w0>)</phi>&nbsp;in&nbsp;<font class="block-name">H</font><gb1>-block:</gb1><br>&nbsp;&nbsp;&nbsp;<l id="2">WorkList</l> : {<font class="block-name">B</font>,&nbsp;<font class="block-name">D</font>}&nbsp;<disj>&#8744;</disj>&nbsp;{<w0>8</w0>}<br><l id="1">variable</l>&nbsp;<w0>d</w0>:<br>&nbsp;&nbsp;&nbsp;<l id="2">WorkList</l> : {<font class="block-name">C</font>,&nbsp;<font class="block-name">D</font>,&nbsp;<font class="block-name">E</font>}<br>&nbsp;&nbsp;&nbsp;<l id="3">insert</l>&nbsp;<phi>&phi;(<h>*</h><w0>d</w0>)</phi>&nbsp;in&nbsp;<font class="block-name">H</font><gb1>-block:</gb1><br>&nbsp;&nbsp;&nbsp;<l id="2">WorkList</l> : {<font class="block-name">C</font>,&nbsp;<font class="block-name">D</font>,&nbsp;<font class="block-name">E</font>}&nbsp;<disj>&#8744;</disj>&nbsp;{<w0>8</w0>}<br>&nbsp;&nbsp;&nbsp;<l id="3">insert</l>&nbsp;<phi>&phi;(<h>*</h><w0>d</w0>)</phi>&nbsp;in&nbsp;<font class="block-name">G</font><gb1>-block:</gb1><br>&nbsp;&nbsp;&nbsp;<l id="2">WorkList</l> : {<font class="block-name">C</font>,&nbsp;<font class="block-name">D</font>,&nbsp;<font class="block-name">E</font>,&nbsp;<font class="block-name">H</font>}&nbsp;<disj>&#8744;</disj>&nbsp;{<w0>7</w0>}<br>&nbsp;&nbsp;&nbsp;<l id="3">insert</l>&nbsp;<phi>&phi;(<h>*</h><w0>d</w0>)</phi>&nbsp;in&nbsp;<font class="block-name">B</font><gb1>-block:</gb1><br>&nbsp;&nbsp;&nbsp;<l id="2">WorkList</l> : {<font class="block-name">C</font>,&nbsp;<font class="block-name">D</font>,&nbsp;<font class="block-name">E</font>,&nbsp;<font class="block-name">H</font>,&nbsp;<font class="block-name">G</font>}&nbsp;<disj>&#8744;</disj>&nbsp;{<w0>2</w0>}</div></details>
 <div class="table-scroll"><table>
 <thead><tr>
 <th>block =</th>
@@ -842,11 +843,11 @@
 <span class="new-block">Block</span> <span class="block-name">B</span> <span class="count-lines">8 lines</span>
 </div>
 <ol class="mir-lines" start="6">
-<li><span><w1>L1</w1>:&nbsp;<w0>b</w0>&nbsp;<w22>&xlarr;</w22>&nbsp;<phi>&phi;(<w0><h>*</h>b</w0>)</phi>,&nbsp;</span></li>
-<li><span><w0>c</w0>&nbsp;<w22>&xlarr;</w22>&nbsp;<phi>&phi;(<w0><h>*</h>c</w0>)</phi>,&nbsp;</span></li>
+<li><span><w1>L1</w1>:&nbsp;<w0>d</w0>&nbsp;<w22>&xlarr;</w22>&nbsp;<phi>&phi;(<w0><h>*</h>d</w0>)</phi>,&nbsp;</span></li>
 <li><span><w0>a</w0>&nbsp;<w22>&xlarr;</w22>&nbsp;<phi>&phi;(<w0><h>*</h>a</w0>)</phi>,&nbsp;</span></li>
+<li><span><w0>b</w0>&nbsp;<w22>&xlarr;</w22>&nbsp;<phi>&phi;(<w0><h>*</h>b</w0>)</phi>,&nbsp;</span></li>
+<li><span><w0>c</w0>&nbsp;<w22>&xlarr;</w22>&nbsp;<phi>&phi;(<w0><h>*</h>c</w0>)</phi>,&nbsp;</span></li>
 <li><span><w0>i</w0>&nbsp;<w22>&xlarr;</w22>&nbsp;<phi>&phi;(<w0><h>*</h>i</w0>)</phi>,&nbsp;</span></li>
-<li><span><w0>d</w0>&nbsp;<w22>&xlarr;</w22>&nbsp;<phi>&phi;(<w0><h>*</h>d</w0>)</phi>,&nbsp;</span></li>
 <li><span><w0>a</w0>&nbsp;<w22>&xlarr;</w22>&nbsp;<w3><h>#</h>0</w3>&nbsp;</span></li>
 <li><span><w0>b</w0>&nbsp;<w22>&xlarr;</w22>&nbsp;<w3><h>#</h>0</w3>&nbsp;</span></li>
 <li><span><if>if</if>&nbsp;<w5>True</w5>&nbsp;<w0>a</w0>&nbsp;<w24>=</w24>&nbsp;<w3><h>#</h>0</w3>&nbsp;<w6>goto</w6>&nbsp;<w1>L2</w1>&nbsp;</span></li>
@@ -895,8 +896,8 @@
 <span class="new-block">Block</span> <span class="block-name">G</span> <span class="count-lines">3 lines</span>
 </div>
 <ol class="mir-lines" start="24">
-<li><span><w1>L4</w1>:&nbsp;<w0>c</w0>&nbsp;<w22>&xlarr;</w22>&nbsp;<phi>&phi;(<w0><h>*</h>c</w0>)</phi>,&nbsp;</span></li>
-<li><span><w0>d</w0>&nbsp;<w22>&xlarr;</w22>&nbsp;<phi>&phi;(<w0><h>*</h>d</w0>)</phi>,&nbsp;</span></li>
+<li><span><w1>L4</w1>:&nbsp;<w0>d</w0>&nbsp;<w22>&xlarr;</w22>&nbsp;<phi>&phi;(<w0><h>*</h>d</w0>)</phi>,&nbsp;</span></li>
+<li><span><w0>c</w0>&nbsp;<w22>&xlarr;</w22>&nbsp;<phi>&phi;(<w0><h>*</h>c</w0>)</phi>,&nbsp;</span></li>
 <li><span><w0>b</w0>&nbsp;<w22>&xlarr;</w22>&nbsp;<w3><h>#</h>0</w3>&nbsp;</span></li>
 </ol>
 </article>
@@ -905,10 +906,10 @@
 <span class="new-block">Block</span> <span class="block-name">H</span> <span class="count-lines">8 lines</span>
 </div>
 <ol class="mir-lines" start="27">
-<li><span><w1>L5</w1>:&nbsp;<w0>b</w0>&nbsp;<w22>&xlarr;</w22>&nbsp;<phi>&phi;(<w0><h>*</h>b</w0>)</phi>,&nbsp;</span></li>
-<li><span><w0>c</w0>&nbsp;<w22>&xlarr;</w22>&nbsp;<phi>&phi;(<w0><h>*</h>c</w0>)</phi>,&nbsp;</span></li>
+<li><span><w1>L5</w1>:&nbsp;<w0>d</w0>&nbsp;<w22>&xlarr;</w22>&nbsp;<phi>&phi;(<w0><h>*</h>d</w0>)</phi>,&nbsp;</span></li>
 <li><span><w0>a</w0>&nbsp;<w22>&xlarr;</w22>&nbsp;<phi>&phi;(<w0><h>*</h>a</w0>)</phi>,&nbsp;</span></li>
-<li><span><w0>d</w0>&nbsp;<w22>&xlarr;</w22>&nbsp;<phi>&phi;(<w0><h>*</h>d</w0>)</phi>,&nbsp;</span></li>
+<li><span><w0>b</w0>&nbsp;<w22>&xlarr;</w22>&nbsp;<phi>&phi;(<w0><h>*</h>b</w0>)</phi>,&nbsp;</span></li>
+<li><span><w0>c</w0>&nbsp;<w22>&xlarr;</w22>&nbsp;<phi>&phi;(<w0><h>*</h>c</w0>)</phi>,&nbsp;</span></li>
 <li><span><w0>y</w0>&nbsp;<w22>&xlarr;</w22>&nbsp;<w23>+</w23>,&nbsp;<w0>a</w0>,&nbsp;<w0>b</w0>&nbsp;</span></li>
 <li><span><w0>z</w0>&nbsp;<w22>&xlarr;</w22>&nbsp;<w23>+</w23>,&nbsp;<w0>c</w0>,&nbsp;<w0>d</w0>&nbsp;</span></li>
 <li><span><w0>i</w0>&nbsp;<w22>&xlarr;</w22>&nbsp;<w23>+</w23>,&nbsp;<w0>i</w0>,&nbsp;<w0>i</w0>&nbsp;</span></li>
@@ -934,34 +935,34 @@
 <li><span><w0>i</w0><sub>1</sub>&nbsp;<w22>&xlarr;</w22>&nbsp;<w3><h>#</h>1</w3>&nbsp;</span></li>
 </ol>
 <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="6">stack</r> : <w0>a</w0>:[0],&nbsp;<w0>b</w0>:[0],&nbsp;<w0>c</w0>:[0],&nbsp;<w0>d</w0>:[0],&nbsp;<w0>i</w0>:[0, 1]<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="3">fill(<font class="block-name">B</font>)</r>:<ol class="mir-lines" start="6">
-<li><span><w1>L1</w1>:&nbsp;<w0>b</w0><sub>1</sub>&nbsp;<w22>&xlarr;</w22>&nbsp;<phi>&phi;(<w0>b</w0><sub>0</sub>, <w0>b</w0><sub>3</sub>)</phi>,&nbsp;</span></li>
+<li><span><w1>L1</w1>:&nbsp;<w0>d</w0><sub>1</sub>&nbsp;<w22>&xlarr;</w22>&nbsp;<phi>&phi;(<w0>d</w0><sub>0</sub>, <w0>d</w0><sub>2</sub>)</phi>,&nbsp;</span></li>
 </ol>
 <ol class="mir-lines" start="7">
-<li><span><w0>c</w0><sub>1</sub>&nbsp;<w22>&xlarr;</w22>&nbsp;<phi>&phi;(<w0>c</w0><sub>0</sub>, <w0>c</w0><sub>2</sub>)</phi>,&nbsp;</span></li>
-</ol>
-<ol class="mir-lines" start="8">
 <li><span><w0>a</w0><sub>1</sub>&nbsp;<w22>&xlarr;</w22>&nbsp;<phi>&phi;(<w0>a</w0><sub>0</sub>, <w0>a</w0><sub>3</sub>)</phi>,&nbsp;</span></li>
 </ol>
+<ol class="mir-lines" start="8">
+<li><span><w0>b</w0><sub>1</sub>&nbsp;<w22>&xlarr;</w22>&nbsp;<phi>&phi;(<w0>b</w0><sub>0</sub>, <w0>b</w0><sub>3</sub>)</phi>,&nbsp;</span></li>
+</ol>
 <ol class="mir-lines" start="9">
-<li><span><w0>i</w0><sub>2</sub>&nbsp;<w22>&xlarr;</w22>&nbsp;<phi>&phi;(<w0>i</w0><sub>1</sub>, <w0>i</w0><sub>3</sub>)</phi>,&nbsp;</span></li>
+<li><span><w0>c</w0><sub>1</sub>&nbsp;<w22>&xlarr;</w22>&nbsp;<phi>&phi;(<w0>c</w0><sub>0</sub>, <w0>c</w0><sub>2</sub>)</phi>,&nbsp;</span></li>
 </ol>
 <ol class="mir-lines" start="10">
-<li><span><w0>d</w0><sub>1</sub>&nbsp;<w22>&xlarr;</w22>&nbsp;<phi>&phi;(<w0>d</w0><sub>0</sub>, <w0>d</w0><sub>2</sub>)</phi>,&nbsp;</span></li>
+<li><span><w0>i</w0><sub>2</sub>&nbsp;<w22>&xlarr;</w22>&nbsp;<phi>&phi;(<w0>i</w0><sub>1</sub>, <w0>i</w0><sub>3</sub>)</phi>,&nbsp;</span></li>
 </ol>
 <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="6">stack</r> : <w0>a</w0>:[0],&nbsp;<w0>b</w0>:[0],&nbsp;<w0>c</w0>:[0],&nbsp;<w0>d</w0>:[0],&nbsp;<w0>i</w0>:[0, 1]<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="1">Rename(<font class="block-name">B</font>)</r>:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="5">rename &phi;-functions:</r><ol class="mir-lines" start="6">
-<li><span><w1>L1</w1>:&nbsp;<w0>b</w0><sub>1</sub>&nbsp;<w22>&xlarr;</w22>&nbsp;<phi>&phi;(<w0>b</w0><sub>0</sub>, <w0>b</w0><sub>3</sub>)</phi>,&nbsp;</span></li>
+<li><span><w1>L1</w1>:&nbsp;<w0>d</w0><sub>1</sub>&nbsp;<w22>&xlarr;</w22>&nbsp;<phi>&phi;(<w0>d</w0><sub>0</sub>, <w0>d</w0><sub>2</sub>)</phi>,&nbsp;</span></li>
 </ol>
 <ol class="mir-lines" start="7">
-<li><span><w0>c</w0><sub>1</sub>&nbsp;<w22>&xlarr;</w22>&nbsp;<phi>&phi;(<w0>c</w0><sub>0</sub>, <w0>c</w0><sub>2</sub>)</phi>,&nbsp;</span></li>
-</ol>
-<ol class="mir-lines" start="8">
 <li><span><w0>a</w0><sub>1</sub>&nbsp;<w22>&xlarr;</w22>&nbsp;<phi>&phi;(<w0>a</w0><sub>0</sub>, <w0>a</w0><sub>3</sub>)</phi>,&nbsp;</span></li>
 </ol>
+<ol class="mir-lines" start="8">
+<li><span><w0>b</w0><sub>1</sub>&nbsp;<w22>&xlarr;</w22>&nbsp;<phi>&phi;(<w0>b</w0><sub>0</sub>, <w0>b</w0><sub>3</sub>)</phi>,&nbsp;</span></li>
+</ol>
 <ol class="mir-lines" start="9">
-<li><span><w0>i</w0><sub>2</sub>&nbsp;<w22>&xlarr;</w22>&nbsp;<phi>&phi;(<w0>i</w0><sub>1</sub>, <w0>i</w0><sub>3</sub>)</phi>,&nbsp;</span></li>
+<li><span><w0>c</w0><sub>1</sub>&nbsp;<w22>&xlarr;</w22>&nbsp;<phi>&phi;(<w0>c</w0><sub>0</sub>, <w0>c</w0><sub>2</sub>)</phi>,&nbsp;</span></li>
 </ol>
 <ol class="mir-lines" start="10">
-<li><span><w0>d</w0><sub>1</sub>&nbsp;<w22>&xlarr;</w22>&nbsp;<phi>&phi;(<w0>d</w0><sub>0</sub>, <w0>d</w0><sub>2</sub>)</phi>,&nbsp;</span></li>
+<li><span><w0>i</w0><sub>2</sub>&nbsp;<w22>&xlarr;</w22>&nbsp;<phi>&phi;(<w0>i</w0><sub>1</sub>, <w0>i</w0><sub>3</sub>)</phi>,&nbsp;</span></li>
 </ol>
 <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="6">stack</r> : <w0>a</w0>:[0, 1],&nbsp;<w0>b</w0>:[0, 1],&nbsp;<w0>c</w0>:[0, 1],&nbsp;<w0>d</w0>:[0, 1],&nbsp;<w0>i</w0>:[0, 1, 2]<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rename instructions:<ol class="mir-lines" start="11">
 <li><span><w0>a</w0><sub>2</sub>&nbsp;<w22>&xlarr;</w22>&nbsp;<w3><h>#</h>0</w3>&nbsp;</span></li>
@@ -973,16 +974,16 @@
 <li><span><if>if</if>&nbsp;<w5>True</w5>&nbsp;<w0>a</w0><sub>2</sub>&nbsp;<w24>=</w24>&nbsp;<w3><h>#</h>0</w3>&nbsp;<w6>goto</w6>&nbsp;<w1>L2</w1>&nbsp;</span></li>
 </ol>
 <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="6">stack</r> : <w0>a</w0>:[0, 1, 2],&nbsp;<w0>b</w0>:[0, 1, 2],&nbsp;<w0>c</w0>:[0, 1],&nbsp;<w0>d</w0>:[0, 1],&nbsp;<w0>i</w0>:[0, 1, 2]<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="3">fill(<font class="block-name">C</font>)</r>:<r id="4">no &phi;-functions</r><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="6">stack</r> : <w0>a</w0>:[0, 1, 2],&nbsp;<w0>b</w0>:[0, 1, 2],&nbsp;<w0>c</w0>:[0, 1],&nbsp;<w0>d</w0>:[0, 1],&nbsp;<w0>i</w0>:[0, 1, 2]<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="3">fill(<font class="block-name">D</font>)</r>:<r id="4">no &phi;-functions</r><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="6">stack</r> : <w0>a</w0>:[0, 1, 2],&nbsp;<w0>b</w0>:[0, 1, 2],&nbsp;<w0>c</w0>:[0, 1],&nbsp;<w0>d</w0>:[0, 1],&nbsp;<w0>i</w0>:[0, 1, 2]<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="1">Rename(<font class="block-name">H</font>)</r>:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="5">rename &phi;-functions:</r><ol class="mir-lines" start="27">
-<li><span><w1>L5</w1>:&nbsp;<w0>b</w0><sub>3</sub>&nbsp;<w22>&xlarr;</w22>&nbsp;<phi>&phi;(<w0>b</w0><sub>4</sub>, <w0>b</w0><sub>5</sub>)</phi>,&nbsp;</span></li>
+<li><span><w1>L5</w1>:&nbsp;<w0>d</w0><sub>2</sub>&nbsp;<w22>&xlarr;</w22>&nbsp;<phi>&phi;(<w0>d</w0><sub>3</sub>, <w0>d</w0><sub>6</sub>)</phi>,&nbsp;</span></li>
 </ol>
 <ol class="mir-lines" start="28">
-<li><span><w0>c</w0><sub>2</sub>&nbsp;<w22>&xlarr;</w22>&nbsp;<phi>&phi;(<w0>c</w0><sub>3</sub>, <w0>c</w0><sub>5</sub>)</phi>,&nbsp;</span></li>
-</ol>
-<ol class="mir-lines" start="29">
 <li><span><w0>a</w0><sub>3</sub>&nbsp;<w22>&xlarr;</w22>&nbsp;<phi>&phi;(<w0>a</w0><sub>2</sub>, <w0>a</w0><sub>4</sub>)</phi>,&nbsp;</span></li>
 </ol>
+<ol class="mir-lines" start="29">
+<li><span><w0>b</w0><sub>3</sub>&nbsp;<w22>&xlarr;</w22>&nbsp;<phi>&phi;(<w0>b</w0><sub>4</sub>, <w0>b</w0><sub>5</sub>)</phi>,&nbsp;</span></li>
+</ol>
 <ol class="mir-lines" start="30">
-<li><span><w0>d</w0><sub>2</sub>&nbsp;<w22>&xlarr;</w22>&nbsp;<phi>&phi;(<w0>d</w0><sub>3</sub>, <w0>d</w0><sub>6</sub>)</phi>,&nbsp;</span></li>
+<li><span><w0>c</w0><sub>2</sub>&nbsp;<w22>&xlarr;</w22>&nbsp;<phi>&phi;(<w0>c</w0><sub>3</sub>, <w0>c</w0><sub>5</sub>)</phi>,&nbsp;</span></li>
 </ol>
 <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="6">stack</r> : <w0>a</w0>:[0, 1, 2, 3],&nbsp;<w0>b</w0>:[0, 1, 2, 3],&nbsp;<w0>c</w0>:[0, 1, 2],&nbsp;<w0>d</w0>:[0, 1, 2],&nbsp;<w0>i</w0>:[0, 1, 2]<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rename instructions:<ol class="mir-lines" start="31">
 <li><span><w0>y</w0>&nbsp;<w22>&xlarr;</w22>&nbsp;<w23>+</w23>,&nbsp;<w0>a</w0><sub>3</sub>,&nbsp;<w0>b</w0><sub>3</sub>&nbsp;</span></li>
@@ -997,19 +998,19 @@
 <li><span><if>if</if>&nbsp;<w5>True</w5>&nbsp;<w0>a</w0><sub>3</sub>&nbsp;<w24>=</w24>&nbsp;<w3><h>#</h>0</w3>&nbsp;<w6>goto</w6>&nbsp;<w1>L1</w1>&nbsp;</span></li>
 </ol>
 <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="6">stack</r> : <w0>a</w0>:[0, 1, 2, 3],&nbsp;<w0>b</w0>:[0, 1, 2, 3],&nbsp;<w0>c</w0>:[0, 1, 2],&nbsp;<w0>d</w0>:[0, 1, 2],&nbsp;<w0>i</w0>:[0, 1, 2, 3]<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="3">fill(<font class="block-name">Exit</font>)</r>:<r id="4">no &phi;-functions</r><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="6">stack</r> : <w0>a</w0>:[0, 1, 2, 3],&nbsp;<w0>b</w0>:[0, 1, 2, 3],&nbsp;<w0>c</w0>:[0, 1, 2],&nbsp;<w0>d</w0>:[0, 1, 2],&nbsp;<w0>i</w0>:[0, 1, 2, 3]<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="3">fill(<font class="block-name">B</font>)</r>:<ol class="mir-lines" start="6">
-<li><span><w1>L1</w1>:&nbsp;<w0>b</w0><sub>1</sub>&nbsp;<w22>&xlarr;</w22>&nbsp;<phi>&phi;(<w0>b</w0><sub>0</sub>, <w0>b</w0><sub>3</sub>)</phi>,&nbsp;</span></li>
+<li><span><w1>L1</w1>:&nbsp;<w0>d</w0><sub>1</sub>&nbsp;<w22>&xlarr;</w22>&nbsp;<phi>&phi;(<w0>d</w0><sub>0</sub>, <w0>d</w0><sub>2</sub>)</phi>,&nbsp;</span></li>
 </ol>
 <ol class="mir-lines" start="7">
-<li><span><w0>c</w0><sub>1</sub>&nbsp;<w22>&xlarr;</w22>&nbsp;<phi>&phi;(<w0>c</w0><sub>0</sub>, <w0>c</w0><sub>2</sub>)</phi>,&nbsp;</span></li>
-</ol>
-<ol class="mir-lines" start="8">
 <li><span><w0>a</w0><sub>1</sub>&nbsp;<w22>&xlarr;</w22>&nbsp;<phi>&phi;(<w0>a</w0><sub>0</sub>, <w0>a</w0><sub>3</sub>)</phi>,&nbsp;</span></li>
 </ol>
+<ol class="mir-lines" start="8">
+<li><span><w0>b</w0><sub>1</sub>&nbsp;<w22>&xlarr;</w22>&nbsp;<phi>&phi;(<w0>b</w0><sub>0</sub>, <w0>b</w0><sub>3</sub>)</phi>,&nbsp;</span></li>
+</ol>
 <ol class="mir-lines" start="9">
-<li><span><w0>i</w0><sub>2</sub>&nbsp;<w22>&xlarr;</w22>&nbsp;<phi>&phi;(<w0>i</w0><sub>1</sub>, <w0>i</w0><sub>3</sub>)</phi>,&nbsp;</span></li>
+<li><span><w0>c</w0><sub>1</sub>&nbsp;<w22>&xlarr;</w22>&nbsp;<phi>&phi;(<w0>c</w0><sub>0</sub>, <w0>c</w0><sub>2</sub>)</phi>,&nbsp;</span></li>
 </ol>
 <ol class="mir-lines" start="10">
-<li><span><w0>d</w0><sub>1</sub>&nbsp;<w22>&xlarr;</w22>&nbsp;<phi>&phi;(<w0>d</w0><sub>0</sub>, <w0>d</w0><sub>2</sub>)</phi>,&nbsp;</span></li>
+<li><span><w0>i</w0><sub>2</sub>&nbsp;<w22>&xlarr;</w22>&nbsp;<phi>&phi;(<w0>i</w0><sub>1</sub>, <w0>i</w0><sub>3</sub>)</phi>,&nbsp;</span></li>
 </ol>
 <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="6">stack</r> : <w0>a</w0>:[0, 1, 2, 3],&nbsp;<w0>b</w0>:[0, 1, 2, 3],&nbsp;<w0>c</w0>:[0, 1, 2],&nbsp;<w0>d</w0>:[0, 1, 2],&nbsp;<w0>i</w0>:[0, 1, 2, 3]<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="1">Rename(<font class="block-name">Exit</font>)</r>:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="5">rename &phi;-functions:</r><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="4">no &phi;-functions</r><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="6">stack</r> : <w0>a</w0>:[0, 1, 2, 3],&nbsp;<w0>b</w0>:[0, 1, 2, 3],&nbsp;<w0>c</w0>:[0, 1, 2],&nbsp;<w0>d</w0>:[0, 1, 2],&nbsp;<w0>i</w0>:[0, 1, 2, 3]<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rename instructions:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="4">no instructions</r><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="6">stack</r> : <w0>a</w0>:[0, 1, 2, 3],&nbsp;<w0>b</w0>:[0, 1, 2, 3],&nbsp;<w0>c</w0>:[0, 1, 2],&nbsp;<w0>d</w0>:[0, 1, 2],&nbsp;<w0>i</w0>:[0, 1, 2, 3]<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;clean():nothing to clean<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="6">stack</r> : <w0>a</w0>:[0, 1, 2, 3],&nbsp;<w0>b</w0>:[0, 1, 2, 3],&nbsp;<w0>c</w0>:[0, 1, 2],&nbsp;<w0>d</w0>:[0, 1, 2],&nbsp;<w0>i</w0>:[0, 1, 2, 3]<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="2">return to <font class="block-name">H</font>;</r><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;clean():<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="6">stack</r> : <w0>a</w0>:[0, 1, 2],&nbsp;<w0>b</w0>:[0, 1, 2],&nbsp;<w0>c</w0>:[0, 1],&nbsp;<w0>d</w0>:[0, 1],&nbsp;<w0>i</w0>:[0, 1, 2]<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="2">return to <font class="block-name">B</font>;</r><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="1">Rename(<font class="block-name">C</font>)</r>:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="5">rename &phi;-functions:</r><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="4">no &phi;-functions</r><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="6">stack</r> : <w0>a</w0>:[0, 1, 2],&nbsp;<w0>b</w0>:[0, 1, 2],&nbsp;<w0>c</w0>:[0, 1],&nbsp;<w0>d</w0>:[0, 1],&nbsp;<w0>i</w0>:[0, 1, 2]<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rename instructions:<ol class="mir-lines" start="14">
 <li><span><w0>b</w0><sub>4</sub>&nbsp;<w22>&xlarr;</w22>&nbsp;<w3><h>#</h>0</w3>&nbsp;</span></li>
@@ -1024,16 +1025,16 @@
 <li><span><w6>goto</w6>&nbsp;<w1>L5</w1>&nbsp;</span></li>
 </ol>
 <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="6">stack</r> : <w0>a</w0>:[0, 1, 2],&nbsp;<w0>b</w0>:[0, 1, 2, 4],&nbsp;<w0>c</w0>:[0, 1, 3],&nbsp;<w0>d</w0>:[0, 1, 3],&nbsp;<w0>i</w0>:[0, 1, 2]<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="3">fill(<font class="block-name">H</font>)</r>:<ol class="mir-lines" start="27">
-<li><span><w1>L5</w1>:&nbsp;<w0>b</w0><sub>3</sub>&nbsp;<w22>&xlarr;</w22>&nbsp;<phi>&phi;(<w0>b</w0><sub>4</sub>, <w0>b</w0><sub>5</sub>)</phi>,&nbsp;</span></li>
+<li><span><w1>L5</w1>:&nbsp;<w0>d</w0><sub>2</sub>&nbsp;<w22>&xlarr;</w22>&nbsp;<phi>&phi;(<w0>d</w0><sub>3</sub>, <w0>d</w0><sub>6</sub>)</phi>,&nbsp;</span></li>
 </ol>
 <ol class="mir-lines" start="28">
-<li><span><w0>c</w0><sub>2</sub>&nbsp;<w22>&xlarr;</w22>&nbsp;<phi>&phi;(<w0>c</w0><sub>3</sub>, <w0>c</w0><sub>5</sub>)</phi>,&nbsp;</span></li>
-</ol>
-<ol class="mir-lines" start="29">
 <li><span><w0>a</w0><sub>3</sub>&nbsp;<w22>&xlarr;</w22>&nbsp;<phi>&phi;(<w0>a</w0><sub>2</sub>, <w0>a</w0><sub>4</sub>)</phi>,&nbsp;</span></li>
 </ol>
+<ol class="mir-lines" start="29">
+<li><span><w0>b</w0><sub>3</sub>&nbsp;<w22>&xlarr;</w22>&nbsp;<phi>&phi;(<w0>b</w0><sub>4</sub>, <w0>b</w0><sub>5</sub>)</phi>,&nbsp;</span></li>
+</ol>
 <ol class="mir-lines" start="30">
-<li><span><w0>d</w0><sub>2</sub>&nbsp;<w22>&xlarr;</w22>&nbsp;<phi>&phi;(<w0>d</w0><sub>3</sub>, <w0>d</w0><sub>6</sub>)</phi>,&nbsp;</span></li>
+<li><span><w0>c</w0><sub>2</sub>&nbsp;<w22>&xlarr;</w22>&nbsp;<phi>&phi;(<w0>c</w0><sub>3</sub>, <w0>c</w0><sub>5</sub>)</phi>,&nbsp;</span></li>
 </ol>
 <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="6">stack</r> : <w0>a</w0>:[0, 1, 2],&nbsp;<w0>b</w0>:[0, 1, 2, 4],&nbsp;<w0>c</w0>:[0, 1, 3],&nbsp;<w0>d</w0>:[0, 1, 3],&nbsp;<w0>i</w0>:[0, 1, 2]<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;clean():<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="6">stack</r> : <w0>a</w0>:[0, 1, 2],&nbsp;<w0>b</w0>:[0, 1, 2],&nbsp;<w0>c</w0>:[0, 1],&nbsp;<w0>d</w0>:[0, 1],&nbsp;<w0>i</w0>:[0, 1, 2]<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="2">return to <font class="block-name">B</font>;</r><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="1">Rename(<font class="block-name">D</font>)</r>:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="5">rename &phi;-functions:</r><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="4">no &phi;-functions</r><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="6">stack</r> : <w0>a</w0>:[0, 1, 2],&nbsp;<w0>b</w0>:[0, 1, 2],&nbsp;<w0>c</w0>:[0, 1],&nbsp;<w0>d</w0>:[0, 1],&nbsp;<w0>i</w0>:[0, 1, 2]<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rename instructions:<ol class="mir-lines" start="18">
 <li><span><w1>L2</w1>:&nbsp;<w0>a</w0><sub>4</sub>&nbsp;<w22>&xlarr;</w22>&nbsp;<w3><h>#</h>0</w3>&nbsp;</span></li>
@@ -1051,40 +1052,40 @@
 <li><span><w6>goto</w6>&nbsp;<w1>L4</w1>&nbsp;</span></li>
 </ol>
 <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="6">stack</r> : <w0>a</w0>:[0, 1, 2, 4],&nbsp;<w0>b</w0>:[0, 1, 2],&nbsp;<w0>c</w0>:[0, 1],&nbsp;<w0>d</w0>:[0, 1, 4, 5],&nbsp;<w0>i</w0>:[0, 1, 2]<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="3">fill(<font class="block-name">G</font>)</r>:<ol class="mir-lines" start="24">
-<li><span><w1>L4</w1>:&nbsp;<w0>c</w0><sub>5</sub>&nbsp;<w22>&xlarr;</w22>&nbsp;<phi>&phi;(<w0>c</w0><sub>1</sub>, <w0>c</w0><sub>4</sub>)</phi>,&nbsp;</span></li>
+<li><span><w1>L4</w1>:&nbsp;<w0>d</w0><sub>6</sub>&nbsp;<w22>&xlarr;</w22>&nbsp;<phi>&phi;(<w0>d</w0><sub>4</sub>, <w0>d</w0><sub>5</sub>)</phi>,&nbsp;</span></li>
 </ol>
 <ol class="mir-lines" start="25">
-<li><span><w0>d</w0><sub>6</sub>&nbsp;<w22>&xlarr;</w22>&nbsp;<phi>&phi;(<w0>d</w0><sub>4</sub>, <w0>d</w0><sub>5</sub>)</phi>,&nbsp;</span></li>
+<li><span><w0>c</w0><sub>5</sub>&nbsp;<w22>&xlarr;</w22>&nbsp;<phi>&phi;(<w0>c</w0><sub>1</sub>, <w0>c</w0><sub>4</sub>)</phi>,&nbsp;</span></li>
 </ol>
 <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="6">stack</r> : <w0>a</w0>:[0, 1, 2, 4],&nbsp;<w0>b</w0>:[0, 1, 2],&nbsp;<w0>c</w0>:[0, 1],&nbsp;<w0>d</w0>:[0, 1, 4, 5],&nbsp;<w0>i</w0>:[0, 1, 2]<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;clean():<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="6">stack</r> : <w0>a</w0>:[0, 1, 2, 4],&nbsp;<w0>b</w0>:[0, 1, 2],&nbsp;<w0>c</w0>:[0, 1],&nbsp;<w0>d</w0>:[0, 1, 4],&nbsp;<w0>i</w0>:[0, 1, 2]<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="2">return to <font class="block-name">D</font>;</r><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="1">Rename(<font class="block-name">F</font>)</r>:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="5">rename &phi;-functions:</r><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="4">no &phi;-functions</r><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="6">stack</r> : <w0>a</w0>:[0, 1, 2, 4],&nbsp;<w0>b</w0>:[0, 1, 2],&nbsp;<w0>c</w0>:[0, 1],&nbsp;<w0>d</w0>:[0, 1, 4],&nbsp;<w0>i</w0>:[0, 1, 2]<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rename instructions:<ol class="mir-lines" start="23">
 <li><span><w1>L3</w1>:&nbsp;<w0>c</w0><sub>4</sub>&nbsp;<w22>&xlarr;</w22>&nbsp;<w3><h>#</h>0</w3>&nbsp;</span></li>
 </ol>
 <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="6">stack</r> : <w0>a</w0>:[0, 1, 2, 4],&nbsp;<w0>b</w0>:[0, 1, 2],&nbsp;<w0>c</w0>:[0, 1, 4],&nbsp;<w0>d</w0>:[0, 1, 4],&nbsp;<w0>i</w0>:[0, 1, 2]<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="3">fill(<font class="block-name">G</font>)</r>:<ol class="mir-lines" start="24">
-<li><span><w1>L4</w1>:&nbsp;<w0>c</w0><sub>5</sub>&nbsp;<w22>&xlarr;</w22>&nbsp;<phi>&phi;(<w0>c</w0><sub>1</sub>, <w0>c</w0><sub>4</sub>)</phi>,&nbsp;</span></li>
+<li><span><w1>L4</w1>:&nbsp;<w0>d</w0><sub>6</sub>&nbsp;<w22>&xlarr;</w22>&nbsp;<phi>&phi;(<w0>d</w0><sub>4</sub>, <w0>d</w0><sub>5</sub>)</phi>,&nbsp;</span></li>
 </ol>
 <ol class="mir-lines" start="25">
-<li><span><w0>d</w0><sub>6</sub>&nbsp;<w22>&xlarr;</w22>&nbsp;<phi>&phi;(<w0>d</w0><sub>4</sub>, <w0>d</w0><sub>5</sub>)</phi>,&nbsp;</span></li>
+<li><span><w0>c</w0><sub>5</sub>&nbsp;<w22>&xlarr;</w22>&nbsp;<phi>&phi;(<w0>c</w0><sub>1</sub>, <w0>c</w0><sub>4</sub>)</phi>,&nbsp;</span></li>
 </ol>
 <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="6">stack</r> : <w0>a</w0>:[0, 1, 2, 4],&nbsp;<w0>b</w0>:[0, 1, 2],&nbsp;<w0>c</w0>:[0, 1, 4],&nbsp;<w0>d</w0>:[0, 1, 4],&nbsp;<w0>i</w0>:[0, 1, 2]<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;clean():<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="6">stack</r> : <w0>a</w0>:[0, 1, 2, 4],&nbsp;<w0>b</w0>:[0, 1, 2],&nbsp;<w0>c</w0>:[0, 1],&nbsp;<w0>d</w0>:[0, 1, 4],&nbsp;<w0>i</w0>:[0, 1, 2]<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="2">return to <font class="block-name">D</font>;</r><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="1">Rename(<font class="block-name">G</font>)</r>:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="5">rename &phi;-functions:</r><ol class="mir-lines" start="24">
-<li><span><w1>L4</w1>:&nbsp;<w0>c</w0><sub>5</sub>&nbsp;<w22>&xlarr;</w22>&nbsp;<phi>&phi;(<w0>c</w0><sub>1</sub>, <w0>c</w0><sub>4</sub>)</phi>,&nbsp;</span></li>
+<li><span><w1>L4</w1>:&nbsp;<w0>d</w0><sub>6</sub>&nbsp;<w22>&xlarr;</w22>&nbsp;<phi>&phi;(<w0>d</w0><sub>4</sub>, <w0>d</w0><sub>5</sub>)</phi>,&nbsp;</span></li>
 </ol>
 <ol class="mir-lines" start="25">
-<li><span><w0>d</w0><sub>6</sub>&nbsp;<w22>&xlarr;</w22>&nbsp;<phi>&phi;(<w0>d</w0><sub>4</sub>, <w0>d</w0><sub>5</sub>)</phi>,&nbsp;</span></li>
+<li><span><w0>c</w0><sub>5</sub>&nbsp;<w22>&xlarr;</w22>&nbsp;<phi>&phi;(<w0>c</w0><sub>1</sub>, <w0>c</w0><sub>4</sub>)</phi>,&nbsp;</span></li>
 </ol>
 <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="6">stack</r> : <w0>a</w0>:[0, 1, 2, 4],&nbsp;<w0>b</w0>:[0, 1, 2],&nbsp;<w0>c</w0>:[0, 1, 5],&nbsp;<w0>d</w0>:[0, 1, 4, 6],&nbsp;<w0>i</w0>:[0, 1, 2]<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rename instructions:<ol class="mir-lines" start="26">
 <li><span><w0>b</w0><sub>5</sub>&nbsp;<w22>&xlarr;</w22>&nbsp;<w3><h>#</h>0</w3>&nbsp;</span></li>
 </ol>
 <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="6">stack</r> : <w0>a</w0>:[0, 1, 2, 4],&nbsp;<w0>b</w0>:[0, 1, 2, 5],&nbsp;<w0>c</w0>:[0, 1, 5],&nbsp;<w0>d</w0>:[0, 1, 4, 6],&nbsp;<w0>i</w0>:[0, 1, 2]<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="3">fill(<font class="block-name">H</font>)</r>:<ol class="mir-lines" start="27">
-<li><span><w1>L5</w1>:&nbsp;<w0>b</w0><sub>3</sub>&nbsp;<w22>&xlarr;</w22>&nbsp;<phi>&phi;(<w0>b</w0><sub>4</sub>, <w0>b</w0><sub>5</sub>)</phi>,&nbsp;</span></li>
+<li><span><w1>L5</w1>:&nbsp;<w0>d</w0><sub>2</sub>&nbsp;<w22>&xlarr;</w22>&nbsp;<phi>&phi;(<w0>d</w0><sub>3</sub>, <w0>d</w0><sub>6</sub>)</phi>,&nbsp;</span></li>
 </ol>
 <ol class="mir-lines" start="28">
-<li><span><w0>c</w0><sub>2</sub>&nbsp;<w22>&xlarr;</w22>&nbsp;<phi>&phi;(<w0>c</w0><sub>3</sub>, <w0>c</w0><sub>5</sub>)</phi>,&nbsp;</span></li>
-</ol>
-<ol class="mir-lines" start="29">
 <li><span><w0>a</w0><sub>3</sub>&nbsp;<w22>&xlarr;</w22>&nbsp;<phi>&phi;(<w0>a</w0><sub>2</sub>, <w0>a</w0><sub>4</sub>)</phi>,&nbsp;</span></li>
 </ol>
+<ol class="mir-lines" start="29">
+<li><span><w0>b</w0><sub>3</sub>&nbsp;<w22>&xlarr;</w22>&nbsp;<phi>&phi;(<w0>b</w0><sub>4</sub>, <w0>b</w0><sub>5</sub>)</phi>,&nbsp;</span></li>
+</ol>
 <ol class="mir-lines" start="30">
-<li><span><w0>d</w0><sub>2</sub>&nbsp;<w22>&xlarr;</w22>&nbsp;<phi>&phi;(<w0>d</w0><sub>3</sub>, <w0>d</w0><sub>6</sub>)</phi>,&nbsp;</span></li>
+<li><span><w0>c</w0><sub>2</sub>&nbsp;<w22>&xlarr;</w22>&nbsp;<phi>&phi;(<w0>c</w0><sub>3</sub>, <w0>c</w0><sub>5</sub>)</phi>,&nbsp;</span></li>
 </ol>
 <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="6">stack</r> : <w0>a</w0>:[0, 1, 2, 4],&nbsp;<w0>b</w0>:[0, 1, 2, 5],&nbsp;<w0>c</w0>:[0, 1, 5],&nbsp;<w0>d</w0>:[0, 1, 4, 6],&nbsp;<w0>i</w0>:[0, 1, 2]<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;clean():<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="6">stack</r> : <w0>a</w0>:[0, 1, 2, 4],&nbsp;<w0>b</w0>:[0, 1, 2],&nbsp;<w0>c</w0>:[0, 1],&nbsp;<w0>d</w0>:[0, 1, 4],&nbsp;<w0>i</w0>:[0, 1, 2]<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="2">return to <font class="block-name">D</font>;</r><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;clean():<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="6">stack</r> : <w0>a</w0>:[0, 1, 2],&nbsp;<w0>b</w0>:[0, 1, 2],&nbsp;<w0>c</w0>:[0, 1],&nbsp;<w0>d</w0>:[0, 1],&nbsp;<w0>i</w0>:[0, 1, 2]<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="2">return to <font class="block-name">B</font>;</r><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;clean():<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="6">stack</r> : <w0>a</w0>:[0],&nbsp;<w0>b</w0>:[0],&nbsp;<w0>c</w0>:[0],&nbsp;<w0>d</w0>:[0],&nbsp;<w0>i</w0>:[0, 1]<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="2">return to <font class="block-name">A</font>;</r><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;clean():<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="6">stack</r> : <w0>a</w0>:[0],&nbsp;<w0>b</w0>:[0],&nbsp;<w0>c</w0>:[0],&nbsp;<w0>d</w0>:[0],&nbsp;<w0>i</w0>:[0]<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="2">return to <font class="block-name">Entry</font>;</r><br>&nbsp;&nbsp;&nbsp;clean():nothing to clean<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="6">stack</r> : <w0>a</w0>:[0],&nbsp;<w0>b</w0>:[0],&nbsp;<w0>c</w0>:[0],&nbsp;<w0>d</w0>:[0],&nbsp;<w0>i</w0>:[0]</div></details>
 <div class="code-panel">
@@ -1106,11 +1107,11 @@
 <span class="new-block">Block</span> <span class="block-name">B</span> <span class="count-lines">8 lines</span>
 </div>
 <ol class="mir-lines" start="6">
-<li><span><w1>L1</w1>:&nbsp;<w0>b</w0><sub>1</sub>&nbsp;<w22>&xlarr;</w22>&nbsp;<phi>&phi;(<w0>b</w0><sub>0</sub>, <w0>b</w0><sub>3</sub>)</phi>,&nbsp;</span></li>
-<li><span><w0>c</w0><sub>1</sub>&nbsp;<w22>&xlarr;</w22>&nbsp;<phi>&phi;(<w0>c</w0><sub>0</sub>, <w0>c</w0><sub>2</sub>)</phi>,&nbsp;</span></li>
+<li><span><w1>L1</w1>:&nbsp;<w0>d</w0><sub>1</sub>&nbsp;<w22>&xlarr;</w22>&nbsp;<phi>&phi;(<w0>d</w0><sub>0</sub>, <w0>d</w0><sub>2</sub>)</phi>,&nbsp;</span></li>
 <li><span><w0>a</w0><sub>1</sub>&nbsp;<w22>&xlarr;</w22>&nbsp;<phi>&phi;(<w0>a</w0><sub>0</sub>, <w0>a</w0><sub>3</sub>)</phi>,&nbsp;</span></li>
+<li><span><w0>b</w0><sub>1</sub>&nbsp;<w22>&xlarr;</w22>&nbsp;<phi>&phi;(<w0>b</w0><sub>0</sub>, <w0>b</w0><sub>3</sub>)</phi>,&nbsp;</span></li>
+<li><span><w0>c</w0><sub>1</sub>&nbsp;<w22>&xlarr;</w22>&nbsp;<phi>&phi;(<w0>c</w0><sub>0</sub>, <w0>c</w0><sub>2</sub>)</phi>,&nbsp;</span></li>
 <li><span><w0>i</w0><sub>2</sub>&nbsp;<w22>&xlarr;</w22>&nbsp;<phi>&phi;(<w0>i</w0><sub>1</sub>, <w0>i</w0><sub>3</sub>)</phi>,&nbsp;</span></li>
-<li><span><w0>d</w0><sub>1</sub>&nbsp;<w22>&xlarr;</w22>&nbsp;<phi>&phi;(<w0>d</w0><sub>0</sub>, <w0>d</w0><sub>2</sub>)</phi>,&nbsp;</span></li>
 <li><span><w0>a</w0><sub>2</sub>&nbsp;<w22>&xlarr;</w22>&nbsp;<w3><h>#</h>0</w3>&nbsp;</span></li>
 <li><span><w0>b</w0><sub>2</sub>&nbsp;<w22>&xlarr;</w22>&nbsp;<w3><h>#</h>0</w3>&nbsp;</span></li>
 <li><span><if>if</if>&nbsp;<w5>True</w5>&nbsp;<w0>a</w0><sub>2</sub>&nbsp;<w24>=</w24>&nbsp;<w3><h>#</h>0</w3>&nbsp;<w6>goto</w6>&nbsp;<w1>L2</w1>&nbsp;</span></li>
@@ -1159,8 +1160,8 @@
 <span class="new-block">Block</span> <span class="block-name">G</span> <span class="count-lines">3 lines</span>
 </div>
 <ol class="mir-lines" start="24">
-<li><span><w1>L4</w1>:&nbsp;<w0>c</w0><sub>5</sub>&nbsp;<w22>&xlarr;</w22>&nbsp;<phi>&phi;(<w0>c</w0><sub>1</sub>, <w0>c</w0><sub>4</sub>)</phi>,&nbsp;</span></li>
-<li><span><w0>d</w0><sub>6</sub>&nbsp;<w22>&xlarr;</w22>&nbsp;<phi>&phi;(<w0>d</w0><sub>4</sub>, <w0>d</w0><sub>5</sub>)</phi>,&nbsp;</span></li>
+<li><span><w1>L4</w1>:&nbsp;<w0>d</w0><sub>6</sub>&nbsp;<w22>&xlarr;</w22>&nbsp;<phi>&phi;(<w0>d</w0><sub>4</sub>, <w0>d</w0><sub>5</sub>)</phi>,&nbsp;</span></li>
+<li><span><w0>c</w0><sub>5</sub>&nbsp;<w22>&xlarr;</w22>&nbsp;<phi>&phi;(<w0>c</w0><sub>1</sub>, <w0>c</w0><sub>4</sub>)</phi>,&nbsp;</span></li>
 <li><span><w0>b</w0><sub>5</sub>&nbsp;<w22>&xlarr;</w22>&nbsp;<w3><h>#</h>0</w3>&nbsp;</span></li>
 </ol>
 </article>
@@ -1169,10 +1170,10 @@
 <span class="new-block">Block</span> <span class="block-name">H</span> <span class="count-lines">8 lines</span>
 </div>
 <ol class="mir-lines" start="27">
-<li><span><w1>L5</w1>:&nbsp;<w0>b</w0><sub>3</sub>&nbsp;<w22>&xlarr;</w22>&nbsp;<phi>&phi;(<w0>b</w0><sub>4</sub>, <w0>b</w0><sub>5</sub>)</phi>,&nbsp;</span></li>
-<li><span><w0>c</w0><sub>2</sub>&nbsp;<w22>&xlarr;</w22>&nbsp;<phi>&phi;(<w0>c</w0><sub>3</sub>, <w0>c</w0><sub>5</sub>)</phi>,&nbsp;</span></li>
+<li><span><w1>L5</w1>:&nbsp;<w0>d</w0><sub>2</sub>&nbsp;<w22>&xlarr;</w22>&nbsp;<phi>&phi;(<w0>d</w0><sub>3</sub>, <w0>d</w0><sub>6</sub>)</phi>,&nbsp;</span></li>
 <li><span><w0>a</w0><sub>3</sub>&nbsp;<w22>&xlarr;</w22>&nbsp;<phi>&phi;(<w0>a</w0><sub>2</sub>, <w0>a</w0><sub>4</sub>)</phi>,&nbsp;</span></li>
-<li><span><w0>d</w0><sub>2</sub>&nbsp;<w22>&xlarr;</w22>&nbsp;<phi>&phi;(<w0>d</w0><sub>3</sub>, <w0>d</w0><sub>6</sub>)</phi>,&nbsp;</span></li>
+<li><span><w0>b</w0><sub>3</sub>&nbsp;<w22>&xlarr;</w22>&nbsp;<phi>&phi;(<w0>b</w0><sub>4</sub>, <w0>b</w0><sub>5</sub>)</phi>,&nbsp;</span></li>
+<li><span><w0>c</w0><sub>2</sub>&nbsp;<w22>&xlarr;</w22>&nbsp;<phi>&phi;(<w0>c</w0><sub>3</sub>, <w0>c</w0><sub>5</sub>)</phi>,&nbsp;</span></li>
 <li><span><w0>y</w0>&nbsp;<w22>&xlarr;</w22>&nbsp;<w23>+</w23>,&nbsp;<w0>a</w0><sub>3</sub>,&nbsp;<w0>b</w0><sub>3</sub>&nbsp;</span></li>
 <li><span><w0>z</w0>&nbsp;<w22>&xlarr;</w22>&nbsp;<w23>+</w23>,&nbsp;<w0>c</w0><sub>2</sub>,&nbsp;<w0>d</w0><sub>2</sub>&nbsp;</span></li>
 <li><span><w0>i</w0><sub>3</sub>&nbsp;<w22>&xlarr;</w22>&nbsp;<w23>+</w23>,&nbsp;<w0>i</w0><sub>2</sub>,&nbsp;<w0>i</w0><sub>2</sub>&nbsp;</span></li>
@@ -1333,4 +1334,4 @@
 </tr>
 </tbody>
 </table></div></details>
-</main></div><footer><p>Generated compiler-analysis report</p></footer><script>const allDetails=()=>Array.from(document.querySelectorAll("main > details"));document.querySelector("[data-expand]")?.addEventListener("click",()=>allDetails().forEach(d=>d.open=true));document.querySelector("[data-collapse]")?.addEventListener("click",()=>allDetails().forEach(d=>d.open=false));</script></body></html>
+</main></div><footer><p>Generated compiler-analysis report</p></footer><script>const themeKey="compiler-analysis-theme";const themeMedia=window.matchMedia("(prefers-color-scheme: dark)");const resolveTheme=(mode)=>mode==="dark"||(mode==="system"&&themeMedia.matches)?"dark":"light";const updateThemeButtons=(mode)=>document.querySelectorAll("[data-theme-choice]").forEach(button=>button.setAttribute("aria-pressed",String(button.dataset.themeChoice===mode)));const applyTheme=(mode,store=true)=>{const selected=mode||"system";document.documentElement.dataset.theme=resolveTheme(selected);document.documentElement.dataset.themeMode=selected;updateThemeButtons(selected);if(store)localStorage.setItem(themeKey,selected);};document.querySelectorAll("[data-theme-choice]").forEach(button=>button.addEventListener("click",()=>applyTheme(button.dataset.themeChoice)));themeMedia.addEventListener("change",()=>{if((localStorage.getItem(themeKey)||"system")==="system")applyTheme("system",false);});window.addEventListener("message",(event)=>{if(event.data&&event.data.type==="compiler-theme")applyTheme(event.data.mode,false);});applyTheme(localStorage.getItem(themeKey)||"system",false);const allDetails=()=>Array.from(document.querySelectorAll("main > details"));document.querySelector("[data-expand]")?.addEventListener("click",()=>allDetails().forEach(d=>d.open=true));document.querySelector("[data-collapse]")?.addEventListener("click",()=>allDetails().forEach(d=>d.open=false));</script></body></html>

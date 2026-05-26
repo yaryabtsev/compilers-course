@@ -1,0 +1,93 @@
+{
+  "generated_at": "2026-05-26T10:33:04Z",
+  "datasets": [
+    {
+      "id": "test01",
+      "label": "test01",
+      "source": "input/test01.txt",
+      "href": "test01/index.html",
+      "dumped_at": "2026-05-26T10:33:00Z",
+      "processed_at": "2026-05-26T10:33:00Z",
+      "blocks": 10,
+      "sections": 17,
+      "region_steps": 3
+    },
+    {
+      "id": "test02",
+      "label": "test02",
+      "source": "input/test02.txt",
+      "href": "test02/index.html",
+      "dumped_at": "2026-05-26T10:33:02Z",
+      "processed_at": "2026-05-26T10:33:02Z",
+      "blocks": 7,
+      "sections": 17,
+      "region_steps": 5
+    },
+    {
+      "id": "test03",
+      "label": "test03",
+      "source": "input/test03.txt",
+      "href": "test03/index.html",
+      "dumped_at": "2026-05-26T10:33:01Z",
+      "processed_at": "2026-05-26T10:33:01Z",
+      "blocks": 10,
+      "sections": 17,
+      "region_steps": 3
+    },
+    {
+      "id": "test04",
+      "label": "test04",
+      "source": "input/test04.txt",
+      "href": "test04/index.html",
+      "dumped_at": "2026-05-26T10:33:01Z",
+      "processed_at": "2026-05-26T10:33:01Z",
+      "blocks": 7,
+      "sections": 17,
+      "region_steps": 4
+    },
+    {
+      "id": "test05",
+      "label": "test05",
+      "source": "synthetic blocks / edges",
+      "href": "test05/index.html",
+      "dumped_at": "2026-05-26T10:33:04Z",
+      "processed_at": "2026-05-26T10:33:04Z",
+      "blocks": 7,
+      "sections": 17,
+      "region_steps": 2
+    },
+    {
+      "id": "test06",
+      "label": "test06",
+      "source": "synthetic blocks / edges",
+      "href": "test06/index.html",
+      "dumped_at": "2026-05-26T10:32:58Z",
+      "processed_at": "2026-05-26T10:32:58Z",
+      "blocks": 10,
+      "sections": 17,
+      "region_steps": 7
+    },
+    {
+      "id": "test07",
+      "label": "test07",
+      "source": "synthetic blocks / edges",
+      "href": "test07/index.html",
+      "dumped_at": "2026-05-26T10:32:59Z",
+      "processed_at": "2026-05-26T10:32:59Z",
+      "blocks": 10,
+      "sections": 17,
+      "region_steps": 7
+    },
+    {
+      "id": "test08",
+      "label": "test08",
+      "source": "synthetic blocks / edges",
+      "href": "test08/index.html",
+      "dumped_at": "2026-05-26T10:33:03Z",
+      "processed_at": "2026-05-26T10:33:03Z",
+      "blocks": 7,
+      "sections": 17,
+      "region_steps": 3
+    }
+  ]
+}

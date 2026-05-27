@@ -1,0 +1,17 @@
+param n
+param m
+i <-- #0
+sum <-- #0
+L1: ifTrue i >= n goto L5
+j <-- #0
+L2: ifTrue j >= m goto L4
+t <-- +, i, j
+ifFalse t == #0 goto L3
+sum <-- +, sum, t
+goto L4
+L3: sum <-- -, sum, #1
+j <-- +, j, #1
+goto L2
+L4: i <-- +, i, #1
+goto L1
+L5: return sum

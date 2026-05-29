@@ -1,5 +1,6 @@
 import os
 import unittest
+from pathlib import Path
 
 from general.solver import solve
 
@@ -44,6 +45,10 @@ class MyTestCase(unittest.TestCase):
                   [], []]
         edges = [{1}, {2}, {3, 4}, {4, 5}, {2, 5}, {6}, set()]
         assert solve('', 'output/test08/', 'B1', blocks, edges) is None
+
+    @staticmethod
+    def test_symbolic_dump_sections():
+        assert solve('input/test10.txt', 'output/test10/') is None
 
 
 if __name__ == '__main__':

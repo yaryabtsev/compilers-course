@@ -1,12 +1,13 @@
 {
   "id": "test08",
-  "label": "test08",
+  "name": "Synthetic gen/kill loop graph",
+  "label": "test08: Synthetic gen/kill loop graph",
   "source": "synthetic blocks / edges",
   "block_name": "B1",
   "blocks": 7,
-  "sections": 17,
+  "sections": 22,
   "region_steps": 3,
-  "processed_at": "2026-05-26T10:33:03Z",
-  "dumped_at": "2026-05-26T10:33:03Z",
+  "processed_at": "2026-05-29T11:38:14Z",
+  "dumped_at": "2026-05-29T11:38:14Z",
   "report": "index.html"
 }

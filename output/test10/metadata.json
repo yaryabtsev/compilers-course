@@ -1,0 +1,13 @@
+{
+  "id": "test10",
+  "name": "Acyclic merge and region-summary demo",
+  "label": "test10: Acyclic merge and region-summary demo",
+  "source": "input/test10.txt",
+  "block_name": "A",
+  "blocks": 9,
+  "sections": 22,
+  "region_steps": 1,
+  "processed_at": "2026-05-29T11:38:13Z",
+  "dumped_at": "2026-05-29T11:38:13Z",
+  "report": "index.html"
+}

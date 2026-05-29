@@ -4,6 +4,8 @@ from tasks.task1 import LocalOptimization
 from tasks.task2 import Dominator, PostDominator
 from tasks.task3 import Phi
 from tasks.task4 import Regions
+from tasks.symbolic_dumps import (AcyclicRegionSummaryPreview, HotVariableDump, JoinMergePreview,
+                                  SymbolicBranchDump, UnsupportedSymbolicStageDump)
 from general.viewer import now_iso, write_dataset_metadata
 
 
@@ -26,15 +28,28 @@ def solve(input: str, output: str, block_name: str = 'A', blocks=None, edges=Non
         parser.graph()
     n = len(parser.lexemes)
     display.n = n
-    display.titles = ['Base MIR', 'Control Flow Graph', 'Local Value Tables', 'Input / Output Sets',
+    display.titles = ['Base MIR', 'Control Flow Graph', 'Symbolic Branch Conditions',
+                      'Hot Variable Approximation', 'Symbolic Execution Scope Stubs',
+                      'Local Value Tables', 'Input / Output Sets',
                       ' / '.join(['Pred', 'Dom', 'Idom', 'DF']),
                       'Dominator Tree', 'Postdominators & Control Dependence',
                       'Globals & Blocks', 'Phi Placement', 'Phi-Inserted Code', 'Partially Truncated SSA Form',
-                      'SSA Checks', 'Region Reduction', 'Control Tree', 'Region Classification', 'Gen / Kill',
-                      'Region Transfer Functions']
+                      'SSA Checks', 'Join Merge Preview', 'Cycle-Based Region Reduction',
+                      'Acyclic Region Summary Preview',
+                      'Control Tree', 'Region Classification', 'Gen / Kill',
+                      'Region Transfer Functions (Structural)']
+    display.notes = ['MIR / blocks', 'CFG edges', 'SE forks', 'QCE idea', 'unsupported papers',
+                     'LVN table', 'local data-flow',
+                     'dominators / DF', 'dom tree', 'postdom / CD',
+                     'SSA globals', 'DF worklist', 'phi code', 'SSA rename',
+                     'partial audit', 'state merging', 'cycle regions', 'veritesting idea',
+                     'region tree', 'area classes', 'reaching defs', 'structural transfer']
     display.show_hyperlinks()
     display.show_code(parser.lexemes)
     display.show_graph(parser.edges)
+    display.show_block_table(*SymbolicBranchDump(parser.lexemes, parser.edges, display.name).table())
+    display.show_block_table(*HotVariableDump(parser.lexemes, parser.edges, display.name).table())
+    display.show_block_table(*UnsupportedSymbolicStageDump().table())
 
     table = []
     for i in range(n):
@@ -57,14 +72,17 @@ def solve(input: str, output: str, block_name: str = 'A', blocks=None, edges=Non
     spoilers = phi.rename(0)
     display.show_code(phi.code_blocks, spoilers)
     display.show_block_table(*phi.checks())
+    display.show_block_table(*JoinMergePreview(phi, dominator, display.name).table())
 
     regions = Regions(dominator, parser.lexemes)
     display.show_graphs(list(regions.find_regions()))
+    display.show_block_table(*AcyclicRegionSummaryPreview(
+        parser.lexemes, parser.edges, post_dominator, display.name).table())
     display.show_control_tree(regions.control_tree)
     display.show_block_table([['Region'] + regions.classification], ['Class', 'Area-Node', 'Area-Body', 'Area-Loop'])
     display.show_block_table(*regions.gen_kill())
     display.show_block_table(*regions.transfer_function())
     processed_at = now_iso()
     sections_count = len(display.titles)
-    del display
+    display.close()
     write_dataset_metadata(output, input, block_name, n, sections_count, processed_at)

@@ -1,12 +1,13 @@
 {
   "id": "test03",
-  "label": "test03",
+  "name": "Nested branch loop for SSA placement",
+  "label": "test03: Nested branch loop for SSA placement",
   "source": "input/test03.txt",
   "block_name": "A",
   "blocks": 10,
-  "sections": 17,
+  "sections": 22,
   "region_steps": 3,
-  "processed_at": "2026-05-26T10:33:01Z",
-  "dumped_at": "2026-05-26T10:33:01Z",
+  "processed_at": "2026-05-29T11:38:12Z",
+  "dumped_at": "2026-05-29T11:38:12Z",
   "report": "index.html"
 }

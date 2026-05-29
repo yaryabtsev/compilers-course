@@ -1,12 +1,13 @@
 {
   "id": "test04",
-  "label": "test04",
+  "name": "Flag-driven cyclic control flow",
+  "label": "test04: Flag-driven cyclic control flow",
   "source": "input/test04.txt",
   "block_name": "A",
   "blocks": 7,
-  "sections": 17,
+  "sections": 22,
   "region_steps": 4,
-  "processed_at": "2026-05-26T10:33:01Z",
-  "dumped_at": "2026-05-26T10:33:01Z",
+  "processed_at": "2026-05-29T11:38:10Z",
+  "dumped_at": "2026-05-29T11:38:10Z",
   "report": "index.html"
 }

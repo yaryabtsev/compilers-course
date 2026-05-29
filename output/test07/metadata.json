@@ -1,12 +1,13 @@
 {
   "id": "test07",
-  "label": "test07",
+  "name": "Synthetic reverse-region graph",
+  "label": "test07: Synthetic reverse-region graph",
   "source": "synthetic blocks / edges",
   "block_name": "B1",
   "blocks": 10,
-  "sections": 17,
+  "sections": 22,
   "region_steps": 7,
-  "processed_at": "2026-05-26T10:32:59Z",
-  "dumped_at": "2026-05-26T10:32:59Z",
+  "processed_at": "2026-05-29T11:38:08Z",
+  "dumped_at": "2026-05-29T11:38:08Z",
   "report": "index.html"
 }

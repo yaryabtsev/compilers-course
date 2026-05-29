@@ -1,0 +1,12 @@
+param x
+param y
+ifTrue x > #0 goto Lpos
+neg <-- -, #0, x
+a <-- +, neg, y
+goto Ljoin
+Lpos: a <-- +, x, y
+Ljoin: ifFalse y == #0 goto Lscale
+r <-- +, a, #1
+goto Lend
+Lscale: r <-- *, a, y
+Lend: return r

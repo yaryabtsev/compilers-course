@@ -16,6 +16,7 @@ class Phi:
         self.phis = set()
         self.blocks = defaultdict(set)
         self.phi_args = [set() for _ in range(self.N)]
+        self.phi_pred_args = defaultdict(dict)
         # self.phis: List[dict]
         self.counter = defaultdict(int)
         self.stack = defaultdict(list)
@@ -92,7 +93,7 @@ class Phi:
         self.rename_phi(block, tabs, spoiler)
         self.rename_instructions(block, tabs, spoiler)
         for successor in self.dominator.edges[block]:
-            self.fill(successor, tabs, spoiler)
+            self.fill(block, successor, tabs, spoiler)
         for successor in self.dominator.dom_edges[block]:
             spoiler += self.rename(successor, tabs + 1)
             spoiler += [['tab', tabs + 2], '<r id="2">return to ', ['block', block], ';</r>']
@@ -238,7 +239,7 @@ class Phi:
                self.code_blocks[node][i][-1] and self.code_blocks[node][i][-1][0] == 0 \
                and self.code_blocks[node][i][-1][4]
 
-    def fill(self, successor, tabs, spoiler):
+    def fill(self, predecessor, successor, tabs, spoiler):
         spoiler += [['tab', tabs + 1], '<r id="3">fill(', ['block', successor], ')</r>:']
         i = 0
         while self.is_phi_line(successor, i):
@@ -246,6 +247,7 @@ class Phi:
             if not self.stack[var[1]]:
                 self.new_name(var[1])
             idx = self.stack[var[1]][-1]
+            self.phi_pred_args[(successor, var[1])][predecessor] = idx
             if idx not in var[2]:
                 var[2].append(idx)
                 var[2].sort()

@@ -4,12 +4,16 @@ import json
 import os
 import subprocess
 import sys
+from pathlib import Path
+
+from general.template_assets import ensure_output_assets, render_template
 
 
 class Display:
     def __init__(self, out_dir: str):
         self.out_dir = out_dir
         os.makedirs(self.out_dir, exist_ok=True)
+        ensure_output_assets(Path(self.out_dir).parent)
         regions_dir = os.path.join(self.out_dir, 'regions')
         os.makedirs(regions_dir, exist_ok=True)
         for file_name in os.listdir(regions_dir):
@@ -18,47 +22,30 @@ class Display:
         self.orig_stdout = sys.stdout
         self.output = open(os.path.join(out_dir, 'index.html'), 'w')
         sys.stdout = self.output
+        self.closed = False
         self.block_name = 'A'
         self.title_id = 0
         self.titles = []
+        self.notes = []
         self.n = -1
 
-        print('<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">'
-              '<meta name="viewport" content="width=device-width, initial-scale=1">'
-              '<link rel="icon" type="image/png" sizes="32x32" href="../coding.png">'
-              '<link rel="stylesheet" href="../styles.css">'
-              '<title>Compiler Analysis Report</title></head><body><div class="app-shell">')
+        print(render_template('report_start.html', asset_prefix='../'))
 
     def __del__(self):
-        print('</main></div><footer><p>Generated compiler-analysis report</p></footer>'
-              '<script>'
-              'const themeKey="compiler-analysis-theme";'
-              'const themeMedia=window.matchMedia("(prefers-color-scheme: dark)");'
-              'const resolveTheme=(mode)=>mode==="dark"||(mode==="system"&&themeMedia.matches)?"dark":"light";'
-              'const updateThemeButtons=(mode)=>document.querySelectorAll("[data-theme-choice]").forEach('
-              'button=>button.setAttribute("aria-pressed",String(button.dataset.themeChoice===mode)));'
-              'const applyTheme=(mode,store=true)=>{'
-              'const selected=mode||"system";'
-              'document.documentElement.dataset.theme=resolveTheme(selected);'
-              'document.documentElement.dataset.themeMode=selected;'
-              'updateThemeButtons(selected);'
-              'if(store)localStorage.setItem(themeKey,selected);'
-              '};'
-              'document.querySelectorAll("[data-theme-choice]").forEach('
-              'button=>button.addEventListener("click",()=>applyTheme(button.dataset.themeChoice)));'
-              'themeMedia.addEventListener("change",()=>{'
-              'if((localStorage.getItem(themeKey)||"system")==="system")applyTheme("system",false);'
-              '});'
-              'window.addEventListener("message",(event)=>{'
-              'if(event.data&&event.data.type==="compiler-theme")applyTheme(event.data.mode,false);'
-              '});'
-              'applyTheme(localStorage.getItem(themeKey)||"system",false);'
-              'const allDetails=()=>Array.from(document.querySelectorAll("main > details"));'
-              'document.querySelector("[data-expand]")?.addEventListener("click",()=>allDetails().forEach(d=>d.open=true));'
-              'document.querySelector("[data-collapse]")?.addEventListener("click",()=>allDetails().forEach(d=>d.open=false));'
-              '</script></body></html>')
-        sys.stdout = self.orig_stdout
+        try:
+            self.close()
+        except Exception:
+            pass
+
+    def close(self):
+        if self.closed:
+            return
+        if not self.output.closed:
+            print(render_template('report_end.html', asset_prefix='../'), file=self.output)
+        if sys.stdout is self.output:
+            sys.stdout = self.orig_stdout
         self.output.close()
+        self.closed = True
 
     @staticmethod
     def line_count_text(count: int) -> str:
@@ -293,45 +280,27 @@ class Display:
         print('</table></div></details>')
 
     def show_title(self, class_name: str) -> None:
+        title = self.titles[self.title_id]
+        note = self.notes[self.title_id] if self.title_id < len(self.notes) else ''
+        note_html = f'<small class="section-note">{note}</small>' if note else ''
         print(f'<details id="title-{self.title_id}"><summary><h2 class="{class_name}"'
-              f'>{self.titles[self.title_id]}</h2></summary>')
+              f'><span class="section-title">{title}</span>{note_html}</h2></summary>')
         self.title_id += 1
 
     def show_hyperlinks(self):
-        print('<aside class="sidebar">')
-        print('<div class="brand"><span class="brand-mark">CA</span>'
-              '<div><p>Compiler Analysis</p><small>Static report</small></div></div>')
-        print('<div class="sidebar-actions">'
-              '<button type="button" data-expand>Expand all</button>'
-              '<button type="button" data-collapse>Collapse all</button>'
-              '</div>')
-        print('<div class="theme-toggle" aria-label="Theme">'
-              '<button type="button" data-theme-choice="light">Light</button>'
-              '<button type="button" data-theme-choice="dark">Dark</button>'
-              '<button type="button" data-theme-choice="system">System</button>'
-              '</div>')
-        print('<nav aria-label="Report sections">')
-        for _id in range(len(self.titles)):
-            Display.show_href(self.titles[_id], "content", _id)
-        print('</nav></aside>')
-        print('<main class="report-main">')
-        print('<header class="report-header">'
-              '<div><p class="eyebrow">Pipeline report</p>'
-              '<h1>Compiler analysis walkthrough</h1>'
-              '<p>Generated from the current MIR input and analysis stages.</p></div>'
-              f'<dl><div><dt>Blocks</dt><dd>{self.n}</dd></div>'
-              f'<div><dt>Sections</dt><dd>{len(self.titles)}</dd></div></dl>'
-              '</header>')
+        links = '\n'.join([Display.href(self.titles[_id], "content", _id) for _id in range(len(self.titles))])
+        print(render_template('report_shell.html', links=links, blocks=self.n, sections=len(self.titles)))
 
     @staticmethod
-    def show_href(title: str, class_name: str, title_id: int):
-        print(f'<a class="{class_name}" href="#title-{title_id}">'
-              f'<span>{title_id + 1:02d}</span>{title}</a>')
+    def href(title: str, class_name: str, title_id: int):
+        return f'<a class="{class_name}" href="#title-{title_id}"><span>{title_id + 1:02d}</span>{title}</a>'
 
     def show_spoiler(self, html):
         if not html:
             return
-        print('<details class="trace"><summary><p class="summary-span">Trace</p></summary><div class="trace-code">')
+        print('<details class="trace"><summary><p class="summary-span">'
+              '<span>Trace</span><small class="section-note">derivation steps</small>'
+              '</p></summary><div class="trace-code">')
         for item in html:
             if type(item) is list:
                 if item[0] == 'tab':

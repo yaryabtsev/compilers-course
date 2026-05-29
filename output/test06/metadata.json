@@ -1,12 +1,13 @@
 {
   "id": "test06",
-  "label": "test06",
+  "name": "Synthetic nested region graph",
+  "label": "test06: Synthetic nested region graph",
   "source": "synthetic blocks / edges",
   "block_name": "B1",
   "blocks": 10,
-  "sections": 17,
+  "sections": 22,
   "region_steps": 7,
-  "processed_at": "2026-05-27T07:07:31Z",
-  "dumped_at": "2026-05-27T07:07:31Z",
+  "processed_at": "2026-05-29T11:38:06Z",
+  "dumped_at": "2026-05-29T11:38:06Z",
   "report": "index.html"
 }

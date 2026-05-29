@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" type="image/png" sizes="32x32" href="coding.png">
+<link rel="stylesheet" href="styles.css">
+<title>Compiler Analysis Dumps</title>
+</head>
+<body class="viewer-body">
+<div class="viewer-shell">
+<header class="viewer-topbar">
+<div class="viewer-title">
+<p class="eyebrow">Dump viewer</p>
+<h1>Compiler analysis dumps</h1>
+</div>
+<div class="viewer-controls">
+<label class="dataset-picker">
+<span>Dataset</span>
+<select id="datasetSelect"></select>
+</label>
+<details class="settings-menu viewer-settings">
+<summary>Settings</summary>
+<div class="settings-panel">
+<div class="theme-toggle" aria-label="Theme">
+<button type="button" data-theme-choice="light">Light</button>
+<button type="button" data-theme-choice="dark">Dark</button>
+<button type="button" data-theme-choice="system">System</button>
+</div>
+</div>
+</details>
+</div>
+<dl class="dataset-metadata">
+<div><dt>Name</dt><dd id="metaName">-</dd></div>
+<div><dt>Last dumped</dt><dd id="metaDumped">-</dd></div>
+<div><dt>Last processed</dt><dd id="metaProcessed">-</dd></div>
+<div><dt>Source</dt><dd id="metaSource">-</dd></div>
+<div><dt>Blocks</dt><dd id="metaBlocks">-</dd></div>
+<div><dt>Region steps</dt><dd id="metaRegions">-</dd></div>
+</dl>
+</header>
+<main class="viewer-main">
+<iframe id="datasetFrame" class="viewer-frame" title="Selected compiler analysis dump"></iframe>
+</main>
+</div>
+<script>
+const DATASETS = ${datasets_json};
+</script>
+<script src="theme.js"></script>
+<script src="viewer.js"></script>
+</body>
+</html>

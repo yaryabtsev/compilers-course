@@ -1,12 +1,13 @@
 {
   "id": "test01",
-  "label": "test01",
+  "name": "Exponentiation loop with parity branches",
+  "label": "test01: Exponentiation loop with parity branches",
   "source": "input/test01.txt",
   "block_name": "A",
   "blocks": 10,
-  "sections": 17,
+  "sections": 22,
   "region_steps": 3,
-  "processed_at": "2026-05-27T07:07:34Z",
-  "dumped_at": "2026-05-27T07:07:34Z",
+  "processed_at": "2026-05-29T11:38:09Z",
+  "dumped_at": "2026-05-29T11:38:10Z",
   "report": "index.html"
 }

@@ -1,12 +1,13 @@
 {
   "id": "test05",
-  "label": "test05",
+  "name": "Synthetic SSA merge graph",
+  "label": "test05: Synthetic SSA merge graph",
   "source": "synthetic blocks / edges",
   "block_name": "R1",
   "blocks": 7,
-  "sections": 17,
+  "sections": 22,
   "region_steps": 2,
-  "processed_at": "2026-05-27T07:07:38Z",
-  "dumped_at": "2026-05-27T07:07:38Z",
+  "processed_at": "2026-05-29T11:38:14Z",
+  "dumped_at": "2026-05-29T11:38:14Z",
   "report": "index.html"
 }

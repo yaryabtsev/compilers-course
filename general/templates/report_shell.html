@@ -1,0 +1,35 @@
+<aside class="sidebar">
+<div class="brand">
+<span class="brand-mark">CA</span>
+<div><p>Compiler Analysis</p><small>Static report</small></div>
+</div>
+<details class="settings-menu">
+<summary>Settings</summary>
+<div class="settings-panel">
+<div class="sidebar-actions">
+<button type="button" data-expand>Expand all</button>
+<button type="button" data-collapse>Collapse all</button>
+</div>
+<div class="theme-toggle" aria-label="Theme">
+<button type="button" data-theme-choice="light">Light</button>
+<button type="button" data-theme-choice="dark">Dark</button>
+<button type="button" data-theme-choice="system">System</button>
+</div>
+</div>
+</details>
+<nav aria-label="Report sections">
+${links}
+</nav>
+</aside>
+<main class="report-main">
+<header class="report-header">
+<div>
+<p class="eyebrow">Pipeline report</p>
+<h1>Compiler analysis walkthrough</h1>
+<p>Generated from the current MIR input and analysis stages.</p>
+</div>
+<dl>
+<div><dt>Blocks</dt><dd>${blocks}</dd></div>
+<div><dt>Sections</dt><dd>${sections}</dd></div>
+</dl>
+</header>

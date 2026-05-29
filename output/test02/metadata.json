@@ -1,12 +1,13 @@
 {
   "id": "test02",
-  "label": "test02",
+  "name": "Long loop value-table stress case",
+  "label": "test02: Long loop value-table stress case",
   "source": "input/test02.txt",
   "block_name": "A",
   "blocks": 7,
-  "sections": 17,
+  "sections": 22,
   "region_steps": 5,
-  "processed_at": "2026-05-27T07:07:37Z",
-  "dumped_at": "2026-05-27T07:07:37Z",
+  "processed_at": "2026-05-29T11:38:13Z",
+  "dumped_at": "2026-05-29T11:38:13Z",
   "report": "index.html"
 }

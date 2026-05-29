@@ -1,12 +1,13 @@
 {
   "id": "test09",
-  "label": "test09",
+  "name": "Nested loop symbolic dump demo",
+  "label": "test09: Nested loop symbolic dump demo",
   "source": "input/test09.txt",
   "block_name": "A",
   "blocks": 11,
-  "sections": 17,
+  "sections": 22,
   "region_steps": 3,
-  "processed_at": "2026-05-27T07:07:34Z",
-  "dumped_at": "2026-05-27T07:07:34Z",
+  "processed_at": "2026-05-29T11:38:09Z",
+  "dumped_at": "2026-05-29T11:38:09Z",
   "report": "index.html"
 }

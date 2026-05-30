@@ -1,0 +1,13 @@
+{
+  "id": "test13",
+  "name": "Qadd dependency expansion baseline",
+  "label": "test13: Qadd dependency expansion baseline",
+  "source": "input/test13.txt",
+  "block_name": "A",
+  "blocks": 9,
+  "sections": 22,
+  "region_steps": 1,
+  "processed_at": "2026-05-30T20:55:43Z",
+  "dumped_at": "2026-05-30T20:55:43Z",
+  "report": "index.html"
+}

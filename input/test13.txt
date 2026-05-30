@@ -1,0 +1,13 @@
+param x
+param y
+ifTrue x < #0 goto Lneg
+a <-- +, x, #5
+goto Ljoin
+Lneg: neg <-- -, #0, x
+a <-- +, neg, #1
+Ljoin: t <-- +, a, y
+ifTrue t > #0 goto Lhot
+r <-- +, y, #1
+goto Lend
+Lhot: r <-- +, t, #1
+Lend: return r

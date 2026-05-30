@@ -1,0 +1,1551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" type="image/png" sizes="32x32" href="../coding.png">
+<link rel="stylesheet" href="../styles.css">
+<title>Compiler Analysis Report</title>
+</head>
+<body>
+<div class="app-shell">
+
+<aside class="sidebar">
+<div class="brand">
+<span class="brand-mark">CA</span>
+<div><p>Compiler Analysis</p><small>Static report</small></div>
+</div>
+<details class="settings-menu">
+<summary>Settings</summary>
+<div class="settings-panel">
+<div class="sidebar-actions">
+<button type="button" data-expand>Expand all</button>
+<button type="button" data-collapse>Collapse all</button>
+</div>
+<div class="theme-toggle" aria-label="Theme">
+<button type="button" data-theme-choice="light">Light</button>
+<button type="button" data-theme-choice="dark">Dark</button>
+<button type="button" data-theme-choice="system">System</button>
+</div>
+</div>
+</details>
+<nav aria-label="Report sections">
+<a class="content" href="#title-0"><span>01</span>Base MIR</a>
+<a class="content" href="#title-1"><span>02</span>Control Flow Graph</a>
+<a class="content" href="#title-2"><span>03</span>Symbolic Branch Conditions</a>
+<a class="content" href="#title-3"><span>04</span>Q_add / Q_t Approximation</a>
+<a class="content" href="#title-4"><span>05</span>Symbolic Execution Scope Stubs</a>
+<a class="content" href="#title-5"><span>06</span>Local Value Tables</a>
+<a class="content" href="#title-6"><span>07</span>Input / Output Sets</a>
+<a class="content" href="#title-7"><span>08</span>Pred / Dom / Idom / DF</a>
+<a class="content" href="#title-8"><span>09</span>Dominator Tree</a>
+<a class="content" href="#title-9"><span>10</span>Postdominators & Control Dependence</a>
+<a class="content" href="#title-10"><span>11</span>Globals & Blocks</a>
+<a class="content" href="#title-11"><span>12</span>Phi Placement</a>
+<a class="content" href="#title-12"><span>13</span>Phi-Inserted Code</a>
+<a class="content" href="#title-13"><span>14</span>Partially Truncated SSA Form</a>
+<a class="content" href="#title-14"><span>15</span>SSA Checks</a>
+<a class="content" href="#title-15"><span>16</span>Join Merge Preview</a>
+<a class="content" href="#title-16"><span>17</span>Cycle-Based Region Reduction</a>
+<a class="content" href="#title-17"><span>18</span>Acyclic Region Summary Preview</a>
+<a class="content" href="#title-18"><span>19</span>Control Tree</a>
+<a class="content" href="#title-19"><span>20</span>Region Classification</a>
+<a class="content" href="#title-20"><span>21</span>Gen / Kill</a>
+<a class="content" href="#title-21"><span>22</span>Region Transfer Functions (Structural)</a>
+</nav>
+</aside>
+<main class="report-main">
+<header class="report-header">
+<div>
+<p class="eyebrow">Pipeline report</p>
+<h1>Compiler analysis walkthrough</h1>
+<p>Generated from the current MIR input and analysis stages.</p>
+</div>
+<dl>
+<div><dt>Blocks</dt><dd>9</dd></div>
+<div><dt>Sections</dt><dd>22</dd></div>
+</dl>
+</header>
+
+<details id="title-0"><summary><h2 class="code-title"><span class="section-title">Base MIR</span><small class="section-note">MIR / blocks</small></h2></summary>
+<div class="code-panel">
+<div class="boundary-block"><span class="block-name">Entry</span></div>
+<article class="mir-block">
+<div class="block-heading">
+<span class="new-block">Block</span> <span class="block-name">A</span> <span class="count-lines">4 lines</span>
+</div>
+<ol class="mir-lines" start="1">
+<li><span><w20>param</w20>&nbsp;<w0>i</w0>&nbsp;</span></li>
+<li><span><w20>param</w20>&nbsp;<w0>n</w0>&nbsp;</span></li>
+<li><span><w20>param</w20>&nbsp;<w0>target</w0>&nbsp;</span></li>
+<li><span><w0>matches</w0>&nbsp;<w22>&xlarr;</w22>&nbsp;<w3><h>#</h>0</w3>&nbsp;</span></li>
+</ol>
+</article>
+<article class="mir-block">
+<div class="block-heading">
+<span class="new-block">Block</span> <span class="block-name">B</span> <span class="count-lines">1 line</span>
+</div>
+<ol class="mir-lines" start="5">
+<li><span><w1>Lloop</w1>:&nbsp;<if>if</if>&nbsp;<w5>False</w5>&nbsp;<w0>i</w0>&nbsp;<w24><</w24>&nbsp;<w0>n</w0>&nbsp;<w6>goto</w6>&nbsp;<w1>Lend</w1>&nbsp;</span></li>
+</ol>
+</article>
+<article class="mir-block">
+<div class="block-heading">
+<span class="new-block">Block</span> <span class="block-name">C</span> <span class="count-lines">1 line</span>
+</div>
+<ol class="mir-lines" start="6">
+<li><span><if>if</if>&nbsp;<w5>False</w5>&nbsp;<w0>target</w0>&nbsp;<w24>=</w24>&nbsp;<w0>i</w0>&nbsp;<w6>goto</w6>&nbsp;<w1>Lskip</w1>&nbsp;</span></li>
+</ol>
+</article>
+<article class="mir-block">
+<div class="block-heading">
+<span class="new-block">Block</span> <span class="block-name">D</span> <span class="count-lines">2 lines</span>
+</div>
+<ol class="mir-lines" start="7">
+<li><span><w0>matches</w0>&nbsp;<w22>&xlarr;</w22>&nbsp;<w23>+</w23>,&nbsp;<w0>matches</w0>,&nbsp;<w3><h>#</h>1</w3>&nbsp;</span></li>
+<li><span><w6>goto</w6>&nbsp;<w1>Lnext</w1>&nbsp;</span></li>
+</ol>
+</article>
+<article class="mir-block">
+<div class="block-heading">
+<span class="new-block">Block</span> <span class="block-name">E</span> <span class="count-lines">1 line</span>
+</div>
+<ol class="mir-lines" start="9">
+<li><span><w1>Lskip</w1>:&nbsp;<w0>matches</w0>&nbsp;<w22>&xlarr;</w22>&nbsp;<w23>+</w23>,&nbsp;<w0>matches</w0>,&nbsp;<w3><h>#</h>0</w3>&nbsp;</span></li>
+</ol>
+</article>
+<article class="mir-block">
+<div class="block-heading">
+<span class="new-block">Block</span> <span class="block-name">F</span> <span class="count-lines">2 lines</span>
+</div>
+<ol class="mir-lines" start="10">
+<li><span><w1>Lnext</w1>:&nbsp;<w0>i</w0>&nbsp;<w22>&xlarr;</w22>&nbsp;<w23>+</w23>,&nbsp;<w0>i</w0>,&nbsp;<w3><h>#</h>1</w3>&nbsp;</span></li>
+<li><span><w6>goto</w6>&nbsp;<w1>Lloop</w1>&nbsp;</span></li>
+</ol>
+</article>
+<article class="mir-block">
+<div class="block-heading">
+<span class="new-block">Block</span> <span class="block-name">G</span> <span class="count-lines">1 line</span>
+</div>
+<ol class="mir-lines" start="12">
+<li><span><w1>Lend</w1>:&nbsp;<w21>return</w21>&nbsp;<w0>matches</w0>&nbsp;</span></li>
+</ol>
+</article>
+<div class="boundary-block"><span class="block-name">Exit</span></div>
+</div></details><details id="title-1"><summary><h2 class="image-title"><span class="section-title">Control Flow Graph</span><small class="section-note">CFG edges</small></h2></summary>
+<div class="graph-panel">
+<img src="cfg.png" alt="Control Flow Graph">
+</div></details>
+<details id="title-2"><summary><h2 class="block-table-title"><span class="section-title">Symbolic Branch Conditions</span><small class="section-note">SE forks</small></h2></summary>
+<details class="trace"><summary><p class="summary-span"><span>Trace</span><small class="section-note">derivation steps</small></p></summary><div class="trace-code">
+<comment>Path prefixes are sampled syntactic acyclic prefixes. Cycles are cut and no SMT satisfiability check is performed.</comment></div></details>
+<div class="table-scroll"><table>
+<thead><tr>
+<th>block</th>
+<th>branch</th>
+<th>true edge</th>
+<th>false edge</th>
+<th>path prefix</th>
+<th>status</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="first-column">B</td>
+<td>ifFalse i &lt; n goto G</td>
+<td>B &rarr; C</td>
+<td>B &rarr; G</td>
+<td>true<br>i &lt; n &and; target = i<br>i &lt; n &and; &not;(target = i)</td>
+<td>syntactic; no SMT feasibility check</td>
+</tr>
+<tr>
+<td class="first-column">C</td>
+<td>ifFalse target = i goto E</td>
+<td>C &rarr; D</td>
+<td>C &rarr; E</td>
+<td>i &lt; n</td>
+<td>syntactic; no SMT feasibility check</td>
+</tr>
+</tbody>
+</table></div>
+</details>
+<details id="title-3"><summary><h2 class="block-table-title"><span class="section-title">Q_add / Q_t Approximation</span><small class="section-note">QCE recurrence</small></h2></summary>
+<details class="trace" open>
+<summary><p class="summary-span"><span>Syntactic branch variables</span></p></summary>
+<div class="trace-code">
+<comment>Q<sub>t</sub> and Q<sub>add</sub> follow the QCE recurrence from Efficient State Merging, with C approximated by syntactic variable occurrence in branch conditions. The dump does not estimate SMT or ite expression cost.</comment></div>
+<div class="table-scroll"><table>
+<thead><tr>
+<th>block</th>
+<th>Q<sub>t</sub></th>
+<th>hot variables</th>
+<th>Q<sub>add</sub>(block, var)</th>
+<th>status</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="first-column">Entry</td>
+<td>3.00</td>
+<td>i, n</td>
+<td>i:3.00, n:2.00, target:1.00</td>
+<td>alpha=0.35, beta=0.50; syntactic C relation</td>
+</tr>
+<tr>
+<td class="first-column">A</td>
+<td>3.00</td>
+<td>i, n</td>
+<td>i:3.00, n:2.00, target:1.00</td>
+<td>alpha=0.35, beta=0.50; syntactic C relation</td>
+</tr>
+<tr>
+<td class="first-column">B</td>
+<td>3.00</td>
+<td>i, n</td>
+<td>i:3.00, n:2.00, target:1.00</td>
+<td>alpha=0.35, beta=0.50; syntactic C relation</td>
+</tr>
+<tr>
+<td class="first-column">C</td>
+<td>4.00</td>
+<td>i, n, target</td>
+<td>i:4.00, n:2.00, target:2.00</td>
+<td>alpha=0.35, beta=0.50; syntactic C relation</td>
+</tr>
+<tr>
+<td class="first-column">D</td>
+<td>3.00</td>
+<td>i, n</td>
+<td>i:3.00, n:2.00, target:1.00</td>
+<td>alpha=0.35, beta=0.50; syntactic C relation</td>
+</tr>
+<tr>
+<td class="first-column">E</td>
+<td>3.00</td>
+<td>i, n</td>
+<td>i:3.00, n:2.00, target:1.00</td>
+<td>alpha=0.35, beta=0.50; syntactic C relation</td>
+</tr>
+<tr>
+<td class="first-column">F</td>
+<td>3.00</td>
+<td>i, n</td>
+<td>i:3.00, n:2.00, target:1.00</td>
+<td>alpha=0.35, beta=0.50; syntactic C relation</td>
+</tr>
+<tr>
+<td class="first-column">G</td>
+<td>0</td>
+<td class="none">None</td>
+<td class="none">None</td>
+<td>alpha=0.35, beta=0.50; syntactic C relation</td>
+</tr>
+<tr>
+<td class="first-column">Exit</td>
+<td>0</td>
+<td class="none">None</td>
+<td class="none">None</td>
+<td>alpha=0.35, beta=0.50; syntactic C relation</td>
+</tr>
+</tbody>
+</table></div>
+</details>
+<details class="trace" open>
+<summary><p class="summary-span"><span>Local dependency variables</span></p></summary>
+<div class="trace-code">
+<comment>Local dependency mode expands branch variables through assignments inside the same block. It does not propagate dependencies across CFG edges.</comment></div>
+<div class="table-scroll"><table>
+<thead><tr>
+<th>block</th>
+<th>Q<sub>t</sub></th>
+<th>hot variables</th>
+<th>Q<sub>add</sub>(block, var)</th>
+<th>status</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="first-column">Entry</td>
+<td>3.00</td>
+<td>i, n</td>
+<td>i:3.00, n:2.00, target:1.00</td>
+<td>alpha=0.35, beta=0.50; local dependency C relation</td>
+</tr>
+<tr>
+<td class="first-column">A</td>
+<td>3.00</td>
+<td>i, n</td>
+<td>i:3.00, n:2.00, target:1.00</td>
+<td>alpha=0.35, beta=0.50; local dependency C relation</td>
+</tr>
+<tr>
+<td class="first-column">B</td>
+<td>3.00</td>
+<td>i, n</td>
+<td>i:3.00, n:2.00, target:1.00</td>
+<td>alpha=0.35, beta=0.50; local dependency C relation</td>
+</tr>
+<tr>
+<td class="first-column">C</td>
+<td>4.00</td>
+<td>i, n, target</td>
+<td>i:4.00, n:2.00, target:2.00</td>
+<td>alpha=0.35, beta=0.50; local dependency C relation</td>
+</tr>
+<tr>
+<td class="first-column">D</td>
+<td>3.00</td>
+<td>i, n</td>
+<td>i:3.00, n:2.00, target:1.00</td>
+<td>alpha=0.35, beta=0.50; local dependency C relation</td>
+</tr>
+<tr>
+<td class="first-column">E</td>
+<td>3.00</td>
+<td>i, n</td>
+<td>i:3.00, n:2.00, target:1.00</td>
+<td>alpha=0.35, beta=0.50; local dependency C relation</td>
+</tr>
+<tr>
+<td class="first-column">F</td>
+<td>3.00</td>
+<td>i, n</td>
+<td>i:3.00, n:2.00, target:1.00</td>
+<td>alpha=0.35, beta=0.50; local dependency C relation</td>
+</tr>
+<tr>
+<td class="first-column">G</td>
+<td>0</td>
+<td class="none">None</td>
+<td class="none">None</td>
+<td>alpha=0.35, beta=0.50; local dependency C relation</td>
+</tr>
+<tr>
+<td class="first-column">Exit</td>
+<td>0</td>
+<td class="none">None</td>
+<td class="none">None</td>
+<td>alpha=0.35, beta=0.50; local dependency C relation</td>
+</tr>
+</tbody>
+</table></div>
+</details>
+<details class="trace" open>
+<summary><p class="summary-span"><span>CFG dependency variables</span></p></summary>
+<div class="trace-code">
+<comment>CFG dependency mode propagates assignment dependencies across CFG edges with set union at joins. It is still syntactic and does not check path feasibility.</comment></div>
+<div class="table-scroll"><table>
+<thead><tr>
+<th>block</th>
+<th>Q<sub>t</sub></th>
+<th>hot variables</th>
+<th>Q<sub>add</sub>(block, var)</th>
+<th>status</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="first-column">Entry</td>
+<td>3.00</td>
+<td>i, n</td>
+<td>i:3.00, n:2.00, target:1.00</td>
+<td>alpha=0.35, beta=0.50; cfg dependency C relation</td>
+</tr>
+<tr>
+<td class="first-column">A</td>
+<td>3.00</td>
+<td>i, n</td>
+<td>i:3.00, n:2.00, target:1.00</td>
+<td>alpha=0.35, beta=0.50; cfg dependency C relation</td>
+</tr>
+<tr>
+<td class="first-column">B</td>
+<td>3.00</td>
+<td>i, n</td>
+<td>i:3.00, n:2.00, target:1.00</td>
+<td>alpha=0.35, beta=0.50; cfg dependency C relation</td>
+</tr>
+<tr>
+<td class="first-column">C</td>
+<td>4.00</td>
+<td>i, n, target</td>
+<td>i:4.00, n:2.00, target:2.00</td>
+<td>alpha=0.35, beta=0.50; cfg dependency C relation</td>
+</tr>
+<tr>
+<td class="first-column">D</td>
+<td>3.00</td>
+<td>i, n</td>
+<td>i:3.00, n:2.00, target:1.00</td>
+<td>alpha=0.35, beta=0.50; cfg dependency C relation</td>
+</tr>
+<tr>
+<td class="first-column">E</td>
+<td>3.00</td>
+<td>i, n</td>
+<td>i:3.00, n:2.00, target:1.00</td>
+<td>alpha=0.35, beta=0.50; cfg dependency C relation</td>
+</tr>
+<tr>
+<td class="first-column">F</td>
+<td>3.00</td>
+<td>i, n</td>
+<td>i:3.00, n:2.00, target:1.00</td>
+<td>alpha=0.35, beta=0.50; cfg dependency C relation</td>
+</tr>
+<tr>
+<td class="first-column">G</td>
+<td>0</td>
+<td class="none">None</td>
+<td class="none">None</td>
+<td>alpha=0.35, beta=0.50; cfg dependency C relation</td>
+</tr>
+<tr>
+<td class="first-column">Exit</td>
+<td>0</td>
+<td class="none">None</td>
+<td class="none">None</td>
+<td>alpha=0.35, beta=0.50; cfg dependency C relation</td>
+</tr>
+</tbody>
+</table></div>
+</details>
+<details class="trace" open>
+<summary><p class="summary-span"><span>Versioned dependency variables</span></p></summary>
+<div class="trace-code">
+<comment>Versioned dependency mode propagates source-definition versions across CFG edges. It is path-insensitive and does not check path feasibility.</comment></div>
+<div class="table-scroll"><table>
+<thead><tr>
+<th>block</th>
+<th>Q<sub>t</sub></th>
+<th>hot variables</th>
+<th>Q<sub>add</sub>(block, var)</th>
+<th>status</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="first-column">Entry</td>
+<td>3.00</td>
+<td>i<sub>0</sub>, n<sub>0</sub></td>
+<td>i<sub>0</sub>:3.00, n<sub>0</sub>:2.00, target<sub>0</sub>:1.00</td>
+<td>alpha=0.35, beta=0.50; versioned dependency C relation</td>
+</tr>
+<tr>
+<td class="first-column">A</td>
+<td>3.00</td>
+<td>i<sub>0</sub>, n<sub>0</sub></td>
+<td>i<sub>0</sub>:3.00, n<sub>0</sub>:2.00, target<sub>0</sub>:1.00</td>
+<td>alpha=0.35, beta=0.50; versioned dependency C relation</td>
+</tr>
+<tr>
+<td class="first-column">B</td>
+<td>3.00</td>
+<td>i<sub>0</sub>, n<sub>0</sub></td>
+<td>i<sub>0</sub>:3.00, n<sub>0</sub>:2.00, target<sub>0</sub>:1.00</td>
+<td>alpha=0.35, beta=0.50; versioned dependency C relation</td>
+</tr>
+<tr>
+<td class="first-column">C</td>
+<td>4.00</td>
+<td>i<sub>0</sub>, n<sub>0</sub>, target<sub>0</sub></td>
+<td>i<sub>0</sub>:4.00, n<sub>0</sub>:2.00, target<sub>0</sub>:2.00</td>
+<td>alpha=0.35, beta=0.50; versioned dependency C relation</td>
+</tr>
+<tr>
+<td class="first-column">D</td>
+<td>3.00</td>
+<td>i<sub>0</sub>, n<sub>0</sub></td>
+<td>i<sub>0</sub>:3.00, n<sub>0</sub>:2.00, target<sub>0</sub>:1.00</td>
+<td>alpha=0.35, beta=0.50; versioned dependency C relation</td>
+</tr>
+<tr>
+<td class="first-column">E</td>
+<td>3.00</td>
+<td>i<sub>0</sub>, n<sub>0</sub></td>
+<td>i<sub>0</sub>:3.00, n<sub>0</sub>:2.00, target<sub>0</sub>:1.00</td>
+<td>alpha=0.35, beta=0.50; versioned dependency C relation</td>
+</tr>
+<tr>
+<td class="first-column">F</td>
+<td>3.00</td>
+<td>i<sub>0</sub>, n<sub>0</sub></td>
+<td>i<sub>0</sub>:3.00, n<sub>0</sub>:2.00, target<sub>0</sub>:1.00</td>
+<td>alpha=0.35, beta=0.50; versioned dependency C relation</td>
+</tr>
+<tr>
+<td class="first-column">G</td>
+<td>0</td>
+<td class="none">None</td>
+<td class="none">None</td>
+<td>alpha=0.35, beta=0.50; versioned dependency C relation</td>
+</tr>
+<tr>
+<td class="first-column">Exit</td>
+<td>0</td>
+<td class="none">None</td>
+<td class="none">None</td>
+<td>alpha=0.35, beta=0.50; versioned dependency C relation</td>
+</tr>
+</tbody>
+</table></div>
+</details>
+<details class="trace" open>
+<summary><p class="summary-span"><span>Q_add algorithm profile</span></p></summary>
+<div class="trace-code">
+<comment>Block-level Q<sub>add</sub> mass compares how widely each approximation mode propagates branch dependencies. Q<sub>t</sub> is plotted per approximation mode because some dependency relations may track different branch-query pressure. Hot-count bars use the matching mode-specific alpha * Q<sub>t</sub> threshold. This is an algorithm profile, not a correctness ranking and not a replacement for a manual oracle.</comment></div>
+<div class="table-scroll"><table>
+<thead><tr>
+<th>chart</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="first-column"><div class="graph-panel"><img src="qadd_algorithm_comparison.svg" alt="Q_add algorithm comparison"></div></td>
+</tr>
+</tbody>
+</table></div>
+</details>
+</details>
+<details id="title-4"><summary><h2 class="block-table-title"><span class="section-title">Symbolic Execution Scope Stubs</span><small class="section-note">unsupported papers</small></h2></summary>
+<details class="trace"><summary><p class="summary-span"><span>Trace</span><small class="section-note">derivation steps</small></p></summary><div class="trace-code">
+<comment>These paper families are intentionally marked as stubs or out of scope until the input language already supports the required concepts.</comment></div></details>
+<div class="table-scroll"><table>
+<thead><tr>
+<th>family</th>
+<th>status</th>
+<th>why unavailable</th>
+<th>current action</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="first-column">Array transformations</td>
+<td>stub</td>
+<td>current MIR has no array read/write syntax or array values</td>
+<td>keep as documentation-only placeholder</td>
+</tr>
+<tr>
+<td class="first-column">Function summaries</td>
+<td>stub</td>
+<td>current MIR has param/return but no call instruction, callee identity, or call graph</td>
+<td>keep as documentation-only placeholder</td>
+</tr>
+<tr>
+<td class="first-column">Heap/list/shape execution</td>
+<td>out of scope</td>
+<td>current MIR has no heap allocation, fields, references, aliases, or predicates</td>
+<td>do not expand parser for this dump-first task</td>
+</tr>
+<tr>
+<td class="first-column">Compiled symbolic execution</td>
+<td>out of scope</td>
+<td>project is not compiling LLVM/C/Java into a symbolic executor</td>
+<td>no implementation planned</td>
+</tr>
+</tbody>
+</table></div>
+</details>
+<details id="title-5"><summary><h2 class="var-table"><span class="section-title">Local Value Tables</span><small class="section-note">LVN table</small></h2></summary>
+<div class="value-grid">
+<article class="value-card">
+<div class="block-heading">
+<span class="new-block">Block</span> <span class="block-name">Entry</span> <span class="count-lines">0 lines</span>
+</div>
+<p class="empty-state">No instructions in this block.</p>
+</article>
+<article class="value-card">
+<div class="block-heading">
+<span class="new-block">Block</span> <span class="block-name">A</span> <span class="count-lines">4 lines</span>
+</div>
+<div class="value-card-body">
+<div class="code compact-code">
+<ol class="mir-lines" start="1">
+<li><span><w20>param</w20>&nbsp;<w0>i</w0><sup>0</sup>&nbsp;</span></li>
+<li><span><w20>param</w20>&nbsp;<w0>n</w0><sup>0</sup>&nbsp;</span></li>
+<li><span><w20>param</w20>&nbsp;<w0>target</w0><sup>0</sup>&nbsp;</span></li>
+<li><span><w0>matches</w0><sup>0</sup>&nbsp;<w22>&xlarr;</w22>&nbsp;<w3><h>#</h>0</w3>&nbsp;</span></li>
+</ol>
+</div>
+<div class="table-scroll">
+<table class="value-table">
+<tbody>
+<tr>
+<td>1</td>
+<td><nm>id/nm</nm></td>
+<td>
+<w0>i</w0><sup>0</sup>
+</td>
+</tr>
+<tr>
+<td>2</td>
+<td><nm>id/nm</nm></td>
+<td>
+<w0>n</w0><sup>0</sup>
+</td>
+</tr>
+<tr>
+<td>3</td>
+<td><nm>id/nm</nm></td>
+<td>
+<w0>target</w0><sup>0</sup>
+</td>
+</tr>
+<tr>
+<td>4</td>
+<td><nm>id/nm</nm></td>
+<td>
+<w3><h>#</h>0</w3>,&nbsp;<w0>matches</w0><sup>0</sup>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</article>
+<article class="value-card">
+<div class="block-heading">
+<span class="new-block">Block</span> <span class="block-name">B</span> <span class="count-lines">1 line</span>
+</div>
+<div class="value-card-body">
+<div class="code compact-code">
+<ol class="mir-lines" start="5">
+<li><span><w1>Lloop</w1>:&nbsp;<if>if</if>&nbsp;<w5>False</w5>&nbsp;<w0>i</w0><sup>0</sup>&nbsp;<w24><</w24>&nbsp;<w0>n</w0><sup>0</sup>&nbsp;<w6>goto</w6>&nbsp;<w1>Lend</w1>&nbsp;</span></li>
+</ol>
+</div>
+<div class="table-scroll">
+<table class="value-table">
+<tbody>
+<tr>
+<td>1</td>
+<td><nm>id/nm</nm></td>
+<td>
+<w0>i</w0><sup>0</sup>
+</td>
+</tr>
+<tr>
+<td>2</td>
+<td><nm>id/nm</nm></td>
+<td>
+<w0>n</w0><sup>0</sup>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</article>
+<article class="value-card">
+<div class="block-heading">
+<span class="new-block">Block</span> <span class="block-name">C</span> <span class="count-lines">1 line</span>
+</div>
+<div class="value-card-body">
+<div class="code compact-code">
+<ol class="mir-lines" start="6">
+<li><span><if>if</if>&nbsp;<w5>False</w5>&nbsp;<w0>target</w0><sup>0</sup>&nbsp;<w24>=</w24>&nbsp;<w0>i</w0><sup>0</sup>&nbsp;<w6>goto</w6>&nbsp;<w1>Lskip</w1>&nbsp;</span></li>
+</ol>
+</div>
+<div class="table-scroll">
+<table class="value-table">
+<tbody>
+<tr>
+<td>1</td>
+<td><nm>id/nm</nm></td>
+<td>
+<w0>target</w0><sup>0</sup>
+</td>
+</tr>
+<tr>
+<td>2</td>
+<td><nm>id/nm</nm></td>
+<td>
+<w0>i</w0><sup>0</sup>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</article>
+<article class="value-card">
+<div class="block-heading">
+<span class="new-block">Block</span> <span class="block-name">D</span> <span class="count-lines">2 lines</span>
+</div>
+<div class="value-card-body">
+<div class="code compact-code">
+<ol class="mir-lines" start="7">
+<li><span><w0>matches</w0><sup>1</sup>&nbsp;<w22>&xlarr;</w22>&nbsp;<w23>+</w23>,&nbsp;<w0>matches</w0><sup>0</sup>,&nbsp;<w3><h>#</h>1</w3>&nbsp;</span></li>
+<li><span><w6>goto</w6>&nbsp;<w1>Lnext</w1>&nbsp;</span></li>
+</ol>
+</div>
+<div class="table-scroll">
+<table class="value-table">
+<tbody>
+<tr>
+<td>1</td>
+<td><nm>id/nm</nm></td>
+<td colspan="2"></td>
+<td>
+<w0>matches</w0><sup>0</sup>
+</td>
+</tr>
+<tr>
+<td>2</td>
+<td><nm>id/nm</nm></td>
+<td colspan="2"></td>
+<td>
+<w3><h>#</h>1</w3>
+</td>
+</tr>
+<tr>
+<td>3</td>
+<td><w23>+</w23></td>
+<td><num>1</num></td>
+<td><num>2</num></td>
+<td>
+<w0>matches</w0><sup>1</sup>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</article>
+<article class="value-card">
+<div class="block-heading">
+<span class="new-block">Block</span> <span class="block-name">E</span> <span class="count-lines">1 line</span>
+</div>
+<div class="value-card-body">
+<div class="code compact-code">
+<ol class="mir-lines" start="9">
+<li><span><w1>Lskip</w1>:&nbsp;<w0>matches</w0><sup>1</sup>&nbsp;<w22>&xlarr;</w22>&nbsp;<w23>+</w23>,&nbsp;<w0>matches</w0><sup>0</sup>,&nbsp;<w3><h>#</h>0</w3>&nbsp;</span></li>
+</ol>
+</div>
+<div class="table-scroll">
+<table class="value-table">
+<tbody>
+<tr>
+<td>1</td>
+<td><nm>id/nm</nm></td>
+<td colspan="2"></td>
+<td>
+<w0>matches</w0><sup>0</sup>
+</td>
+</tr>
+<tr>
+<td>2</td>
+<td><nm>id/nm</nm></td>
+<td colspan="2"></td>
+<td>
+<w3><h>#</h>0</w3>
+</td>
+</tr>
+<tr>
+<td>3</td>
+<td><w23>+</w23></td>
+<td><num>1</num></td>
+<td><num>2</num></td>
+<td>
+<w0>matches</w0><sup>1</sup>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</article>
+<article class="value-card">
+<div class="block-heading">
+<span class="new-block">Block</span> <span class="block-name">F</span> <span class="count-lines">2 lines</span>
+</div>
+<div class="value-card-body">
+<div class="code compact-code">
+<ol class="mir-lines" start="10">
+<li><span><w1>Lnext</w1>:&nbsp;<w0>i</w0><sup>1</sup>&nbsp;<w22>&xlarr;</w22>&nbsp;<w23>+</w23>,&nbsp;<w0>i</w0><sup>0</sup>,&nbsp;<w3><h>#</h>1</w3>&nbsp;</span></li>
+<li><span><w6>goto</w6>&nbsp;<w1>Lloop</w1>&nbsp;</span></li>
+</ol>
+</div>
+<div class="table-scroll">
+<table class="value-table">
+<tbody>
+<tr>
+<td>1</td>
+<td><nm>id/nm</nm></td>
+<td colspan="2"></td>
+<td>
+<w0>i</w0><sup>0</sup>
+</td>
+</tr>
+<tr>
+<td>2</td>
+<td><nm>id/nm</nm></td>
+<td colspan="2"></td>
+<td>
+<w3><h>#</h>1</w3>
+</td>
+</tr>
+<tr>
+<td>3</td>
+<td><w23>+</w23></td>
+<td><num>1</num></td>
+<td><num>2</num></td>
+<td>
+<w0>i</w0><sup>1</sup>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</article>
+<article class="value-card">
+<div class="block-heading">
+<span class="new-block">Block</span> <span class="block-name">G</span> <span class="count-lines">1 line</span>
+</div>
+<div class="value-card-body">
+<div class="code compact-code">
+<ol class="mir-lines" start="12">
+<li><span><w1>Lend</w1>:&nbsp;<w21>return</w21>&nbsp;<w0>matches</w0><sup>0</sup>&nbsp;</span></li>
+</ol>
+</div>
+<div class="table-scroll">
+<table class="value-table">
+<tbody>
+<tr>
+<td>1</td>
+<td><nm>id/nm</nm></td>
+<td>
+<w0>matches</w0><sup>0</sup>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</article>
+<article class="value-card">
+<div class="block-heading">
+<span class="new-block">Block</span> <span class="block-name">Exit</span> <span class="count-lines">0 lines</span>
+</div>
+<p class="empty-state">No instructions in this block.</p>
+</article>
+</div></details>
+<details id="title-6"><summary><h2 class="block-table-title"><span class="section-title">Input / Output Sets</span><small class="section-note">local data-flow</small></h2></summary>
+<details class="trace"><summary><p class="summary-span"><span>Trace</span><small class="section-note">derivation steps</small></p></summary><div class="trace-code">
+<comment>Input contains variables read before a local definition; Output contains variables assigned in the block.</comment></div></details>
+<div class="table-scroll"><table>
+<thead><tr>
+<th>block</th>
+<th>Entry</th>
+<th>A</th>
+<th>B</th>
+<th>C</th>
+<th>D</th>
+<th>E</th>
+<th>F</th>
+<th>G</th>
+<th>Exit</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="first-column">Input(block)</td>
+<td class="none">None</td>
+<td>i, n, target</td>
+<td>i, n</td>
+<td>i, target</td>
+<td class="none">None</td>
+<td class="none">None</td>
+<td class="none">None</td>
+<td>matches</td>
+<td class="none">None</td>
+</tr>
+<tr>
+<td class="first-column">Output(block)</td>
+<td class="none">None</td>
+<td>matches</td>
+<td class="none">None</td>
+<td class="none">None</td>
+<td>matches</td>
+<td>matches</td>
+<td>i</td>
+<td class="none">None</td>
+<td class="none">None</td>
+</tr>
+</tbody>
+</table></div>
+</details>
+<details id="title-7"><summary><h2 class="block-table-title"><span class="section-title">Pred / Dom / Idom / DF</span><small class="section-note">dominators / DF</small></h2></summary>
+<div class="table-scroll"><table>
+<thead><tr>
+<th>node =</th>
+<th>Entry</th>
+<th>A</th>
+<th>B</th>
+<th>C</th>
+<th>D</th>
+<th>E</th>
+<th>F</th>
+<th>G</th>
+<th>Exit</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="first-column">Pred(node)</td>
+<td class="none">None</td>
+<td>Entry</td>
+<td>A, F</td>
+<td>B</td>
+<td>C</td>
+<td>C</td>
+<td>D, E</td>
+<td>B</td>
+<td>G</td>
+</tr>
+<tr>
+<td class="first-column">Dom(node)</td>
+<td>Entry</td>
+<td>Entry, A</td>
+<td>Entry, A, B</td>
+<td>Entry, A, B, C</td>
+<td>Entry, A, B, C, D</td>
+<td>Entry, A, B, C, E</td>
+<td>Entry, A, B, C, F</td>
+<td>Entry, A, B, G</td>
+<td>Entry, A, B, G, Exit</td>
+</tr>
+<tr>
+<td class="first-column">Idom(node)</td>
+<td class="none">None</td>
+<td>Entry</td>
+<td>A</td>
+<td>B</td>
+<td>C</td>
+<td>C</td>
+<td>C</td>
+<td>B</td>
+<td>G</td>
+</tr>
+<tr>
+<td class="first-column">DF(node)</td>
+<td class="none">None</td>
+<td class="none">None</td>
+<td>B</td>
+<td>B</td>
+<td>F</td>
+<td>F</td>
+<td>B</td>
+<td class="none">None</td>
+<td class="none">None</td>
+</tr>
+</tbody>
+</table></div>
+</details>
+<details id="title-8"><summary><h2 class="image-title"><span class="section-title">Dominator Tree</span><small class="section-note">dom tree</small></h2></summary>
+<div class="graph-panel">
+<img src="dt.png" alt="Dominator Tree">
+</div></details>
+<details id="title-9"><summary><h2 class="block-table-title"><span class="section-title">Postdominators & Control Dependence</span><small class="section-note">postdom / CD</small></h2></summary>
+<div class="table-scroll"><table>
+<thead><tr>
+<th>node =</th>
+<th>Entry</th>
+<th>A</th>
+<th>B</th>
+<th>C</th>
+<th>D</th>
+<th>E</th>
+<th>F</th>
+<th>G</th>
+<th>Exit</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="first-column">Pdom(node)</td>
+<td>Entry, A, B, G, Exit</td>
+<td>A, B, G, Exit</td>
+<td>B, G, Exit</td>
+<td>B, C, F, G, Exit</td>
+<td>B, D, F, G, Exit</td>
+<td>B, E, F, G, Exit</td>
+<td>B, F, G, Exit</td>
+<td>G, Exit</td>
+<td>Exit</td>
+</tr>
+<tr>
+<td class="first-column">Ipdom(node)</td>
+<td>A</td>
+<td>B</td>
+<td>G</td>
+<td>F</td>
+<td>F</td>
+<td>F</td>
+<td>B</td>
+<td>Exit</td>
+<td class="none">None</td>
+</tr>
+<tr>
+<td class="first-column">CD(node)</td>
+<td class="none">None</td>
+<td class="none">None</td>
+<td>B</td>
+<td>B</td>
+<td>C</td>
+<td>C</td>
+<td>B</td>
+<td class="none">None</td>
+<td class="none">None</td>
+</tr>
+</tbody>
+</table></div>
+</details>
+<details id="title-10"><summary><h2 class="block-table-title"><span class="section-title">Globals & Blocks</span><small class="section-note">SSA globals</small></h2></summary>
+<details class="trace"><summary><p class="summary-span"><span>Trace</span><small class="section-note">derivation steps</small></p></summary><div class="trace-code">
+<font class="block-name">Entry</font><gb1>-block:</gb1><br>&nbsp;&nbsp;&nbsp;<gb2>def<sub><font class="block-name">Entry</font></sub>&nbsp;:&nbsp;</gb2>{}<br><font class="block-name">A</font><gb1>-block:</gb1><br>&nbsp;&nbsp;&nbsp;<gb2>def<sub><font class="block-name">A</font></sub>&nbsp;:&nbsp;</gb2>{}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<ol class="mir-lines" start="1">
+<li><span><w20>param</w20>&nbsp;<w0>i</w0>&nbsp;</span></li>
+</ol>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb3>Globals&nbsp;:&nbsp;</gb3>{}&nbsp;<disj>&#8744;</disj>&nbsp;{<w0>i</w0>}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<ol class="mir-lines" start="2">
+<li><span><w20>param</w20>&nbsp;<w0>n</w0>&nbsp;</span></li>
+</ol>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb3>Globals&nbsp;:&nbsp;</gb3>{<w0>i</w0>}&nbsp;<disj>&#8744;</disj>&nbsp;{<w0>n</w0>}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<ol class="mir-lines" start="3">
+<li><span><w20>param</w20>&nbsp;<w0>target</w0>&nbsp;</span></li>
+</ol>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb3>Globals&nbsp;:&nbsp;</gb3>{<w0>n</w0>,&nbsp;<w0>i</w0>}&nbsp;<disj>&#8744;</disj>&nbsp;{<w0>target</w0>}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<ol class="mir-lines" start="4">
+<li><span><w0>matches</w0>&nbsp;<w22>&xlarr;</w22>&nbsp;<w3><h>#</h>0</w3>&nbsp;</span></li>
+</ol>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb2>def<sub><font class="block-name">A</font></sub>&nbsp;:&nbsp;</gb2>{}&nbsp;<disj>&#8744;</disj>&nbsp;{<w0>matches</w0>}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb4>Blocks(<gb5>matches</gb5>)&nbsp;:&nbsp;</gb4>{}&nbsp;<disj>&#8744;</disj>&nbsp;{<font class="block-name">A</font>}<br><font class="block-name">B</font><gb1>-block:</gb1><br>&nbsp;&nbsp;&nbsp;<gb2>def<sub><font class="block-name">B</font></sub>&nbsp;:&nbsp;</gb2>{}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<ol class="mir-lines" start="5">
+<li><span><w1>Lloop</w1>:&nbsp;<if>if</if>&nbsp;<w5>False</w5>&nbsp;<w0>i</w0>&nbsp;<w24><</w24>&nbsp;<w0>n</w0>&nbsp;<w6>goto</w6>&nbsp;<w1>Lend</w1>&nbsp;</span></li>
+</ol>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb3>Globals&nbsp;:&nbsp;</gb3>{<w0>target</w0>,&nbsp;<w0>n</w0>,&nbsp;<w0>i</w0>}&nbsp;<disj>&#8744;</disj>&nbsp;{<w0>i</w0>}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb3>Globals&nbsp;:&nbsp;</gb3>{<w0>target</w0>,&nbsp;<w0>n</w0>,&nbsp;<w0>i</w0>}&nbsp;<disj>&#8744;</disj>&nbsp;{<w0>n</w0>}<br><font class="block-name">C</font><gb1>-block:</gb1><br>&nbsp;&nbsp;&nbsp;<gb2>def<sub><font class="block-name">C</font></sub>&nbsp;:&nbsp;</gb2>{}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<ol class="mir-lines" start="6">
+<li><span><if>if</if>&nbsp;<w5>False</w5>&nbsp;<w0>target</w0>&nbsp;<w24>=</w24>&nbsp;<w0>i</w0>&nbsp;<w6>goto</w6>&nbsp;<w1>Lskip</w1>&nbsp;</span></li>
+</ol>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb3>Globals&nbsp;:&nbsp;</gb3>{<w0>target</w0>,&nbsp;<w0>n</w0>,&nbsp;<w0>i</w0>}&nbsp;<disj>&#8744;</disj>&nbsp;{<w0>target</w0>}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb3>Globals&nbsp;:&nbsp;</gb3>{<w0>target</w0>,&nbsp;<w0>n</w0>,&nbsp;<w0>i</w0>}&nbsp;<disj>&#8744;</disj>&nbsp;{<w0>i</w0>}<br><font class="block-name">D</font><gb1>-block:</gb1><br>&nbsp;&nbsp;&nbsp;<gb2>def<sub><font class="block-name">D</font></sub>&nbsp;:&nbsp;</gb2>{}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<ol class="mir-lines" start="7">
+<li><span><w0>matches</w0>&nbsp;<w22>&xlarr;</w22>&nbsp;<w23>+</w23>,&nbsp;<w0>matches</w0>,&nbsp;<w3><h>#</h>1</w3>&nbsp;</span></li>
+</ol>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb3>Globals&nbsp;:&nbsp;</gb3>{<w0>target</w0>,&nbsp;<w0>n</w0>,&nbsp;<w0>i</w0>}&nbsp;<disj>&#8744;</disj>&nbsp;{<w0>matches</w0>}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb2>def<sub><font class="block-name">D</font></sub>&nbsp;:&nbsp;</gb2>{}&nbsp;<disj>&#8744;</disj>&nbsp;{<w0>matches</w0>}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb4>Blocks(<gb5>matches</gb5>)&nbsp;:&nbsp;</gb4>{<font class="block-name">A</font>}&nbsp;<disj>&#8744;</disj>&nbsp;{<font class="block-name">D</font>}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<ol class="mir-lines" start="8">
+<li><span><w6>goto</w6>&nbsp;<w1>Lnext</w1>&nbsp;</span></li>
+</ol>
+<br><font class="block-name">E</font><gb1>-block:</gb1><br>&nbsp;&nbsp;&nbsp;<gb2>def<sub><font class="block-name">E</font></sub>&nbsp;:&nbsp;</gb2>{}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<ol class="mir-lines" start="9">
+<li><span><w1>Lskip</w1>:&nbsp;<w0>matches</w0>&nbsp;<w22>&xlarr;</w22>&nbsp;<w23>+</w23>,&nbsp;<w0>matches</w0>,&nbsp;<w3><h>#</h>0</w3>&nbsp;</span></li>
+</ol>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb3>Globals&nbsp;:&nbsp;</gb3>{<w0>target</w0>,&nbsp;<w0>n</w0>,&nbsp;<w0>matches</w0>,&nbsp;<w0>i</w0>}&nbsp;<disj>&#8744;</disj>&nbsp;{<w0>matches</w0>}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb2>def<sub><font class="block-name">E</font></sub>&nbsp;:&nbsp;</gb2>{}&nbsp;<disj>&#8744;</disj>&nbsp;{<w0>matches</w0>}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb4>Blocks(<gb5>matches</gb5>)&nbsp;:&nbsp;</gb4>{<font class="block-name">A</font>,&nbsp;<font class="block-name">D</font>}&nbsp;<disj>&#8744;</disj>&nbsp;{<font class="block-name">E</font>}<br><font class="block-name">F</font><gb1>-block:</gb1><br>&nbsp;&nbsp;&nbsp;<gb2>def<sub><font class="block-name">F</font></sub>&nbsp;:&nbsp;</gb2>{}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<ol class="mir-lines" start="10">
+<li><span><w1>Lnext</w1>:&nbsp;<w0>i</w0>&nbsp;<w22>&xlarr;</w22>&nbsp;<w23>+</w23>,&nbsp;<w0>i</w0>,&nbsp;<w3><h>#</h>1</w3>&nbsp;</span></li>
+</ol>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb3>Globals&nbsp;:&nbsp;</gb3>{<w0>target</w0>,&nbsp;<w0>n</w0>,&nbsp;<w0>matches</w0>,&nbsp;<w0>i</w0>}&nbsp;<disj>&#8744;</disj>&nbsp;{<w0>i</w0>}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb2>def<sub><font class="block-name">F</font></sub>&nbsp;:&nbsp;</gb2>{}&nbsp;<disj>&#8744;</disj>&nbsp;{<w0>i</w0>}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb4>Blocks(<gb5>i</gb5>)&nbsp;:&nbsp;</gb4>{}&nbsp;<disj>&#8744;</disj>&nbsp;{<font class="block-name">F</font>}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<ol class="mir-lines" start="11">
+<li><span><w6>goto</w6>&nbsp;<w1>Lloop</w1>&nbsp;</span></li>
+</ol>
+<br><font class="block-name">G</font><gb1>-block:</gb1><br>&nbsp;&nbsp;&nbsp;<gb2>def<sub><font class="block-name">G</font></sub>&nbsp;:&nbsp;</gb2>{}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<ol class="mir-lines" start="12">
+<li><span><w1>Lend</w1>:&nbsp;<w21>return</w21>&nbsp;<w0>matches</w0>&nbsp;</span></li>
+</ol>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb3>Globals&nbsp;:&nbsp;</gb3>{<w0>target</w0>,&nbsp;<w0>n</w0>,&nbsp;<w0>matches</w0>,&nbsp;<w0>i</w0>}&nbsp;<disj>&#8744;</disj>&nbsp;{<w0>matches</w0>}<br><font class="block-name">Exit</font><gb1>-block:</gb1><br>&nbsp;&nbsp;&nbsp;<gb2>def<sub><font class="block-name">Exit</font></sub>&nbsp;:&nbsp;</gb2>{}</div></details>
+<div class="table-scroll"><table>
+<thead><tr>
+<th>var =</th>
+<th>i</th>
+<th>matches</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="first-column">Blocks(var)</td>
+<td>F</td>
+<td>A, D, E</td>
+</tr>
+<tr>
+<td class="first-column">is Global</td>
+<td class="true">+</td>
+<td class="true">+</td>
+</tr>
+</tbody>
+</table></div>
+</details>
+<details id="title-11"><summary><h2 class="block-table-title"><span class="section-title">Phi Placement</span><small class="section-note">DF worklist</small></h2></summary>
+<details class="trace"><summary><p class="summary-span"><span>Trace</span><small class="section-note">derivation steps</small></p></summary><div class="trace-code">
+<l id="1">variable</l>&nbsp;<w0>target</w0>:<br>&nbsp;&nbsp;&nbsp;<l id="2">WorkList</l> : {}<br><l id="1">variable</l>&nbsp;<w0>n</w0>:<br>&nbsp;&nbsp;&nbsp;<l id="2">WorkList</l> : {}<br><l id="1">variable</l>&nbsp;<w0>matches</w0>:<br>&nbsp;&nbsp;&nbsp;<l id="2">WorkList</l> : {<font class="block-name">A</font>,&nbsp;<font class="block-name">D</font>,&nbsp;<font class="block-name">E</font>}<br>&nbsp;&nbsp;&nbsp;<l id="3">insert</l>&nbsp;<phi>&phi;(<h>*</h><w0>matches</w0>)</phi>&nbsp;in&nbsp;<font class="block-name">F</font><gb1>-block:</gb1><br>&nbsp;&nbsp;&nbsp;<l id="2">WorkList</l> : {<font class="block-name">A</font>,&nbsp;<font class="block-name">D</font>,&nbsp;<font class="block-name">E</font>}&nbsp;<disj>&#8744;</disj>&nbsp;{<w0>6</w0>}<br>&nbsp;&nbsp;&nbsp;<l id="3">insert</l>&nbsp;<phi>&phi;(<h>*</h><w0>matches</w0>)</phi>&nbsp;in&nbsp;<font class="block-name">B</font><gb1>-block:</gb1><br>&nbsp;&nbsp;&nbsp;<l id="2">WorkList</l> : {<font class="block-name">A</font>,&nbsp;<font class="block-name">D</font>,&nbsp;<font class="block-name">E</font>,&nbsp;<font class="block-name">F</font>}&nbsp;<disj>&#8744;</disj>&nbsp;{<w0>2</w0>}<br><l id="1">variable</l>&nbsp;<w0>i</w0>:<br>&nbsp;&nbsp;&nbsp;<l id="2">WorkList</l> : {<font class="block-name">F</font>}<br>&nbsp;&nbsp;&nbsp;<l id="3">insert</l>&nbsp;<phi>&phi;(<h>*</h><w0>i</w0>)</phi>&nbsp;in&nbsp;<font class="block-name">B</font><gb1>-block:</gb1><br>&nbsp;&nbsp;&nbsp;<l id="2">WorkList</l> : {<font class="block-name">F</font>}&nbsp;<disj>&#8744;</disj>&nbsp;{<w0>2</w0>}</div></details>
+<div class="table-scroll"><table>
+<thead><tr>
+<th>block =</th>
+<th>Entry</th>
+<th>A</th>
+<th>B</th>
+<th>C</th>
+<th>D</th>
+<th>E</th>
+<th>F</th>
+<th>G</th>
+<th>Exit</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="first-column">i</td>
+<td class="false">-</td>
+<td class="false">-</td>
+<td class="true">+</td>
+<td class="false">-</td>
+<td class="false">-</td>
+<td class="false">-</td>
+<td class="false">-</td>
+<td class="false">-</td>
+<td class="false">-</td>
+</tr>
+<tr>
+<td class="first-column">matches</td>
+<td class="false">-</td>
+<td class="false">-</td>
+<td class="true">+</td>
+<td class="false">-</td>
+<td class="false">-</td>
+<td class="false">-</td>
+<td class="true">+</td>
+<td class="false">-</td>
+<td class="false">-</td>
+</tr>
+<tr>
+<td class="first-column">n</td>
+<td class="false">-</td>
+<td class="false">-</td>
+<td class="false">-</td>
+<td class="false">-</td>
+<td class="false">-</td>
+<td class="false">-</td>
+<td class="false">-</td>
+<td class="false">-</td>
+<td class="false">-</td>
+</tr>
+<tr>
+<td class="first-column">target</td>
+<td class="false">-</td>
+<td class="false">-</td>
+<td class="false">-</td>
+<td class="false">-</td>
+<td class="false">-</td>
+<td class="false">-</td>
+<td class="false">-</td>
+<td class="false">-</td>
+<td class="false">-</td>
+</tr>
+</tbody>
+</table></div>
+</details>
+<details id="title-12"><summary><h2 class="code-title"><span class="section-title">Phi-Inserted Code</span><small class="section-note">phi code</small></h2></summary>
+<div class="code-panel">
+<div class="boundary-block"><span class="block-name">Entry</span></div>
+<article class="mir-block">
+<div class="block-heading">
+<span class="new-block">Block</span> <span class="block-name">A</span> <span class="count-lines">4 lines</span>
+</div>
+<ol class="mir-lines" start="1">
+<li><span><w20>param</w20>&nbsp;<w0>i</w0>&nbsp;</span></li>
+<li><span><w20>param</w20>&nbsp;<w0>n</w0>&nbsp;</span></li>
+<li><span><w20>param</w20>&nbsp;<w0>target</w0>&nbsp;</span></li>
+<li><span><w0>matches</w0>&nbsp;<w22>&xlarr;</w22>&nbsp;<w3><h>#</h>0</w3>&nbsp;</span></li>
+</ol>
+</article>
+<article class="mir-block">
+<div class="block-heading">
+<span class="new-block">Block</span> <span class="block-name">B</span> <span class="count-lines">3 lines</span>
+</div>
+<ol class="mir-lines" start="5">
+<li><span><w1>Lloop</w1>:&nbsp;<w0>i</w0>&nbsp;<w22>&xlarr;</w22>&nbsp;<phi>&phi;(<w0><h>*</h>i</w0>)</phi>,&nbsp;</span></li>
+<li><span><w0>matches</w0>&nbsp;<w22>&xlarr;</w22>&nbsp;<phi>&phi;(<w0><h>*</h>matches</w0>)</phi>,&nbsp;</span></li>
+<li><span><if>if</if>&nbsp;<w5>False</w5>&nbsp;<w0>i</w0>&nbsp;<w24><</w24>&nbsp;<w0>n</w0>&nbsp;<w6>goto</w6>&nbsp;<w1>Lend</w1>&nbsp;</span></li>
+</ol>
+</article>
+<article class="mir-block">
+<div class="block-heading">
+<span class="new-block">Block</span> <span class="block-name">C</span> <span class="count-lines">1 line</span>
+</div>
+<ol class="mir-lines" start="8">
+<li><span><if>if</if>&nbsp;<w5>False</w5>&nbsp;<w0>target</w0>&nbsp;<w24>=</w24>&nbsp;<w0>i</w0>&nbsp;<w6>goto</w6>&nbsp;<w1>Lskip</w1>&nbsp;</span></li>
+</ol>
+</article>
+<article class="mir-block">
+<div class="block-heading">
+<span class="new-block">Block</span> <span class="block-name">D</span> <span class="count-lines">2 lines</span>
+</div>
+<ol class="mir-lines" start="9">
+<li><span><w0>matches</w0>&nbsp;<w22>&xlarr;</w22>&nbsp;<w23>+</w23>,&nbsp;<w0>matches</w0>,&nbsp;<w3><h>#</h>1</w3>&nbsp;</span></li>
+<li><span><w6>goto</w6>&nbsp;<w1>Lnext</w1>&nbsp;</span></li>
+</ol>
+</article>
+<article class="mir-block">
+<div class="block-heading">
+<span class="new-block">Block</span> <span class="block-name">E</span> <span class="count-lines">1 line</span>
+</div>
+<ol class="mir-lines" start="11">
+<li><span><w1>Lskip</w1>:&nbsp;<w0>matches</w0>&nbsp;<w22>&xlarr;</w22>&nbsp;<w23>+</w23>,&nbsp;<w0>matches</w0>,&nbsp;<w3><h>#</h>0</w3>&nbsp;</span></li>
+</ol>
+</article>
+<article class="mir-block">
+<div class="block-heading">
+<span class="new-block">Block</span> <span class="block-name">F</span> <span class="count-lines">3 lines</span>
+</div>
+<ol class="mir-lines" start="12">
+<li><span><w1>Lnext</w1>:&nbsp;<w0>matches</w0>&nbsp;<w22>&xlarr;</w22>&nbsp;<phi>&phi;(<w0><h>*</h>matches</w0>)</phi>,&nbsp;</span></li>
+<li><span><w0>i</w0>&nbsp;<w22>&xlarr;</w22>&nbsp;<w23>+</w23>,&nbsp;<w0>i</w0>,&nbsp;<w3><h>#</h>1</w3>&nbsp;</span></li>
+<li><span><w6>goto</w6>&nbsp;<w1>Lloop</w1>&nbsp;</span></li>
+</ol>
+</article>
+<article class="mir-block">
+<div class="block-heading">
+<span class="new-block">Block</span> <span class="block-name">G</span> <span class="count-lines">1 line</span>
+</div>
+<ol class="mir-lines" start="15">
+<li><span><w1>Lend</w1>:&nbsp;<w21>return</w21>&nbsp;<w0>matches</w0>&nbsp;</span></li>
+</ol>
+</article>
+<div class="boundary-block"><span class="block-name">Exit</span></div>
+</div></details><details id="title-13"><summary><h2 class="code-title"><span class="section-title">Partially Truncated SSA Form</span><small class="section-note">SSA rename</small></h2></summary>
+<details class="trace"><summary><p class="summary-span"><span>Trace</span><small class="section-note">derivation steps</small></p></summary><div class="trace-code">
+<br><r id="1">Rename(<font class="block-name">Entry</font>)</r>:<br>&nbsp;&nbsp;&nbsp;<r id="5">rename &phi;-functions:</r><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="4">no &phi;-functions</r><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="6">stack</r> : empty<br>&nbsp;&nbsp;&nbsp;rename instructions:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="4">no instructions</r><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="6">stack</r> : empty<br>&nbsp;&nbsp;&nbsp;<r id="3">fill(<font class="block-name">A</font>)</r>:<r id="4">no &phi;-functions</r><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="6">stack</r> : empty<br>&nbsp;&nbsp;&nbsp;<r id="1">Rename(<font class="block-name">A</font>)</r>:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="5">rename &phi;-functions:</r><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="4">no &phi;-functions</r><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="6">stack</r> : empty<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rename instructions:<ol class="mir-lines" start="1">
+<li><span><w20>param</w20>&nbsp;<w0>i</w0><sub>0</sub>&nbsp;</span></li>
+</ol>
+<ol class="mir-lines" start="2">
+<li><span><w20>param</w20>&nbsp;<w0>n</w0>&nbsp;</span></li>
+</ol>
+<ol class="mir-lines" start="3">
+<li><span><w20>param</w20>&nbsp;<w0>target</w0>&nbsp;</span></li>
+</ol>
+<ol class="mir-lines" start="4">
+<li><span><w0>matches</w0><sub>1</sub>&nbsp;<w22>&xlarr;</w22>&nbsp;<w3><h>#</h>0</w3>&nbsp;</span></li>
+</ol>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="6">stack</r> : <w0>i</w0>:[0],&nbsp;<w0>matches</w0>:[0, 1]<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="3">fill(<font class="block-name">B</font>)</r>:<ol class="mir-lines" start="5">
+<li><span><w1>Lloop</w1>:&nbsp;<w0>i</w0><sub>1</sub>&nbsp;<w22>&xlarr;</w22>&nbsp;<phi>&phi;(<w0>i</w0><sub>0</sub>, <w0>i</w0><sub>2</sub>)</phi>,&nbsp;</span></li>
+</ol>
+<ol class="mir-lines" start="6">
+<li><span><w0>matches</w0><sub>2</sub>&nbsp;<w22>&xlarr;</w22>&nbsp;<phi>&phi;(<w0>matches</w0><sub>1</sub>, <w0>matches</w0><sub>5</sub>)</phi>,&nbsp;</span></li>
+</ol>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="6">stack</r> : <w0>i</w0>:[0],&nbsp;<w0>matches</w0>:[0, 1]<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="1">Rename(<font class="block-name">B</font>)</r>:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="5">rename &phi;-functions:</r><ol class="mir-lines" start="5">
+<li><span><w1>Lloop</w1>:&nbsp;<w0>i</w0><sub>1</sub>&nbsp;<w22>&xlarr;</w22>&nbsp;<phi>&phi;(<w0>i</w0><sub>0</sub>, <w0>i</w0><sub>2</sub>)</phi>,&nbsp;</span></li>
+</ol>
+<ol class="mir-lines" start="6">
+<li><span><w0>matches</w0><sub>2</sub>&nbsp;<w22>&xlarr;</w22>&nbsp;<phi>&phi;(<w0>matches</w0><sub>1</sub>, <w0>matches</w0><sub>5</sub>)</phi>,&nbsp;</span></li>
+</ol>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="6">stack</r> : <w0>i</w0>:[0, 1],&nbsp;<w0>matches</w0>:[0, 1, 2]<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rename instructions:<ol class="mir-lines" start="7">
+<li><span><if>if</if>&nbsp;<w5>False</w5>&nbsp;<w0>i</w0><sub>1</sub>&nbsp;<w24><</w24>&nbsp;<w0>n</w0>&nbsp;<w6>goto</w6>&nbsp;<w1>Lend</w1>&nbsp;</span></li>
+</ol>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="6">stack</r> : <w0>i</w0>:[0, 1],&nbsp;<w0>matches</w0>:[0, 1, 2]<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="3">fill(<font class="block-name">C</font>)</r>:<r id="4">no &phi;-functions</r><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="6">stack</r> : <w0>i</w0>:[0, 1],&nbsp;<w0>matches</w0>:[0, 1, 2]<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="3">fill(<font class="block-name">G</font>)</r>:<r id="4">no &phi;-functions</r><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="6">stack</r> : <w0>i</w0>:[0, 1],&nbsp;<w0>matches</w0>:[0, 1, 2]<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="1">Rename(<font class="block-name">C</font>)</r>:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="5">rename &phi;-functions:</r><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="4">no &phi;-functions</r><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="6">stack</r> : <w0>i</w0>:[0, 1],&nbsp;<w0>matches</w0>:[0, 1, 2]<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rename instructions:<ol class="mir-lines" start="8">
+<li><span><if>if</if>&nbsp;<w5>False</w5>&nbsp;<w0>target</w0>&nbsp;<w24>=</w24>&nbsp;<w0>i</w0><sub>1</sub>&nbsp;<w6>goto</w6>&nbsp;<w1>Lskip</w1>&nbsp;</span></li>
+</ol>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="6">stack</r> : <w0>i</w0>:[0, 1],&nbsp;<w0>matches</w0>:[0, 1, 2]<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="3">fill(<font class="block-name">D</font>)</r>:<r id="4">no &phi;-functions</r><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="6">stack</r> : <w0>i</w0>:[0, 1],&nbsp;<w0>matches</w0>:[0, 1, 2]<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="3">fill(<font class="block-name">E</font>)</r>:<r id="4">no &phi;-functions</r><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="6">stack</r> : <w0>i</w0>:[0, 1],&nbsp;<w0>matches</w0>:[0, 1, 2]<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="1">Rename(<font class="block-name">D</font>)</r>:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="5">rename &phi;-functions:</r><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="4">no &phi;-functions</r><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="6">stack</r> : <w0>i</w0>:[0, 1],&nbsp;<w0>matches</w0>:[0, 1, 2]<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rename instructions:<ol class="mir-lines" start="9">
+<li><span><w0>matches</w0><sub>3</sub>&nbsp;<w22>&xlarr;</w22>&nbsp;<w23>+</w23>,&nbsp;<w0>matches</w0><sub>2</sub>,&nbsp;<w3><h>#</h>1</w3>&nbsp;</span></li>
+</ol>
+<ol class="mir-lines" start="10">
+<li><span><w6>goto</w6>&nbsp;<w1>Lnext</w1>&nbsp;</span></li>
+</ol>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="6">stack</r> : <w0>i</w0>:[0, 1],&nbsp;<w0>matches</w0>:[0, 1, 2, 3]<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="3">fill(<font class="block-name">F</font>)</r>:<ol class="mir-lines" start="12">
+<li><span><w1>Lnext</w1>:&nbsp;<w0>matches</w0><sub>5</sub>&nbsp;<w22>&xlarr;</w22>&nbsp;<phi>&phi;(<w0>matches</w0><sub>3</sub>, <w0>matches</w0><sub>4</sub>)</phi>,&nbsp;</span></li>
+</ol>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="6">stack</r> : <w0>i</w0>:[0, 1],&nbsp;<w0>matches</w0>:[0, 1, 2, 3]<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;clean():<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="6">stack</r> : <w0>i</w0>:[0, 1],&nbsp;<w0>matches</w0>:[0, 1, 2]<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="2">return to <font class="block-name">C</font>;</r><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="1">Rename(<font class="block-name">E</font>)</r>:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="5">rename &phi;-functions:</r><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="4">no &phi;-functions</r><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="6">stack</r> : <w0>i</w0>:[0, 1],&nbsp;<w0>matches</w0>:[0, 1, 2]<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rename instructions:<ol class="mir-lines" start="11">
+<li><span><w1>Lskip</w1>:&nbsp;<w0>matches</w0><sub>4</sub>&nbsp;<w22>&xlarr;</w22>&nbsp;<w23>+</w23>,&nbsp;<w0>matches</w0><sub>2</sub>,&nbsp;<w3><h>#</h>0</w3>&nbsp;</span></li>
+</ol>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="6">stack</r> : <w0>i</w0>:[0, 1],&nbsp;<w0>matches</w0>:[0, 1, 2, 4]<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="3">fill(<font class="block-name">F</font>)</r>:<ol class="mir-lines" start="12">
+<li><span><w1>Lnext</w1>:&nbsp;<w0>matches</w0><sub>5</sub>&nbsp;<w22>&xlarr;</w22>&nbsp;<phi>&phi;(<w0>matches</w0><sub>3</sub>, <w0>matches</w0><sub>4</sub>)</phi>,&nbsp;</span></li>
+</ol>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="6">stack</r> : <w0>i</w0>:[0, 1],&nbsp;<w0>matches</w0>:[0, 1, 2, 4]<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;clean():<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="6">stack</r> : <w0>i</w0>:[0, 1],&nbsp;<w0>matches</w0>:[0, 1, 2]<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="2">return to <font class="block-name">C</font>;</r><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="1">Rename(<font class="block-name">F</font>)</r>:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="5">rename &phi;-functions:</r><ol class="mir-lines" start="12">
+<li><span><w1>Lnext</w1>:&nbsp;<w0>matches</w0><sub>5</sub>&nbsp;<w22>&xlarr;</w22>&nbsp;<phi>&phi;(<w0>matches</w0><sub>3</sub>, <w0>matches</w0><sub>4</sub>)</phi>,&nbsp;</span></li>
+</ol>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="6">stack</r> : <w0>i</w0>:[0, 1],&nbsp;<w0>matches</w0>:[0, 1, 2, 5]<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rename instructions:<ol class="mir-lines" start="13">
+<li><span><w0>i</w0><sub>2</sub>&nbsp;<w22>&xlarr;</w22>&nbsp;<w23>+</w23>,&nbsp;<w0>i</w0><sub>1</sub>,&nbsp;<w3><h>#</h>1</w3>&nbsp;</span></li>
+</ol>
+<ol class="mir-lines" start="14">
+<li><span><w6>goto</w6>&nbsp;<w1>Lloop</w1>&nbsp;</span></li>
+</ol>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="6">stack</r> : <w0>i</w0>:[0, 1, 2],&nbsp;<w0>matches</w0>:[0, 1, 2, 5]<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="3">fill(<font class="block-name">B</font>)</r>:<ol class="mir-lines" start="5">
+<li><span><w1>Lloop</w1>:&nbsp;<w0>i</w0><sub>1</sub>&nbsp;<w22>&xlarr;</w22>&nbsp;<phi>&phi;(<w0>i</w0><sub>0</sub>, <w0>i</w0><sub>2</sub>)</phi>,&nbsp;</span></li>
+</ol>
+<ol class="mir-lines" start="6">
+<li><span><w0>matches</w0><sub>2</sub>&nbsp;<w22>&xlarr;</w22>&nbsp;<phi>&phi;(<w0>matches</w0><sub>1</sub>, <w0>matches</w0><sub>5</sub>)</phi>,&nbsp;</span></li>
+</ol>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="6">stack</r> : <w0>i</w0>:[0, 1, 2],&nbsp;<w0>matches</w0>:[0, 1, 2, 5]<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;clean():<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="6">stack</r> : <w0>i</w0>:[0, 1],&nbsp;<w0>matches</w0>:[0, 1, 2]<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="2">return to <font class="block-name">C</font>;</r><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;clean():nothing to clean<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="6">stack</r> : <w0>i</w0>:[0, 1],&nbsp;<w0>matches</w0>:[0, 1, 2]<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="2">return to <font class="block-name">B</font>;</r><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="1">Rename(<font class="block-name">G</font>)</r>:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="5">rename &phi;-functions:</r><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="4">no &phi;-functions</r><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="6">stack</r> : <w0>i</w0>:[0, 1],&nbsp;<w0>matches</w0>:[0, 1, 2]<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rename instructions:<ol class="mir-lines" start="15">
+<li><span><w1>Lend</w1>:&nbsp;<w21>return</w21>&nbsp;<w0>matches</w0><sub>2</sub>&nbsp;</span></li>
+</ol>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="6">stack</r> : <w0>i</w0>:[0, 1],&nbsp;<w0>matches</w0>:[0, 1, 2]<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="3">fill(<font class="block-name">Exit</font>)</r>:<r id="4">no &phi;-functions</r><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="6">stack</r> : <w0>i</w0>:[0, 1],&nbsp;<w0>matches</w0>:[0, 1, 2]<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="1">Rename(<font class="block-name">Exit</font>)</r>:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="5">rename &phi;-functions:</r><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="4">no &phi;-functions</r><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="6">stack</r> : <w0>i</w0>:[0, 1],&nbsp;<w0>matches</w0>:[0, 1, 2]<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rename instructions:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="4">no instructions</r><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="6">stack</r> : <w0>i</w0>:[0, 1],&nbsp;<w0>matches</w0>:[0, 1, 2]<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;clean():nothing to clean<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="6">stack</r> : <w0>i</w0>:[0, 1],&nbsp;<w0>matches</w0>:[0, 1, 2]<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="2">return to <font class="block-name">G</font>;</r><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;clean():nothing to clean<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="6">stack</r> : <w0>i</w0>:[0, 1],&nbsp;<w0>matches</w0>:[0, 1, 2]<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="2">return to <font class="block-name">B</font>;</r><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;clean():<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="6">stack</r> : <w0>i</w0>:[0],&nbsp;<w0>matches</w0>:[0, 1]<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="2">return to <font class="block-name">A</font>;</r><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;clean():<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="6">stack</r> : <w0>i</w0>:[0],&nbsp;<w0>matches</w0>:[0]<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="2">return to <font class="block-name">Entry</font>;</r><br>&nbsp;&nbsp;&nbsp;clean():nothing to clean<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="6">stack</r> : <w0>i</w0>:[0],&nbsp;<w0>matches</w0>:[0]</div></details>
+<div class="code-panel">
+<div class="boundary-block"><span class="block-name">Entry</span></div>
+<article class="mir-block">
+<div class="block-heading">
+<span class="new-block">Block</span> <span class="block-name">A</span> <span class="count-lines">4 lines</span>
+</div>
+<ol class="mir-lines" start="1">
+<li><span><w20>param</w20>&nbsp;<w0>i</w0><sub>0</sub>&nbsp;</span></li>
+<li><span><w20>param</w20>&nbsp;<w0>n</w0>&nbsp;</span></li>
+<li><span><w20>param</w20>&nbsp;<w0>target</w0>&nbsp;</span></li>
+<li><span><w0>matches</w0><sub>1</sub>&nbsp;<w22>&xlarr;</w22>&nbsp;<w3><h>#</h>0</w3>&nbsp;</span></li>
+</ol>
+</article>
+<article class="mir-block">
+<div class="block-heading">
+<span class="new-block">Block</span> <span class="block-name">B</span> <span class="count-lines">3 lines</span>
+</div>
+<ol class="mir-lines" start="5">
+<li><span><w1>Lloop</w1>:&nbsp;<w0>i</w0><sub>1</sub>&nbsp;<w22>&xlarr;</w22>&nbsp;<phi>&phi;(<w0>i</w0><sub>0</sub>, <w0>i</w0><sub>2</sub>)</phi>,&nbsp;</span></li>
+<li><span><w0>matches</w0><sub>2</sub>&nbsp;<w22>&xlarr;</w22>&nbsp;<phi>&phi;(<w0>matches</w0><sub>1</sub>, <w0>matches</w0><sub>5</sub>)</phi>,&nbsp;</span></li>
+<li><span><if>if</if>&nbsp;<w5>False</w5>&nbsp;<w0>i</w0><sub>1</sub>&nbsp;<w24><</w24>&nbsp;<w0>n</w0>&nbsp;<w6>goto</w6>&nbsp;<w1>Lend</w1>&nbsp;</span></li>
+</ol>
+</article>
+<article class="mir-block">
+<div class="block-heading">
+<span class="new-block">Block</span> <span class="block-name">C</span> <span class="count-lines">1 line</span>
+</div>
+<ol class="mir-lines" start="8">
+<li><span><if>if</if>&nbsp;<w5>False</w5>&nbsp;<w0>target</w0>&nbsp;<w24>=</w24>&nbsp;<w0>i</w0><sub>1</sub>&nbsp;<w6>goto</w6>&nbsp;<w1>Lskip</w1>&nbsp;</span></li>
+</ol>
+</article>
+<article class="mir-block">
+<div class="block-heading">
+<span class="new-block">Block</span> <span class="block-name">D</span> <span class="count-lines">2 lines</span>
+</div>
+<ol class="mir-lines" start="9">
+<li><span><w0>matches</w0><sub>3</sub>&nbsp;<w22>&xlarr;</w22>&nbsp;<w23>+</w23>,&nbsp;<w0>matches</w0><sub>2</sub>,&nbsp;<w3><h>#</h>1</w3>&nbsp;</span></li>
+<li><span><w6>goto</w6>&nbsp;<w1>Lnext</w1>&nbsp;</span></li>
+</ol>
+</article>
+<article class="mir-block">
+<div class="block-heading">
+<span class="new-block">Block</span> <span class="block-name">E</span> <span class="count-lines">1 line</span>
+</div>
+<ol class="mir-lines" start="11">
+<li><span><w1>Lskip</w1>:&nbsp;<w0>matches</w0><sub>4</sub>&nbsp;<w22>&xlarr;</w22>&nbsp;<w23>+</w23>,&nbsp;<w0>matches</w0><sub>2</sub>,&nbsp;<w3><h>#</h>0</w3>&nbsp;</span></li>
+</ol>
+</article>
+<article class="mir-block">
+<div class="block-heading">
+<span class="new-block">Block</span> <span class="block-name">F</span> <span class="count-lines">3 lines</span>
+</div>
+<ol class="mir-lines" start="12">
+<li><span><w1>Lnext</w1>:&nbsp;<w0>matches</w0><sub>5</sub>&nbsp;<w22>&xlarr;</w22>&nbsp;<phi>&phi;(<w0>matches</w0><sub>3</sub>, <w0>matches</w0><sub>4</sub>)</phi>,&nbsp;</span></li>
+<li><span><w0>i</w0><sub>2</sub>&nbsp;<w22>&xlarr;</w22>&nbsp;<w23>+</w23>,&nbsp;<w0>i</w0><sub>1</sub>,&nbsp;<w3><h>#</h>1</w3>&nbsp;</span></li>
+<li><span><w6>goto</w6>&nbsp;<w1>Lloop</w1>&nbsp;</span></li>
+</ol>
+</article>
+<article class="mir-block">
+<div class="block-heading">
+<span class="new-block">Block</span> <span class="block-name">G</span> <span class="count-lines">1 line</span>
+</div>
+<ol class="mir-lines" start="15">
+<li><span><w1>Lend</w1>:&nbsp;<w21>return</w21>&nbsp;<w0>matches</w0><sub>2</sub>&nbsp;</span></li>
+</ol>
+</article>
+<div class="boundary-block"><span class="block-name">Exit</span></div>
+</div></details><details id="title-14"><summary><h2 class="block-table-title"><span class="section-title">SSA Checks</span><small class="section-note">partial audit</small></h2></summary>
+<details class="trace"><summary><p class="summary-span"><span>Trace</span><small class="section-note">derivation steps</small></p></summary><div class="trace-code">
+<comment>Checks are scoped to variables selected by phi placement; other variables remain in the original MIR naming style.</comment></div></details>
+<div class="table-scroll"><table>
+<thead><tr>
+<th>check</th>
+<th>status</th>
+<th>details</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="first-column">SSA rename scope</td>
+<td>partial</td>
+<td><w0>i</w0>, <w0>matches</w0></td>
+</tr>
+<tr>
+<td class="first-column">Untracked variables</td>
+<td>not renamed</td>
+<td><w0>n</w0>, <w0>target</w0></td>
+</tr>
+<tr>
+<td class="first-column">Tracked definitions named</td>
+<td class="true">+</td>
+<td>ok</td>
+</tr>
+<tr>
+<td class="first-column">Tracked uses named</td>
+<td class="true">+</td>
+<td>ok</td>
+</tr>
+<tr>
+<td class="first-column">Unique tracked definitions</td>
+<td class="true">+</td>
+<td>ok</td>
+</tr>
+<tr>
+<td class="first-column">Phi arity matches predecessors</td>
+<td class="true">+</td>
+<td>ok</td>
+</tr>
+</tbody>
+</table></div>
+</details>
+<details id="title-15"><summary><h2 class="block-table-title"><span class="section-title">Join Merge Preview</span><small class="section-note">state merging</small></h2></summary>
+<details class="trace"><summary><p class="summary-span"><span>Trace</span><small class="section-note">derivation steps</small></p></summary><div class="trace-code">
+<comment>Merge previews are display-only. They reuse predecessor and phi data; no symbolic store is executed and no path feasibility is checked.</comment></div></details>
+<div class="table-scroll"><table>
+<thead><tr>
+<th>join</th>
+<th>predecessors</th>
+<th>variable</th>
+<th>merge preview</th>
+<th>status</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="first-column">B</td>
+<td>A, F</td>
+<td>i</td>
+<td>ite(path(A), i<sub>0</sub>, i<sub>2</sub>)<br>{(path(A), i<sub>0</sub>), (path(F), i<sub>2</sub>)}</td>
+<td>predecessor-mapped; no SMT check</td>
+</tr>
+<tr>
+<td class="first-column">B</td>
+<td>A, F</td>
+<td>matches</td>
+<td>ite(path(A), matches<sub>1</sub>, matches<sub>5</sub>)<br>{(path(A), matches<sub>1</sub>), (path(F), matches<sub>5</sub>)}</td>
+<td>predecessor-mapped; no SMT check</td>
+</tr>
+<tr>
+<td class="first-column">F</td>
+<td>D, E</td>
+<td>matches</td>
+<td>ite(path(D), matches<sub>3</sub>, matches<sub>4</sub>)<br>{(path(D), matches<sub>3</sub>), (path(E), matches<sub>4</sub>)}</td>
+<td>predecessor-mapped; no SMT check</td>
+</tr>
+</tbody>
+</table></div>
+</details>
+<details id="title-16"><summary><h2 class="block-graphs-title"><span class="section-title">Cycle-Based Region Reduction</span><small class="section-note">cycle regions</small></h2></summary>
+<div class="region-gallery">
+<figure>
+<img src="regions/0.png" alt="Cycle-Based Region Reduction step 1">
+<figcaption>Step 1</figcaption>
+</figure>
+<figure>
+<img src="regions/1.png" alt="Cycle-Based Region Reduction step 2">
+<figcaption>Step 2</figcaption>
+</figure>
+<figure>
+<img src="regions/2.png" alt="Cycle-Based Region Reduction step 3">
+<figcaption>Step 3</figcaption>
+</figure>
+</div></details>
+<details id="title-17"><summary><h2 class="block-table-title"><span class="section-title">Acyclic Region Summary Preview</span><small class="section-note">veritesting idea</small></h2></summary>
+<details class="trace"><summary><p class="summary-span"><span>Trace</span><small class="section-note">derivation steps</small></p></summary><div class="trace-code">
+<comment>Region summaries are syntactic previews inspired by veritesting-style regions. They do not execute stores, solve formulas, or replace the existing region reduction.</comment></div></details>
+<div class="table-scroll"><table>
+<thead><tr>
+<th>entry</th>
+<th>exit</th>
+<th>nodes</th>
+<th>loop-free</th>
+<th>path summary preview</th>
+<th>status</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="first-column">B</td>
+<td>G</td>
+<td>B, C, D, E, F</td>
+<td class="false">-</td>
+<td>not emitted</td>
+<td>cycle detected; transition: incomplete loop / resume normal dump</td>
+</tr>
+<tr>
+<td class="first-column">C</td>
+<td>F</td>
+<td>C, D, E</td>
+<td class="true">+</td>
+<td>path 1: target = i &rarr; F<br>path 2: &not;(target = i) &rarr; F</td>
+<td>syntactic acyclic summary; no SMT/store execution</td>
+</tr>
+</tbody>
+</table></div>
+</details>
+<details id="title-18"><summary><h2 class="block-graphs-title"><span class="section-title">Control Tree</span><small class="section-note">region tree</small></h2></summary>
+<div class="graph-panel">
+<img src="ct.png" alt="Control Tree">
+</div></details>
+<details id="title-19"><summary><h2 class="block-table-title"><span class="section-title">Region Classification</span><small class="section-note">area classes</small></h2></summary>
+<div class="table-scroll"><table>
+<thead><tr>
+<th>Class</th>
+<th>Area-Node</th>
+<th>Area-Body</th>
+<th>Area-Loop</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="first-column">Region</td>
+<td>Re, R0, R1, R2, R3, R4, R5, R6, R7</td>
+<td>R8, R10</td>
+<td>R9</td>
+</tr>
+</tbody>
+</table></div>
+</details>
+<details id="title-20"><summary><h2 class="block-table-title"><span class="section-title">Gen / Kill</span><small class="section-note">reaching defs</small></h2></summary>
+<details class="trace"><summary><p class="summary-span"><span>Trace</span><small class="section-note">derivation steps</small></p></summary><div class="trace-code">
+<comment>The instruction index corresponds to the line number in the original code.</comment></div></details>
+<div class="table-scroll"><table>
+<thead><tr>
+<th>block</th>
+<th>Entry</th>
+<th>A</th>
+<th>B</th>
+<th>C</th>
+<th>D</th>
+<th>E</th>
+<th>F</th>
+<th>G</th>
+<th>Exit</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="first-column">gen<sub>block</sub></td>
+<td class="none">None</td>
+<td>d<sub>4</sub></td>
+<td class="none">None</td>
+<td class="none">None</td>
+<td>d<sub>7</sub></td>
+<td>d<sub>9</sub></td>
+<td>d<sub>10</sub></td>
+<td class="none">None</td>
+<td class="none">None</td>
+</tr>
+<tr>
+<td class="first-column">kill<sub>block</sub></td>
+<td class="none">None</td>
+<td>d<sub>7</sub>, d<sub>9</sub></td>
+<td class="none">None</td>
+<td class="none">None</td>
+<td>d<sub>4</sub>, d<sub>9</sub></td>
+<td>d<sub>4</sub>, d<sub>7</sub></td>
+<td class="none">None</td>
+<td class="none">None</td>
+<td class="none">None</td>
+</tr>
+</tbody>
+</table></div>
+</details>
+<details id="title-21"><summary><h2 class="block-table-title"><span class="section-title">Region Transfer Functions (Structural)</span><small class="section-note">structural transfer</small></h2></summary>
+<div class="table-scroll"><table>
+<thead><tr>
+<th>region</th>
+<th>Transfer Function</th>
+<th>gen</th>
+<th>kill</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="first-column">R8</td>
+<td><div class="code">f<sub>R8, In[R2]</sub> = f<sub>R8, Out[A]</sub> &and; f<sub>R8, Out[F]</sub><br>f<sub>R8, Out[2]</sub> = f<sub>R2, Out[2]</sub> &#176; f<sub>R8, In[R2]</sub>  <br>f<sub>R8, In[R3]</sub> = f<sub>R8, Out[B]</sub><br>f<sub>R8, Out[3]</sub> = f<sub>R3, Out[3]</sub> &#176; f<sub>R8, In[R3]</sub>  <br>f<sub>R8, In[R5]</sub> = f<sub>R8, Out[C]</sub><br>f<sub>R8, Out[4]</sub> = f<sub>R5, Out[4]</sub> &#176; f<sub>R8, In[R5]</sub>  <br>f<sub>R8, In[R7]</sub> = f<sub>R8, Out[D]</sub> &and; f<sub>R8, Out[E]</sub><br>f<sub>R8, Out[6]</sub> = f<sub>R7, Out[6]</sub> &#176; f<sub>R8, In[R7]</sub>  <br>f<sub>R8, In[R6]</sub> = f<sub>R8, Out[C]</sub><br>f<sub>R8, Out[5]</sub> = f<sub>R6, Out[5]</sub> &#176; f<sub>R8, In[R6]</sub>  <br></div></td>
+<td>d<sub>7</sub>, d<sub>9</sub>, d<sub>10</sub></td>
+<td>d<sub>4</sub>, d<sub>7</sub>, d<sub>9</sub></td>
+</tr>
+<tr>
+<td class="first-column">R9</td>
+<td><div class="code">f<sub>R9, In[R8]</sub> = (f<sub>R9, Out[A]</sub> &and; f<sub>R9, Out[F]</sub>)*<br>f<sub>R9, Out[R2]</sub> = f<sub>R8, Out[R2]</sub> &#176; f<sub>R9, In[R8]</sub>  <br>f<sub>R9, Out[R3]</sub> = f<sub>R8, Out[R3]</sub> &#176; f<sub>R9, In[R8]</sub>  <br>f<sub>R9, Out[R5]</sub> = f<sub>R8, Out[R5]</sub> &#176; f<sub>R9, In[R8]</sub>  <br>f<sub>R9, Out[R7]</sub> = f<sub>R8, Out[R7]</sub> &#176; f<sub>R9, In[R8]</sub>  <br>f<sub>R9, Out[R6]</sub> = f<sub>R8, Out[R6]</sub> &#176; f<sub>R9, In[R8]</sub>  <br></div></td>
+<td>d<sub>7</sub>, d<sub>9</sub>, d<sub>10</sub></td>
+<td>d<sub>4</sub>, d<sub>7</sub>, d<sub>9</sub></td>
+</tr>
+<tr>
+<td class="first-column">R10</td>
+<td><div class="code">f<sub>R10, In[R0]</sub> = I<br>f<sub>R10, Out[0]</sub> = f<sub>R0, Out[0]</sub> &#176; f<sub>R10, In[R0]</sub>  <br>f<sub>R10, In[R1]</sub> = f<sub>R10, Out[Entry]</sub><br>f<sub>R10, Out[1]</sub> = f<sub>R1, Out[1]</sub> &#176; f<sub>R10, In[R1]</sub>  <br>f<sub>R10, In[R4]</sub> = f<sub>R10, Out[B]</sub><br>f<sub>R10, Out[7]</sub> = f<sub>R4, Out[7]</sub> &#176; f<sub>R10, In[R4]</sub>  <br>f<sub>R10, In[R9]</sub> = f<sub>R10, Out[A]</sub> &and; f<sub>R10, Out[F]</sub><br>f<sub>R10, Out[R8]</sub> = f<sub>R9, Out[R8]</sub> &#176; f<sub>R10, In[R9]</sub>  <br>f<sub>R10, In[Re]</sub> = f<sub>R10, Out[G]</sub><br>f<sub>R10, Out[Exit]</sub> = f<sub>Re, Out[Exit]</sub> &#176; f<sub>R10, In[Re]</sub>  <br></div></td>
+<td>d<sub>4</sub>, d<sub>7</sub>, d<sub>9</sub>, d<sub>10</sub></td>
+<td>d<sub>4</sub>, d<sub>7</sub>, d<sub>9</sub></td>
+</tr>
+</tbody>
+</table></div>
+</details>
+</main>
+</div>
+<footer><p>Generated compiler-analysis report</p></footer>
+<script src="../theme.js"></script>
+<script src="../report.js"></script>
+</body>
+</html>
+

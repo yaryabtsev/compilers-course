@@ -1,0 +1,183 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1050" height="660" viewBox="0 0 1050 660" role="img">
+<title>Q_add algorithm profile</title>
+<style>text{font-family:Arial,sans-serif;font-size:12px;fill:#334155}.title{font-size:18px;font-weight:700;fill:#0f172a}.subtitle{font-size:12px;fill:#64748b}.section{font-size:14px;font-weight:700;fill:#0f172a}.axis{stroke:#475569;stroke-width:1}.grid{stroke:#e2e8f0;stroke-width:1}.label{font-size:11px;fill:#475569}.legend{font-size:12px;fill:#334155}.qt{fill:#0f172a;stroke:#0f172a}</style>
+<rect width="100%" height="100%" fill="white"/>
+<text class="title" x="76" y="28">Q_add algorithm profile</text>
+<text class="subtitle" x="76" y="47">alpha=0.35, beta=0.50; Q_t and Q_add are shown per dependency mode</text>
+<text class="section" x="76" y="54">Q_add mass by block</text>
+<text class="section" x="76" y="457">Hot variable count by block</text>
+<line class="grid" x1="76" y1="377.00" x2="1020" y2="377.00"/>
+<text class="label" x="68" y="381.00" text-anchor="end">0</text>
+<line class="grid" x1="76" y1="300.75" x2="1020" y2="300.75"/>
+<text class="label" x="68" y="304.75" text-anchor="end">0.25</text>
+<line class="grid" x1="76" y1="224.50" x2="1020" y2="224.50"/>
+<text class="label" x="68" y="228.50" text-anchor="end">0.50</text>
+<line class="grid" x1="76" y1="148.25" x2="1020" y2="148.25"/>
+<text class="label" x="68" y="152.25" text-anchor="end">0.75</text>
+<line class="grid" x1="76" y1="72.00" x2="1020" y2="72.00"/>
+<text class="label" x="68" y="76.00" text-anchor="end">1.00</text>
+<line class="axis" x1="76" y1="377" x2="1020" y2="377"/>
+<line class="axis" x1="76" y1="72" x2="76" y2="377"/>
+<text class="label" x="20" y="224.50" transform="rotate(-90 20 224.50)" text-anchor="middle">sum Q_add(block, var)</text>
+<line class="grid" x1="76" y1="587.00" x2="1020" y2="587.00"/>
+<text class="label" x="68" y="591.00" text-anchor="end">0</text>
+<line class="grid" x1="76" y1="559.00" x2="1020" y2="559.00"/>
+<text class="label" x="68" y="563.00" text-anchor="end">0</text>
+<line class="grid" x1="76" y1="531.00" x2="1020" y2="531.00"/>
+<text class="label" x="68" y="535.00" text-anchor="end">0</text>
+<line class="grid" x1="76" y1="503.00" x2="1020" y2="503.00"/>
+<text class="label" x="68" y="507.00" text-anchor="end">1</text>
+<line class="grid" x1="76" y1="475.00" x2="1020" y2="475.00"/>
+<text class="label" x="68" y="479.00" text-anchor="end">1</text>
+<line class="axis" x1="76" y1="587" x2="1020" y2="587"/>
+<line class="axis" x1="76" y1="475" x2="76" y2="587"/>
+<text class="label" x="28" y="531.00" transform="rotate(-90 28 531.00)" text-anchor="middle">hot variables</text>
+<text class="label" x="123.20" y="609" text-anchor="end" transform="rotate(-35 123.20 609)">Entry</text>
+<rect x="87.33" y="377.00" width="15.78" height="0.00" fill="#2563eb"><title>Entry / Syntactic mass: 0.00</title></rect>
+<rect x="105.98" y="377.00" width="15.78" height="0.00" fill="#16a34a"><title>Entry / Local dependency mass: 0.00</title></rect>
+<rect x="124.63" y="377.00" width="15.78" height="0.00" fill="#f97316"><title>Entry / CFG dependency mass: 0.00</title></rect>
+<rect x="143.29" y="377.00" width="15.78" height="0.00" fill="#7c3aed"><title>Entry / Versioned dependency mass: 0.00</title></rect>
+<rect x="87.33" y="587.00" width="15.78" height="0.00" fill="#2563eb" opacity="0.82"><title>Entry / Syntactic hot variables: 0</title></rect>
+<rect x="105.98" y="587.00" width="15.78" height="0.00" fill="#16a34a" opacity="0.82"><title>Entry / Local dependency hot variables: 0</title></rect>
+<rect x="124.63" y="587.00" width="15.78" height="0.00" fill="#f97316" opacity="0.82"><title>Entry / CFG dependency hot variables: 0</title></rect>
+<rect x="143.29" y="587.00" width="15.78" height="0.00" fill="#7c3aed" opacity="0.82"><title>Entry / Versioned dependency hot variables: 0</title></rect>
+<text class="label" x="217.60" y="609" text-anchor="end" transform="rotate(-35 217.60 609)">B1</text>
+<rect x="181.73" y="377.00" width="15.78" height="0.00" fill="#2563eb"><title>B1 / Syntactic mass: 0.00</title></rect>
+<rect x="200.38" y="377.00" width="15.78" height="0.00" fill="#16a34a"><title>B1 / Local dependency mass: 0.00</title></rect>
+<rect x="219.03" y="377.00" width="15.78" height="0.00" fill="#f97316"><title>B1 / CFG dependency mass: 0.00</title></rect>
+<rect x="237.69" y="377.00" width="15.78" height="0.00" fill="#7c3aed"><title>B1 / Versioned dependency mass: 0.00</title></rect>
+<rect x="181.73" y="587.00" width="15.78" height="0.00" fill="#2563eb" opacity="0.82"><title>B1 / Syntactic hot variables: 0</title></rect>
+<rect x="200.38" y="587.00" width="15.78" height="0.00" fill="#16a34a" opacity="0.82"><title>B1 / Local dependency hot variables: 0</title></rect>
+<rect x="219.03" y="587.00" width="15.78" height="0.00" fill="#f97316" opacity="0.82"><title>B1 / CFG dependency hot variables: 0</title></rect>
+<rect x="237.69" y="587.00" width="15.78" height="0.00" fill="#7c3aed" opacity="0.82"><title>B1 / Versioned dependency hot variables: 0</title></rect>
+<text class="label" x="312.00" y="609" text-anchor="end" transform="rotate(-35 312.00 609)">B2</text>
+<rect x="276.13" y="377.00" width="15.78" height="0.00" fill="#2563eb"><title>B2 / Syntactic mass: 0.00</title></rect>
+<rect x="294.78" y="377.00" width="15.78" height="0.00" fill="#16a34a"><title>B2 / Local dependency mass: 0.00</title></rect>
+<rect x="313.43" y="377.00" width="15.78" height="0.00" fill="#f97316"><title>B2 / CFG dependency mass: 0.00</title></rect>
+<rect x="332.09" y="377.00" width="15.78" height="0.00" fill="#7c3aed"><title>B2 / Versioned dependency mass: 0.00</title></rect>
+<rect x="276.13" y="587.00" width="15.78" height="0.00" fill="#2563eb" opacity="0.82"><title>B2 / Syntactic hot variables: 0</title></rect>
+<rect x="294.78" y="587.00" width="15.78" height="0.00" fill="#16a34a" opacity="0.82"><title>B2 / Local dependency hot variables: 0</title></rect>
+<rect x="313.43" y="587.00" width="15.78" height="0.00" fill="#f97316" opacity="0.82"><title>B2 / CFG dependency hot variables: 0</title></rect>
+<rect x="332.09" y="587.00" width="15.78" height="0.00" fill="#7c3aed" opacity="0.82"><title>B2 / Versioned dependency hot variables: 0</title></rect>
+<text class="label" x="406.40" y="609" text-anchor="end" transform="rotate(-35 406.40 609)">B3</text>
+<rect x="370.53" y="377.00" width="15.78" height="0.00" fill="#2563eb"><title>B3 / Syntactic mass: 0.00</title></rect>
+<rect x="389.18" y="377.00" width="15.78" height="0.00" fill="#16a34a"><title>B3 / Local dependency mass: 0.00</title></rect>
+<rect x="407.83" y="377.00" width="15.78" height="0.00" fill="#f97316"><title>B3 / CFG dependency mass: 0.00</title></rect>
+<rect x="426.49" y="377.00" width="15.78" height="0.00" fill="#7c3aed"><title>B3 / Versioned dependency mass: 0.00</title></rect>
+<rect x="370.53" y="587.00" width="15.78" height="0.00" fill="#2563eb" opacity="0.82"><title>B3 / Syntactic hot variables: 0</title></rect>
+<rect x="389.18" y="587.00" width="15.78" height="0.00" fill="#16a34a" opacity="0.82"><title>B3 / Local dependency hot variables: 0</title></rect>
+<rect x="407.83" y="587.00" width="15.78" height="0.00" fill="#f97316" opacity="0.82"><title>B3 / CFG dependency hot variables: 0</title></rect>
+<rect x="426.49" y="587.00" width="15.78" height="0.00" fill="#7c3aed" opacity="0.82"><title>B3 / Versioned dependency hot variables: 0</title></rect>
+<text class="label" x="500.80" y="609" text-anchor="end" transform="rotate(-35 500.80 609)">B4</text>
+<rect x="464.93" y="377.00" width="15.78" height="0.00" fill="#2563eb"><title>B4 / Syntactic mass: 0.00</title></rect>
+<rect x="483.58" y="377.00" width="15.78" height="0.00" fill="#16a34a"><title>B4 / Local dependency mass: 0.00</title></rect>
+<rect x="502.23" y="377.00" width="15.78" height="0.00" fill="#f97316"><title>B4 / CFG dependency mass: 0.00</title></rect>
+<rect x="520.89" y="377.00" width="15.78" height="0.00" fill="#7c3aed"><title>B4 / Versioned dependency mass: 0.00</title></rect>
+<rect x="464.93" y="587.00" width="15.78" height="0.00" fill="#2563eb" opacity="0.82"><title>B4 / Syntactic hot variables: 0</title></rect>
+<rect x="483.58" y="587.00" width="15.78" height="0.00" fill="#16a34a" opacity="0.82"><title>B4 / Local dependency hot variables: 0</title></rect>
+<rect x="502.23" y="587.00" width="15.78" height="0.00" fill="#f97316" opacity="0.82"><title>B4 / CFG dependency hot variables: 0</title></rect>
+<rect x="520.89" y="587.00" width="15.78" height="0.00" fill="#7c3aed" opacity="0.82"><title>B4 / Versioned dependency hot variables: 0</title></rect>
+<text class="label" x="595.20" y="609" text-anchor="end" transform="rotate(-35 595.20 609)">B5</text>
+<rect x="559.33" y="377.00" width="15.78" height="0.00" fill="#2563eb"><title>B5 / Syntactic mass: 0.00</title></rect>
+<rect x="577.98" y="377.00" width="15.78" height="0.00" fill="#16a34a"><title>B5 / Local dependency mass: 0.00</title></rect>
+<rect x="596.63" y="377.00" width="15.78" height="0.00" fill="#f97316"><title>B5 / CFG dependency mass: 0.00</title></rect>
+<rect x="615.29" y="377.00" width="15.78" height="0.00" fill="#7c3aed"><title>B5 / Versioned dependency mass: 0.00</title></rect>
+<rect x="559.33" y="587.00" width="15.78" height="0.00" fill="#2563eb" opacity="0.82"><title>B5 / Syntactic hot variables: 0</title></rect>
+<rect x="577.98" y="587.00" width="15.78" height="0.00" fill="#16a34a" opacity="0.82"><title>B5 / Local dependency hot variables: 0</title></rect>
+<rect x="596.63" y="587.00" width="15.78" height="0.00" fill="#f97316" opacity="0.82"><title>B5 / CFG dependency hot variables: 0</title></rect>
+<rect x="615.29" y="587.00" width="15.78" height="0.00" fill="#7c3aed" opacity="0.82"><title>B5 / Versioned dependency hot variables: 0</title></rect>
+<text class="label" x="689.60" y="609" text-anchor="end" transform="rotate(-35 689.60 609)">B6</text>
+<rect x="653.73" y="377.00" width="15.78" height="0.00" fill="#2563eb"><title>B6 / Syntactic mass: 0.00</title></rect>
+<rect x="672.38" y="377.00" width="15.78" height="0.00" fill="#16a34a"><title>B6 / Local dependency mass: 0.00</title></rect>
+<rect x="691.03" y="377.00" width="15.78" height="0.00" fill="#f97316"><title>B6 / CFG dependency mass: 0.00</title></rect>
+<rect x="709.69" y="377.00" width="15.78" height="0.00" fill="#7c3aed"><title>B6 / Versioned dependency mass: 0.00</title></rect>
+<rect x="653.73" y="587.00" width="15.78" height="0.00" fill="#2563eb" opacity="0.82"><title>B6 / Syntactic hot variables: 0</title></rect>
+<rect x="672.38" y="587.00" width="15.78" height="0.00" fill="#16a34a" opacity="0.82"><title>B6 / Local dependency hot variables: 0</title></rect>
+<rect x="691.03" y="587.00" width="15.78" height="0.00" fill="#f97316" opacity="0.82"><title>B6 / CFG dependency hot variables: 0</title></rect>
+<rect x="709.69" y="587.00" width="15.78" height="0.00" fill="#7c3aed" opacity="0.82"><title>B6 / Versioned dependency hot variables: 0</title></rect>
+<text class="label" x="784.00" y="609" text-anchor="end" transform="rotate(-35 784.00 609)">B7</text>
+<rect x="748.13" y="377.00" width="15.78" height="0.00" fill="#2563eb"><title>B7 / Syntactic mass: 0.00</title></rect>
+<rect x="766.78" y="377.00" width="15.78" height="0.00" fill="#16a34a"><title>B7 / Local dependency mass: 0.00</title></rect>
+<rect x="785.43" y="377.00" width="15.78" height="0.00" fill="#f97316"><title>B7 / CFG dependency mass: 0.00</title></rect>
+<rect x="804.09" y="377.00" width="15.78" height="0.00" fill="#7c3aed"><title>B7 / Versioned dependency mass: 0.00</title></rect>
+<rect x="748.13" y="587.00" width="15.78" height="0.00" fill="#2563eb" opacity="0.82"><title>B7 / Syntactic hot variables: 0</title></rect>
+<rect x="766.78" y="587.00" width="15.78" height="0.00" fill="#16a34a" opacity="0.82"><title>B7 / Local dependency hot variables: 0</title></rect>
+<rect x="785.43" y="587.00" width="15.78" height="0.00" fill="#f97316" opacity="0.82"><title>B7 / CFG dependency hot variables: 0</title></rect>
+<rect x="804.09" y="587.00" width="15.78" height="0.00" fill="#7c3aed" opacity="0.82"><title>B7 / Versioned dependency hot variables: 0</title></rect>
+<text class="label" x="878.40" y="609" text-anchor="end" transform="rotate(-35 878.40 609)">B8</text>
+<rect x="842.53" y="377.00" width="15.78" height="0.00" fill="#2563eb"><title>B8 / Syntactic mass: 0.00</title></rect>
+<rect x="861.18" y="377.00" width="15.78" height="0.00" fill="#16a34a"><title>B8 / Local dependency mass: 0.00</title></rect>
+<rect x="879.83" y="377.00" width="15.78" height="0.00" fill="#f97316"><title>B8 / CFG dependency mass: 0.00</title></rect>
+<rect x="898.49" y="377.00" width="15.78" height="0.00" fill="#7c3aed"><title>B8 / Versioned dependency mass: 0.00</title></rect>
+<rect x="842.53" y="587.00" width="15.78" height="0.00" fill="#2563eb" opacity="0.82"><title>B8 / Syntactic hot variables: 0</title></rect>
+<rect x="861.18" y="587.00" width="15.78" height="0.00" fill="#16a34a" opacity="0.82"><title>B8 / Local dependency hot variables: 0</title></rect>
+<rect x="879.83" y="587.00" width="15.78" height="0.00" fill="#f97316" opacity="0.82"><title>B8 / CFG dependency hot variables: 0</title></rect>
+<rect x="898.49" y="587.00" width="15.78" height="0.00" fill="#7c3aed" opacity="0.82"><title>B8 / Versioned dependency hot variables: 0</title></rect>
+<text class="label" x="972.80" y="609" text-anchor="end" transform="rotate(-35 972.80 609)">Exit</text>
+<rect x="936.93" y="377.00" width="15.78" height="0.00" fill="#2563eb"><title>Exit / Syntactic mass: 0.00</title></rect>
+<rect x="955.58" y="377.00" width="15.78" height="0.00" fill="#16a34a"><title>Exit / Local dependency mass: 0.00</title></rect>
+<rect x="974.23" y="377.00" width="15.78" height="0.00" fill="#f97316"><title>Exit / CFG dependency mass: 0.00</title></rect>
+<rect x="992.89" y="377.00" width="15.78" height="0.00" fill="#7c3aed"><title>Exit / Versioned dependency mass: 0.00</title></rect>
+<rect x="936.93" y="587.00" width="15.78" height="0.00" fill="#2563eb" opacity="0.82"><title>Exit / Syntactic hot variables: 0</title></rect>
+<rect x="955.58" y="587.00" width="15.78" height="0.00" fill="#16a34a" opacity="0.82"><title>Exit / Local dependency hot variables: 0</title></rect>
+<rect x="974.23" y="587.00" width="15.78" height="0.00" fill="#f97316" opacity="0.82"><title>Exit / CFG dependency hot variables: 0</title></rect>
+<rect x="992.89" y="587.00" width="15.78" height="0.00" fill="#7c3aed" opacity="0.82"><title>Exit / Versioned dependency hot variables: 0</title></rect>
+<polyline points="110.18,377.00 204.58,377.00 298.98,377.00 393.38,377.00 487.78,377.00 582.18,377.00 676.58,377.00 770.98,377.00 865.38,377.00 959.78,377.00" fill="none" stroke="#2563eb" stroke-width="2.0" stroke-dasharray="4 3"/>
+<circle cx="110.18" cy="377.00" r="3.2" fill="white" stroke="#2563eb" stroke-width="2"><title>Entry / Syntactic Q_t: 0.00</title></circle>
+<circle cx="204.58" cy="377.00" r="3.2" fill="white" stroke="#2563eb" stroke-width="2"><title>B1 / Syntactic Q_t: 0.00</title></circle>
+<circle cx="298.98" cy="377.00" r="3.2" fill="white" stroke="#2563eb" stroke-width="2"><title>B2 / Syntactic Q_t: 0.00</title></circle>
+<circle cx="393.38" cy="377.00" r="3.2" fill="white" stroke="#2563eb" stroke-width="2"><title>B3 / Syntactic Q_t: 0.00</title></circle>
+<circle cx="487.78" cy="377.00" r="3.2" fill="white" stroke="#2563eb" stroke-width="2"><title>B4 / Syntactic Q_t: 0.00</title></circle>
+<circle cx="582.18" cy="377.00" r="3.2" fill="white" stroke="#2563eb" stroke-width="2"><title>B5 / Syntactic Q_t: 0.00</title></circle>
+<circle cx="676.58" cy="377.00" r="3.2" fill="white" stroke="#2563eb" stroke-width="2"><title>B6 / Syntactic Q_t: 0.00</title></circle>
+<circle cx="770.98" cy="377.00" r="3.2" fill="white" stroke="#2563eb" stroke-width="2"><title>B7 / Syntactic Q_t: 0.00</title></circle>
+<circle cx="865.38" cy="377.00" r="3.2" fill="white" stroke="#2563eb" stroke-width="2"><title>B8 / Syntactic Q_t: 0.00</title></circle>
+<circle cx="959.78" cy="377.00" r="3.2" fill="white" stroke="#2563eb" stroke-width="2"><title>Exit / Syntactic Q_t: 0.00</title></circle>
+<polyline points="118.86,377.00 213.26,377.00 307.66,377.00 402.06,377.00 496.46,377.00 590.86,377.00 685.26,377.00 779.66,377.00 874.06,377.00 968.46,377.00" fill="none" stroke="#16a34a" stroke-width="2.0" stroke-dasharray="4 3"/>
+<circle cx="118.86" cy="377.00" r="3.2" fill="white" stroke="#16a34a" stroke-width="2"><title>Entry / Local dependency Q_t: 0.00</title></circle>
+<circle cx="213.26" cy="377.00" r="3.2" fill="white" stroke="#16a34a" stroke-width="2"><title>B1 / Local dependency Q_t: 0.00</title></circle>
+<circle cx="307.66" cy="377.00" r="3.2" fill="white" stroke="#16a34a" stroke-width="2"><title>B2 / Local dependency Q_t: 0.00</title></circle>
+<circle cx="402.06" cy="377.00" r="3.2" fill="white" stroke="#16a34a" stroke-width="2"><title>B3 / Local dependency Q_t: 0.00</title></circle>
+<circle cx="496.46" cy="377.00" r="3.2" fill="white" stroke="#16a34a" stroke-width="2"><title>B4 / Local dependency Q_t: 0.00</title></circle>
+<circle cx="590.86" cy="377.00" r="3.2" fill="white" stroke="#16a34a" stroke-width="2"><title>B5 / Local dependency Q_t: 0.00</title></circle>
+<circle cx="685.26" cy="377.00" r="3.2" fill="white" stroke="#16a34a" stroke-width="2"><title>B6 / Local dependency Q_t: 0.00</title></circle>
+<circle cx="779.66" cy="377.00" r="3.2" fill="white" stroke="#16a34a" stroke-width="2"><title>B7 / Local dependency Q_t: 0.00</title></circle>
+<circle cx="874.06" cy="377.00" r="3.2" fill="white" stroke="#16a34a" stroke-width="2"><title>B8 / Local dependency Q_t: 0.00</title></circle>
+<circle cx="968.46" cy="377.00" r="3.2" fill="white" stroke="#16a34a" stroke-width="2"><title>Exit / Local dependency Q_t: 0.00</title></circle>
+<polyline points="127.54,377.00 221.94,377.00 316.34,377.00 410.74,377.00 505.14,377.00 599.54,377.00 693.94,377.00 788.34,377.00 882.74,377.00 977.14,377.00" fill="none" stroke="#f97316" stroke-width="2.0" stroke-dasharray="4 3"/>
+<circle cx="127.54" cy="377.00" r="3.2" fill="white" stroke="#f97316" stroke-width="2"><title>Entry / CFG dependency Q_t: 0.00</title></circle>
+<circle cx="221.94" cy="377.00" r="3.2" fill="white" stroke="#f97316" stroke-width="2"><title>B1 / CFG dependency Q_t: 0.00</title></circle>
+<circle cx="316.34" cy="377.00" r="3.2" fill="white" stroke="#f97316" stroke-width="2"><title>B2 / CFG dependency Q_t: 0.00</title></circle>
+<circle cx="410.74" cy="377.00" r="3.2" fill="white" stroke="#f97316" stroke-width="2"><title>B3 / CFG dependency Q_t: 0.00</title></circle>
+<circle cx="505.14" cy="377.00" r="3.2" fill="white" stroke="#f97316" stroke-width="2"><title>B4 / CFG dependency Q_t: 0.00</title></circle>
+<circle cx="599.54" cy="377.00" r="3.2" fill="white" stroke="#f97316" stroke-width="2"><title>B5 / CFG dependency Q_t: 0.00</title></circle>
+<circle cx="693.94" cy="377.00" r="3.2" fill="white" stroke="#f97316" stroke-width="2"><title>B6 / CFG dependency Q_t: 0.00</title></circle>
+<circle cx="788.34" cy="377.00" r="3.2" fill="white" stroke="#f97316" stroke-width="2"><title>B7 / CFG dependency Q_t: 0.00</title></circle>
+<circle cx="882.74" cy="377.00" r="3.2" fill="white" stroke="#f97316" stroke-width="2"><title>B8 / CFG dependency Q_t: 0.00</title></circle>
+<circle cx="977.14" cy="377.00" r="3.2" fill="white" stroke="#f97316" stroke-width="2"><title>Exit / CFG dependency Q_t: 0.00</title></circle>
+<polyline points="136.22,377.00 230.62,377.00 325.02,377.00 419.42,377.00 513.82,377.00 608.22,377.00 702.62,377.00 797.02,377.00 891.42,377.00 985.82,377.00" fill="none" stroke="#7c3aed" stroke-width="2.0" stroke-dasharray="4 3"/>
+<circle cx="136.22" cy="377.00" r="3.2" fill="white" stroke="#7c3aed" stroke-width="2"><title>Entry / Versioned dependency Q_t: 0.00</title></circle>
+<circle cx="230.62" cy="377.00" r="3.2" fill="white" stroke="#7c3aed" stroke-width="2"><title>B1 / Versioned dependency Q_t: 0.00</title></circle>
+<circle cx="325.02" cy="377.00" r="3.2" fill="white" stroke="#7c3aed" stroke-width="2"><title>B2 / Versioned dependency Q_t: 0.00</title></circle>
+<circle cx="419.42" cy="377.00" r="3.2" fill="white" stroke="#7c3aed" stroke-width="2"><title>B3 / Versioned dependency Q_t: 0.00</title></circle>
+<circle cx="513.82" cy="377.00" r="3.2" fill="white" stroke="#7c3aed" stroke-width="2"><title>B4 / Versioned dependency Q_t: 0.00</title></circle>
+<circle cx="608.22" cy="377.00" r="3.2" fill="white" stroke="#7c3aed" stroke-width="2"><title>B5 / Versioned dependency Q_t: 0.00</title></circle>
+<circle cx="702.62" cy="377.00" r="3.2" fill="white" stroke="#7c3aed" stroke-width="2"><title>B6 / Versioned dependency Q_t: 0.00</title></circle>
+<circle cx="797.02" cy="377.00" r="3.2" fill="white" stroke="#7c3aed" stroke-width="2"><title>B7 / Versioned dependency Q_t: 0.00</title></circle>
+<circle cx="891.42" cy="377.00" r="3.2" fill="white" stroke="#7c3aed" stroke-width="2"><title>B8 / Versioned dependency Q_t: 0.00</title></circle>
+<circle cx="985.82" cy="377.00" r="3.2" fill="white" stroke="#7c3aed" stroke-width="2"><title>Exit / Versioned dependency Q_t: 0.00</title></circle>
+<rect x="336" y="16" width="12" height="12" fill="#2563eb"/>
+<text class="legend" x="353" y="26">Syntactic</text>
+<rect x="468" y="16" width="12" height="12" fill="#16a34a"/>
+<text class="legend" x="485" y="26">Local dependency</text>
+<rect x="600" y="16" width="12" height="12" fill="#f97316"/>
+<text class="legend" x="617" y="26">CFG dependency</text>
+<rect x="732" y="16" width="12" height="12" fill="#7c3aed"/>
+<text class="legend" x="749" y="26">Versioned dependency</text>
+<line x1="864" y1="22" x2="884" y2="22" stroke="#0f172a" stroke-width="2.0" stroke-dasharray="4 3"/>
+<circle cx="874" cy="22" r="3.2" fill="white" stroke="#0f172a" stroke-width="2"/>
+<text class="legend" x="891" y="26">Q_t per mode</text>
+<text x="548.00" y="224.50" text-anchor="middle" fill="#64748b">No Q_add dependencies detected</text>
+<text x="548.00" y="531.00" text-anchor="middle" fill="#64748b">No variables pass alpha * Q_t</text>
+<text class="subtitle" x="76" y="642">Solid bars: Q_add mass; dashed lines: mode-specific Q_t; lower bars: hot variables under the same mode-specific threshold.</text>
+</svg>

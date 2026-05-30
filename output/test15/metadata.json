@@ -1,0 +1,13 @@
+{
+  "id": "test15",
+  "name": "Qadd beta 0.75 oracle variant",
+  "label": "test15: Qadd beta 0.75 oracle variant",
+  "source": "input/test13.txt",
+  "block_name": "A",
+  "blocks": 9,
+  "sections": 22,
+  "region_steps": 1,
+  "processed_at": "2026-05-30T20:55:47Z",
+  "dumped_at": "2026-05-30T20:55:47Z",
+  "report": "index.html"
+}

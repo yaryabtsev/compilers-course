@@ -1,0 +1,24 @@
+param s
+param n
+param chars
+param m
+
+p <-- #0
+count <-- #0
+
+Lwhile: ifFalse p < m goto Lend
+ifFalse count < n goto Lend
+
+ch <-- %load, chars, p
+sc <-- %load, s, count
+
+ifFalse ch == sc goto Lelse
+
+count <-- +, count, #1
+p <-- #0
+goto Lwhile
+
+Lelse: p <-- +, p, #1
+goto Lwhile
+
+Lend: return count

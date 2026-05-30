@@ -33,7 +33,7 @@
 <a class="content" href="#title-0"><span>01</span>Base MIR</a>
 <a class="content" href="#title-1"><span>02</span>Control Flow Graph</a>
 <a class="content" href="#title-2"><span>03</span>Symbolic Branch Conditions</a>
-<a class="content" href="#title-3"><span>04</span>Hot Variable Approximation</a>
+<a class="content" href="#title-3"><span>04</span>Q_add / Q_t Approximation</a>
 <a class="content" href="#title-4"><span>05</span>Symbolic Execution Scope Stubs</a>
 <a class="content" href="#title-5"><span>06</span>Local Value Tables</a>
 <a class="content" href="#title-6"><span>07</span>Input / Output Sets</a>
@@ -97,91 +97,369 @@
 <td>no ifTrue / ifFalse branch lines in this input</td>
 </tr>
 </tbody>
-</table></div></details>
-<details id="title-3"><summary><h2 class="block-table-title"><span class="section-title">Hot Variable Approximation</span><small class="section-note">QCE idea</small></h2></summary>
-<details class="trace"><summary><p class="summary-span"><span>Trace</span><small class="section-note">derivation steps</small></p></summary><div class="trace-code">
-<comment>Hot variables approximate QCE by counting future syntactic uses in branch conditions. The dump does not estimate solver query cost.</comment></div></details>
+</table></div>
+</details>
+<details id="title-3"><summary><h2 class="block-table-title"><span class="section-title">Q_add / Q_t Approximation</span><small class="section-note">QCE recurrence</small></h2></summary>
+<details class="trace" open>
+<summary><p class="summary-span"><span>Syntactic branch variables</span></p></summary>
+<div class="trace-code">
+<comment>Q<sub>t</sub> and Q<sub>add</sub> follow the QCE recurrence from Efficient State Merging, with C approximated by syntactic variable occurrence in branch conditions. The dump does not estimate SMT or ite expression cost.</comment></div>
 <div class="table-scroll"><table>
 <thead><tr>
 <th>block</th>
-<th>future branch uses</th>
+<th>Q<sub>t</sub></th>
 <th>hot variables</th>
-<th>counts</th>
+<th>Q<sub>add</sub>(block, var)</th>
 <th>status</th>
 </tr></thead>
 <tbody>
 <tr>
 <td class="first-column">Entry</td>
-<td>Entry</td>
+<td>0</td>
 <td class="none">None</td>
 <td class="none">None</td>
-<td>syntactic QCE-style approximation; no SMT or ite-cost model</td>
+<td>alpha=0.35, beta=0.50; syntactic C relation</td>
 </tr>
 <tr>
 <td class="first-column">B1</td>
-<td>Entry</td>
+<td>0</td>
 <td class="none">None</td>
 <td class="none">None</td>
-<td>syntactic QCE-style approximation; no SMT or ite-cost model</td>
+<td>alpha=0.35, beta=0.50; syntactic C relation</td>
 </tr>
 <tr>
 <td class="first-column">B2</td>
-<td>Entry</td>
+<td>0</td>
 <td class="none">None</td>
 <td class="none">None</td>
-<td>syntactic QCE-style approximation; no SMT or ite-cost model</td>
+<td>alpha=0.35, beta=0.50; syntactic C relation</td>
 </tr>
 <tr>
 <td class="first-column">B3</td>
-<td>Entry</td>
+<td>0</td>
 <td class="none">None</td>
 <td class="none">None</td>
-<td>syntactic QCE-style approximation; no SMT or ite-cost model</td>
+<td>alpha=0.35, beta=0.50; syntactic C relation</td>
 </tr>
 <tr>
 <td class="first-column">B4</td>
-<td>Entry</td>
+<td>0</td>
 <td class="none">None</td>
 <td class="none">None</td>
-<td>syntactic QCE-style approximation; no SMT or ite-cost model</td>
+<td>alpha=0.35, beta=0.50; syntactic C relation</td>
 </tr>
 <tr>
 <td class="first-column">B5</td>
-<td>Entry</td>
+<td>0</td>
 <td class="none">None</td>
 <td class="none">None</td>
-<td>syntactic QCE-style approximation; no SMT or ite-cost model</td>
+<td>alpha=0.35, beta=0.50; syntactic C relation</td>
 </tr>
 <tr>
 <td class="first-column">B6</td>
-<td>Entry</td>
+<td>0</td>
 <td class="none">None</td>
 <td class="none">None</td>
-<td>syntactic QCE-style approximation; no SMT or ite-cost model</td>
+<td>alpha=0.35, beta=0.50; syntactic C relation</td>
 </tr>
 <tr>
 <td class="first-column">B7</td>
-<td>Entry</td>
+<td>0</td>
 <td class="none">None</td>
 <td class="none">None</td>
-<td>syntactic QCE-style approximation; no SMT or ite-cost model</td>
+<td>alpha=0.35, beta=0.50; syntactic C relation</td>
 </tr>
 <tr>
 <td class="first-column">B8</td>
-<td>Entry</td>
+<td>0</td>
 <td class="none">None</td>
 <td class="none">None</td>
-<td>syntactic QCE-style approximation; no SMT or ite-cost model</td>
+<td>alpha=0.35, beta=0.50; syntactic C relation</td>
 </tr>
 <tr>
 <td class="first-column">Exit</td>
-<td>Entry</td>
+<td>0</td>
 <td class="none">None</td>
 <td class="none">None</td>
-<td>syntactic QCE-style approximation; no SMT or ite-cost model</td>
+<td>alpha=0.35, beta=0.50; syntactic C relation</td>
 </tr>
 </tbody>
-</table></div></details>
+</table></div>
+</details>
+<details class="trace" open>
+<summary><p class="summary-span"><span>Local dependency variables</span></p></summary>
+<div class="trace-code">
+<comment>Local dependency mode expands branch variables through assignments inside the same block. It does not propagate dependencies across CFG edges.</comment></div>
+<div class="table-scroll"><table>
+<thead><tr>
+<th>block</th>
+<th>Q<sub>t</sub></th>
+<th>hot variables</th>
+<th>Q<sub>add</sub>(block, var)</th>
+<th>status</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="first-column">Entry</td>
+<td>0</td>
+<td class="none">None</td>
+<td class="none">None</td>
+<td>alpha=0.35, beta=0.50; local dependency C relation</td>
+</tr>
+<tr>
+<td class="first-column">B1</td>
+<td>0</td>
+<td class="none">None</td>
+<td class="none">None</td>
+<td>alpha=0.35, beta=0.50; local dependency C relation</td>
+</tr>
+<tr>
+<td class="first-column">B2</td>
+<td>0</td>
+<td class="none">None</td>
+<td class="none">None</td>
+<td>alpha=0.35, beta=0.50; local dependency C relation</td>
+</tr>
+<tr>
+<td class="first-column">B3</td>
+<td>0</td>
+<td class="none">None</td>
+<td class="none">None</td>
+<td>alpha=0.35, beta=0.50; local dependency C relation</td>
+</tr>
+<tr>
+<td class="first-column">B4</td>
+<td>0</td>
+<td class="none">None</td>
+<td class="none">None</td>
+<td>alpha=0.35, beta=0.50; local dependency C relation</td>
+</tr>
+<tr>
+<td class="first-column">B5</td>
+<td>0</td>
+<td class="none">None</td>
+<td class="none">None</td>
+<td>alpha=0.35, beta=0.50; local dependency C relation</td>
+</tr>
+<tr>
+<td class="first-column">B6</td>
+<td>0</td>
+<td class="none">None</td>
+<td class="none">None</td>
+<td>alpha=0.35, beta=0.50; local dependency C relation</td>
+</tr>
+<tr>
+<td class="first-column">B7</td>
+<td>0</td>
+<td class="none">None</td>
+<td class="none">None</td>
+<td>alpha=0.35, beta=0.50; local dependency C relation</td>
+</tr>
+<tr>
+<td class="first-column">B8</td>
+<td>0</td>
+<td class="none">None</td>
+<td class="none">None</td>
+<td>alpha=0.35, beta=0.50; local dependency C relation</td>
+</tr>
+<tr>
+<td class="first-column">Exit</td>
+<td>0</td>
+<td class="none">None</td>
+<td class="none">None</td>
+<td>alpha=0.35, beta=0.50; local dependency C relation</td>
+</tr>
+</tbody>
+</table></div>
+</details>
+<details class="trace" open>
+<summary><p class="summary-span"><span>CFG dependency variables</span></p></summary>
+<div class="trace-code">
+<comment>CFG dependency mode propagates assignment dependencies across CFG edges with set union at joins. It is still syntactic and does not check path feasibility.</comment></div>
+<div class="table-scroll"><table>
+<thead><tr>
+<th>block</th>
+<th>Q<sub>t</sub></th>
+<th>hot variables</th>
+<th>Q<sub>add</sub>(block, var)</th>
+<th>status</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="first-column">Entry</td>
+<td>0</td>
+<td class="none">None</td>
+<td class="none">None</td>
+<td>alpha=0.35, beta=0.50; cfg dependency C relation</td>
+</tr>
+<tr>
+<td class="first-column">B1</td>
+<td>0</td>
+<td class="none">None</td>
+<td class="none">None</td>
+<td>alpha=0.35, beta=0.50; cfg dependency C relation</td>
+</tr>
+<tr>
+<td class="first-column">B2</td>
+<td>0</td>
+<td class="none">None</td>
+<td class="none">None</td>
+<td>alpha=0.35, beta=0.50; cfg dependency C relation</td>
+</tr>
+<tr>
+<td class="first-column">B3</td>
+<td>0</td>
+<td class="none">None</td>
+<td class="none">None</td>
+<td>alpha=0.35, beta=0.50; cfg dependency C relation</td>
+</tr>
+<tr>
+<td class="first-column">B4</td>
+<td>0</td>
+<td class="none">None</td>
+<td class="none">None</td>
+<td>alpha=0.35, beta=0.50; cfg dependency C relation</td>
+</tr>
+<tr>
+<td class="first-column">B5</td>
+<td>0</td>
+<td class="none">None</td>
+<td class="none">None</td>
+<td>alpha=0.35, beta=0.50; cfg dependency C relation</td>
+</tr>
+<tr>
+<td class="first-column">B6</td>
+<td>0</td>
+<td class="none">None</td>
+<td class="none">None</td>
+<td>alpha=0.35, beta=0.50; cfg dependency C relation</td>
+</tr>
+<tr>
+<td class="first-column">B7</td>
+<td>0</td>
+<td class="none">None</td>
+<td class="none">None</td>
+<td>alpha=0.35, beta=0.50; cfg dependency C relation</td>
+</tr>
+<tr>
+<td class="first-column">B8</td>
+<td>0</td>
+<td class="none">None</td>
+<td class="none">None</td>
+<td>alpha=0.35, beta=0.50; cfg dependency C relation</td>
+</tr>
+<tr>
+<td class="first-column">Exit</td>
+<td>0</td>
+<td class="none">None</td>
+<td class="none">None</td>
+<td>alpha=0.35, beta=0.50; cfg dependency C relation</td>
+</tr>
+</tbody>
+</table></div>
+</details>
+<details class="trace" open>
+<summary><p class="summary-span"><span>Versioned dependency variables</span></p></summary>
+<div class="trace-code">
+<comment>Versioned dependency mode propagates source-definition versions across CFG edges. It is path-insensitive and does not check path feasibility.</comment></div>
+<div class="table-scroll"><table>
+<thead><tr>
+<th>block</th>
+<th>Q<sub>t</sub></th>
+<th>hot variables</th>
+<th>Q<sub>add</sub>(block, var)</th>
+<th>status</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="first-column">Entry</td>
+<td>0</td>
+<td class="none">None</td>
+<td class="none">None</td>
+<td>alpha=0.35, beta=0.50; versioned dependency C relation</td>
+</tr>
+<tr>
+<td class="first-column">B1</td>
+<td>0</td>
+<td class="none">None</td>
+<td class="none">None</td>
+<td>alpha=0.35, beta=0.50; versioned dependency C relation</td>
+</tr>
+<tr>
+<td class="first-column">B2</td>
+<td>0</td>
+<td class="none">None</td>
+<td class="none">None</td>
+<td>alpha=0.35, beta=0.50; versioned dependency C relation</td>
+</tr>
+<tr>
+<td class="first-column">B3</td>
+<td>0</td>
+<td class="none">None</td>
+<td class="none">None</td>
+<td>alpha=0.35, beta=0.50; versioned dependency C relation</td>
+</tr>
+<tr>
+<td class="first-column">B4</td>
+<td>0</td>
+<td class="none">None</td>
+<td class="none">None</td>
+<td>alpha=0.35, beta=0.50; versioned dependency C relation</td>
+</tr>
+<tr>
+<td class="first-column">B5</td>
+<td>0</td>
+<td class="none">None</td>
+<td class="none">None</td>
+<td>alpha=0.35, beta=0.50; versioned dependency C relation</td>
+</tr>
+<tr>
+<td class="first-column">B6</td>
+<td>0</td>
+<td class="none">None</td>
+<td class="none">None</td>
+<td>alpha=0.35, beta=0.50; versioned dependency C relation</td>
+</tr>
+<tr>
+<td class="first-column">B7</td>
+<td>0</td>
+<td class="none">None</td>
+<td class="none">None</td>
+<td>alpha=0.35, beta=0.50; versioned dependency C relation</td>
+</tr>
+<tr>
+<td class="first-column">B8</td>
+<td>0</td>
+<td class="none">None</td>
+<td class="none">None</td>
+<td>alpha=0.35, beta=0.50; versioned dependency C relation</td>
+</tr>
+<tr>
+<td class="first-column">Exit</td>
+<td>0</td>
+<td class="none">None</td>
+<td class="none">None</td>
+<td>alpha=0.35, beta=0.50; versioned dependency C relation</td>
+</tr>
+</tbody>
+</table></div>
+</details>
+<details class="trace" open>
+<summary><p class="summary-span"><span>Q_add algorithm profile</span></p></summary>
+<div class="trace-code">
+<comment>Block-level Q<sub>add</sub> mass compares how widely each approximation mode propagates branch dependencies. Q<sub>t</sub> is plotted per approximation mode because some dependency relations may track different branch-query pressure. Hot-count bars use the matching mode-specific alpha * Q<sub>t</sub> threshold. This is an algorithm profile, not a correctness ranking and not a replacement for a manual oracle.</comment></div>
+<div class="table-scroll"><table>
+<thead><tr>
+<th>chart</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="first-column"><div class="graph-panel"><img src="qadd_algorithm_comparison.svg" alt="Q_add algorithm comparison"></div></td>
+</tr>
+</tbody>
+</table></div>
+</details>
+</details>
 <details id="title-4"><summary><h2 class="block-table-title"><span class="section-title">Symbolic Execution Scope Stubs</span><small class="section-note">unsupported papers</small></h2></summary>
 <details class="trace"><summary><p class="summary-span"><span>Trace</span><small class="section-note">derivation steps</small></p></summary><div class="trace-code">
 <comment>These paper families are intentionally marked as stubs or out of scope until the input language already supports the required concepts.</comment></div></details>
@@ -218,7 +496,8 @@
 <td>no implementation planned</td>
 </tr>
 </tbody>
-</table></div></details>
+</table></div>
+</details>
 <details id="title-5"><summary><h2 class="var-table"><span class="section-title">Local Value Tables</span><small class="section-note">LVN table</small></h2></summary>
 <div class="value-grid">
 <article class="value-card">
@@ -327,7 +606,8 @@
 <td class="none">None</td>
 </tr>
 </tbody>
-</table></div></details>
+</table></div>
+</details>
 <details id="title-7"><summary><h2 class="block-table-title"><span class="section-title">Pred / Dom / Idom / DF</span><small class="section-note">dominators / DF</small></h2></summary>
 <div class="table-scroll"><table>
 <thead><tr>
@@ -397,7 +677,8 @@
 <td class="none">None</td>
 </tr>
 </tbody>
-</table></div></details>
+</table></div>
+</details>
 <details id="title-8"><summary><h2 class="image-title"><span class="section-title">Dominator Tree</span><small class="section-note">dom tree</small></h2></summary>
 <div class="graph-panel">
 <img src="dt.png" alt="Dominator Tree">
@@ -458,7 +739,8 @@
 <td class="none">None</td>
 </tr>
 </tbody>
-</table></div></details>
+</table></div>
+</details>
 <details id="title-10"><summary><h2 class="block-table-title"><span class="section-title">Globals & Blocks</span><small class="section-note">SSA globals</small></h2></summary>
 <details class="trace"><summary><p class="summary-span"><span>Trace</span><small class="section-note">derivation steps</small></p></summary><div class="trace-code">
 <font class="block-name">Entry</font><gb1>-block:</gb1><br>&nbsp;&nbsp;&nbsp;<gb2>def<sub><font class="block-name">Entry</font></sub>&nbsp;:&nbsp;</gb2>{}<br><font class="block-name">B1</font><gb1>-block:</gb1><br>&nbsp;&nbsp;&nbsp;<gb2>def<sub><font class="block-name">B1</font></sub>&nbsp;:&nbsp;</gb2>{}<br><font class="block-name">B2</font><gb1>-block:</gb1><br>&nbsp;&nbsp;&nbsp;<gb2>def<sub><font class="block-name">B2</font></sub>&nbsp;:&nbsp;</gb2>{}<br><font class="block-name">B3</font><gb1>-block:</gb1><br>&nbsp;&nbsp;&nbsp;<gb2>def<sub><font class="block-name">B3</font></sub>&nbsp;:&nbsp;</gb2>{}<br><font class="block-name">B4</font><gb1>-block:</gb1><br>&nbsp;&nbsp;&nbsp;<gb2>def<sub><font class="block-name">B4</font></sub>&nbsp;:&nbsp;</gb2>{}<br><font class="block-name">B5</font><gb1>-block:</gb1><br>&nbsp;&nbsp;&nbsp;<gb2>def<sub><font class="block-name">B5</font></sub>&nbsp;:&nbsp;</gb2>{}<br><font class="block-name">B6</font><gb1>-block:</gb1><br>&nbsp;&nbsp;&nbsp;<gb2>def<sub><font class="block-name">B6</font></sub>&nbsp;:&nbsp;</gb2>{}<br><font class="block-name">B7</font><gb1>-block:</gb1><br>&nbsp;&nbsp;&nbsp;<gb2>def<sub><font class="block-name">B7</font></sub>&nbsp;:&nbsp;</gb2>{}<br><font class="block-name">B8</font><gb1>-block:</gb1><br>&nbsp;&nbsp;&nbsp;<gb2>def<sub><font class="block-name">B8</font></sub>&nbsp;:&nbsp;</gb2>{}<br><font class="block-name">Exit</font><gb1>-block:</gb1><br>&nbsp;&nbsp;&nbsp;<gb2>def<sub><font class="block-name">Exit</font></sub>&nbsp;:&nbsp;</gb2>{}</div></details>
@@ -474,7 +756,8 @@
 <td class="first-column">is Global</td>
 </tr>
 </tbody>
-</table></div></details>
+</table></div>
+</details>
 <details id="title-11"><summary><h2 class="block-table-title"><span class="section-title">Phi Placement</span><small class="section-note">DF worklist</small></h2></summary>
 <div class="table-scroll"><table>
 <thead><tr>
@@ -492,7 +775,8 @@
 </tr></thead>
 <tbody>
 </tbody>
-</table></div></details>
+</table></div>
+</details>
 <details id="title-12"><summary><h2 class="code-title"><span class="section-title">Phi-Inserted Code</span><small class="section-note">phi code</small></h2></summary>
 <div class="code-panel">
 <div class="boundary-block"><span class="block-name">Entry</span></div>
@@ -544,7 +828,8 @@
 <td>ok</td>
 </tr>
 </tbody>
-</table></div></details>
+</table></div>
+</details>
 <details id="title-15"><summary><h2 class="block-table-title"><span class="section-title">Join Merge Preview</span><small class="section-note">state merging</small></h2></summary>
 <details class="trace"><summary><p class="summary-span"><span>Trace</span><small class="section-note">derivation steps</small></p></summary><div class="trace-code">
 <comment>Merge previews are display-only. They reuse predecessor and phi data; no symbolic store is executed and no path feasibility is checked.</comment></div></details>
@@ -586,7 +871,8 @@
 <td>structural join only</td>
 </tr>
 </tbody>
-</table></div></details>
+</table></div>
+</details>
 <details id="title-16"><summary><h2 class="block-graphs-title"><span class="section-title">Cycle-Based Region Reduction</span><small class="section-note">cycle regions</small></h2></summary>
 <div class="region-gallery">
 <figure>
@@ -640,7 +926,8 @@
 <td>no conditional block with a usable immediate postdominator</td>
 </tr>
 </tbody>
-</table></div></details>
+</table></div>
+</details>
 <details id="title-18"><summary><h2 class="block-graphs-title"><span class="section-title">Control Tree</span><small class="section-note">region tree</small></h2></summary>
 <div class="graph-panel">
 <img src="ct.png" alt="Control Tree">
@@ -661,7 +948,8 @@
 <td>R10, R12, R14</td>
 </tr>
 </tbody>
-</table></div></details>
+</table></div>
+</details>
 <details id="title-20"><summary><h2 class="block-table-title"><span class="section-title">Gen / Kill</span><small class="section-note">reaching defs</small></h2></summary>
 <details class="trace"><summary><p class="summary-span"><span>Trace</span><small class="section-note">derivation steps</small></p></summary><div class="trace-code">
 <comment>The instruction index corresponds to the line number in the original code.</comment></div></details>
@@ -707,7 +995,8 @@
 <td class="none">None</td>
 </tr>
 </tbody>
-</table></div></details>
+</table></div>
+</details>
 <details id="title-21"><summary><h2 class="block-table-title"><span class="section-title">Region Transfer Functions (Structural)</span><small class="section-note">structural transfer</small></h2></summary>
 <div class="table-scroll"><table>
 <thead><tr>
@@ -760,7 +1049,8 @@
 <td class="none">None</td>
 </tr>
 </tbody>
-</table></div></details>
+</table></div>
+</details>
 </main>
 </div>
 <footer><p>Generated compiler-analysis report</p></footer>

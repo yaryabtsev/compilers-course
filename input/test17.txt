@@ -1,0 +1,12 @@
+param i
+param n
+param target
+matches <-- #0
+Lloop: ifFalse i < n goto Lend
+ifFalse target = i goto Lskip
+matches <-- +, matches, #1
+goto Lnext
+Lskip: matches <-- +, matches, #0
+Lnext: i <-- +, i, #1
+goto Lloop
+Lend: return matches

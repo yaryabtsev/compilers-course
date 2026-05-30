@@ -358,6 +358,107 @@
 </tbody>
 </table></div>
 </details>
+<details class="trace" open>
+<summary><p class="summary-span"><span>Versioned dependency variables</span></p></summary>
+<div class="trace-code">
+<comment>Versioned dependency mode propagates source-definition versions across CFG edges. It is path-insensitive and does not check path feasibility.</comment></div>
+<div class="table-scroll"><table>
+<thead><tr>
+<th>block</th>
+<th>Q<sub>t</sub></th>
+<th>hot variables</th>
+<th>Q<sub>add</sub>(block, var)</th>
+<th>status</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="first-column">Entry</td>
+<td>0</td>
+<td class="none">None</td>
+<td class="none">None</td>
+<td>alpha=0.35, beta=0.50; versioned dependency C relation</td>
+</tr>
+<tr>
+<td class="first-column">B1</td>
+<td>0</td>
+<td class="none">None</td>
+<td class="none">None</td>
+<td>alpha=0.35, beta=0.50; versioned dependency C relation</td>
+</tr>
+<tr>
+<td class="first-column">B2</td>
+<td>0</td>
+<td class="none">None</td>
+<td class="none">None</td>
+<td>alpha=0.35, beta=0.50; versioned dependency C relation</td>
+</tr>
+<tr>
+<td class="first-column">B3</td>
+<td>0</td>
+<td class="none">None</td>
+<td class="none">None</td>
+<td>alpha=0.35, beta=0.50; versioned dependency C relation</td>
+</tr>
+<tr>
+<td class="first-column">B4</td>
+<td>0</td>
+<td class="none">None</td>
+<td class="none">None</td>
+<td>alpha=0.35, beta=0.50; versioned dependency C relation</td>
+</tr>
+<tr>
+<td class="first-column">B5</td>
+<td>0</td>
+<td class="none">None</td>
+<td class="none">None</td>
+<td>alpha=0.35, beta=0.50; versioned dependency C relation</td>
+</tr>
+<tr>
+<td class="first-column">B6</td>
+<td>0</td>
+<td class="none">None</td>
+<td class="none">None</td>
+<td>alpha=0.35, beta=0.50; versioned dependency C relation</td>
+</tr>
+<tr>
+<td class="first-column">B7</td>
+<td>0</td>
+<td class="none">None</td>
+<td class="none">None</td>
+<td>alpha=0.35, beta=0.50; versioned dependency C relation</td>
+</tr>
+<tr>
+<td class="first-column">B8</td>
+<td>0</td>
+<td class="none">None</td>
+<td class="none">None</td>
+<td>alpha=0.35, beta=0.50; versioned dependency C relation</td>
+</tr>
+<tr>
+<td class="first-column">Exit</td>
+<td>0</td>
+<td class="none">None</td>
+<td class="none">None</td>
+<td>alpha=0.35, beta=0.50; versioned dependency C relation</td>
+</tr>
+</tbody>
+</table></div>
+</details>
+<details class="trace" open>
+<summary><p class="summary-span"><span>Q_add algorithm profile</span></p></summary>
+<div class="trace-code">
+<comment>Block-level Q<sub>add</sub> mass compares how widely each approximation mode propagates branch dependencies. Q<sub>t</sub> is plotted per approximation mode because some dependency relations may track different branch-query pressure. Hot-count bars use the matching mode-specific alpha * Q<sub>t</sub> threshold. This is an algorithm profile, not a correctness ranking and not a replacement for a manual oracle.</comment></div>
+<div class="table-scroll"><table>
+<thead><tr>
+<th>chart</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="first-column"><div class="graph-panel"><img src="qadd_algorithm_comparison.svg" alt="Q_add algorithm comparison"></div></td>
+</tr>
+</tbody>
+</table></div>
+</details>
 </details>
 <details id="title-4"><summary><h2 class="block-table-title"><span class="section-title">Symbolic Execution Scope Stubs</span><small class="section-note">unsupported papers</small></h2></summary>
 <details class="trace"><summary><p class="summary-span"><span>Trace</span><small class="section-note">derivation steps</small></p></summary><div class="trace-code">

@@ -406,6 +406,100 @@
 </tbody>
 </table></div>
 </details>
+<details class="trace" open>
+<summary><p class="summary-span"><span>Versioned dependency variables</span></p></summary>
+<div class="trace-code">
+<comment>Versioned dependency mode propagates source-definition versions across CFG edges. It is path-insensitive and does not check path feasibility.</comment></div>
+<div class="table-scroll"><table>
+<thead><tr>
+<th>block</th>
+<th>Q<sub>t</sub></th>
+<th>hot variables</th>
+<th>Q<sub>add</sub>(block, var)</th>
+<th>status</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="first-column">Entry</td>
+<td>2.00</td>
+<td>x<sub>0</sub>, y<sub>0</sub></td>
+<td>x<sub>0</sub>:1.00, y<sub>0</sub>:1.00</td>
+<td>alpha=0.35, beta=0.50; versioned dependency C relation</td>
+</tr>
+<tr>
+<td class="first-column">A</td>
+<td>2.00</td>
+<td>x<sub>0</sub>, y<sub>0</sub></td>
+<td>x<sub>0</sub>:1.00, y<sub>0</sub>:1.00</td>
+<td>alpha=0.35, beta=0.50; versioned dependency C relation</td>
+</tr>
+<tr>
+<td class="first-column">B</td>
+<td>1.00</td>
+<td>y<sub>0</sub></td>
+<td>y<sub>0</sub>:1.00</td>
+<td>alpha=0.35, beta=0.50; versioned dependency C relation</td>
+</tr>
+<tr>
+<td class="first-column">C</td>
+<td>1.00</td>
+<td>y<sub>0</sub></td>
+<td>y<sub>0</sub>:1.00</td>
+<td>alpha=0.35, beta=0.50; versioned dependency C relation</td>
+</tr>
+<tr>
+<td class="first-column">D</td>
+<td>1.00</td>
+<td>y<sub>0</sub></td>
+<td>y<sub>0</sub>:1.00</td>
+<td>alpha=0.35, beta=0.50; versioned dependency C relation</td>
+</tr>
+<tr>
+<td class="first-column">E</td>
+<td>0</td>
+<td class="none">None</td>
+<td class="none">None</td>
+<td>alpha=0.35, beta=0.50; versioned dependency C relation</td>
+</tr>
+<tr>
+<td class="first-column">F</td>
+<td>0</td>
+<td class="none">None</td>
+<td class="none">None</td>
+<td>alpha=0.35, beta=0.50; versioned dependency C relation</td>
+</tr>
+<tr>
+<td class="first-column">G</td>
+<td>0</td>
+<td class="none">None</td>
+<td class="none">None</td>
+<td>alpha=0.35, beta=0.50; versioned dependency C relation</td>
+</tr>
+<tr>
+<td class="first-column">Exit</td>
+<td>0</td>
+<td class="none">None</td>
+<td class="none">None</td>
+<td>alpha=0.35, beta=0.50; versioned dependency C relation</td>
+</tr>
+</tbody>
+</table></div>
+</details>
+<details class="trace" open>
+<summary><p class="summary-span"><span>Q_add algorithm profile</span></p></summary>
+<div class="trace-code">
+<comment>Block-level Q<sub>add</sub> mass compares how widely each approximation mode propagates branch dependencies. Q<sub>t</sub> is plotted per approximation mode because some dependency relations may track different branch-query pressure. Hot-count bars use the matching mode-specific alpha * Q<sub>t</sub> threshold. This is an algorithm profile, not a correctness ranking and not a replacement for a manual oracle.</comment></div>
+<div class="table-scroll"><table>
+<thead><tr>
+<th>chart</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="first-column"><div class="graph-panel"><img src="qadd_algorithm_comparison.svg" alt="Q_add algorithm comparison"></div></td>
+</tr>
+</tbody>
+</table></div>
+</details>
 </details>
 <details id="title-4"><summary><h2 class="block-table-title"><span class="section-title">Symbolic Execution Scope Stubs</span><small class="section-note">unsupported papers</small></h2></summary>
 <details class="trace"><summary><p class="summary-span"><span>Trace</span><small class="section-note">derivation steps</small></p></summary><div class="trace-code">
@@ -939,10 +1033,10 @@
 <br><font class="block-name">F</font><gb1>-block:</gb1><br>&nbsp;&nbsp;&nbsp;<gb2>def<sub><font class="block-name">F</font></sub>&nbsp;:&nbsp;</gb2>{}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<ol class="mir-lines" start="11">
 <li><span><w1>Lscale</w1>:&nbsp;<w0>r</w0>&nbsp;<w22>&xlarr;</w22>&nbsp;<w23>*</w23>,&nbsp;<w0>a</w0>,&nbsp;<w0>y</w0>&nbsp;</span></li>
 </ol>
-<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb3>Globals&nbsp;:&nbsp;</gb3>{<w0>x</w0>,&nbsp;<w0>a</w0>,&nbsp;<w0>y</w0>}&nbsp;<disj>&#8744;</disj>&nbsp;{<w0>a</w0>}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb3>Globals&nbsp;:&nbsp;</gb3>{<w0>x</w0>,&nbsp;<w0>a</w0>,&nbsp;<w0>y</w0>}&nbsp;<disj>&#8744;</disj>&nbsp;{<w0>y</w0>}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb2>def<sub><font class="block-name">F</font></sub>&nbsp;:&nbsp;</gb2>{}&nbsp;<disj>&#8744;</disj>&nbsp;{<w0>r</w0>}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb4>Blocks(<gb5>r</gb5>)&nbsp;:&nbsp;</gb4>{<font class="block-name">E</font>}&nbsp;<disj>&#8744;</disj>&nbsp;{<font class="block-name">F</font>}<br><font class="block-name">G</font><gb1>-block:</gb1><br>&nbsp;&nbsp;&nbsp;<gb2>def<sub><font class="block-name">G</font></sub>&nbsp;:&nbsp;</gb2>{}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<ol class="mir-lines" start="12">
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb3>Globals&nbsp;:&nbsp;</gb3>{<w0>x</w0>,&nbsp;<w0>y</w0>,&nbsp;<w0>a</w0>}&nbsp;<disj>&#8744;</disj>&nbsp;{<w0>a</w0>}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb3>Globals&nbsp;:&nbsp;</gb3>{<w0>x</w0>,&nbsp;<w0>y</w0>,&nbsp;<w0>a</w0>}&nbsp;<disj>&#8744;</disj>&nbsp;{<w0>y</w0>}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb2>def<sub><font class="block-name">F</font></sub>&nbsp;:&nbsp;</gb2>{}&nbsp;<disj>&#8744;</disj>&nbsp;{<w0>r</w0>}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb4>Blocks(<gb5>r</gb5>)&nbsp;:&nbsp;</gb4>{<font class="block-name">E</font>}&nbsp;<disj>&#8744;</disj>&nbsp;{<font class="block-name">F</font>}<br><font class="block-name">G</font><gb1>-block:</gb1><br>&nbsp;&nbsp;&nbsp;<gb2>def<sub><font class="block-name">G</font></sub>&nbsp;:&nbsp;</gb2>{}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<ol class="mir-lines" start="12">
 <li><span><w1>Lend</w1>:&nbsp;<w21>return</w21>&nbsp;<w0>r</w0>&nbsp;</span></li>
 </ol>
-<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb3>Globals&nbsp;:&nbsp;</gb3>{<w0>x</w0>,&nbsp;<w0>a</w0>,&nbsp;<w0>y</w0>}&nbsp;<disj>&#8744;</disj>&nbsp;{<w0>r</w0>}<br><font class="block-name">Exit</font><gb1>-block:</gb1><br>&nbsp;&nbsp;&nbsp;<gb2>def<sub><font class="block-name">Exit</font></sub>&nbsp;:&nbsp;</gb2>{}</div></details>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb3>Globals&nbsp;:&nbsp;</gb3>{<w0>x</w0>,&nbsp;<w0>y</w0>,&nbsp;<w0>a</w0>}&nbsp;<disj>&#8744;</disj>&nbsp;{<w0>r</w0>}<br><font class="block-name">Exit</font><gb1>-block:</gb1><br>&nbsp;&nbsp;&nbsp;<gb2>def<sub><font class="block-name">Exit</font></sub>&nbsp;:&nbsp;</gb2>{}</div></details>
 <div class="table-scroll"><table>
 <thead><tr>
 <th>var =</th>
@@ -968,7 +1062,7 @@
 </details>
 <details id="title-11"><summary><h2 class="block-table-title"><span class="section-title">Phi Placement</span><small class="section-note">DF worklist</small></h2></summary>
 <details class="trace"><summary><p class="summary-span"><span>Trace</span><small class="section-note">derivation steps</small></p></summary><div class="trace-code">
-<l id="1">variable</l>&nbsp;<w0>r</w0>:<br>&nbsp;&nbsp;&nbsp;<l id="2">WorkList</l> : {<font class="block-name">E</font>,&nbsp;<font class="block-name">F</font>}<br>&nbsp;&nbsp;&nbsp;<l id="3">insert</l>&nbsp;<phi>&phi;(<h>*</h><w0>r</w0>)</phi>&nbsp;in&nbsp;<font class="block-name">G</font><gb1>-block:</gb1><br>&nbsp;&nbsp;&nbsp;<l id="2">WorkList</l> : {<font class="block-name">E</font>,&nbsp;<font class="block-name">F</font>}&nbsp;<disj>&#8744;</disj>&nbsp;{<w0>7</w0>}<br><l id="1">variable</l>&nbsp;<w0>x</w0>:<br>&nbsp;&nbsp;&nbsp;<l id="2">WorkList</l> : {}<br><l id="1">variable</l>&nbsp;<w0>a</w0>:<br>&nbsp;&nbsp;&nbsp;<l id="2">WorkList</l> : {<font class="block-name">B</font>,&nbsp;<font class="block-name">C</font>}<br>&nbsp;&nbsp;&nbsp;<l id="3">insert</l>&nbsp;<phi>&phi;(<h>*</h><w0>a</w0>)</phi>&nbsp;in&nbsp;<font class="block-name">D</font><gb1>-block:</gb1><br>&nbsp;&nbsp;&nbsp;<l id="2">WorkList</l> : {<font class="block-name">B</font>,&nbsp;<font class="block-name">C</font>}&nbsp;<disj>&#8744;</disj>&nbsp;{<w0>4</w0>}<br><l id="1">variable</l>&nbsp;<w0>y</w0>:<br>&nbsp;&nbsp;&nbsp;<l id="2">WorkList</l> : {}</div></details>
+<l id="1">variable</l>&nbsp;<w0>x</w0>:<br>&nbsp;&nbsp;&nbsp;<l id="2">WorkList</l> : {}<br><l id="1">variable</l>&nbsp;<w0>r</w0>:<br>&nbsp;&nbsp;&nbsp;<l id="2">WorkList</l> : {<font class="block-name">E</font>,&nbsp;<font class="block-name">F</font>}<br>&nbsp;&nbsp;&nbsp;<l id="3">insert</l>&nbsp;<phi>&phi;(<h>*</h><w0>r</w0>)</phi>&nbsp;in&nbsp;<font class="block-name">G</font><gb1>-block:</gb1><br>&nbsp;&nbsp;&nbsp;<l id="2">WorkList</l> : {<font class="block-name">E</font>,&nbsp;<font class="block-name">F</font>}&nbsp;<disj>&#8744;</disj>&nbsp;{<w0>7</w0>}<br><l id="1">variable</l>&nbsp;<w0>y</w0>:<br>&nbsp;&nbsp;&nbsp;<l id="2">WorkList</l> : {}<br><l id="1">variable</l>&nbsp;<w0>a</w0>:<br>&nbsp;&nbsp;&nbsp;<l id="2">WorkList</l> : {<font class="block-name">B</font>,&nbsp;<font class="block-name">C</font>}<br>&nbsp;&nbsp;&nbsp;<l id="3">insert</l>&nbsp;<phi>&phi;(<h>*</h><w0>a</w0>)</phi>&nbsp;in&nbsp;<font class="block-name">D</font><gb1>-block:</gb1><br>&nbsp;&nbsp;&nbsp;<l id="2">WorkList</l> : {<font class="block-name">B</font>,&nbsp;<font class="block-name">C</font>}&nbsp;<disj>&#8744;</disj>&nbsp;{<w0>4</w0>}</div></details>
 <div class="table-scroll"><table>
 <thead><tr>
 <th>block =</th>

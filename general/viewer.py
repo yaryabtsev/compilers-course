@@ -37,6 +37,13 @@ DATASET_NAMES = {
     'test08': 'Synthetic gen/kill loop graph',
     'test09': 'Nested loop symbolic dump demo',
     'test10': 'Acyclic merge and region-summary demo',
+    'test11': 'Load-based scanner loop',
+    'test12': 'Inline array-like scanner loop',
+    'test13': 'Qadd dependency expansion baseline',
+    'test14': 'Qadd beta 0.50 oracle variant',
+    'test15': 'Qadd beta 0.75 oracle variant',
+    'test16': 'Qadd beta 0.90 oracle variant',
+    'test17': 'Quantified-merge loop pattern sketch',
 }
 
 

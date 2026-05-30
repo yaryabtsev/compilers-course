@@ -1,13 +1,13 @@
 {
   "id": "test11",
-  "name": "Test11",
-  "label": "test11: Test11",
+  "name": "Load-based scanner loop",
+  "label": "test11: Load-based scanner loop",
   "source": "input/test11.txt",
   "block_name": "A",
   "blocks": 9,
   "sections": 22,
   "region_steps": 5,
-  "processed_at": "2026-05-30T14:15:27Z",
-  "dumped_at": "2026-05-30T14:15:27Z",
+  "processed_at": "2026-05-30T20:55:41Z",
+  "dumped_at": "2026-05-30T20:55:41Z",
   "report": "index.html"
 }

@@ -1,0 +1,13 @@
+{
+  "id": "test17",
+  "name": "Quantified-merge loop pattern sketch",
+  "label": "test17: Quantified-merge loop pattern sketch",
+  "source": "input/test17.txt",
+  "block_name": "A",
+  "blocks": 9,
+  "sections": 22,
+  "region_steps": 3,
+  "processed_at": "2026-05-30T20:55:44Z",
+  "dumped_at": "2026-05-30T20:55:44Z",
+  "report": "index.html"
+}

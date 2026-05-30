@@ -1,13 +1,13 @@
 {
   "id": "test14",
-  "name": "Test13",
-  "label": "test14: Test13",
+  "name": "Qadd beta 0.50 oracle variant",
+  "label": "test14: Qadd beta 0.50 oracle variant",
   "source": "input/test13.txt",
   "block_name": "A",
   "blocks": 9,
   "sections": 22,
   "region_steps": 1,
-  "processed_at": "2026-05-30T14:15:32Z",
-  "dumped_at": "2026-05-30T14:15:32Z",
+  "processed_at": "2026-05-30T20:55:47Z",
+  "dumped_at": "2026-05-30T20:55:47Z",
   "report": "index.html"
 }

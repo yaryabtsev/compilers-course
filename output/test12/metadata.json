@@ -1,13 +1,13 @@
 {
   "id": "test12",
-  "name": "Test12",
-  "label": "test12: Test12",
+  "name": "Inline array-like scanner loop",
+  "label": "test12: Inline array-like scanner loop",
   "source": "input/test12.txt",
   "block_name": "A",
   "blocks": 9,
   "sections": 22,
   "region_steps": 5,
-  "processed_at": "2026-05-30T14:15:28Z",
-  "dumped_at": "2026-05-30T14:15:28Z",
+  "processed_at": "2026-05-30T20:55:42Z",
+  "dumped_at": "2026-05-30T20:55:42Z",
   "report": "index.html"
 }

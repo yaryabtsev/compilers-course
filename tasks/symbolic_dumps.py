@@ -284,32 +284,72 @@ class JoinMergePreview:
 
 
 class HotVariableDump:
-    def __init__(self, lexemes, edges, name, alpha=0.35):
+    def __init__(self, lexemes, edges, name, alpha=0.35, beta=0.5):
         self.lexemes = lexemes
         self.edges = edges
         self.name = name
         self.alpha = alpha
+        self.beta = beta
+        self.branch_info = SymbolicBranchDump(lexemes, edges, name)
         self.branch_uses = self.collect_branch_uses()
+        self.local_dependency_branch_uses = self.collect_local_dependency_branch_uses()
+        self.cfg_dependency_branch_uses = self.collect_cfg_dependency_branch_uses()
+        self.branch_successors = self.collect_branch_successors()
+        self.variables = self.collect_variables(self.branch_uses)
+        self.local_dependency_variables = self.collect_variables(self.local_dependency_branch_uses)
+        self.cfg_dependency_variables = self.collect_variables(self.cfg_dependency_branch_uses)
+        self.q_t = self.solve_q({block: 1.0 for block in self.branch_successors})
+        self.q_add = self.build_q_add(self.branch_uses, self.variables)
+        self.q_add_local_dependency = self.build_q_add(
+            self.local_dependency_branch_uses, self.local_dependency_variables
+        )
+        self.q_add_cfg_dependency = self.build_q_add(
+            self.cfg_dependency_branch_uses, self.cfg_dependency_variables
+        )
 
     def table(self):
+        return self.make_table(
+            self.q_add,
+            f'alpha={self.alpha:.2f}, beta={self.beta:.2f}; syntactic C relation',
+            '<comment>Q<sub>t</sub> and Q<sub>add</sub> follow the QCE recurrence from Efficient State Merging, '
+            'with C approximated by syntactic variable occurrence in branch conditions. '
+            'The dump does not estimate SMT or ite expression cost.</comment>'
+        )
+
+    def tables(self):
+        return [
+            ('Syntactic branch variables', *self.table()),
+            ('Local dependency variables', *self.make_table(
+                self.q_add_local_dependency,
+                f'alpha={self.alpha:.2f}, beta={self.beta:.2f}; local dependency C relation',
+                '<comment>Local dependency mode expands branch variables through assignments inside the same block. '
+                'It does not propagate dependencies across CFG edges.</comment>'
+            )),
+            ('CFG dependency variables', *self.make_table(
+                self.q_add_cfg_dependency,
+                f'alpha={self.alpha:.2f}, beta={self.beta:.2f}; cfg dependency C relation',
+                '<comment>CFG dependency mode propagates assignment dependencies across CFG edges with set union at joins. '
+                'It is still syntactic and does not check path feasibility.</comment>'
+            )),
+        ]
+
+    def make_table(self, q_add_source, status, note=None):
         rows = []
         for block in range(len(self.edges)):
-            counts = self.future_counts(block)
-            total = sum(counts.values())
-            hot = sorted([var for var, count in counts.items() if total and count > self.alpha * total])
+            q_t = self.q_t[block] if block < len(self.q_t) else 0.0
+            q_add = {variable: values[block] for variable, values in q_add_source.items() if values[block] > 0.0}
+            hot = sorted([var for var, value in q_add.items() if q_t and value > self.alpha * q_t])
             rows.append([
                 self.name(block),
-                total,
+                self.format_number(q_t),
                 ', '.join(hot) if hot else 'None',
-                self.format_counts(counts),
-                'syntactic QCE-style approximation; no SMT or ite-cost model',
+                self.format_counts(q_add),
+                status,
             ])
         if not rows:
             rows.append(['No blocks', 0, 'None', 'None', 'not applicable'])
-        return rows, ['block', 'future branch uses', 'hot variables', 'counts', 'status'], [
-            '<comment>Hot variables approximate QCE by counting future syntactic uses in branch conditions. '
-            'The dump does not estimate solver query cost.</comment>'
-        ]
+        notes = [note] if note else []
+        return rows, ['block', 'Q<sub>t</sub>', 'hot variables', 'Q<sub>add</sub>(block, var)', 'status'], notes
 
     def collect_branch_uses(self):
         uses = [set() for _ in self.lexemes]
@@ -324,29 +364,150 @@ class HotVariableDump:
                         uses[block].add(token[1])
         return uses
 
-    def future_counts(self, block):
-        counts = defaultdict(int)
-        for node in self.reachable_from(block):
-            for variable in self.branch_uses[node]:
-                counts[variable] += 1
-        return counts
+    def collect_local_dependency_branch_uses(self):
+        uses = [set() for _ in self.lexemes]
+        for block, lines in enumerate(self.lexemes):
+            dependencies = {}
+            for line in lines:
+                assignment_at = self.assignment_operator_index(line)
+                condition_at = SymbolicBranchDump.index_of_type(line, 5)
+                goto_at = SymbolicBranchDump.index_of_type(line, 6)
 
-    def reachable_from(self, block):
-        seen = set()
-        stack = [block]
-        while stack:
-            node = stack.pop()
-            if node in seen:
-                continue
-            seen.add(node)
-            stack.extend(sorted(self.edges[node] - seen, reverse=True))
-        return seen
+                if assignment_at is not None:
+                    target = line[assignment_at - 1]
+                    if target[0] == 0:
+                        dependencies[target[1]] = self.tokens_dependencies(line[assignment_at + 1:], dependencies)
+
+                if condition_at is not None and goto_at is not None:
+                    uses[block] |= self.tokens_dependencies(line[condition_at + 1:goto_at], dependencies)
+        return uses
+
+    def collect_cfg_dependency_branch_uses(self):
+        uses = [set() for _ in self.lexemes]
+        in_maps = [{} for _ in self.lexemes]
+        out_maps = [{} for _ in self.lexemes]
+        changed = True
+        while changed:
+            changed = False
+            for block, lines in enumerate(self.lexemes):
+                next_out, block_uses = self.transfer_dependencies(in_maps[block], lines)
+                uses[block] |= block_uses
+                if self.dependency_maps_differ(out_maps[block], next_out):
+                    out_maps[block] = next_out
+                    changed = True
+                for successor in self.edges[block]:
+                    merged = self.merge_dependency_maps(in_maps[successor], out_maps[block])
+                    if self.dependency_maps_differ(in_maps[successor], merged):
+                        in_maps[successor] = merged
+                        changed = True
+        return uses
+
+    def transfer_dependencies(self, input_map, lines):
+        env = self.copy_dependency_map(input_map)
+        uses = set()
+        for line in lines:
+            assignment_at = self.assignment_operator_index(line)
+            condition_at = SymbolicBranchDump.index_of_type(line, 5)
+            goto_at = SymbolicBranchDump.index_of_type(line, 6)
+
+            if assignment_at is not None:
+                target = line[assignment_at - 1]
+                if target[0] == 0:
+                    env[target[1]] = self.tokens_dependencies(line[assignment_at + 1:], env)
+
+            if condition_at is not None and goto_at is not None:
+                uses |= self.tokens_dependencies(line[condition_at + 1:goto_at], env)
+        return env, uses
+
+    @staticmethod
+    def copy_dependency_map(source):
+        return {variable: set(dependencies) for variable, dependencies in source.items()}
+
+    @staticmethod
+    def merge_dependency_maps(left, right):
+        result = HotVariableDump.copy_dependency_map(left)
+        for variable, dependencies in right.items():
+            result.setdefault(variable, set()).update(dependencies)
+        return result
+
+    @staticmethod
+    def dependency_maps_differ(left, right):
+        if left.keys() != right.keys():
+            return True
+        return any(left[variable] != right[variable] for variable in left)
+
+    @staticmethod
+    def assignment_operator_index(line):
+        for index in range(1, len(line)):
+            if line[index][0] == 2 and line[index][2] == 2:
+                return index
+        return None
+
+    @classmethod
+    def tokens_dependencies(cls, tokens, dependencies):
+        result = set()
+        for token in tokens:
+            if token[0] == 0:
+                result |= dependencies.get(token[1], {token[1]})
+        return result
+
+    @staticmethod
+    def collect_variables(uses):
+        return sorted(set().union(*uses) if uses else set())
+
+    def build_q_add(self, uses, variables):
+        return {
+            variable: self.solve_q({
+                block: 1.0 for block, block_uses in enumerate(uses) if variable in block_uses
+            })
+            for variable in variables
+        }
+
+    def collect_branch_successors(self):
+        successors = {}
+        for info in self.branch_info.branches:
+            targets = []
+            for target in [info['true'], info['false']]:
+                if target is not None and target not in targets:
+                    targets.append(target)
+            if targets:
+                successors[info['block']] = targets
+        return successors
+
+    def solve_q(self, cost, max_iterations=200, tolerance=0.001):
+        values = [0.0 for _ in self.edges]
+        for _ in range(max_iterations):
+            next_values = [0.0 for _ in self.edges]
+            for block in reversed(range(len(self.edges))):
+                successors = sorted(self.edges[block])
+                local_cost = cost.get(block, 0.0)
+                if block in self.branch_successors:
+                    next_values[block] = local_cost + self.beta * sum(
+                        values[successor] for successor in self.branch_successors[block]
+                    )
+                elif len(successors) == 1:
+                    next_values[block] = local_cost + values[successors[0]]
+                elif successors:
+                    next_values[block] = local_cost + self.beta * sum(values[successor] for successor in successors)
+                else:
+                    next_values[block] = 0.0
+            if max(abs(next_values[idx] - values[idx]) for idx in range(len(values))) < tolerance:
+                return next_values
+            values = next_values
+        return values
 
     @staticmethod
     def format_counts(counts):
         if not counts:
             return 'None'
-        return ', '.join([f'{escape(var)}:{count}' for var, count in sorted(counts.items())])
+        return ', '.join([f'{escape(var)}:{HotVariableDump.format_number(value)}'
+                          for var, value in sorted(counts.items())])
+
+    @staticmethod
+    def format_number(value):
+        if abs(value) < 0.005:
+            return '0'
+        return f'{value:.2f}'
 
 
 class UnsupportedSymbolicStageDump:

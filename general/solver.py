@@ -29,7 +29,7 @@ def solve(input: str, output: str, block_name: str = 'A', blocks=None, edges=Non
     n = len(parser.lexemes)
     display.n = n
     display.titles = ['Base MIR', 'Control Flow Graph', 'Symbolic Branch Conditions',
-                      'Hot Variable Approximation', 'Symbolic Execution Scope Stubs',
+                      'Q_add / Q_t Approximation', 'Symbolic Execution Scope Stubs',
                       'Local Value Tables', 'Input / Output Sets',
                       ' / '.join(['Pred', 'Dom', 'Idom', 'DF']),
                       'Dominator Tree', 'Postdominators & Control Dependence',
@@ -38,7 +38,7 @@ def solve(input: str, output: str, block_name: str = 'A', blocks=None, edges=Non
                       'Acyclic Region Summary Preview',
                       'Control Tree', 'Region Classification', 'Gen / Kill',
                       'Region Transfer Functions (Structural)']
-    display.notes = ['MIR / blocks', 'CFG edges', 'SE forks', 'QCE idea', 'unsupported papers',
+    display.notes = ['MIR / blocks', 'CFG edges', 'SE forks', 'QCE recurrence', 'unsupported papers',
                      'LVN table', 'local data-flow',
                      'dominators / DF', 'dom tree', 'postdom / CD',
                      'SSA globals', 'DF worklist', 'phi code', 'SSA rename',
@@ -48,7 +48,7 @@ def solve(input: str, output: str, block_name: str = 'A', blocks=None, edges=Non
     display.show_code(parser.lexemes)
     display.show_graph(parser.edges)
     display.show_block_table(*SymbolicBranchDump(parser.lexemes, parser.edges, display.name).table())
-    display.show_block_table(*HotVariableDump(parser.lexemes, parser.edges, display.name).table())
+    display.show_block_table_group(HotVariableDump(parser.lexemes, parser.edges, display.name).tables())
     display.show_block_table(*UnsupportedSymbolicStageDump().table())
 
     table = []

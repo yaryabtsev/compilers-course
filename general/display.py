@@ -226,6 +226,24 @@ class Display:
         self.show_title('block-table-title')
         if spoilers:
             self.show_spoiler(spoilers)
+        self.show_table(table, columns)
+        print('</details>')
+
+    def show_block_table_group(self, sections):
+        self.show_title('block-table-title')
+        for title, table, columns, spoilers in sections:
+            print('<details class="trace" open>')
+            print(f'<summary><p class="summary-span"><span>{title}</span></p></summary>')
+            if spoilers:
+                print('<div class="trace-code">')
+                for item in spoilers:
+                    print(item, end='')
+                print('</div>')
+            self.show_table(table, columns)
+            print('</details>')
+        print('</details>')
+
+    def show_table(self, table: list, columns: list):
         print('<div class="table-scroll"><table>')
         print('<thead><tr>')
         print(f'<th>{columns[0]}</th>')
@@ -277,7 +295,7 @@ class Display:
 
             print('</tr>')
         print('</tbody>')
-        print('</table></div></details>')
+        print('</table></div>')
 
     def show_title(self, class_name: str) -> None:
         title = self.titles[self.title_id]

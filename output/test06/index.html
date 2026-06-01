@@ -47,12 +47,13 @@
 <a class="content" href="#title-14"><span>15</span>Partially Truncated SSA Form</a>
 <a class="content" href="#title-15"><span>16</span>SSA Checks</a>
 <a class="content" href="#title-16"><span>17</span>Join Merge Preview</a>
-<a class="content" href="#title-17"><span>18</span>Cycle-Based Region Reduction</a>
-<a class="content" href="#title-18"><span>19</span>Acyclic Region Summary Preview</a>
-<a class="content" href="#title-19"><span>20</span>Control Tree</a>
-<a class="content" href="#title-20"><span>21</span>Region Classification</a>
-<a class="content" href="#title-21"><span>22</span>Gen / Kill</a>
-<a class="content" href="#title-22"><span>23</span>Region Transfer Functions (Structural)</a>
+<a class="content" href="#title-17"><span>18</span>State Merge Decision Preview</a>
+<a class="content" href="#title-18"><span>19</span>Cycle-Based Region Reduction</a>
+<a class="content" href="#title-19"><span>20</span>Acyclic Region Summary Preview</a>
+<a class="content" href="#title-20"><span>21</span>Control Tree</a>
+<a class="content" href="#title-21"><span>22</span>Region Classification</a>
+<a class="content" href="#title-22"><span>23</span>Gen / Kill</a>
+<a class="content" href="#title-23"><span>24</span>Region Transfer Functions (Structural)</a>
 </nav>
 </aside>
 <main class="report-main">
@@ -64,7 +65,7 @@
 </div>
 <dl>
 <div><dt>Blocks</dt><dd>10</dd></div>
-<div><dt>Sections</dt><dd>23</dd></div>
+<div><dt>Sections</dt><dd>24</dd></div>
 </dl>
 </header>
 
@@ -1408,7 +1409,35 @@
 </tbody>
 </table></div>
 </details>
-<details id="title-17"><summary><h2 class="block-graphs-title"><span class="section-title">Cycle-Based Region Reduction</span><small class="section-note">cycle regions</small></h2></summary>
+<details id="title-17"><summary><h2 class="block-table-title"><span class="section-title">State Merge Decision Preview</span><small class="section-note">QCE merge risk</small></h2></summary>
+<details class="trace"><summary><p class="summary-span"><span>Trace</span><small class="section-note">derivation steps</small></p></summary><div class="trace-code">
+<comment>Static preview only: uses phi candidates, CFG-dependency QCE hot variables, and path-insensitive source-dependency sets. It does not execute symbolic states, call an SMT solver, check feasibility, schedule states, or benchmark runtime cost.</comment></div></details>
+<div class="table-scroll"><table>
+<thead><tr>
+<th>join</th>
+<th>predecessors</th>
+<th>candidate merged vars</th>
+<th>merged source deps</th>
+<th>future hot vars</th>
+<th>risky overlap</th>
+<th>decision</th>
+<th>reason</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="first-column">No merge decisions</td>
+<td class="none">None</td>
+<td class="none">None</td>
+<td class="none">None</td>
+<td class="none">None</td>
+<td class="none">None</td>
+<td>not applicable</td>
+<td>no join block with phi-like merge candidates</td>
+</tr>
+</tbody>
+</table></div>
+</details>
+<details id="title-18"><summary><h2 class="block-graphs-title"><span class="section-title">Cycle-Based Region Reduction</span><small class="section-note">cycle regions</small></h2></summary>
 <div class="region-gallery">
 <figure>
 <img src="regions/0.png" alt="Cycle-Based Region Reduction step 1">
@@ -1439,7 +1468,7 @@
 <figcaption>Step 7</figcaption>
 </figure>
 </div></details>
-<details id="title-18"><summary><h2 class="block-table-title"><span class="section-title">Acyclic Region Summary Preview</span><small class="section-note">veritesting idea</small></h2></summary>
+<details id="title-19"><summary><h2 class="block-table-title"><span class="section-title">Acyclic Region Summary Preview</span><small class="section-note">veritesting idea</small></h2></summary>
 <details class="trace"><summary><p class="summary-span"><span>Trace</span><small class="section-note">derivation steps</small></p></summary><div class="trace-code">
 <comment>Region summaries are syntactic previews inspired by veritesting-style regions. They do not execute stores, solve formulas, or replace the existing region reduction.</comment></div></details>
 <div class="table-scroll"><table>
@@ -1465,11 +1494,11 @@
 </tbody>
 </table></div>
 </details>
-<details id="title-19"><summary><h2 class="block-graphs-title"><span class="section-title">Control Tree</span><small class="section-note">region tree</small></h2></summary>
+<details id="title-20"><summary><h2 class="block-graphs-title"><span class="section-title">Control Tree</span><small class="section-note">region tree</small></h2></summary>
 <div class="graph-panel">
 <img src="ct.png" alt="Control Tree">
 </div></details>
-<details id="title-20"><summary><h2 class="block-table-title"><span class="section-title">Region Classification</span><small class="section-note">area classes</small></h2></summary>
+<details id="title-21"><summary><h2 class="block-table-title"><span class="section-title">Region Classification</span><small class="section-note">area classes</small></h2></summary>
 <div class="table-scroll"><table>
 <thead><tr>
 <th>Class</th>
@@ -1487,7 +1516,7 @@
 </tbody>
 </table></div>
 </details>
-<details id="title-21"><summary><h2 class="block-table-title"><span class="section-title">Gen / Kill</span><small class="section-note">reaching defs</small></h2></summary>
+<details id="title-22"><summary><h2 class="block-table-title"><span class="section-title">Gen / Kill</span><small class="section-note">reaching defs</small></h2></summary>
 <details class="trace"><summary><p class="summary-span"><span>Trace</span><small class="section-note">derivation steps</small></p></summary><div class="trace-code">
 <comment>The instruction index corresponds to the line number in the original code.</comment></div></details>
 <div class="table-scroll"><table>
@@ -1534,7 +1563,7 @@
 </tbody>
 </table></div>
 </details>
-<details id="title-22"><summary><h2 class="block-table-title"><span class="section-title">Region Transfer Functions (Structural)</span><small class="section-note">structural transfer</small></h2></summary>
+<details id="title-23"><summary><h2 class="block-table-title"><span class="section-title">Region Transfer Functions (Structural)</span><small class="section-note">structural transfer</small></h2></summary>
 <div class="table-scroll"><table>
 <thead><tr>
 <th>region</th>

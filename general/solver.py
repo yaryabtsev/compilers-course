@@ -8,6 +8,7 @@ from tasks.query_cost_estimation import HotVariableDump
 from tasks.quantified_patterns import QuantifiedPatternPreview
 from tasks.ssa import Phi
 from tasks.regions import Regions
+from tasks.state_merge_decision import StateMergeDecisionPreview
 from tasks.state_merge_preview import JoinMergePreview
 from tasks.symbolic_scope_stubs import UnsupportedSymbolicStageDump
 from general.viewer import now_iso, write_dataset_metadata
@@ -39,7 +40,8 @@ def solve(input: str, output: str, block_name: str = 'A', blocks=None, edges=Non
                       ' / '.join(['Pred', 'Dom', 'Idom', 'DF']),
                       'Dominator Tree', 'Postdominators & Control Dependence',
                       'Globals & Blocks', 'Phi Placement', 'Phi-Inserted Code', 'Partially Truncated SSA Form',
-                      'SSA Checks', 'Join Merge Preview', 'Cycle-Based Region Reduction',
+                      'SSA Checks', 'Join Merge Preview', 'State Merge Decision Preview',
+                      'Cycle-Based Region Reduction',
                       'Acyclic Region Summary Preview',
                       'Control Tree', 'Region Classification', 'Gen / Kill',
                       'Region Transfer Functions (Structural)']
@@ -48,7 +50,8 @@ def solve(input: str, output: str, block_name: str = 'A', blocks=None, edges=Non
                      'LVN table', 'local data-flow',
                      'dominators / DF', 'dom tree', 'postdom / CD',
                      'SSA globals', 'DF worklist', 'phi code', 'SSA rename',
-                     'partial audit', 'state merging', 'cycle regions', 'veritesting idea',
+                     'partial audit', 'state merging', 'QCE merge risk',
+                     'cycle regions', 'veritesting idea',
                      'region tree', 'area classes', 'reaching defs', 'structural transfer']
     display.show_hyperlinks()
     display.show_code(parser.lexemes)
@@ -81,6 +84,8 @@ def solve(input: str, output: str, block_name: str = 'A', blocks=None, edges=Non
     display.show_code(phi.code_blocks, spoilers)
     display.show_block_table(*phi.checks())
     display.show_block_table(*JoinMergePreview(phi, dominator, display.name).table())
+    display.show_block_table(*StateMergeDecisionPreview(
+        phi, dominator, hot_variables, display.name).table())
 
     regions = Regions(dominator, parser.lexemes)
     display.show_graphs(list(regions.find_regions()))

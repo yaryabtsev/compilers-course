@@ -34,24 +34,27 @@
 <a class="content" href="#title-1"><span>02</span>Control Flow Graph</a>
 <a class="content" href="#title-2"><span>03</span>Symbolic Branch Conditions</a>
 <a class="content" href="#title-3"><span>04</span>Q_add / Q_t Approximation</a>
-<a class="content" href="#title-4"><span>05</span>Symbolic Execution Scope Stubs</a>
-<a class="content" href="#title-5"><span>06</span>Local Value Tables</a>
-<a class="content" href="#title-6"><span>07</span>Input / Output Sets</a>
-<a class="content" href="#title-7"><span>08</span>Pred / Dom / Idom / DF</a>
-<a class="content" href="#title-8"><span>09</span>Dominator Tree</a>
-<a class="content" href="#title-9"><span>10</span>Postdominators & Control Dependence</a>
-<a class="content" href="#title-10"><span>11</span>Globals & Blocks</a>
-<a class="content" href="#title-11"><span>12</span>Phi Placement</a>
-<a class="content" href="#title-12"><span>13</span>Phi-Inserted Code</a>
-<a class="content" href="#title-13"><span>14</span>Partially Truncated SSA Form</a>
-<a class="content" href="#title-14"><span>15</span>SSA Checks</a>
-<a class="content" href="#title-15"><span>16</span>Join Merge Preview</a>
-<a class="content" href="#title-16"><span>17</span>Cycle-Based Region Reduction</a>
-<a class="content" href="#title-17"><span>18</span>Acyclic Region Summary Preview</a>
-<a class="content" href="#title-18"><span>19</span>Control Tree</a>
-<a class="content" href="#title-19"><span>20</span>Region Classification</a>
-<a class="content" href="#title-20"><span>21</span>Gen / Kill</a>
-<a class="content" href="#title-21"><span>22</span>Region Transfer Functions (Structural)</a>
+<a class="content" href="#title-4"><span>05</span>Quantified Pattern Preview</a>
+<a class="content" href="#title-5"><span>06</span>Symbolic Execution Scope Stubs</a>
+<a class="content" href="#title-6"><span>07</span>Local Value Tables</a>
+<a class="content" href="#title-7"><span>08</span>Input / Output Sets</a>
+<a class="content" href="#title-8"><span>09</span>Pred / Dom / Idom / DF</a>
+<a class="content" href="#title-9"><span>10</span>Dominator Tree</a>
+<a class="content" href="#title-10"><span>11</span>Postdominators & Control Dependence</a>
+<a class="content" href="#title-11"><span>12</span>Globals & Blocks</a>
+<a class="content" href="#title-12"><span>13</span>Phi Placement</a>
+<a class="content" href="#title-13"><span>14</span>Phi-Inserted Code</a>
+<a class="content" href="#title-14"><span>15</span>Partially Truncated SSA Form</a>
+<a class="content" href="#title-15"><span>16</span>SSA Checks</a>
+<a class="content" href="#title-16"><span>17</span>Join Merge Preview</a>
+<a class="content" href="#title-17"><span>18</span>State Merge Decision Preview</a>
+<a class="content" href="#title-18"><span>19</span>ITE-Cost Preview</a>
+<a class="content" href="#title-19"><span>20</span>Cycle-Based Region Reduction</a>
+<a class="content" href="#title-20"><span>21</span>Acyclic Region Summary Preview</a>
+<a class="content" href="#title-21"><span>22</span>Control Tree</a>
+<a class="content" href="#title-22"><span>23</span>Region Classification</a>
+<a class="content" href="#title-23"><span>24</span>Gen / Kill</a>
+<a class="content" href="#title-24"><span>25</span>Region Transfer Functions (Structural)</a>
 </nav>
 </aside>
 <main class="report-main">
@@ -63,7 +66,7 @@
 </div>
 <dl>
 <div><dt>Blocks</dt><dd>7</dd></div>
-<div><dt>Sections</dt><dd>22</dd></div>
+<div><dt>Sections</dt><dd>25</dd></div>
 </dl>
 </header>
 
@@ -133,8 +136,10 @@
 <thead><tr>
 <th>block</th>
 <th>branch</th>
+<th>condition symbols</th>
 <th>true edge</th>
 <th>false edge</th>
+<th>prefixes shown</th>
 <th>path prefix</th>
 <th>status</th>
 </tr></thead>
@@ -142,32 +147,40 @@
 <tr>
 <td class="first-column">A</td>
 <td>ifTrue @flag goto E</td>
+<td>@flag</td>
 <td>A &rarr; E</td>
 <td>A &rarr; B</td>
+<td>1</td>
 <td>true</td>
 <td>syntactic; no SMT feasibility check</td>
 </tr>
 <tr>
 <td class="first-column">B</td>
 <td>ifTrue @flag goto D</td>
+<td>@flag</td>
 <td>B &rarr; D</td>
 <td>B &rarr; C</td>
+<td>3</td>
 <td>&not;(@flag)<br>&not;(@flag) &and; @flag &and; @flag<br>&not;(@flag) &and; &not;(@flag) &and; &not;(@flag) &and; @flag</td>
 <td>syntactic; no SMT feasibility check</td>
 </tr>
 <tr>
 <td class="first-column">C</td>
 <td>ifTrue @flag goto C</td>
+<td>@flag</td>
 <td>C &rarr; C</td>
 <td>C &rarr; D</td>
+<td>2</td>
 <td>&not;(@flag) &and; &not;(@flag)<br>&not;(@flag) &and; &not;(@flag) &and; @flag</td>
 <td>syntactic; no SMT feasibility check</td>
 </tr>
 <tr>
 <td class="first-column">D</td>
 <td>ifTrue @flag goto B</td>
+<td>@flag</td>
 <td>D &rarr; B</td>
 <td>D &rarr; E</td>
+<td>2</td>
 <td>&not;(@flag) &and; @flag<br>&not;(@flag) &and; &not;(@flag) &and; &not;(@flag)</td>
 <td>syntactic; no SMT feasibility check</td>
 </tr>
@@ -175,6 +188,65 @@
 </table></div>
 </details>
 <details id="title-3"><summary><h2 class="block-table-title"><span class="section-title">Q_add / Q_t Approximation</span><small class="section-note">QCE recurrence</small></h2></summary>
+<details class="trace" open>
+<summary><p class="summary-span"><span>Algorithm metrics</span></p></summary>
+<div class="trace-code">
+<comment>Aggregate metrics compare dependency approximations at a glance. They are dump summaries, not a correctness ranking.</comment></div>
+<div class="table-scroll"><table>
+<thead><tr>
+<th>mode</th>
+<th>variables</th>
+<th>dependency blocks</th>
+<th>max Q<sub>t</sub></th>
+<th>total Q<sub>add</sub> mass</th>
+<th>L1 &Delta; vs CFG</th>
+<th>hot refs</th>
+<th>status</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="first-column">Syntactic</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>aggregate over displayed blocks</td>
+</tr>
+<tr>
+<td class="first-column">Local dependency</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>aggregate over displayed blocks</td>
+</tr>
+<tr>
+<td class="first-column">CFG dependency</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>aggregate over displayed blocks</td>
+</tr>
+<tr>
+<td class="first-column">Versioned dependency</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>aggregate over displayed blocks</td>
+</tr>
+</tbody>
+</table></div>
+</details>
 <details class="trace" open>
 <summary><p class="summary-span"><span>Syntactic branch variables</span></p></summary>
 <div class="trace-code">
@@ -451,7 +523,293 @@
 </table></div>
 </details>
 </details>
-<details id="title-4"><summary><h2 class="block-table-title"><span class="section-title">Symbolic Execution Scope Stubs</span><small class="section-note">unsupported papers</small></h2></summary>
+<details id="title-4"><summary><h2 class="block-table-title"><span class="section-title">Quantified Pattern Preview</span><small class="section-note">node tree / pattern inference</small></h2></summary>
+<details class="trace" open>
+<summary><p class="summary-span"><span>Bounded node tree</span></p></summary>
+<div class="trace-code">
+<comment>The node tree is a bounded syntactic preview. It expands simple loop candidates only to a small depth, cuts cycles, and does not build quantified solver formulas.</comment></div>
+<div class="table-scroll"><table>
+<thead><tr>
+<th>loop</th>
+<th>depth</th>
+<th>node</th>
+<th>via condition</th>
+<th>children</th>
+<th>inferred role</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="first-column">C &larr; C</td>
+<td>0</td>
+<td>C</td>
+<td>loop header</td>
+<td>C, D</td>
+<td>branch: @flag</td>
+</tr>
+<tr>
+<td class="first-column">C &larr; C</td>
+<td>1</td>
+<td>C</td>
+<td>@flag</td>
+<td>C, D</td>
+<td>branch: @flag</td>
+</tr>
+<tr>
+<td class="first-column">C &larr; C</td>
+<td>2</td>
+<td>D</td>
+<td>&not;(@flag)</td>
+<td>B, E</td>
+<td>branch: @flag</td>
+</tr>
+<tr>
+<td class="first-column">C &larr; C</td>
+<td>3</td>
+<td>B</td>
+<td>@flag</td>
+<td>C, D</td>
+<td>branch: @flag</td>
+</tr>
+<tr>
+<td class="first-column">C &larr; C</td>
+<td>1</td>
+<td>D</td>
+<td>&not;(@flag)</td>
+<td>B, E</td>
+<td>branch: @flag</td>
+</tr>
+<tr>
+<td class="first-column">C &larr; C</td>
+<td>2</td>
+<td>B</td>
+<td>@flag</td>
+<td>C, D</td>
+<td>branch: @flag</td>
+</tr>
+<tr>
+<td class="first-column">B &larr; D</td>
+<td>0</td>
+<td>B</td>
+<td>loop header</td>
+<td>C, D</td>
+<td>branch: @flag</td>
+</tr>
+<tr>
+<td class="first-column">B &larr; D</td>
+<td>1</td>
+<td>C</td>
+<td>&not;(@flag)</td>
+<td>C, D</td>
+<td>branch: @flag</td>
+</tr>
+<tr>
+<td class="first-column">B &larr; D</td>
+<td>2</td>
+<td>C</td>
+<td>@flag</td>
+<td>C, D</td>
+<td>branch: @flag</td>
+</tr>
+<tr>
+<td class="first-column">B &larr; D</td>
+<td>3</td>
+<td>D</td>
+<td>&not;(@flag)</td>
+<td>B, E</td>
+<td>branch: @flag</td>
+</tr>
+<tr>
+<td class="first-column">B &larr; D</td>
+<td>2</td>
+<td>D</td>
+<td>&not;(@flag)</td>
+<td>B, E</td>
+<td>branch: @flag</td>
+</tr>
+<tr>
+<td class="first-column">B &larr; D</td>
+<td>1</td>
+<td>D</td>
+<td>@flag</td>
+<td>B, E</td>
+<td>branch: @flag</td>
+</tr>
+</tbody>
+</table></div>
+</details>
+<details class="trace" open>
+<summary><p class="summary-span"><span>Pattern inference</span></p></summary>
+<div class="trace-code">
+<comment>Pattern inference is intentionally narrow: one loop guard, one linear induction update, and one direct two-arm accumulator update. It is meant for readable dumps, not complete quantified state merging.</comment></div>
+<div class="table-scroll"><table>
+<thead><tr>
+<th>loop</th>
+<th>pattern</th>
+<th>evidence</th>
+<th>inferred sketch</th>
+<th>status</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="first-column">C &larr; C</td>
+<td>loop guard</td>
+<td>C</td>
+<td>@flag</td>
+<td>guarded loop candidate</td>
+</tr>
+<tr>
+<td class="first-column">C &larr; C</td>
+<td>induction update</td>
+<td>C</td>
+<td>not inferred</td>
+<td>not inferred</td>
+</tr>
+<tr>
+<td class="first-column">C &larr; C</td>
+<td>guarded accumulator</td>
+<td class="none">None</td>
+<td>not inferred</td>
+<td>requires two branch arms updating the same variable</td>
+</tr>
+<tr>
+<td class="first-column">C &larr; C</td>
+<td>quantified sketch</td>
+<td>C</td>
+<td>not inferred</td>
+<td>report-level formula; not emitted to a solver</td>
+</tr>
+<tr>
+<td class="first-column">B &larr; D</td>
+<td>loop guard</td>
+<td>B</td>
+<td>@flag</td>
+<td>guarded loop candidate</td>
+</tr>
+<tr>
+<td class="first-column">B &larr; D</td>
+<td>induction update</td>
+<td>D</td>
+<td>not inferred</td>
+<td>not inferred</td>
+</tr>
+<tr>
+<td class="first-column">B &larr; D</td>
+<td>guarded accumulator</td>
+<td class="none">None</td>
+<td>not inferred</td>
+<td>requires two branch arms updating the same variable</td>
+</tr>
+<tr>
+<td class="first-column">B &larr; D</td>
+<td>quantified sketch</td>
+<td>B</td>
+<td>not inferred</td>
+<td>report-level formula; not emitted to a solver</td>
+</tr>
+</tbody>
+</table></div>
+</details>
+<details class="trace" open>
+<summary><p class="summary-span"><span>Automaton walkthrough</span></p></summary>
+<div class="trace-code">
+<comment>This is a finite-state walkthrough of the recognized shape. It simulates a few structural cases from the loop tree: exit, true arm, false arm, latch/repeat, and accept. It is not a full execution tree and does not prove regularity for arbitrary inputs.</comment></div>
+<div class="table-scroll"><table>
+<thead><tr>
+<th>loop</th>
+<th>state</th>
+<th>case</th>
+<th>node</th>
+<th>condition</th>
+<th>action</th>
+<th>next</th>
+<th>status</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="first-column">C &larr; C</td>
+<td>S0</td>
+<td>loop exits before next iteration</td>
+<td>C</td>
+<td>&not;(@flag)</td>
+<td>emit terminal leaf for current k</td>
+<td>ACCEPT-EXIT</td>
+<td>terminal case similar to a leaf in the execution tree</td>
+</tr>
+<tr>
+<td class="first-column">C &larr; C</td>
+<td>S0</td>
+<td>loop continues</td>
+<td>C</td>
+<td>@flag</td>
+<td>enter loop body for iteration k</td>
+<td>S1</td>
+<td>guard accepted</td>
+</tr>
+<tr>
+<td class="first-column">C &larr; C</td>
+<td>S1</td>
+<td>inner branch</td>
+<td class="none">None</td>
+<td>not inferred</td>
+<td>no two-arm accumulator update found</td>
+<td>REJECT</td>
+<td>pattern incomplete</td>
+</tr>
+<tr>
+<td class="first-column">C &larr; C</td>
+<td>S2</td>
+<td>latch / repeat</td>
+<td>C</td>
+<td>after either arm</td>
+<td>no linear induction update found</td>
+<td>REJECT</td>
+<td>pattern incomplete</td>
+</tr>
+<tr>
+<td class="first-column">B &larr; D</td>
+<td>S0</td>
+<td>loop exits before next iteration</td>
+<td>B</td>
+<td>&not;(@flag)</td>
+<td>emit terminal leaf for current k</td>
+<td>ACCEPT-EXIT</td>
+<td>terminal case similar to a leaf in the execution tree</td>
+</tr>
+<tr>
+<td class="first-column">B &larr; D</td>
+<td>S0</td>
+<td>loop continues</td>
+<td>B</td>
+<td>@flag</td>
+<td>enter loop body for iteration k</td>
+<td>S1</td>
+<td>guard accepted</td>
+</tr>
+<tr>
+<td class="first-column">B &larr; D</td>
+<td>S1</td>
+<td>inner branch</td>
+<td class="none">None</td>
+<td>not inferred</td>
+<td>no two-arm accumulator update found</td>
+<td>REJECT</td>
+<td>pattern incomplete</td>
+</tr>
+<tr>
+<td class="first-column">B &larr; D</td>
+<td>S2</td>
+<td>latch / repeat</td>
+<td>D</td>
+<td>after either arm</td>
+<td>no linear induction update found</td>
+<td>REJECT</td>
+<td>pattern incomplete</td>
+</tr>
+</tbody>
+</table></div>
+</details>
+</details>
+<details id="title-5"><summary><h2 class="block-table-title"><span class="section-title">Symbolic Execution Scope Stubs</span><small class="section-note">unsupported papers</small></h2></summary>
 <details class="trace"><summary><p class="summary-span"><span>Trace</span><small class="section-note">derivation steps</small></p></summary><div class="trace-code">
 <comment>These paper families are intentionally marked as stubs or out of scope until the input language already supports the required concepts.</comment></div></details>
 <div class="table-scroll"><table>
@@ -489,7 +847,7 @@
 </tbody>
 </table></div>
 </details>
-<details id="title-5"><summary><h2 class="var-table"><span class="section-title">Local Value Tables</span><small class="section-note">LVN table</small></h2></summary>
+<details id="title-6"><summary><h2 class="var-table"><span class="section-title">Local Value Tables</span><small class="section-note">LVN table</small></h2></summary>
 <div class="value-grid">
 <article class="value-card">
 <div class="block-heading">
@@ -798,7 +1156,7 @@
 <p class="empty-state">No instructions in this block.</p>
 </article>
 </div></details>
-<details id="title-6"><summary><h2 class="block-table-title"><span class="section-title">Input / Output Sets</span><small class="section-note">local data-flow</small></h2></summary>
+<details id="title-7"><summary><h2 class="block-table-title"><span class="section-title">Input / Output Sets</span><small class="section-note">local data-flow</small></h2></summary>
 <details class="trace"><summary><p class="summary-span"><span>Trace</span><small class="section-note">derivation steps</small></p></summary><div class="trace-code">
 <comment>Input contains variables read before a local definition; Output contains variables assigned in the block.</comment></div></details>
 <div class="table-scroll"><table>
@@ -836,7 +1194,7 @@
 </tbody>
 </table></div>
 </details>
-<details id="title-7"><summary><h2 class="block-table-title"><span class="section-title">Pred / Dom / Idom / DF</span><small class="section-note">dominators / DF</small></h2></summary>
+<details id="title-8"><summary><h2 class="block-table-title"><span class="section-title">Pred / Dom / Idom / DF</span><small class="section-note">dominators / DF</small></h2></summary>
 <div class="table-scroll"><table>
 <thead><tr>
 <th>node =</th>
@@ -892,11 +1250,11 @@
 </tbody>
 </table></div>
 </details>
-<details id="title-8"><summary><h2 class="image-title"><span class="section-title">Dominator Tree</span><small class="section-note">dom tree</small></h2></summary>
+<details id="title-9"><summary><h2 class="image-title"><span class="section-title">Dominator Tree</span><small class="section-note">dom tree</small></h2></summary>
 <div class="graph-panel">
 <img src="dt.png" alt="Dominator Tree">
 </div></details>
-<details id="title-9"><summary><h2 class="block-table-title"><span class="section-title">Postdominators & Control Dependence</span><small class="section-note">postdom / CD</small></h2></summary>
+<details id="title-10"><summary><h2 class="block-table-title"><span class="section-title">Postdominators & Control Dependence</span><small class="section-note">postdom / CD</small></h2></summary>
 <div class="table-scroll"><table>
 <thead><tr>
 <th>node =</th>
@@ -942,7 +1300,7 @@
 </tbody>
 </table></div>
 </details>
-<details id="title-10"><summary><h2 class="block-table-title"><span class="section-title">Globals & Blocks</span><small class="section-note">SSA globals</small></h2></summary>
+<details id="title-11"><summary><h2 class="block-table-title"><span class="section-title">Globals & Blocks</span><small class="section-note">SSA globals</small></h2></summary>
 <details class="trace"><summary><p class="summary-span"><span>Trace</span><small class="section-note">derivation steps</small></p></summary><div class="trace-code">
 <font class="block-name">Entry</font><gb1>-block:</gb1><br>&nbsp;&nbsp;&nbsp;<gb2>def<sub><font class="block-name">Entry</font></sub>&nbsp;:&nbsp;</gb2>{}<br><font class="block-name">A</font><gb1>-block:</gb1><br>&nbsp;&nbsp;&nbsp;<gb2>def<sub><font class="block-name">A</font></sub>&nbsp;:&nbsp;</gb2>{}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<ol class="mir-lines" start="1">
 <li><span><w20>param</w20>&nbsp;<w0>a</w0>&nbsp;</span></li>
@@ -974,13 +1332,13 @@
 <br><font class="block-name">C</font><gb1>-block:</gb1><br>&nbsp;&nbsp;&nbsp;<gb2>def<sub><font class="block-name">C</font></sub>&nbsp;:&nbsp;</gb2>{}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<ol class="mir-lines" start="10">
 <li><span><w1>L2</w1>:&nbsp;<w0>a</w0>&nbsp;<w22>&xlarr;</w22>&nbsp;<w23>+</w23>,&nbsp;<w0>a</w0>,&nbsp;<w0>b</w0>&nbsp;</span></li>
 </ol>
-<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb3>Globals&nbsp;:&nbsp;</gb3>{<w0>b</w0>,&nbsp;<w0>a</w0>,&nbsp;<w0>c</w0>}&nbsp;<disj>&#8744;</disj>&nbsp;{<w0>a</w0>}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb3>Globals&nbsp;:&nbsp;</gb3>{<w0>b</w0>,&nbsp;<w0>a</w0>,&nbsp;<w0>c</w0>}&nbsp;<disj>&#8744;</disj>&nbsp;{<w0>b</w0>}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb2>def<sub><font class="block-name">C</font></sub>&nbsp;:&nbsp;</gb2>{}&nbsp;<disj>&#8744;</disj>&nbsp;{<w0>a</w0>}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb4>Blocks(<gb5>a</gb5>)&nbsp;:&nbsp;</gb4>{<font class="block-name">B</font>}&nbsp;<disj>&#8744;</disj>&nbsp;{<font class="block-name">C</font>}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<ol class="mir-lines" start="11">
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb3>Globals&nbsp;:&nbsp;</gb3>{<w0>a</w0>,&nbsp;<w0>b</w0>,&nbsp;<w0>c</w0>}&nbsp;<disj>&#8744;</disj>&nbsp;{<w0>a</w0>}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb3>Globals&nbsp;:&nbsp;</gb3>{<w0>a</w0>,&nbsp;<w0>b</w0>,&nbsp;<w0>c</w0>}&nbsp;<disj>&#8744;</disj>&nbsp;{<w0>b</w0>}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb2>def<sub><font class="block-name">C</font></sub>&nbsp;:&nbsp;</gb2>{}&nbsp;<disj>&#8744;</disj>&nbsp;{<w0>a</w0>}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb4>Blocks(<gb5>a</gb5>)&nbsp;:&nbsp;</gb4>{<font class="block-name">B</font>}&nbsp;<disj>&#8744;</disj>&nbsp;{<font class="block-name">C</font>}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<ol class="mir-lines" start="11">
 <li><span><if>if</if>&nbsp;<w5>True</w5>&nbsp;<w4><h>@</h>flag</w4>&nbsp;<w6>goto</w6>&nbsp;<w1>L2</w1>&nbsp;</span></li>
 </ol>
 <br><font class="block-name">D</font><gb1>-block:</gb1><br>&nbsp;&nbsp;&nbsp;<gb2>def<sub><font class="block-name">D</font></sub>&nbsp;:&nbsp;</gb2>{}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<ol class="mir-lines" start="12">
 <li><span><w1>L3</w1>:&nbsp;<w0>a</w0>&nbsp;<w22>&xlarr;</w22>&nbsp;<w23>+</w23>,&nbsp;<w0>a</w0>,&nbsp;<w0>b</w0>&nbsp;</span></li>
 </ol>
-<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb3>Globals&nbsp;:&nbsp;</gb3>{<w0>b</w0>,&nbsp;<w0>a</w0>,&nbsp;<w0>c</w0>}&nbsp;<disj>&#8744;</disj>&nbsp;{<w0>a</w0>}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb3>Globals&nbsp;:&nbsp;</gb3>{<w0>b</w0>,&nbsp;<w0>a</w0>,&nbsp;<w0>c</w0>}&nbsp;<disj>&#8744;</disj>&nbsp;{<w0>b</w0>}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb2>def<sub><font class="block-name">D</font></sub>&nbsp;:&nbsp;</gb2>{}&nbsp;<disj>&#8744;</disj>&nbsp;{<w0>a</w0>}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb4>Blocks(<gb5>a</gb5>)&nbsp;:&nbsp;</gb4>{<font class="block-name">B</font>,&nbsp;<font class="block-name">C</font>}&nbsp;<disj>&#8744;</disj>&nbsp;{<font class="block-name">D</font>}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<ol class="mir-lines" start="13">
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb3>Globals&nbsp;:&nbsp;</gb3>{<w0>a</w0>,&nbsp;<w0>b</w0>,&nbsp;<w0>c</w0>}&nbsp;<disj>&#8744;</disj>&nbsp;{<w0>a</w0>}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb3>Globals&nbsp;:&nbsp;</gb3>{<w0>a</w0>,&nbsp;<w0>b</w0>,&nbsp;<w0>c</w0>}&nbsp;<disj>&#8744;</disj>&nbsp;{<w0>b</w0>}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb2>def<sub><font class="block-name">D</font></sub>&nbsp;:&nbsp;</gb2>{}&nbsp;<disj>&#8744;</disj>&nbsp;{<w0>a</w0>}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb4>Blocks(<gb5>a</gb5>)&nbsp;:&nbsp;</gb4>{<font class="block-name">B</font>,&nbsp;<font class="block-name">C</font>}&nbsp;<disj>&#8744;</disj>&nbsp;{<font class="block-name">D</font>}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<ol class="mir-lines" start="13">
 <li><span><w0>b</w0>&nbsp;<w22>&xlarr;</w22>&nbsp;<w23>-</w23>,&nbsp;<w3><h>#</h>1</w3>,&nbsp;<w0>a</w0>&nbsp;</span></li>
 </ol>
 <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb2>def<sub><font class="block-name">D</font></sub>&nbsp;:&nbsp;</gb2>{<w0>a</w0>}&nbsp;<disj>&#8744;</disj>&nbsp;{<w0>b</w0>}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb4>Blocks(<gb5>b</gb5>)&nbsp;:&nbsp;</gb4>{<font class="block-name">B</font>}&nbsp;<disj>&#8744;</disj>&nbsp;{<font class="block-name">D</font>}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<ol class="mir-lines" start="14">
@@ -989,10 +1347,10 @@
 <br><font class="block-name">E</font><gb1>-block:</gb1><br>&nbsp;&nbsp;&nbsp;<gb2>def<sub><font class="block-name">E</font></sub>&nbsp;:&nbsp;</gb2>{}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<ol class="mir-lines" start="15">
 <li><span><w1>L4</w1>:&nbsp;<w0>a</w0>&nbsp;<w22>&xlarr;</w22>&nbsp;<w23>+</w23>,&nbsp;<w0>a</w0>,&nbsp;<w0>c</w0>&nbsp;</span></li>
 </ol>
-<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb3>Globals&nbsp;:&nbsp;</gb3>{<w0>b</w0>,&nbsp;<w0>a</w0>,&nbsp;<w0>c</w0>}&nbsp;<disj>&#8744;</disj>&nbsp;{<w0>a</w0>}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb3>Globals&nbsp;:&nbsp;</gb3>{<w0>b</w0>,&nbsp;<w0>a</w0>,&nbsp;<w0>c</w0>}&nbsp;<disj>&#8744;</disj>&nbsp;{<w0>c</w0>}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb2>def<sub><font class="block-name">E</font></sub>&nbsp;:&nbsp;</gb2>{}&nbsp;<disj>&#8744;</disj>&nbsp;{<w0>a</w0>}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb4>Blocks(<gb5>a</gb5>)&nbsp;:&nbsp;</gb4>{<font class="block-name">B</font>,&nbsp;<font class="block-name">C</font>,&nbsp;<font class="block-name">D</font>}&nbsp;<disj>&#8744;</disj>&nbsp;{<font class="block-name">E</font>}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<ol class="mir-lines" start="16">
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb3>Globals&nbsp;:&nbsp;</gb3>{<w0>a</w0>,&nbsp;<w0>b</w0>,&nbsp;<w0>c</w0>}&nbsp;<disj>&#8744;</disj>&nbsp;{<w0>a</w0>}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb3>Globals&nbsp;:&nbsp;</gb3>{<w0>a</w0>,&nbsp;<w0>b</w0>,&nbsp;<w0>c</w0>}&nbsp;<disj>&#8744;</disj>&nbsp;{<w0>c</w0>}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb2>def<sub><font class="block-name">E</font></sub>&nbsp;:&nbsp;</gb2>{}&nbsp;<disj>&#8744;</disj>&nbsp;{<w0>a</w0>}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb4>Blocks(<gb5>a</gb5>)&nbsp;:&nbsp;</gb4>{<font class="block-name">B</font>,&nbsp;<font class="block-name">C</font>,&nbsp;<font class="block-name">D</font>}&nbsp;<disj>&#8744;</disj>&nbsp;{<font class="block-name">E</font>}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<ol class="mir-lines" start="16">
 <li><span><w0>b</w0>&nbsp;<w22>&xlarr;</w22>&nbsp;<w23>+</w23>,&nbsp;<w0>a</w0>,&nbsp;<w0>b</w0>&nbsp;</span></li>
 </ol>
-<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb3>Globals&nbsp;:&nbsp;</gb3>{<w0>b</w0>,&nbsp;<w0>a</w0>,&nbsp;<w0>c</w0>}&nbsp;<disj>&#8744;</disj>&nbsp;{<w0>b</w0>}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb2>def<sub><font class="block-name">E</font></sub>&nbsp;:&nbsp;</gb2>{<w0>a</w0>}&nbsp;<disj>&#8744;</disj>&nbsp;{<w0>b</w0>}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb4>Blocks(<gb5>b</gb5>)&nbsp;:&nbsp;</gb4>{<font class="block-name">B</font>,&nbsp;<font class="block-name">D</font>}&nbsp;<disj>&#8744;</disj>&nbsp;{<font class="block-name">E</font>}<br><font class="block-name">Exit</font><gb1>-block:</gb1><br>&nbsp;&nbsp;&nbsp;<gb2>def<sub><font class="block-name">Exit</font></sub>&nbsp;:&nbsp;</gb2>{}</div></details>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb3>Globals&nbsp;:&nbsp;</gb3>{<w0>a</w0>,&nbsp;<w0>b</w0>,&nbsp;<w0>c</w0>}&nbsp;<disj>&#8744;</disj>&nbsp;{<w0>b</w0>}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb2>def<sub><font class="block-name">E</font></sub>&nbsp;:&nbsp;</gb2>{<w0>a</w0>}&nbsp;<disj>&#8744;</disj>&nbsp;{<w0>b</w0>}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb4>Blocks(<gb5>b</gb5>)&nbsp;:&nbsp;</gb4>{<font class="block-name">B</font>,&nbsp;<font class="block-name">D</font>}&nbsp;<disj>&#8744;</disj>&nbsp;{<font class="block-name">E</font>}<br><font class="block-name">Exit</font><gb1>-block:</gb1><br>&nbsp;&nbsp;&nbsp;<gb2>def<sub><font class="block-name">Exit</font></sub>&nbsp;:&nbsp;</gb2>{}</div></details>
 <div class="table-scroll"><table>
 <thead><tr>
 <th>var =</th>
@@ -1019,9 +1377,9 @@
 </tbody>
 </table></div>
 </details>
-<details id="title-11"><summary><h2 class="block-table-title"><span class="section-title">Phi Placement</span><small class="section-note">DF worklist</small></h2></summary>
+<details id="title-12"><summary><h2 class="block-table-title"><span class="section-title">Phi Placement</span><small class="section-note">DF worklist</small></h2></summary>
 <details class="trace"><summary><p class="summary-span"><span>Trace</span><small class="section-note">derivation steps</small></p></summary><div class="trace-code">
-<l id="1">variable</l>&nbsp;<w0>b</w0>:<br>&nbsp;&nbsp;&nbsp;<l id="2">WorkList</l> : {<font class="block-name">B</font>,&nbsp;<font class="block-name">D</font>,&nbsp;<font class="block-name">E</font>}<br>&nbsp;&nbsp;&nbsp;<l id="3">insert</l>&nbsp;<phi>&phi;(<h>*</h><w0>b</w0>)</phi>&nbsp;in&nbsp;<font class="block-name">B</font><gb1>-block:</gb1><br>&nbsp;&nbsp;&nbsp;<l id="3">insert</l>&nbsp;<phi>&phi;(<h>*</h><w0>b</w0>)</phi>&nbsp;in&nbsp;<font class="block-name">E</font><gb1>-block:</gb1><br><l id="1">variable</l>&nbsp;<w0>a</w0>:<br>&nbsp;&nbsp;&nbsp;<l id="2">WorkList</l> : {<font class="block-name">B</font>,&nbsp;<font class="block-name">C</font>,&nbsp;<font class="block-name">D</font>,&nbsp;<font class="block-name">E</font>}<br>&nbsp;&nbsp;&nbsp;<l id="3">insert</l>&nbsp;<phi>&phi;(<h>*</h><w0>a</w0>)</phi>&nbsp;in&nbsp;<font class="block-name">B</font><gb1>-block:</gb1><br>&nbsp;&nbsp;&nbsp;<l id="3">insert</l>&nbsp;<phi>&phi;(<h>*</h><w0>a</w0>)</phi>&nbsp;in&nbsp;<font class="block-name">E</font><gb1>-block:</gb1><br>&nbsp;&nbsp;&nbsp;<l id="3">insert</l>&nbsp;<phi>&phi;(<h>*</h><w0>a</w0>)</phi>&nbsp;in&nbsp;<font class="block-name">C</font><gb1>-block:</gb1><br>&nbsp;&nbsp;&nbsp;<l id="3">insert</l>&nbsp;<phi>&phi;(<h>*</h><w0>a</w0>)</phi>&nbsp;in&nbsp;<font class="block-name">D</font><gb1>-block:</gb1><br><l id="1">variable</l>&nbsp;<w0>c</w0>:<br>&nbsp;&nbsp;&nbsp;<l id="2">WorkList</l> : {<font class="block-name">A</font>}</div></details>
+<l id="1">variable</l>&nbsp;<w0>c</w0>:<br>&nbsp;&nbsp;&nbsp;<l id="2">WorkList</l> : {<font class="block-name">A</font>}<br><l id="1">variable</l>&nbsp;<w0>b</w0>:<br>&nbsp;&nbsp;&nbsp;<l id="2">WorkList</l> : {<font class="block-name">B</font>,&nbsp;<font class="block-name">D</font>,&nbsp;<font class="block-name">E</font>}<br>&nbsp;&nbsp;&nbsp;<l id="3">insert</l>&nbsp;<phi>&phi;(<h>*</h><w0>b</w0>)</phi>&nbsp;in&nbsp;<font class="block-name">B</font><gb1>-block:</gb1><br>&nbsp;&nbsp;&nbsp;<l id="3">insert</l>&nbsp;<phi>&phi;(<h>*</h><w0>b</w0>)</phi>&nbsp;in&nbsp;<font class="block-name">E</font><gb1>-block:</gb1><br><l id="1">variable</l>&nbsp;<w0>a</w0>:<br>&nbsp;&nbsp;&nbsp;<l id="2">WorkList</l> : {<font class="block-name">B</font>,&nbsp;<font class="block-name">C</font>,&nbsp;<font class="block-name">D</font>,&nbsp;<font class="block-name">E</font>}<br>&nbsp;&nbsp;&nbsp;<l id="3">insert</l>&nbsp;<phi>&phi;(<h>*</h><w0>a</w0>)</phi>&nbsp;in&nbsp;<font class="block-name">B</font><gb1>-block:</gb1><br>&nbsp;&nbsp;&nbsp;<l id="3">insert</l>&nbsp;<phi>&phi;(<h>*</h><w0>a</w0>)</phi>&nbsp;in&nbsp;<font class="block-name">E</font><gb1>-block:</gb1><br>&nbsp;&nbsp;&nbsp;<l id="3">insert</l>&nbsp;<phi>&phi;(<h>*</h><w0>a</w0>)</phi>&nbsp;in&nbsp;<font class="block-name">C</font><gb1>-block:</gb1><br>&nbsp;&nbsp;&nbsp;<l id="3">insert</l>&nbsp;<phi>&phi;(<h>*</h><w0>a</w0>)</phi>&nbsp;in&nbsp;<font class="block-name">D</font><gb1>-block:</gb1></div></details>
 <div class="table-scroll"><table>
 <thead><tr>
 <th>block =</th>
@@ -1077,7 +1435,7 @@
 </tbody>
 </table></div>
 </details>
-<details id="title-12"><summary><h2 class="code-title"><span class="section-title">Phi-Inserted Code</span><small class="section-note">phi code</small></h2></summary>
+<details id="title-13"><summary><h2 class="code-title"><span class="section-title">Phi-Inserted Code</span><small class="section-note">phi code</small></h2></summary>
 <div class="code-panel">
 <div class="boundary-block"><span class="block-name">Entry</span></div>
 <article class="mir-block">
@@ -1138,7 +1496,7 @@
 </ol>
 </article>
 <div class="boundary-block"><span class="block-name">Exit</span></div>
-</div></details><details id="title-13"><summary><h2 class="code-title"><span class="section-title">Partially Truncated SSA Form</span><small class="section-note">SSA rename</small></h2></summary>
+</div></details><details id="title-14"><summary><h2 class="code-title"><span class="section-title">Partially Truncated SSA Form</span><small class="section-note">SSA rename</small></h2></summary>
 <details class="trace"><summary><p class="summary-span"><span>Trace</span><small class="section-note">derivation steps</small></p></summary><div class="trace-code">
 <br><r id="1">Rename(<font class="block-name">Entry</font>)</r>:<br>&nbsp;&nbsp;&nbsp;<r id="5">rename &phi;-functions:</r><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="4">no &phi;-functions</r><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="6">stack</r> : empty<br>&nbsp;&nbsp;&nbsp;rename instructions:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="4">no instructions</r><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="6">stack</r> : empty<br>&nbsp;&nbsp;&nbsp;<r id="3">fill(<font class="block-name">A</font>)</r>:<r id="4">no &phi;-functions</r><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="6">stack</r> : empty<br>&nbsp;&nbsp;&nbsp;<r id="1">Rename(<font class="block-name">A</font>)</r>:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="5">rename &phi;-functions:</r><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="4">no &phi;-functions</r><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="6">stack</r> : empty<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rename instructions:<ol class="mir-lines" start="1">
 <li><span><w20>param</w20>&nbsp;<w0>a</w0><sub>0</sub>&nbsp;</span></li>
@@ -1303,7 +1661,7 @@
 </ol>
 </article>
 <div class="boundary-block"><span class="block-name">Exit</span></div>
-</div></details><details id="title-14"><summary><h2 class="block-table-title"><span class="section-title">SSA Checks</span><small class="section-note">partial audit</small></h2></summary>
+</div></details><details id="title-15"><summary><h2 class="block-table-title"><span class="section-title">SSA Checks</span><small class="section-note">partial audit</small></h2></summary>
 <details class="trace"><summary><p class="summary-span"><span>Trace</span><small class="section-note">derivation steps</small></p></summary><div class="trace-code">
 <comment>Checks are scoped to variables selected by phi placement; other variables remain in the original MIR naming style.</comment></div></details>
 <div class="table-scroll"><table>
@@ -1346,7 +1704,7 @@
 </tbody>
 </table></div>
 </details>
-<details id="title-15"><summary><h2 class="block-table-title"><span class="section-title">Join Merge Preview</span><small class="section-note">state merging</small></h2></summary>
+<details id="title-16"><summary><h2 class="block-table-title"><span class="section-title">Join Merge Preview</span><small class="section-note">state merging</small></h2></summary>
 <details class="trace"><summary><p class="summary-span"><span>Trace</span><small class="section-note">derivation steps</small></p></summary><div class="trace-code">
 <comment>Merge previews are display-only. They reuse predecessor and phi data; no symbolic store is executed and no path feasibility is checked.</comment></div></details>
 <div class="table-scroll"><table>
@@ -1355,6 +1713,7 @@
 <th>predecessors</th>
 <th>variable</th>
 <th>merge preview</th>
+<th>merge metrics</th>
 <th>status</th>
 </tr></thead>
 <tbody>
@@ -1363,6 +1722,7 @@
 <td>A, D</td>
 <td>a</td>
 <td>ite(path(A), a<sub>0</sub>, a<sub>6</sub>)<br>{(path(A), a<sub>0</sub>), (path(D), a<sub>6</sub>)}</td>
+<td>preds=2, mapped=2, ite ops=1, summary entries=2</td>
 <td>predecessor-mapped; no SMT check</td>
 </tr>
 <tr>
@@ -1370,6 +1730,7 @@
 <td>A, D</td>
 <td>b</td>
 <td>ite(path(A), b<sub>0</sub>, b<sub>3</sub>)<br>{(path(A), b<sub>0</sub>), (path(D), b<sub>3</sub>)}</td>
+<td>preds=2, mapped=2, ite ops=1, summary entries=2</td>
 <td>predecessor-mapped; no SMT check</td>
 </tr>
 <tr>
@@ -1377,6 +1738,7 @@
 <td>B, C</td>
 <td>a</td>
 <td>ite(path(B), a<sub>2</sub>, a<sub>4</sub>)<br>{(path(B), a<sub>2</sub>), (path(C), a<sub>4</sub>)}</td>
+<td>preds=2, mapped=2, ite ops=1, summary entries=2</td>
 <td>predecessor-mapped; no SMT check</td>
 </tr>
 <tr>
@@ -1384,6 +1746,7 @@
 <td>B, C</td>
 <td>a</td>
 <td>ite(path(B), a<sub>2</sub>, a<sub>4</sub>)<br>{(path(B), a<sub>2</sub>), (path(C), a<sub>4</sub>)}</td>
+<td>preds=2, mapped=2, ite ops=1, summary entries=2</td>
 <td>predecessor-mapped; no SMT check</td>
 </tr>
 <tr>
@@ -1391,6 +1754,7 @@
 <td>A, D</td>
 <td>a</td>
 <td>ite(path(A), a<sub>0</sub>, a<sub>6</sub>)<br>{(path(A), a<sub>0</sub>), (path(D), a<sub>6</sub>)}</td>
+<td>preds=2, mapped=2, ite ops=1, summary entries=2</td>
 <td>predecessor-mapped; no SMT check</td>
 </tr>
 <tr>
@@ -1398,12 +1762,156 @@
 <td>A, D</td>
 <td>b</td>
 <td>ite(path(A), b<sub>0</sub>, b<sub>3</sub>)<br>{(path(A), b<sub>0</sub>), (path(D), b<sub>3</sub>)}</td>
+<td>preds=2, mapped=2, ite ops=1, summary entries=2</td>
 <td>predecessor-mapped; no SMT check</td>
 </tr>
 </tbody>
 </table></div>
 </details>
-<details id="title-16"><summary><h2 class="block-graphs-title"><span class="section-title">Cycle-Based Region Reduction</span><small class="section-note">cycle regions</small></h2></summary>
+<details id="title-17"><summary><h2 class="block-table-title"><span class="section-title">State Merge Decision Preview</span><small class="section-note">QCE merge risk</small></h2></summary>
+<details class="trace"><summary><p class="summary-span"><span>Trace</span><small class="section-note">derivation steps</small></p></summary><div class="trace-code">
+<comment>Static preview only: uses phi candidates, CFG-dependency QCE hot variables, and path-insensitive source-dependency sets. It does not execute symbolic states, call an SMT solver, check feasibility, schedule states, or benchmark runtime cost.</comment></div></details>
+<div class="table-scroll"><table>
+<thead><tr>
+<th>join</th>
+<th>predecessors</th>
+<th>candidate merged vars</th>
+<th>merged source deps</th>
+<th>future hot vars</th>
+<th>risky overlap</th>
+<th>decision</th>
+<th>reason</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="first-column">B</td>
+<td>A, D</td>
+<td>a, b</td>
+<td>a</td>
+<td class="none">None</td>
+<td class="none">None</td>
+<td>no-future-query</td>
+<td>Q_t is zero; no future branch pressure is visible at this join</td>
+</tr>
+<tr>
+<td class="first-column">C</td>
+<td>B, C</td>
+<td>a</td>
+<td>a</td>
+<td class="none">None</td>
+<td class="none">None</td>
+<td>no-future-query</td>
+<td>Q_t is zero; no future branch pressure is visible at this join</td>
+</tr>
+<tr>
+<td class="first-column">D</td>
+<td>B, C</td>
+<td>a</td>
+<td>a</td>
+<td class="none">None</td>
+<td class="none">None</td>
+<td>no-future-query</td>
+<td>Q_t is zero; no future branch pressure is visible at this join</td>
+</tr>
+<tr>
+<td class="first-column">E</td>
+<td>A, D</td>
+<td>a, b</td>
+<td>a</td>
+<td class="none">None</td>
+<td class="none">None</td>
+<td>no-future-query</td>
+<td>Q_t is zero; no future branch pressure is visible at this join</td>
+</tr>
+</tbody>
+</table></div>
+</details>
+<details id="title-18"><summary><h2 class="block-table-title"><span class="section-title">ITE-Cost Preview</span><small class="section-note">ite formula growth</small></h2></summary>
+<details class="trace"><summary><p class="summary-span"><span>Trace</span><small class="section-note">derivation steps</small></p></summary><div class="trace-code">
+<comment>Syntactic shallow preview only: reconstructs small two-way join expressions, substitutes at most local assignment chains, and counts visible ite nodes. It is path-insensitive and is not an SMT formula, simplifier, runtime benchmark, or solver-cost estimate.</comment></div></details>
+<div class="table-scroll"><table>
+<thead><tr>
+<th>merge site</th>
+<th>variable</th>
+<th>ite preview</th>
+<th>future branch</th>
+<th>expanded branch preview</th>
+<th>ite ops</th>
+<th>ite depth</th>
+<th>expr size</th>
+<th>status</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="first-column">B</td>
+<td>a</td>
+<td class="none">None</td>
+<td class="none">None</td>
+<td class="none">None</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>missing expression: source expression could not be reconstructed</td>
+</tr>
+<tr>
+<td class="first-column">B</td>
+<td>b</td>
+<td class="none">None</td>
+<td class="none">None</td>
+<td class="none">None</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>missing expression: source expression could not be reconstructed</td>
+</tr>
+<tr>
+<td class="first-column">C</td>
+<td>a</td>
+<td>a = ite(path(B), #1 + c, a + b)</td>
+<td class="none">None</td>
+<td class="none">None</td>
+<td>1</td>
+<td>1</td>
+<td>11</td>
+<td>no future branch</td>
+</tr>
+<tr>
+<td class="first-column">D</td>
+<td>a</td>
+<td>a = ite(path(B), #1 + c, a + b)</td>
+<td class="none">None</td>
+<td class="none">None</td>
+<td>1</td>
+<td>1</td>
+<td>11</td>
+<td>no future branch</td>
+</tr>
+<tr>
+<td class="first-column">E</td>
+<td>a</td>
+<td class="none">None</td>
+<td class="none">None</td>
+<td class="none">None</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>missing expression: source expression could not be reconstructed</td>
+</tr>
+<tr>
+<td class="first-column">E</td>
+<td>b</td>
+<td class="none">None</td>
+<td class="none">None</td>
+<td class="none">None</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>missing expression: source expression could not be reconstructed</td>
+</tr>
+</tbody>
+</table></div>
+</details>
+<details id="title-19"><summary><h2 class="block-graphs-title"><span class="section-title">Cycle-Based Region Reduction</span><small class="section-note">cycle regions</small></h2></summary>
 <div class="region-gallery">
 <figure>
 <img src="regions/0.png" alt="Cycle-Based Region Reduction step 1">
@@ -1422,7 +1930,7 @@
 <figcaption>Step 4</figcaption>
 </figure>
 </div></details>
-<details id="title-17"><summary><h2 class="block-table-title"><span class="section-title">Acyclic Region Summary Preview</span><small class="section-note">veritesting idea</small></h2></summary>
+<details id="title-20"><summary><h2 class="block-table-title"><span class="section-title">Acyclic Region Summary Preview</span><small class="section-note">veritesting idea</small></h2></summary>
 <details class="trace"><summary><p class="summary-span"><span>Trace</span><small class="section-note">derivation steps</small></p></summary><div class="trace-code">
 <comment>Region summaries are syntactic previews inspired by veritesting-style regions. They do not execute stores, solve formulas, or replace the existing region reduction.</comment></div></details>
 <div class="table-scroll"><table>
@@ -1431,6 +1939,7 @@
 <th>exit</th>
 <th>nodes</th>
 <th>loop-free</th>
+<th>paths shown</th>
 <th>path summary preview</th>
 <th>status</th>
 </tr></thead>
@@ -1440,6 +1949,7 @@
 <td>E</td>
 <td>A, B, C, D</td>
 <td class="false">-</td>
+<td>0</td>
 <td>not emitted</td>
 <td>cycle detected; transition: incomplete loop / resume normal dump</td>
 </tr>
@@ -1448,6 +1958,7 @@
 <td>D</td>
 <td>B, C</td>
 <td class="false">-</td>
+<td>0</td>
 <td>not emitted</td>
 <td>cycle detected; transition: incomplete loop / resume normal dump</td>
 </tr>
@@ -1456,6 +1967,7 @@
 <td>D</td>
 <td>C</td>
 <td class="false">-</td>
+<td>0</td>
 <td>not emitted</td>
 <td>cycle detected; transition: incomplete loop / resume normal dump</td>
 </tr>
@@ -1464,17 +1976,18 @@
 <td>E</td>
 <td>B, C, D</td>
 <td class="false">-</td>
+<td>0</td>
 <td>not emitted</td>
 <td>cycle detected; transition: incomplete loop / resume normal dump</td>
 </tr>
 </tbody>
 </table></div>
 </details>
-<details id="title-18"><summary><h2 class="block-graphs-title"><span class="section-title">Control Tree</span><small class="section-note">region tree</small></h2></summary>
+<details id="title-21"><summary><h2 class="block-graphs-title"><span class="section-title">Control Tree</span><small class="section-note">region tree</small></h2></summary>
 <div class="graph-panel">
 <img src="ct.png" alt="Control Tree">
 </div></details>
-<details id="title-19"><summary><h2 class="block-table-title"><span class="section-title">Region Classification</span><small class="section-note">area classes</small></h2></summary>
+<details id="title-22"><summary><h2 class="block-table-title"><span class="section-title">Region Classification</span><small class="section-note">area classes</small></h2></summary>
 <div class="table-scroll"><table>
 <thead><tr>
 <th>Class</th>
@@ -1492,7 +2005,7 @@
 </tbody>
 </table></div>
 </details>
-<details id="title-20"><summary><h2 class="block-table-title"><span class="section-title">Gen / Kill</span><small class="section-note">reaching defs</small></h2></summary>
+<details id="title-23"><summary><h2 class="block-table-title"><span class="section-title">Gen / Kill</span><small class="section-note">reaching defs</small></h2></summary>
 <details class="trace"><summary><p class="summary-span"><span>Trace</span><small class="section-note">derivation steps</small></p></summary><div class="trace-code">
 <comment>The instruction index corresponds to the line number in the original code.</comment></div></details>
 <div class="table-scroll"><table>
@@ -1530,7 +2043,7 @@
 </tbody>
 </table></div>
 </details>
-<details id="title-21"><summary><h2 class="block-table-title"><span class="section-title">Region Transfer Functions (Structural)</span><small class="section-note">structural transfer</small></h2></summary>
+<details id="title-24"><summary><h2 class="block-table-title"><span class="section-title">Region Transfer Functions (Structural)</span><small class="section-note">structural transfer</small></h2></summary>
 <div class="table-scroll"><table>
 <thead><tr>
 <th>region</th>

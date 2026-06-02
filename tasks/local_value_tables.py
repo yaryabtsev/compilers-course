@@ -1,7 +1,7 @@
 import copy
 
 
-class LocalOptimization:
+class LocalValueTable:
     def __init__(self, block):
         self.block = block
         self.variables = []
@@ -47,7 +47,7 @@ class LocalOptimization:
             input_set = set()
             output_set = set()
             for line in block:
-                assignment = LocalOptimization.assignment_target(line)
+                assignment = LocalValueTable.assignment_target(line)
                 for idx in range(len(line)):
                     word = line[idx]
                     if word[0] != 0:

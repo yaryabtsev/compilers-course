@@ -48,12 +48,13 @@
 <a class="content" href="#title-15"><span>16</span>SSA Checks</a>
 <a class="content" href="#title-16"><span>17</span>Join Merge Preview</a>
 <a class="content" href="#title-17"><span>18</span>State Merge Decision Preview</a>
-<a class="content" href="#title-18"><span>19</span>Cycle-Based Region Reduction</a>
-<a class="content" href="#title-19"><span>20</span>Acyclic Region Summary Preview</a>
-<a class="content" href="#title-20"><span>21</span>Control Tree</a>
-<a class="content" href="#title-21"><span>22</span>Region Classification</a>
-<a class="content" href="#title-22"><span>23</span>Gen / Kill</a>
-<a class="content" href="#title-23"><span>24</span>Region Transfer Functions (Structural)</a>
+<a class="content" href="#title-18"><span>19</span>ITE-Cost Preview</a>
+<a class="content" href="#title-19"><span>20</span>Cycle-Based Region Reduction</a>
+<a class="content" href="#title-20"><span>21</span>Acyclic Region Summary Preview</a>
+<a class="content" href="#title-21"><span>22</span>Control Tree</a>
+<a class="content" href="#title-22"><span>23</span>Region Classification</a>
+<a class="content" href="#title-23"><span>24</span>Gen / Kill</a>
+<a class="content" href="#title-24"><span>25</span>Region Transfer Functions (Structural)</a>
 </nav>
 </aside>
 <main class="report-main">
@@ -65,7 +66,7 @@
 </div>
 <dl>
 <div><dt>Blocks</dt><dd>7</dd></div>
-<div><dt>Sections</dt><dd>24</dd></div>
+<div><dt>Sections</dt><dd>25</dd></div>
 </dl>
 </header>
 
@@ -1310,7 +1311,7 @@
 <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb3>Globals&nbsp;:&nbsp;</gb3>{<w0>a</w0>}&nbsp;<disj>&#8744;</disj>&nbsp;{<w0>b</w0>}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<ol class="mir-lines" start="3">
 <li><span><w0>j</w0>&nbsp;<w22>&xlarr;</w22>&nbsp;<w23>+</w23>,&nbsp;<w3><h>#</h>2</w3>,&nbsp;<w0>a</w0>&nbsp;</span></li>
 </ol>
-<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb3>Globals&nbsp;:&nbsp;</gb3>{<w0>a</w0>,&nbsp;<w0>b</w0>}&nbsp;<disj>&#8744;</disj>&nbsp;{<w0>a</w0>}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb2>def<sub><font class="block-name">A</font></sub>&nbsp;:&nbsp;</gb2>{}&nbsp;<disj>&#8744;</disj>&nbsp;{<w0>j</w0>}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb4>Blocks(<gb5>j</gb5>)&nbsp;:&nbsp;</gb4>{}&nbsp;<disj>&#8744;</disj>&nbsp;{<font class="block-name">A</font>}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<ol class="mir-lines" start="4">
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb3>Globals&nbsp;:&nbsp;</gb3>{<w0>b</w0>,&nbsp;<w0>a</w0>}&nbsp;<disj>&#8744;</disj>&nbsp;{<w0>a</w0>}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb2>def<sub><font class="block-name">A</font></sub>&nbsp;:&nbsp;</gb2>{}&nbsp;<disj>&#8744;</disj>&nbsp;{<w0>j</w0>}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb4>Blocks(<gb5>j</gb5>)&nbsp;:&nbsp;</gb4>{}&nbsp;<disj>&#8744;</disj>&nbsp;{<font class="block-name">A</font>}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<ol class="mir-lines" start="4">
 <li><span><w0>c</w0>&nbsp;<w22>&xlarr;</w22>&nbsp;<w23>-</w23>,&nbsp;<w3><h>#</h>1</w3>,&nbsp;<w0>j</w0>&nbsp;</span></li>
 </ol>
 <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb2>def<sub><font class="block-name">A</font></sub>&nbsp;:&nbsp;</gb2>{<w0>j</w0>}&nbsp;<disj>&#8744;</disj>&nbsp;{<w0>c</w0>}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb4>Blocks(<gb5>c</gb5>)&nbsp;:&nbsp;</gb4>{}&nbsp;<disj>&#8744;</disj>&nbsp;{<font class="block-name">A</font>}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<ol class="mir-lines" start="5">
@@ -1322,7 +1323,7 @@
 <br><font class="block-name">B</font><gb1>-block:</gb1><br>&nbsp;&nbsp;&nbsp;<gb2>def<sub><font class="block-name">B</font></sub>&nbsp;:&nbsp;</gb2>{}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<ol class="mir-lines" start="7">
 <li><span><w1>L1</w1>:&nbsp;<w0>a</w0>&nbsp;<w22>&xlarr;</w22>&nbsp;<w23>+</w23>,&nbsp;<w3><h>#</h>1</w3>,&nbsp;<w0>c</w0>&nbsp;</span></li>
 </ol>
-<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb3>Globals&nbsp;:&nbsp;</gb3>{<w0>a</w0>,&nbsp;<w0>b</w0>}&nbsp;<disj>&#8744;</disj>&nbsp;{<w0>c</w0>}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb2>def<sub><font class="block-name">B</font></sub>&nbsp;:&nbsp;</gb2>{}&nbsp;<disj>&#8744;</disj>&nbsp;{<w0>a</w0>}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb4>Blocks(<gb5>a</gb5>)&nbsp;:&nbsp;</gb4>{}&nbsp;<disj>&#8744;</disj>&nbsp;{<font class="block-name">B</font>}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<ol class="mir-lines" start="8">
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb3>Globals&nbsp;:&nbsp;</gb3>{<w0>b</w0>,&nbsp;<w0>a</w0>}&nbsp;<disj>&#8744;</disj>&nbsp;{<w0>c</w0>}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb2>def<sub><font class="block-name">B</font></sub>&nbsp;:&nbsp;</gb2>{}&nbsp;<disj>&#8744;</disj>&nbsp;{<w0>a</w0>}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb4>Blocks(<gb5>a</gb5>)&nbsp;:&nbsp;</gb4>{}&nbsp;<disj>&#8744;</disj>&nbsp;{<font class="block-name">B</font>}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<ol class="mir-lines" start="8">
 <li><span><w0>b</w0>&nbsp;<w22>&xlarr;</w22>&nbsp;<w23>+</w23>,&nbsp;<w3><h>#</h>1</w3>,&nbsp;<w0>a</w0>&nbsp;</span></li>
 </ol>
 <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb2>def<sub><font class="block-name">B</font></sub>&nbsp;:&nbsp;</gb2>{<w0>a</w0>}&nbsp;<disj>&#8744;</disj>&nbsp;{<w0>b</w0>}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb4>Blocks(<gb5>b</gb5>)&nbsp;:&nbsp;</gb4>{}&nbsp;<disj>&#8744;</disj>&nbsp;{<font class="block-name">B</font>}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<ol class="mir-lines" start="9">
@@ -1331,13 +1332,13 @@
 <br><font class="block-name">C</font><gb1>-block:</gb1><br>&nbsp;&nbsp;&nbsp;<gb2>def<sub><font class="block-name">C</font></sub>&nbsp;:&nbsp;</gb2>{}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<ol class="mir-lines" start="10">
 <li><span><w1>L2</w1>:&nbsp;<w0>a</w0>&nbsp;<w22>&xlarr;</w22>&nbsp;<w23>+</w23>,&nbsp;<w0>a</w0>,&nbsp;<w0>b</w0>&nbsp;</span></li>
 </ol>
-<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb3>Globals&nbsp;:&nbsp;</gb3>{<w0>a</w0>,&nbsp;<w0>c</w0>,&nbsp;<w0>b</w0>}&nbsp;<disj>&#8744;</disj>&nbsp;{<w0>a</w0>}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb3>Globals&nbsp;:&nbsp;</gb3>{<w0>a</w0>,&nbsp;<w0>c</w0>,&nbsp;<w0>b</w0>}&nbsp;<disj>&#8744;</disj>&nbsp;{<w0>b</w0>}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb2>def<sub><font class="block-name">C</font></sub>&nbsp;:&nbsp;</gb2>{}&nbsp;<disj>&#8744;</disj>&nbsp;{<w0>a</w0>}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb4>Blocks(<gb5>a</gb5>)&nbsp;:&nbsp;</gb4>{<font class="block-name">B</font>}&nbsp;<disj>&#8744;</disj>&nbsp;{<font class="block-name">C</font>}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<ol class="mir-lines" start="11">
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb3>Globals&nbsp;:&nbsp;</gb3>{<w0>a</w0>,&nbsp;<w0>b</w0>,&nbsp;<w0>c</w0>}&nbsp;<disj>&#8744;</disj>&nbsp;{<w0>a</w0>}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb3>Globals&nbsp;:&nbsp;</gb3>{<w0>a</w0>,&nbsp;<w0>b</w0>,&nbsp;<w0>c</w0>}&nbsp;<disj>&#8744;</disj>&nbsp;{<w0>b</w0>}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb2>def<sub><font class="block-name">C</font></sub>&nbsp;:&nbsp;</gb2>{}&nbsp;<disj>&#8744;</disj>&nbsp;{<w0>a</w0>}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb4>Blocks(<gb5>a</gb5>)&nbsp;:&nbsp;</gb4>{<font class="block-name">B</font>}&nbsp;<disj>&#8744;</disj>&nbsp;{<font class="block-name">C</font>}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<ol class="mir-lines" start="11">
 <li><span><if>if</if>&nbsp;<w5>True</w5>&nbsp;<w4><h>@</h>flag</w4>&nbsp;<w6>goto</w6>&nbsp;<w1>L2</w1>&nbsp;</span></li>
 </ol>
 <br><font class="block-name">D</font><gb1>-block:</gb1><br>&nbsp;&nbsp;&nbsp;<gb2>def<sub><font class="block-name">D</font></sub>&nbsp;:&nbsp;</gb2>{}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<ol class="mir-lines" start="12">
 <li><span><w1>L3</w1>:&nbsp;<w0>a</w0>&nbsp;<w22>&xlarr;</w22>&nbsp;<w23>+</w23>,&nbsp;<w0>a</w0>,&nbsp;<w0>b</w0>&nbsp;</span></li>
 </ol>
-<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb3>Globals&nbsp;:&nbsp;</gb3>{<w0>a</w0>,&nbsp;<w0>c</w0>,&nbsp;<w0>b</w0>}&nbsp;<disj>&#8744;</disj>&nbsp;{<w0>a</w0>}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb3>Globals&nbsp;:&nbsp;</gb3>{<w0>a</w0>,&nbsp;<w0>c</w0>,&nbsp;<w0>b</w0>}&nbsp;<disj>&#8744;</disj>&nbsp;{<w0>b</w0>}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb2>def<sub><font class="block-name">D</font></sub>&nbsp;:&nbsp;</gb2>{}&nbsp;<disj>&#8744;</disj>&nbsp;{<w0>a</w0>}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb4>Blocks(<gb5>a</gb5>)&nbsp;:&nbsp;</gb4>{<font class="block-name">B</font>,&nbsp;<font class="block-name">C</font>}&nbsp;<disj>&#8744;</disj>&nbsp;{<font class="block-name">D</font>}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<ol class="mir-lines" start="13">
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb3>Globals&nbsp;:&nbsp;</gb3>{<w0>a</w0>,&nbsp;<w0>b</w0>,&nbsp;<w0>c</w0>}&nbsp;<disj>&#8744;</disj>&nbsp;{<w0>a</w0>}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb3>Globals&nbsp;:&nbsp;</gb3>{<w0>a</w0>,&nbsp;<w0>b</w0>,&nbsp;<w0>c</w0>}&nbsp;<disj>&#8744;</disj>&nbsp;{<w0>b</w0>}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb2>def<sub><font class="block-name">D</font></sub>&nbsp;:&nbsp;</gb2>{}&nbsp;<disj>&#8744;</disj>&nbsp;{<w0>a</w0>}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb4>Blocks(<gb5>a</gb5>)&nbsp;:&nbsp;</gb4>{<font class="block-name">B</font>,&nbsp;<font class="block-name">C</font>}&nbsp;<disj>&#8744;</disj>&nbsp;{<font class="block-name">D</font>}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<ol class="mir-lines" start="13">
 <li><span><w0>b</w0>&nbsp;<w22>&xlarr;</w22>&nbsp;<w23>-</w23>,&nbsp;<w3><h>#</h>1</w3>,&nbsp;<w0>a</w0>&nbsp;</span></li>
 </ol>
 <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb2>def<sub><font class="block-name">D</font></sub>&nbsp;:&nbsp;</gb2>{<w0>a</w0>}&nbsp;<disj>&#8744;</disj>&nbsp;{<w0>b</w0>}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb4>Blocks(<gb5>b</gb5>)&nbsp;:&nbsp;</gb4>{<font class="block-name">B</font>}&nbsp;<disj>&#8744;</disj>&nbsp;{<font class="block-name">D</font>}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<ol class="mir-lines" start="14">
@@ -1346,10 +1347,10 @@
 <br><font class="block-name">E</font><gb1>-block:</gb1><br>&nbsp;&nbsp;&nbsp;<gb2>def<sub><font class="block-name">E</font></sub>&nbsp;:&nbsp;</gb2>{}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<ol class="mir-lines" start="15">
 <li><span><w1>L4</w1>:&nbsp;<w0>a</w0>&nbsp;<w22>&xlarr;</w22>&nbsp;<w23>+</w23>,&nbsp;<w0>a</w0>,&nbsp;<w0>c</w0>&nbsp;</span></li>
 </ol>
-<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb3>Globals&nbsp;:&nbsp;</gb3>{<w0>a</w0>,&nbsp;<w0>c</w0>,&nbsp;<w0>b</w0>}&nbsp;<disj>&#8744;</disj>&nbsp;{<w0>a</w0>}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb3>Globals&nbsp;:&nbsp;</gb3>{<w0>a</w0>,&nbsp;<w0>c</w0>,&nbsp;<w0>b</w0>}&nbsp;<disj>&#8744;</disj>&nbsp;{<w0>c</w0>}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb2>def<sub><font class="block-name">E</font></sub>&nbsp;:&nbsp;</gb2>{}&nbsp;<disj>&#8744;</disj>&nbsp;{<w0>a</w0>}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb4>Blocks(<gb5>a</gb5>)&nbsp;:&nbsp;</gb4>{<font class="block-name">B</font>,&nbsp;<font class="block-name">C</font>,&nbsp;<font class="block-name">D</font>}&nbsp;<disj>&#8744;</disj>&nbsp;{<font class="block-name">E</font>}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<ol class="mir-lines" start="16">
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb3>Globals&nbsp;:&nbsp;</gb3>{<w0>a</w0>,&nbsp;<w0>b</w0>,&nbsp;<w0>c</w0>}&nbsp;<disj>&#8744;</disj>&nbsp;{<w0>a</w0>}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb3>Globals&nbsp;:&nbsp;</gb3>{<w0>a</w0>,&nbsp;<w0>b</w0>,&nbsp;<w0>c</w0>}&nbsp;<disj>&#8744;</disj>&nbsp;{<w0>c</w0>}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb2>def<sub><font class="block-name">E</font></sub>&nbsp;:&nbsp;</gb2>{}&nbsp;<disj>&#8744;</disj>&nbsp;{<w0>a</w0>}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb4>Blocks(<gb5>a</gb5>)&nbsp;:&nbsp;</gb4>{<font class="block-name">B</font>,&nbsp;<font class="block-name">C</font>,&nbsp;<font class="block-name">D</font>}&nbsp;<disj>&#8744;</disj>&nbsp;{<font class="block-name">E</font>}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<ol class="mir-lines" start="16">
 <li><span><w0>b</w0>&nbsp;<w22>&xlarr;</w22>&nbsp;<w23>+</w23>,&nbsp;<w0>a</w0>,&nbsp;<w0>b</w0>&nbsp;</span></li>
 </ol>
-<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb3>Globals&nbsp;:&nbsp;</gb3>{<w0>a</w0>,&nbsp;<w0>c</w0>,&nbsp;<w0>b</w0>}&nbsp;<disj>&#8744;</disj>&nbsp;{<w0>b</w0>}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb2>def<sub><font class="block-name">E</font></sub>&nbsp;:&nbsp;</gb2>{<w0>a</w0>}&nbsp;<disj>&#8744;</disj>&nbsp;{<w0>b</w0>}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb4>Blocks(<gb5>b</gb5>)&nbsp;:&nbsp;</gb4>{<font class="block-name">B</font>,&nbsp;<font class="block-name">D</font>}&nbsp;<disj>&#8744;</disj>&nbsp;{<font class="block-name">E</font>}<br><font class="block-name">Exit</font><gb1>-block:</gb1><br>&nbsp;&nbsp;&nbsp;<gb2>def<sub><font class="block-name">Exit</font></sub>&nbsp;:&nbsp;</gb2>{}</div></details>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb3>Globals&nbsp;:&nbsp;</gb3>{<w0>a</w0>,&nbsp;<w0>b</w0>,&nbsp;<w0>c</w0>}&nbsp;<disj>&#8744;</disj>&nbsp;{<w0>b</w0>}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb2>def<sub><font class="block-name">E</font></sub>&nbsp;:&nbsp;</gb2>{<w0>a</w0>}&nbsp;<disj>&#8744;</disj>&nbsp;{<w0>b</w0>}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb4>Blocks(<gb5>b</gb5>)&nbsp;:&nbsp;</gb4>{<font class="block-name">B</font>,&nbsp;<font class="block-name">D</font>}&nbsp;<disj>&#8744;</disj>&nbsp;{<font class="block-name">E</font>}<br><font class="block-name">Exit</font><gb1>-block:</gb1><br>&nbsp;&nbsp;&nbsp;<gb2>def<sub><font class="block-name">Exit</font></sub>&nbsp;:&nbsp;</gb2>{}</div></details>
 <div class="table-scroll"><table>
 <thead><tr>
 <th>var =</th>
@@ -1378,7 +1379,7 @@
 </details>
 <details id="title-12"><summary><h2 class="block-table-title"><span class="section-title">Phi Placement</span><small class="section-note">DF worklist</small></h2></summary>
 <details class="trace"><summary><p class="summary-span"><span>Trace</span><small class="section-note">derivation steps</small></p></summary><div class="trace-code">
-<l id="1">variable</l>&nbsp;<w0>a</w0>:<br>&nbsp;&nbsp;&nbsp;<l id="2">WorkList</l> : {<font class="block-name">B</font>,&nbsp;<font class="block-name">C</font>,&nbsp;<font class="block-name">D</font>,&nbsp;<font class="block-name">E</font>}<br>&nbsp;&nbsp;&nbsp;<l id="3">insert</l>&nbsp;<phi>&phi;(<h>*</h><w0>a</w0>)</phi>&nbsp;in&nbsp;<font class="block-name">B</font><gb1>-block:</gb1><br>&nbsp;&nbsp;&nbsp;<l id="3">insert</l>&nbsp;<phi>&phi;(<h>*</h><w0>a</w0>)</phi>&nbsp;in&nbsp;<font class="block-name">E</font><gb1>-block:</gb1><br>&nbsp;&nbsp;&nbsp;<l id="3">insert</l>&nbsp;<phi>&phi;(<h>*</h><w0>a</w0>)</phi>&nbsp;in&nbsp;<font class="block-name">C</font><gb1>-block:</gb1><br>&nbsp;&nbsp;&nbsp;<l id="3">insert</l>&nbsp;<phi>&phi;(<h>*</h><w0>a</w0>)</phi>&nbsp;in&nbsp;<font class="block-name">D</font><gb1>-block:</gb1><br><l id="1">variable</l>&nbsp;<w0>c</w0>:<br>&nbsp;&nbsp;&nbsp;<l id="2">WorkList</l> : {<font class="block-name">A</font>}<br><l id="1">variable</l>&nbsp;<w0>b</w0>:<br>&nbsp;&nbsp;&nbsp;<l id="2">WorkList</l> : {<font class="block-name">B</font>,&nbsp;<font class="block-name">D</font>,&nbsp;<font class="block-name">E</font>}<br>&nbsp;&nbsp;&nbsp;<l id="3">insert</l>&nbsp;<phi>&phi;(<h>*</h><w0>b</w0>)</phi>&nbsp;in&nbsp;<font class="block-name">B</font><gb1>-block:</gb1><br>&nbsp;&nbsp;&nbsp;<l id="3">insert</l>&nbsp;<phi>&phi;(<h>*</h><w0>b</w0>)</phi>&nbsp;in&nbsp;<font class="block-name">E</font><gb1>-block:</gb1></div></details>
+<l id="1">variable</l>&nbsp;<w0>c</w0>:<br>&nbsp;&nbsp;&nbsp;<l id="2">WorkList</l> : {<font class="block-name">A</font>}<br><l id="1">variable</l>&nbsp;<w0>b</w0>:<br>&nbsp;&nbsp;&nbsp;<l id="2">WorkList</l> : {<font class="block-name">B</font>,&nbsp;<font class="block-name">D</font>,&nbsp;<font class="block-name">E</font>}<br>&nbsp;&nbsp;&nbsp;<l id="3">insert</l>&nbsp;<phi>&phi;(<h>*</h><w0>b</w0>)</phi>&nbsp;in&nbsp;<font class="block-name">B</font><gb1>-block:</gb1><br>&nbsp;&nbsp;&nbsp;<l id="3">insert</l>&nbsp;<phi>&phi;(<h>*</h><w0>b</w0>)</phi>&nbsp;in&nbsp;<font class="block-name">E</font><gb1>-block:</gb1><br><l id="1">variable</l>&nbsp;<w0>a</w0>:<br>&nbsp;&nbsp;&nbsp;<l id="2">WorkList</l> : {<font class="block-name">B</font>,&nbsp;<font class="block-name">C</font>,&nbsp;<font class="block-name">D</font>,&nbsp;<font class="block-name">E</font>}<br>&nbsp;&nbsp;&nbsp;<l id="3">insert</l>&nbsp;<phi>&phi;(<h>*</h><w0>a</w0>)</phi>&nbsp;in&nbsp;<font class="block-name">B</font><gb1>-block:</gb1><br>&nbsp;&nbsp;&nbsp;<l id="3">insert</l>&nbsp;<phi>&phi;(<h>*</h><w0>a</w0>)</phi>&nbsp;in&nbsp;<font class="block-name">E</font><gb1>-block:</gb1><br>&nbsp;&nbsp;&nbsp;<l id="3">insert</l>&nbsp;<phi>&phi;(<h>*</h><w0>a</w0>)</phi>&nbsp;in&nbsp;<font class="block-name">C</font><gb1>-block:</gb1><br>&nbsp;&nbsp;&nbsp;<l id="3">insert</l>&nbsp;<phi>&phi;(<h>*</h><w0>a</w0>)</phi>&nbsp;in&nbsp;<font class="block-name">D</font><gb1>-block:</gb1></div></details>
 <div class="table-scroll"><table>
 <thead><tr>
 <th>block =</th>
@@ -1455,8 +1456,8 @@
 <span class="new-block">Block</span> <span class="block-name">B</span> <span class="count-lines">5 lines</span>
 </div>
 <ol class="mir-lines" start="7">
-<li><span><w1>L1</w1>:&nbsp;<w0>b</w0>&nbsp;<w22>&xlarr;</w22>&nbsp;<phi>&phi;(<w0><h>*</h>b</w0>)</phi>,&nbsp;</span></li>
-<li><span><w0>a</w0>&nbsp;<w22>&xlarr;</w22>&nbsp;<phi>&phi;(<w0><h>*</h>a</w0>)</phi>,&nbsp;</span></li>
+<li><span><w1>L1</w1>:&nbsp;<w0>a</w0>&nbsp;<w22>&xlarr;</w22>&nbsp;<phi>&phi;(<w0><h>*</h>a</w0>)</phi>,&nbsp;</span></li>
+<li><span><w0>b</w0>&nbsp;<w22>&xlarr;</w22>&nbsp;<phi>&phi;(<w0><h>*</h>b</w0>)</phi>,&nbsp;</span></li>
 <li><span><w0>a</w0>&nbsp;<w22>&xlarr;</w22>&nbsp;<w23>+</w23>,&nbsp;<w3><h>#</h>1</w3>,&nbsp;<w0>c</w0>&nbsp;</span></li>
 <li><span><w0>b</w0>&nbsp;<w22>&xlarr;</w22>&nbsp;<w23>+</w23>,&nbsp;<w3><h>#</h>1</w3>,&nbsp;<w0>a</w0>&nbsp;</span></li>
 <li><span><if>if</if>&nbsp;<w5>True</w5>&nbsp;<w4><h>@</h>flag</w4>&nbsp;<w6>goto</w6>&nbsp;<w1>L3</w1>&nbsp;</span></li>
@@ -1488,8 +1489,8 @@
 <span class="new-block">Block</span> <span class="block-name">E</span> <span class="count-lines">4 lines</span>
 </div>
 <ol class="mir-lines" start="19">
-<li><span><w1>L4</w1>:&nbsp;<w0>b</w0>&nbsp;<w22>&xlarr;</w22>&nbsp;<phi>&phi;(<w0><h>*</h>b</w0>)</phi>,&nbsp;</span></li>
-<li><span><w0>a</w0>&nbsp;<w22>&xlarr;</w22>&nbsp;<phi>&phi;(<w0><h>*</h>a</w0>)</phi>,&nbsp;</span></li>
+<li><span><w1>L4</w1>:&nbsp;<w0>a</w0>&nbsp;<w22>&xlarr;</w22>&nbsp;<phi>&phi;(<w0><h>*</h>a</w0>)</phi>,&nbsp;</span></li>
+<li><span><w0>b</w0>&nbsp;<w22>&xlarr;</w22>&nbsp;<phi>&phi;(<w0><h>*</h>b</w0>)</phi>,&nbsp;</span></li>
 <li><span><w0>a</w0>&nbsp;<w22>&xlarr;</w22>&nbsp;<w23>+</w23>,&nbsp;<w0>a</w0>,&nbsp;<w0>c</w0>&nbsp;</span></li>
 <li><span><w0>b</w0>&nbsp;<w22>&xlarr;</w22>&nbsp;<w23>+</w23>,&nbsp;<w0>a</w0>,&nbsp;<w0>b</w0>&nbsp;</span></li>
 </ol>
@@ -1516,22 +1517,22 @@
 <li><span><if>if</if>&nbsp;<w5>True</w5>&nbsp;<w4><h>@</h>flag</w4>&nbsp;<w6>goto</w6>&nbsp;<w1>L4</w1>&nbsp;</span></li>
 </ol>
 <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="6">stack</r> : <w0>a</w0>:[0],&nbsp;<w0>b</w0>:[0]<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="3">fill(<font class="block-name">B</font>)</r>:<ol class="mir-lines" start="7">
-<li><span><w1>L1</w1>:&nbsp;<w0>b</w0><sub>1</sub>&nbsp;<w22>&xlarr;</w22>&nbsp;<phi>&phi;(<w0>b</w0><sub>0</sub>, <w0>b</w0><sub>3</sub>)</phi>,&nbsp;</span></li>
+<li><span><w1>L1</w1>:&nbsp;<w0>a</w0><sub>1</sub>&nbsp;<w22>&xlarr;</w22>&nbsp;<phi>&phi;(<w0>a</w0><sub>0</sub>, <w0>a</w0><sub>6</sub>)</phi>,&nbsp;</span></li>
 </ol>
 <ol class="mir-lines" start="8">
-<li><span><w0>a</w0><sub>1</sub>&nbsp;<w22>&xlarr;</w22>&nbsp;<phi>&phi;(<w0>a</w0><sub>0</sub>, <w0>a</w0><sub>6</sub>)</phi>,&nbsp;</span></li>
+<li><span><w0>b</w0><sub>1</sub>&nbsp;<w22>&xlarr;</w22>&nbsp;<phi>&phi;(<w0>b</w0><sub>0</sub>, <w0>b</w0><sub>3</sub>)</phi>,&nbsp;</span></li>
 </ol>
 <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="6">stack</r> : <w0>a</w0>:[0],&nbsp;<w0>b</w0>:[0]<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="3">fill(<font class="block-name">E</font>)</r>:<ol class="mir-lines" start="19">
-<li><span><w1>L4</w1>:&nbsp;<w0>b</w0><sub>4</sub>&nbsp;<w22>&xlarr;</w22>&nbsp;<phi>&phi;(<w0>b</w0><sub>0</sub>, <w0>b</w0><sub>3</sub>)</phi>,&nbsp;</span></li>
+<li><span><w1>L4</w1>:&nbsp;<w0>a</w0><sub>7</sub>&nbsp;<w22>&xlarr;</w22>&nbsp;<phi>&phi;(<w0>a</w0><sub>0</sub>, <w0>a</w0><sub>6</sub>)</phi>,&nbsp;</span></li>
 </ol>
 <ol class="mir-lines" start="20">
-<li><span><w0>a</w0><sub>7</sub>&nbsp;<w22>&xlarr;</w22>&nbsp;<phi>&phi;(<w0>a</w0><sub>0</sub>, <w0>a</w0><sub>6</sub>)</phi>,&nbsp;</span></li>
+<li><span><w0>b</w0><sub>4</sub>&nbsp;<w22>&xlarr;</w22>&nbsp;<phi>&phi;(<w0>b</w0><sub>0</sub>, <w0>b</w0><sub>3</sub>)</phi>,&nbsp;</span></li>
 </ol>
 <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="6">stack</r> : <w0>a</w0>:[0],&nbsp;<w0>b</w0>:[0]<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="1">Rename(<font class="block-name">B</font>)</r>:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="5">rename &phi;-functions:</r><ol class="mir-lines" start="7">
-<li><span><w1>L1</w1>:&nbsp;<w0>b</w0><sub>1</sub>&nbsp;<w22>&xlarr;</w22>&nbsp;<phi>&phi;(<w0>b</w0><sub>0</sub>, <w0>b</w0><sub>3</sub>)</phi>,&nbsp;</span></li>
+<li><span><w1>L1</w1>:&nbsp;<w0>a</w0><sub>1</sub>&nbsp;<w22>&xlarr;</w22>&nbsp;<phi>&phi;(<w0>a</w0><sub>0</sub>, <w0>a</w0><sub>6</sub>)</phi>,&nbsp;</span></li>
 </ol>
 <ol class="mir-lines" start="8">
-<li><span><w0>a</w0><sub>1</sub>&nbsp;<w22>&xlarr;</w22>&nbsp;<phi>&phi;(<w0>a</w0><sub>0</sub>, <w0>a</w0><sub>6</sub>)</phi>,&nbsp;</span></li>
+<li><span><w0>b</w0><sub>1</sub>&nbsp;<w22>&xlarr;</w22>&nbsp;<phi>&phi;(<w0>b</w0><sub>0</sub>, <w0>b</w0><sub>3</sub>)</phi>,&nbsp;</span></li>
 </ol>
 <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="6">stack</r> : <w0>a</w0>:[0, 1],&nbsp;<w0>b</w0>:[0, 1]<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rename instructions:<ol class="mir-lines" start="9">
 <li><span><w0>a</w0><sub>2</sub>&nbsp;<w22>&xlarr;</w22>&nbsp;<w23>+</w23>,&nbsp;<w3><h>#</h>1</w3>,&nbsp;<w0>c</w0>&nbsp;</span></li>
@@ -1576,22 +1577,22 @@
 <li><span><if>if</if>&nbsp;<w5>True</w5>&nbsp;<w4><h>@</h>flag</w4>&nbsp;<w6>goto</w6>&nbsp;<w1>L1</w1>&nbsp;</span></li>
 </ol>
 <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="6">stack</r> : <w0>a</w0>:[0, 1, 2, 5, 6],&nbsp;<w0>b</w0>:[0, 1, 2, 3]<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="3">fill(<font class="block-name">B</font>)</r>:<ol class="mir-lines" start="7">
-<li><span><w1>L1</w1>:&nbsp;<w0>b</w0><sub>1</sub>&nbsp;<w22>&xlarr;</w22>&nbsp;<phi>&phi;(<w0>b</w0><sub>0</sub>, <w0>b</w0><sub>3</sub>)</phi>,&nbsp;</span></li>
+<li><span><w1>L1</w1>:&nbsp;<w0>a</w0><sub>1</sub>&nbsp;<w22>&xlarr;</w22>&nbsp;<phi>&phi;(<w0>a</w0><sub>0</sub>, <w0>a</w0><sub>6</sub>)</phi>,&nbsp;</span></li>
 </ol>
 <ol class="mir-lines" start="8">
-<li><span><w0>a</w0><sub>1</sub>&nbsp;<w22>&xlarr;</w22>&nbsp;<phi>&phi;(<w0>a</w0><sub>0</sub>, <w0>a</w0><sub>6</sub>)</phi>,&nbsp;</span></li>
+<li><span><w0>b</w0><sub>1</sub>&nbsp;<w22>&xlarr;</w22>&nbsp;<phi>&phi;(<w0>b</w0><sub>0</sub>, <w0>b</w0><sub>3</sub>)</phi>,&nbsp;</span></li>
 </ol>
 <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="6">stack</r> : <w0>a</w0>:[0, 1, 2, 5, 6],&nbsp;<w0>b</w0>:[0, 1, 2, 3]<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="3">fill(<font class="block-name">E</font>)</r>:<ol class="mir-lines" start="19">
-<li><span><w1>L4</w1>:&nbsp;<w0>b</w0><sub>4</sub>&nbsp;<w22>&xlarr;</w22>&nbsp;<phi>&phi;(<w0>b</w0><sub>0</sub>, <w0>b</w0><sub>3</sub>)</phi>,&nbsp;</span></li>
+<li><span><w1>L4</w1>:&nbsp;<w0>a</w0><sub>7</sub>&nbsp;<w22>&xlarr;</w22>&nbsp;<phi>&phi;(<w0>a</w0><sub>0</sub>, <w0>a</w0><sub>6</sub>)</phi>,&nbsp;</span></li>
 </ol>
 <ol class="mir-lines" start="20">
-<li><span><w0>a</w0><sub>7</sub>&nbsp;<w22>&xlarr;</w22>&nbsp;<phi>&phi;(<w0>a</w0><sub>0</sub>, <w0>a</w0><sub>6</sub>)</phi>,&nbsp;</span></li>
+<li><span><w0>b</w0><sub>4</sub>&nbsp;<w22>&xlarr;</w22>&nbsp;<phi>&phi;(<w0>b</w0><sub>0</sub>, <w0>b</w0><sub>3</sub>)</phi>,&nbsp;</span></li>
 </ol>
 <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="6">stack</r> : <w0>a</w0>:[0, 1, 2, 5, 6],&nbsp;<w0>b</w0>:[0, 1, 2, 3]<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;clean():<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="6">stack</r> : <w0>a</w0>:[0, 1, 2],&nbsp;<w0>b</w0>:[0, 1, 2]<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="2">return to <font class="block-name">B</font>;</r><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;clean():<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="6">stack</r> : <w0>a</w0>:[0],&nbsp;<w0>b</w0>:[0]<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="2">return to <font class="block-name">A</font>;</r><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="1">Rename(<font class="block-name">E</font>)</r>:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="5">rename &phi;-functions:</r><ol class="mir-lines" start="19">
-<li><span><w1>L4</w1>:&nbsp;<w0>b</w0><sub>4</sub>&nbsp;<w22>&xlarr;</w22>&nbsp;<phi>&phi;(<w0>b</w0><sub>0</sub>, <w0>b</w0><sub>3</sub>)</phi>,&nbsp;</span></li>
+<li><span><w1>L4</w1>:&nbsp;<w0>a</w0><sub>7</sub>&nbsp;<w22>&xlarr;</w22>&nbsp;<phi>&phi;(<w0>a</w0><sub>0</sub>, <w0>a</w0><sub>6</sub>)</phi>,&nbsp;</span></li>
 </ol>
 <ol class="mir-lines" start="20">
-<li><span><w0>a</w0><sub>7</sub>&nbsp;<w22>&xlarr;</w22>&nbsp;<phi>&phi;(<w0>a</w0><sub>0</sub>, <w0>a</w0><sub>6</sub>)</phi>,&nbsp;</span></li>
+<li><span><w0>b</w0><sub>4</sub>&nbsp;<w22>&xlarr;</w22>&nbsp;<phi>&phi;(<w0>b</w0><sub>0</sub>, <w0>b</w0><sub>3</sub>)</phi>,&nbsp;</span></li>
 </ol>
 <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<r id="6">stack</r> : <w0>a</w0>:[0, 7],&nbsp;<w0>b</w0>:[0, 4]<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rename instructions:<ol class="mir-lines" start="21">
 <li><span><w0>a</w0><sub>8</sub>&nbsp;<w22>&xlarr;</w22>&nbsp;<w23>+</w23>,&nbsp;<w0>a</w0><sub>7</sub>,&nbsp;<w0>c</w0>&nbsp;</span></li>
@@ -1620,8 +1621,8 @@
 <span class="new-block">Block</span> <span class="block-name">B</span> <span class="count-lines">5 lines</span>
 </div>
 <ol class="mir-lines" start="7">
-<li><span><w1>L1</w1>:&nbsp;<w0>b</w0><sub>1</sub>&nbsp;<w22>&xlarr;</w22>&nbsp;<phi>&phi;(<w0>b</w0><sub>0</sub>, <w0>b</w0><sub>3</sub>)</phi>,&nbsp;</span></li>
-<li><span><w0>a</w0><sub>1</sub>&nbsp;<w22>&xlarr;</w22>&nbsp;<phi>&phi;(<w0>a</w0><sub>0</sub>, <w0>a</w0><sub>6</sub>)</phi>,&nbsp;</span></li>
+<li><span><w1>L1</w1>:&nbsp;<w0>a</w0><sub>1</sub>&nbsp;<w22>&xlarr;</w22>&nbsp;<phi>&phi;(<w0>a</w0><sub>0</sub>, <w0>a</w0><sub>6</sub>)</phi>,&nbsp;</span></li>
+<li><span><w0>b</w0><sub>1</sub>&nbsp;<w22>&xlarr;</w22>&nbsp;<phi>&phi;(<w0>b</w0><sub>0</sub>, <w0>b</w0><sub>3</sub>)</phi>,&nbsp;</span></li>
 <li><span><w0>a</w0><sub>2</sub>&nbsp;<w22>&xlarr;</w22>&nbsp;<w23>+</w23>,&nbsp;<w3><h>#</h>1</w3>,&nbsp;<w0>c</w0>&nbsp;</span></li>
 <li><span><w0>b</w0><sub>2</sub>&nbsp;<w22>&xlarr;</w22>&nbsp;<w23>+</w23>,&nbsp;<w3><h>#</h>1</w3>,&nbsp;<w0>a</w0><sub>2</sub>&nbsp;</span></li>
 <li><span><if>if</if>&nbsp;<w5>True</w5>&nbsp;<w4><h>@</h>flag</w4>&nbsp;<w6>goto</w6>&nbsp;<w1>L3</w1>&nbsp;</span></li>
@@ -1653,8 +1654,8 @@
 <span class="new-block">Block</span> <span class="block-name">E</span> <span class="count-lines">4 lines</span>
 </div>
 <ol class="mir-lines" start="19">
-<li><span><w1>L4</w1>:&nbsp;<w0>b</w0><sub>4</sub>&nbsp;<w22>&xlarr;</w22>&nbsp;<phi>&phi;(<w0>b</w0><sub>0</sub>, <w0>b</w0><sub>3</sub>)</phi>,&nbsp;</span></li>
-<li><span><w0>a</w0><sub>7</sub>&nbsp;<w22>&xlarr;</w22>&nbsp;<phi>&phi;(<w0>a</w0><sub>0</sub>, <w0>a</w0><sub>6</sub>)</phi>,&nbsp;</span></li>
+<li><span><w1>L4</w1>:&nbsp;<w0>a</w0><sub>7</sub>&nbsp;<w22>&xlarr;</w22>&nbsp;<phi>&phi;(<w0>a</w0><sub>0</sub>, <w0>a</w0><sub>6</sub>)</phi>,&nbsp;</span></li>
+<li><span><w0>b</w0><sub>4</sub>&nbsp;<w22>&xlarr;</w22>&nbsp;<phi>&phi;(<w0>b</w0><sub>0</sub>, <w0>b</w0><sub>3</sub>)</phi>,&nbsp;</span></li>
 <li><span><w0>a</w0><sub>8</sub>&nbsp;<w22>&xlarr;</w22>&nbsp;<w23>+</w23>,&nbsp;<w0>a</w0><sub>7</sub>,&nbsp;<w0>c</w0>&nbsp;</span></li>
 <li><span><w0>b</w0><sub>5</sub>&nbsp;<w22>&xlarr;</w22>&nbsp;<w23>+</w23>,&nbsp;<w0>a</w0><sub>8</sub>,&nbsp;<w0>b</w0><sub>4</sub>&nbsp;</span></li>
 </ol>
@@ -1825,7 +1826,92 @@
 </tbody>
 </table></div>
 </details>
-<details id="title-18"><summary><h2 class="block-graphs-title"><span class="section-title">Cycle-Based Region Reduction</span><small class="section-note">cycle regions</small></h2></summary>
+<details id="title-18"><summary><h2 class="block-table-title"><span class="section-title">ITE-Cost Preview</span><small class="section-note">ite formula growth</small></h2></summary>
+<details class="trace"><summary><p class="summary-span"><span>Trace</span><small class="section-note">derivation steps</small></p></summary><div class="trace-code">
+<comment>Syntactic shallow preview only: reconstructs small two-way join expressions, substitutes at most local assignment chains, and counts visible ite nodes. It is path-insensitive and is not an SMT formula, simplifier, runtime benchmark, or solver-cost estimate.</comment></div></details>
+<div class="table-scroll"><table>
+<thead><tr>
+<th>merge site</th>
+<th>variable</th>
+<th>ite preview</th>
+<th>future branch</th>
+<th>expanded branch preview</th>
+<th>ite ops</th>
+<th>ite depth</th>
+<th>expr size</th>
+<th>status</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="first-column">B</td>
+<td>a</td>
+<td class="none">None</td>
+<td class="none">None</td>
+<td class="none">None</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>missing expression: source expression could not be reconstructed</td>
+</tr>
+<tr>
+<td class="first-column">B</td>
+<td>b</td>
+<td class="none">None</td>
+<td class="none">None</td>
+<td class="none">None</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>missing expression: source expression could not be reconstructed</td>
+</tr>
+<tr>
+<td class="first-column">C</td>
+<td>a</td>
+<td>a = ite(path(B), #1 + c, a + b)</td>
+<td class="none">None</td>
+<td class="none">None</td>
+<td>1</td>
+<td>1</td>
+<td>11</td>
+<td>no future branch</td>
+</tr>
+<tr>
+<td class="first-column">D</td>
+<td>a</td>
+<td>a = ite(path(B), #1 + c, a + b)</td>
+<td class="none">None</td>
+<td class="none">None</td>
+<td>1</td>
+<td>1</td>
+<td>11</td>
+<td>no future branch</td>
+</tr>
+<tr>
+<td class="first-column">E</td>
+<td>a</td>
+<td class="none">None</td>
+<td class="none">None</td>
+<td class="none">None</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>missing expression: source expression could not be reconstructed</td>
+</tr>
+<tr>
+<td class="first-column">E</td>
+<td>b</td>
+<td class="none">None</td>
+<td class="none">None</td>
+<td class="none">None</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>missing expression: source expression could not be reconstructed</td>
+</tr>
+</tbody>
+</table></div>
+</details>
+<details id="title-19"><summary><h2 class="block-graphs-title"><span class="section-title">Cycle-Based Region Reduction</span><small class="section-note">cycle regions</small></h2></summary>
 <div class="region-gallery">
 <figure>
 <img src="regions/0.png" alt="Cycle-Based Region Reduction step 1">
@@ -1844,7 +1930,7 @@
 <figcaption>Step 4</figcaption>
 </figure>
 </div></details>
-<details id="title-19"><summary><h2 class="block-table-title"><span class="section-title">Acyclic Region Summary Preview</span><small class="section-note">veritesting idea</small></h2></summary>
+<details id="title-20"><summary><h2 class="block-table-title"><span class="section-title">Acyclic Region Summary Preview</span><small class="section-note">veritesting idea</small></h2></summary>
 <details class="trace"><summary><p class="summary-span"><span>Trace</span><small class="section-note">derivation steps</small></p></summary><div class="trace-code">
 <comment>Region summaries are syntactic previews inspired by veritesting-style regions. They do not execute stores, solve formulas, or replace the existing region reduction.</comment></div></details>
 <div class="table-scroll"><table>
@@ -1897,11 +1983,11 @@
 </tbody>
 </table></div>
 </details>
-<details id="title-20"><summary><h2 class="block-graphs-title"><span class="section-title">Control Tree</span><small class="section-note">region tree</small></h2></summary>
+<details id="title-21"><summary><h2 class="block-graphs-title"><span class="section-title">Control Tree</span><small class="section-note">region tree</small></h2></summary>
 <div class="graph-panel">
 <img src="ct.png" alt="Control Tree">
 </div></details>
-<details id="title-21"><summary><h2 class="block-table-title"><span class="section-title">Region Classification</span><small class="section-note">area classes</small></h2></summary>
+<details id="title-22"><summary><h2 class="block-table-title"><span class="section-title">Region Classification</span><small class="section-note">area classes</small></h2></summary>
 <div class="table-scroll"><table>
 <thead><tr>
 <th>Class</th>
@@ -1919,7 +2005,7 @@
 </tbody>
 </table></div>
 </details>
-<details id="title-22"><summary><h2 class="block-table-title"><span class="section-title">Gen / Kill</span><small class="section-note">reaching defs</small></h2></summary>
+<details id="title-23"><summary><h2 class="block-table-title"><span class="section-title">Gen / Kill</span><small class="section-note">reaching defs</small></h2></summary>
 <details class="trace"><summary><p class="summary-span"><span>Trace</span><small class="section-note">derivation steps</small></p></summary><div class="trace-code">
 <comment>The instruction index corresponds to the line number in the original code.</comment></div></details>
 <div class="table-scroll"><table>
@@ -1957,7 +2043,7 @@
 </tbody>
 </table></div>
 </details>
-<details id="title-23"><summary><h2 class="block-table-title"><span class="section-title">Region Transfer Functions (Structural)</span><small class="section-note">structural transfer</small></h2></summary>
+<details id="title-24"><summary><h2 class="block-table-title"><span class="section-title">Region Transfer Functions (Structural)</span><small class="section-note">structural transfer</small></h2></summary>
 <div class="table-scroll"><table>
 <thead><tr>
 <th>region</th>

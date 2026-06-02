@@ -2,6 +2,7 @@ from general.display import Display
 from general.parser import Parser
 from tasks.acyclic_region_preview import AcyclicRegionSummaryPreview
 from tasks.branch_conditions import SymbolicBranchDump
+from tasks.ite_cost_preview import IteCostPreview
 from tasks.local_value_tables import LocalValueTable
 from tasks.dominators import Dominator, PostDominator
 from tasks.query_cost_estimation import HotVariableDump
@@ -41,7 +42,7 @@ def solve(input: str, output: str, block_name: str = 'A', blocks=None, edges=Non
                       'Dominator Tree', 'Postdominators & Control Dependence',
                       'Globals & Blocks', 'Phi Placement', 'Phi-Inserted Code', 'Partially Truncated SSA Form',
                       'SSA Checks', 'Join Merge Preview', 'State Merge Decision Preview',
-                      'Cycle-Based Region Reduction',
+                      'ITE-Cost Preview', 'Cycle-Based Region Reduction',
                       'Acyclic Region Summary Preview',
                       'Control Tree', 'Region Classification', 'Gen / Kill',
                       'Region Transfer Functions (Structural)']
@@ -51,7 +52,7 @@ def solve(input: str, output: str, block_name: str = 'A', blocks=None, edges=Non
                      'dominators / DF', 'dom tree', 'postdom / CD',
                      'SSA globals', 'DF worklist', 'phi code', 'SSA rename',
                      'partial audit', 'state merging', 'QCE merge risk',
-                     'cycle regions', 'veritesting idea',
+                     'ite formula growth', 'cycle regions', 'veritesting idea',
                      'region tree', 'area classes', 'reaching defs', 'structural transfer']
     display.show_hyperlinks()
     display.show_code(parser.lexemes)
@@ -85,6 +86,8 @@ def solve(input: str, output: str, block_name: str = 'A', blocks=None, edges=Non
     display.show_block_table(*phi.checks())
     display.show_block_table(*JoinMergePreview(phi, dominator, display.name).table())
     display.show_block_table(*StateMergeDecisionPreview(
+        phi, dominator, hot_variables, display.name).table())
+    display.show_block_table(*IteCostPreview(
         phi, dominator, hot_variables, display.name).table())
 
     regions = Regions(dominator, parser.lexemes)

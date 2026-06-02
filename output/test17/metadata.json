@@ -5,9 +5,9 @@
   "source": "input/test17.txt",
   "block_name": "A",
   "blocks": 9,
-  "sections": 24,
+  "sections": 25,
   "region_steps": 3,
-  "processed_at": "2026-05-31T08:33:12Z",
-  "dumped_at": "2026-05-31T08:33:12Z",
+  "processed_at": "2026-05-31T08:49:03Z",
+  "dumped_at": "2026-05-31T08:49:03Z",
   "report": "index.html"
 }

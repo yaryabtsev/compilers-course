@@ -4,6 +4,7 @@ import unittest
 from pathlib import Path
 
 from general.solver import solve
+from tasks.ite_cost_preview import IteCostPreview
 
 
 TEST13_BLOCKS = ['Entry', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'Exit']
@@ -189,6 +190,47 @@ class MyTestCase(unittest.TestCase):
                   [], []]
         edges = [{1}, {2}, {3, 4}, {4, 5}, {2, 5}, {6}, set()]
         assert solve('', 'output/test08/', 'B1', blocks, edges) is None
+
+    @staticmethod
+    def test_analysis_roadmap_ui():
+        assert solve('input/test13.txt', 'output/test13/') is None
+        html = Path('output/test13/index.html').read_text(encoding='utf-8')
+        report_js = Path('output/report.js').read_text(encoding='utf-8')
+        assert '<nav class="analysis-roadmap"' in html
+        assert '<ol class="roadmap-path">' in html
+        assert '<details class="roadmap-branch" data-family=' in html
+        assert '<section class="analysis-roadmap"' not in html
+        assert html.index('<nav class="analysis-roadmap"') < html.index('<main class="report-main">')
+        assert 'data-section-title="Control Flow Graph"' in html
+        assert 'data-section-title="State Merge Decision Preview"' in html
+        assert '<span data-status="warning">warning</span>' in html
+        assert 'updateRoadmapStatuses' in report_js
+
+    @staticmethod
+    def test_state_merge_decision_preview():
+        assert solve('input/test10.txt', 'output/test10/') is None
+        html = Path('output/test10/index.html').read_text(encoding='utf-8')
+        assert 'State Merge Decision Preview' in html
+        assert 'candidate merged vars' in html
+        assert 'future hot vars' in html
+        assert 'merge-risky' in html
+        assert 'no-future-query' in html
+        assert 'Static preview only' in html
+
+    @staticmethod
+    def test_ite_cost_preview():
+        assert solve('input/test13.txt', 'output/test13/') is None
+        html = Path('output/test13/index.html').read_text(encoding='utf-8')
+        assert 'ITE-Cost Preview' in html
+        assert 'expanded branch preview' in html
+        assert 'a = ite(' in html
+        assert 'D: t &gt; #0' in html
+        assert ') + y &gt; #0' in html
+        assert '<td>1</td>\n<td>1</td>\n<td>17</td>' in html
+        assert 'shallow' in html
+        assert 'no future branch' in html
+        assert 'Syntactic shallow preview only' in html
+        assert IteCostPreview.metrics('ite(a, ite(b, c, d), e)') == (2, 2, 7)
 
     @staticmethod
     def test_test13_qadd_beta_oracle_dump_patches():

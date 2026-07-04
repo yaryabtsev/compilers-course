@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-31T08:49:06Z",
+  "generated_at": "2026-06-17T09:14:00Z",
   "datasets": [
     {
       "id": "test01",
@@ -7,8 +7,8 @@
       "label": "test01: Exponentiation loop with parity branches",
       "source": "input/test01.txt",
       "href": "test01/index.html",
-      "dumped_at": "2026-05-31T08:48:57Z",
-      "processed_at": "2026-05-31T08:48:57Z",
+      "dumped_at": "2026-06-17T09:13:51Z",
+      "processed_at": "2026-06-17T09:13:51Z",
       "blocks": 10,
       "sections": 25,
       "region_steps": 3
@@ -19,8 +19,8 @@
       "label": "test02: Long loop value-table stress case",
       "source": "input/test02.txt",
       "href": "test02/index.html",
-      "dumped_at": "2026-05-31T08:49:04Z",
-      "processed_at": "2026-05-31T08:49:04Z",
+      "dumped_at": "2026-06-17T09:13:58Z",
+      "processed_at": "2026-06-17T09:13:58Z",
       "blocks": 7,
       "sections": 25,
       "region_steps": 5
@@ -31,8 +31,8 @@
       "label": "test03: Nested branch loop for SSA placement",
       "source": "input/test03.txt",
       "href": "test03/index.html",
-      "dumped_at": "2026-05-31T08:49:00Z",
-      "processed_at": "2026-05-31T08:49:00Z",
+      "dumped_at": "2026-06-17T09:13:54Z",
+      "processed_at": "2026-06-17T09:13:54Z",
       "blocks": 10,
       "sections": 25,
       "region_steps": 3
@@ -43,8 +43,8 @@
       "label": "test04: Flag-driven cyclic control flow",
       "source": "input/test04.txt",
       "href": "test04/index.html",
-      "dumped_at": "2026-05-31T08:48:58Z",
-      "processed_at": "2026-05-31T08:48:58Z",
+      "dumped_at": "2026-06-17T09:13:52Z",
+      "processed_at": "2026-06-17T09:13:52Z",
       "blocks": 7,
       "sections": 25,
       "region_steps": 4
@@ -55,8 +55,8 @@
       "label": "test05: Synthetic SSA merge graph",
       "source": "synthetic blocks / edges",
       "href": "test05/index.html",
-      "dumped_at": "2026-05-31T08:49:06Z",
-      "processed_at": "2026-05-31T08:49:06Z",
+      "dumped_at": "2026-06-17T09:14:00Z",
+      "processed_at": "2026-06-17T09:14:00Z",
       "blocks": 7,
       "sections": 25,
       "region_steps": 2
@@ -67,8 +67,8 @@
       "label": "test06: Synthetic nested region graph",
       "source": "synthetic blocks / edges",
       "href": "test06/index.html",
-      "dumped_at": "2026-05-31T08:48:54Z",
-      "processed_at": "2026-05-31T08:48:54Z",
+      "dumped_at": "2026-06-17T09:13:48Z",
+      "processed_at": "2026-06-17T09:13:48Z",
       "blocks": 10,
       "sections": 25,
       "region_steps": 7
@@ -79,8 +79,8 @@
       "label": "test07: Synthetic reverse-region graph",
       "source": "synthetic blocks / edges",
       "href": "test07/index.html",
-      "dumped_at": "2026-05-31T08:48:56Z",
-      "processed_at": "2026-05-31T08:48:56Z",
+      "dumped_at": "2026-06-17T09:13:49Z",
+      "processed_at": "2026-06-17T09:13:49Z",
       "blocks": 10,
       "sections": 25,
       "region_steps": 7
@@ -91,8 +91,8 @@
       "label": "test08: Synthetic gen/kill loop graph",
       "source": "synthetic blocks / edges",
       "href": "test08/index.html",
-      "dumped_at": "2026-05-31T08:48:53Z",
-      "processed_at": "2026-05-31T08:48:53Z",
+      "dumped_at": "2026-06-17T09:13:47Z",
+      "processed_at": "2026-06-17T09:13:47Z",
       "blocks": 7,
       "sections": 25,
       "region_steps": 3
@@ -103,8 +103,8 @@
       "label": "test09: Nested loop symbolic dump demo",
       "source": "input/test09.txt",
       "href": "test09/index.html",
-      "dumped_at": "2026-05-31T08:48:56Z",
-      "processed_at": "2026-05-31T08:48:56Z",
+      "dumped_at": "2026-06-17T09:13:50Z",
+      "processed_at": "2026-06-17T09:13:50Z",
       "blocks": 11,
       "sections": 25,
       "region_steps": 3
@@ -115,8 +115,8 @@
       "label": "test10: Acyclic merge and region-summary demo",
       "source": "input/test10.txt",
       "href": "test10/index.html",
-      "dumped_at": "2026-05-31T08:49:04Z",
-      "processed_at": "2026-05-31T08:49:04Z",
+      "dumped_at": "2026-06-17T09:13:58Z",
+      "processed_at": "2026-06-17T09:13:58Z",
       "blocks": 9,
       "sections": 25,
       "region_steps": 1
@@ -127,8 +127,8 @@
       "label": "test11: Load-based scanner loop",
       "source": "input/test11.txt",
       "href": "test11/index.html",
-      "dumped_at": "2026-05-31T08:49:00Z",
-      "processed_at": "2026-05-31T08:49:00Z",
+      "dumped_at": "2026-06-17T09:13:53Z",
+      "processed_at": "2026-06-17T09:13:53Z",
       "blocks": 9,
       "sections": 25,
       "region_steps": 5
@@ -139,8 +139,8 @@
       "label": "test12: Inline array-like scanner loop",
       "source": "input/test12.txt",
       "href": "test12/index.html",
-      "dumped_at": "2026-05-31T08:49:01Z",
-      "processed_at": "2026-05-31T08:49:01Z",
+      "dumped_at": "2026-06-17T09:13:55Z",
+      "processed_at": "2026-06-17T09:13:55Z",
       "blocks": 9,
       "sections": 25,
       "region_steps": 5
@@ -151,8 +151,8 @@
       "label": "test13: Qadd dependency expansion baseline",
       "source": "input/test13.txt",
       "href": "test13/index.html",
-      "dumped_at": "2026-05-31T08:49:02Z",
-      "processed_at": "2026-05-31T08:49:02Z",
+      "dumped_at": "2026-06-17T09:13:56Z",
+      "processed_at": "2026-06-17T09:13:56Z",
       "blocks": 9,
       "sections": 25,
       "region_steps": 1
@@ -163,8 +163,8 @@
       "label": "test14: Qadd beta 0.50 oracle variant",
       "source": "input/test13.txt",
       "href": "test14/index.html",
-      "dumped_at": "2026-05-31T08:49:05Z",
-      "processed_at": "2026-05-31T08:49:05Z",
+      "dumped_at": "2026-06-17T09:13:59Z",
+      "processed_at": "2026-06-17T09:13:59Z",
       "blocks": 9,
       "sections": 25,
       "region_steps": 1
@@ -175,8 +175,8 @@
       "label": "test15: Qadd beta 0.75 oracle variant",
       "source": "input/test13.txt",
       "href": "test15/index.html",
-      "dumped_at": "2026-05-31T08:49:05Z",
-      "processed_at": "2026-05-31T08:49:05Z",
+      "dumped_at": "2026-06-17T09:13:59Z",
+      "processed_at": "2026-06-17T09:13:59Z",
       "blocks": 9,
       "sections": 25,
       "region_steps": 1
@@ -187,8 +187,8 @@
       "label": "test16: Qadd beta 0.90 oracle variant",
       "source": "input/test13.txt",
       "href": "test16/index.html",
-      "dumped_at": "2026-05-31T08:49:06Z",
-      "processed_at": "2026-05-31T08:49:06Z",
+      "dumped_at": "2026-06-17T09:14:00Z",
+      "processed_at": "2026-06-17T09:14:00Z",
       "blocks": 9,
       "sections": 25,
       "region_steps": 1
@@ -199,8 +199,8 @@
       "label": "test17: Quantified-merge loop pattern sketch",
       "source": "input/test17.txt",
       "href": "test17/index.html",
-      "dumped_at": "2026-05-31T08:49:03Z",
-      "processed_at": "2026-05-31T08:49:03Z",
+      "dumped_at": "2026-06-17T09:13:57Z",
+      "processed_at": "2026-06-17T09:13:57Z",
       "blocks": 9,
       "sections": 25,
       "region_steps": 3

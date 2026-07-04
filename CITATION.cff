@@ -1,0 +1,15 @@
+cff-version: 1.2.0
+message: "If you use this project, please cite it using the metadata below."
+title: "compilers-course"
+type: software
+authors:
+  - family-names: "Riabtsev"
+    given-names: "Yaroslav"
+    orcid: "https://orcid.org/0000-0001-5530-3752"
+repository-code: "https://github.com/ninjaro/compilers-course"
+keywords:
+  - compilers-course
+  - middle-end dumps
+  - MIR-like examples
+  - symbolic execution
+  - compiler analysis

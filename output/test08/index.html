@@ -29,32 +29,252 @@
 </div>
 </div>
 </details>
-<nav aria-label="Report sections">
-<a class="content" href="#title-0"><span>01</span>Base MIR</a>
-<a class="content" href="#title-1"><span>02</span>Control Flow Graph</a>
-<a class="content" href="#title-2"><span>03</span>Symbolic Branch Conditions</a>
-<a class="content" href="#title-3"><span>04</span>Q_add / Q_t Approximation</a>
-<a class="content" href="#title-4"><span>05</span>Quantified Pattern Preview</a>
-<a class="content" href="#title-5"><span>06</span>Symbolic Execution Scope Stubs</a>
-<a class="content" href="#title-6"><span>07</span>Local Value Tables</a>
-<a class="content" href="#title-7"><span>08</span>Input / Output Sets</a>
-<a class="content" href="#title-8"><span>09</span>Pred / Dom / Idom / DF</a>
-<a class="content" href="#title-9"><span>10</span>Dominator Tree</a>
-<a class="content" href="#title-10"><span>11</span>Postdominators & Control Dependence</a>
-<a class="content" href="#title-11"><span>12</span>Globals & Blocks</a>
-<a class="content" href="#title-12"><span>13</span>Phi Placement</a>
-<a class="content" href="#title-13"><span>14</span>Phi-Inserted Code</a>
-<a class="content" href="#title-14"><span>15</span>Partially Truncated SSA Form</a>
-<a class="content" href="#title-15"><span>16</span>SSA Checks</a>
-<a class="content" href="#title-16"><span>17</span>Join Merge Preview</a>
-<a class="content" href="#title-17"><span>18</span>State Merge Decision Preview</a>
-<a class="content" href="#title-18"><span>19</span>ITE-Cost Preview</a>
-<a class="content" href="#title-19"><span>20</span>Cycle-Based Region Reduction</a>
-<a class="content" href="#title-20"><span>21</span>Acyclic Region Summary Preview</a>
-<a class="content" href="#title-21"><span>22</span>Control Tree</a>
-<a class="content" href="#title-22"><span>23</span>Region Classification</a>
-<a class="content" href="#title-23"><span>24</span>Gen / Kill</a>
-<a class="content" href="#title-24"><span>25</span>Region Transfer Functions (Structural)</a>
+<nav class="analysis-roadmap" aria-labelledby="analysis-roadmap-title">
+<div class="roadmap-header">
+<div>
+<p id="analysis-roadmap-title">Analysis Roadmap</p>
+<small>analysis flow and derived dumps</small>
+</div>
+<div class="roadmap-legend" aria-label="Roadmap status legend">
+<span data-status="available">available</span>
+<span data-status="empty">empty</span>
+<span data-status="warning">warning</span>
+<span data-status="not-applicable">n/a</span>
+</div>
+</div>
+<ol class="roadmap-path">
+<li class="roadmap-stage" data-family="source">
+<a class="roadmap-node roadmap-main-node" href="#title-0" data-family="source" data-section-title="Base MIR" data-status="available" title="Base MIR">
+<span class="roadmap-node-top">
+<span class="roadmap-node-label">MIR</span>
+<span class="roadmap-status">available</span>
+</span>
+<span class="roadmap-node-desc">input split into basic blocks</span>
+</a>
+
+</li>
+<li class="roadmap-stage" data-family="graph">
+<a class="roadmap-node roadmap-main-node" href="#title-1" data-family="graph" data-section-title="Control Flow Graph" data-status="available" title="Control Flow Graph">
+<span class="roadmap-node-top">
+<span class="roadmap-node-label">CFG</span>
+<span class="roadmap-status">available</span>
+</span>
+<span class="roadmap-node-desc">successors, predecessors, and branch shape</span>
+</a>
+<details class="roadmap-branch" data-family="query" open>
+<summary>Branch queries</summary>
+<ol class="roadmap-branch-list">
+<li><a class="roadmap-node roadmap-branch-node" href="#title-2" data-family="query" data-section-title="Symbolic Branch Conditions" data-status="available" title="Symbolic Branch Conditions">
+<span class="roadmap-node-top">
+<span class="roadmap-node-label">Branch Conditions</span>
+<span class="roadmap-status">available</span>
+</span>
+<span class="roadmap-node-desc">syntactic path and fork preview</span>
+</a></li>
+<li><a class="roadmap-node roadmap-branch-node" href="#title-3" data-family="query" data-section-title="Q_add / Q_t Approximation" data-status="available" title="Q_add / Q_t Approximation">
+<span class="roadmap-node-top">
+<span class="roadmap-node-label">Query Pressure</span>
+<span class="roadmap-status">available</span>
+</span>
+<span class="roadmap-node-desc">future branch-use estimates</span>
+</a></li>
+<li><a class="roadmap-node roadmap-branch-node" href="#title-4" data-family="query" data-section-title="Quantified Pattern Preview" data-status="available" title="Quantified Pattern Preview">
+<span class="roadmap-node-top">
+<span class="roadmap-node-label">Loop Pattern</span>
+<span class="roadmap-status">available</span>
+</span>
+<span class="roadmap-node-desc">bounded loop-shape inference</span>
+</a></li>
+<li><a class="roadmap-node roadmap-branch-node" href="#title-5" data-family="query" data-section-title="Symbolic Execution Scope Stubs" data-status="available" title="Symbolic Execution Scope Stubs">
+<span class="roadmap-node-top">
+<span class="roadmap-node-label">Scope Notes</span>
+<span class="roadmap-status">available</span>
+</span>
+<span class="roadmap-node-desc">intentionally unsupported MIR concepts</span>
+</a></li>
+</ol>
+</details>
+
+</li>
+<li class="roadmap-stage" data-family="local">
+<a class="roadmap-node roadmap-main-node" href="#title-6" data-family="local" data-section-title="Local Value Tables" data-status="available" title="Local Value Tables">
+<span class="roadmap-node-top">
+<span class="roadmap-node-label">Local Facts</span>
+<span class="roadmap-status">available</span>
+</span>
+<span class="roadmap-node-desc">local numbering and value table rows</span>
+</a>
+<details class="roadmap-branch" data-family="local" open>
+<summary>Local data flow</summary>
+<ol class="roadmap-branch-list">
+<li><a class="roadmap-node roadmap-branch-node" href="#title-7" data-family="local" data-section-title="Input / Output Sets" data-status="available" title="Input / Output Sets">
+<span class="roadmap-node-top">
+<span class="roadmap-node-label">Input / Output</span>
+<span class="roadmap-status">available</span>
+</span>
+<span class="roadmap-node-desc">variables read before and defined in blocks</span>
+</a></li>
+</ol>
+</details>
+
+</li>
+<li class="roadmap-stage" data-family="dominance">
+<a class="roadmap-node roadmap-main-node" href="#title-8" data-family="dominance" data-section-title="Pred / Dom / Idom / DF" data-status="available" title="Pred / Dom / Idom / DF">
+<span class="roadmap-node-top">
+<span class="roadmap-node-label">Dominance</span>
+<span class="roadmap-status">available</span>
+</span>
+<span class="roadmap-node-desc">dominators, immediate dominators, and frontier</span>
+</a>
+<details class="roadmap-branch" data-family="dominance" open>
+<summary>Derived dominance views</summary>
+<ol class="roadmap-branch-list">
+<li><a class="roadmap-node roadmap-branch-node" href="#title-9" data-family="dominance" data-section-title="Dominator Tree" data-status="available" title="Dominator Tree">
+<span class="roadmap-node-top">
+<span class="roadmap-node-label">Dom Tree</span>
+<span class="roadmap-status">available</span>
+</span>
+<span class="roadmap-node-desc">tree view of immediate dominators</span>
+</a></li>
+<li><a class="roadmap-node roadmap-branch-node" href="#title-10" data-family="dominance" data-section-title="Postdominators &amp; Control Dependence" data-status="available" title="Postdominators &amp; Control Dependence">
+<span class="roadmap-node-top">
+<span class="roadmap-node-label">Postdom / CD</span>
+<span class="roadmap-status">available</span>
+</span>
+<span class="roadmap-node-desc">postdominators and control dependence</span>
+</a></li>
+</ol>
+</details>
+
+</li>
+<li class="roadmap-stage" data-family="ssa">
+<a class="roadmap-node roadmap-main-node" href="#title-12" data-family="ssa" data-section-title="Phi Placement" data-status="available" title="Phi Placement">
+<span class="roadmap-node-top">
+<span class="roadmap-node-label">SSA</span>
+<span class="roadmap-status">available</span>
+</span>
+<span class="roadmap-node-desc">phi placement and rename-oriented checks</span>
+</a>
+<details class="roadmap-branch" data-family="ssa" open>
+<summary>SSA artifacts</summary>
+<ol class="roadmap-branch-list">
+<li><a class="roadmap-node roadmap-branch-node" href="#title-11" data-family="ssa" data-section-title="Globals &amp; Blocks" data-status="available" title="Globals &amp; Blocks">
+<span class="roadmap-node-top">
+<span class="roadmap-node-label">Globals</span>
+<span class="roadmap-status">available</span>
+</span>
+<span class="roadmap-node-desc">definition blocks selected for SSA</span>
+</a></li>
+<li><a class="roadmap-node roadmap-branch-node" href="#title-13" data-family="ssa" data-section-title="Phi-Inserted Code" data-status="available" title="Phi-Inserted Code">
+<span class="roadmap-node-top">
+<span class="roadmap-node-label">Phi Code</span>
+<span class="roadmap-status">available</span>
+</span>
+<span class="roadmap-node-desc">MIR after phi insertion</span>
+</a></li>
+<li><a class="roadmap-node roadmap-branch-node" href="#title-14" data-family="ssa" data-section-title="Partially Truncated SSA Form" data-status="available" title="Partially Truncated SSA Form">
+<span class="roadmap-node-top">
+<span class="roadmap-node-label">SSA Rename</span>
+<span class="roadmap-status">available</span>
+</span>
+<span class="roadmap-node-desc">rename trace and resulting names</span>
+</a></li>
+<li><a class="roadmap-node roadmap-branch-node" href="#title-15" data-family="ssa" data-section-title="SSA Checks" data-status="available" title="SSA Checks">
+<span class="roadmap-node-top">
+<span class="roadmap-node-label">SSA Checks</span>
+<span class="roadmap-status">available</span>
+</span>
+<span class="roadmap-node-desc">small consistency audit</span>
+</a></li>
+</ol>
+</details>
+<details class="roadmap-branch" data-family="merge" open>
+<summary>Merge previews</summary>
+<ol class="roadmap-branch-list">
+<li><a class="roadmap-node roadmap-branch-node" href="#title-16" data-family="merge" data-section-title="Join Merge Preview" data-status="available" title="Join Merge Preview">
+<span class="roadmap-node-top">
+<span class="roadmap-node-label">Join Merge</span>
+<span class="roadmap-status">available</span>
+</span>
+<span class="roadmap-node-desc">join candidates from predecessor/phi data</span>
+</a></li>
+<li><a class="roadmap-node roadmap-branch-node" href="#title-17" data-family="merge" data-section-title="State Merge Decision Preview" data-status="available" title="State Merge Decision Preview">
+<span class="roadmap-node-top">
+<span class="roadmap-node-label">Merge Risk</span>
+<span class="roadmap-status">available</span>
+</span>
+<span class="roadmap-node-desc">static overlap with future hot variables</span>
+</a></li>
+<li><a class="roadmap-node roadmap-branch-node" href="#title-18" data-family="merge" data-section-title="ITE-Cost Preview" data-status="available" title="ITE-Cost Preview">
+<span class="roadmap-node-top">
+<span class="roadmap-node-label">ITE Cost</span>
+<span class="roadmap-status">available</span>
+</span>
+<span class="roadmap-node-desc">shallow formula-growth shape</span>
+</a></li>
+</ol>
+</details>
+
+</li>
+<li class="roadmap-stage" data-family="region">
+<a class="roadmap-node roadmap-main-node" href="#title-19" data-family="region" data-section-title="Cycle-Based Region Reduction" data-status="available" title="Cycle-Based Region Reduction">
+<span class="roadmap-node-top">
+<span class="roadmap-node-label">Regions</span>
+<span class="roadmap-status">available</span>
+</span>
+<span class="roadmap-node-desc">cycle reduction and region discovery</span>
+</a>
+<details class="roadmap-branch" data-family="region" open>
+<summary>Region summaries</summary>
+<ol class="roadmap-branch-list">
+<li><a class="roadmap-node roadmap-branch-node" href="#title-20" data-family="region" data-section-title="Acyclic Region Summary Preview" data-status="available" title="Acyclic Region Summary Preview">
+<span class="roadmap-node-top">
+<span class="roadmap-node-label">Acyclic Summary</span>
+<span class="roadmap-status">available</span>
+</span>
+<span class="roadmap-node-desc">straight-line region summary preview</span>
+</a></li>
+<li><a class="roadmap-node roadmap-branch-node" href="#title-21" data-family="region" data-section-title="Control Tree" data-status="available" title="Control Tree">
+<span class="roadmap-node-top">
+<span class="roadmap-node-label">Control Tree</span>
+<span class="roadmap-status">available</span>
+</span>
+<span class="roadmap-node-desc">region tree visualization</span>
+</a></li>
+<li><a class="roadmap-node roadmap-branch-node" href="#title-22" data-family="region" data-section-title="Region Classification" data-status="available" title="Region Classification">
+<span class="roadmap-node-top">
+<span class="roadmap-node-label">Classes</span>
+<span class="roadmap-status">available</span>
+</span>
+<span class="roadmap-node-desc">area, body, and loop region classes</span>
+</a></li>
+</ol>
+</details>
+
+</li>
+<li class="roadmap-stage" data-family="transfer">
+<a class="roadmap-node roadmap-main-node" href="#title-23" data-family="transfer" data-section-title="Gen / Kill" data-status="available" title="Gen / Kill">
+<span class="roadmap-node-top">
+<span class="roadmap-node-label">Transfer</span>
+<span class="roadmap-status">available</span>
+</span>
+<span class="roadmap-node-desc">reaching-definition facts and structural transfer</span>
+</a>
+<details class="roadmap-branch" data-family="transfer" open>
+<summary>Transfer detail</summary>
+<ol class="roadmap-branch-list">
+<li><a class="roadmap-node roadmap-branch-node" href="#title-24" data-family="transfer" data-section-title="Region Transfer Functions (Structural)" data-status="available" title="Region Transfer Functions (Structural)">
+<span class="roadmap-node-top">
+<span class="roadmap-node-label">Region Transfer</span>
+<span class="roadmap-status">available</span>
+</span>
+<span class="roadmap-node-desc">structural transfer-function preview</span>
+</a></li>
+</ol>
+</details>
+
+</li>
+</ol>
 </nav>
 </aside>
 <main class="report-main">
@@ -998,16 +1218,16 @@
 <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb3>Globals&nbsp;:&nbsp;</gb3>{<w0>m</w0>}&nbsp;<disj>&#8744;</disj>&nbsp;{<w0>n</w0>}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb2>def<sub><font class="block-name">B1</font></sub>&nbsp;:&nbsp;</gb2>{<w0>i</w0>}&nbsp;<disj>&#8744;</disj>&nbsp;{<w0>j</w0>}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb4>Blocks(<gb5>j</gb5>)&nbsp;:&nbsp;</gb4>{}&nbsp;<disj>&#8744;</disj>&nbsp;{<font class="block-name">B1</font>}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<ol class="mir-lines" start="3">
 <li><span><w0>a</w0>&nbsp;<w22>&xlarr;</w22>&nbsp;<w0>u1</w0>&nbsp;</span></li>
 </ol>
-<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb3>Globals&nbsp;:&nbsp;</gb3>{<w0>n</w0>,&nbsp;<w0>m</w0>}&nbsp;<disj>&#8744;</disj>&nbsp;{<w0>u1</w0>}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb2>def<sub><font class="block-name">B1</font></sub>&nbsp;:&nbsp;</gb2>{<w0>i</w0>,&nbsp;<w0>j</w0>}&nbsp;<disj>&#8744;</disj>&nbsp;{<w0>a</w0>}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb4>Blocks(<gb5>a</gb5>)&nbsp;:&nbsp;</gb4>{}&nbsp;<disj>&#8744;</disj>&nbsp;{<font class="block-name">B1</font>}<br><font class="block-name">B2</font><gb1>-block:</gb1><br>&nbsp;&nbsp;&nbsp;<gb2>def<sub><font class="block-name">B2</font></sub>&nbsp;:&nbsp;</gb2>{}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<ol class="mir-lines" start="4">
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb3>Globals&nbsp;:&nbsp;</gb3>{<w0>m</w0>,&nbsp;<w0>n</w0>}&nbsp;<disj>&#8744;</disj>&nbsp;{<w0>u1</w0>}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb2>def<sub><font class="block-name">B1</font></sub>&nbsp;:&nbsp;</gb2>{<w0>j</w0>,&nbsp;<w0>i</w0>}&nbsp;<disj>&#8744;</disj>&nbsp;{<w0>a</w0>}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb4>Blocks(<gb5>a</gb5>)&nbsp;:&nbsp;</gb4>{}&nbsp;<disj>&#8744;</disj>&nbsp;{<font class="block-name">B1</font>}<br><font class="block-name">B2</font><gb1>-block:</gb1><br>&nbsp;&nbsp;&nbsp;<gb2>def<sub><font class="block-name">B2</font></sub>&nbsp;:&nbsp;</gb2>{}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<ol class="mir-lines" start="4">
 <li><span><w0>i</w0>&nbsp;<w22>&xlarr;</w22>&nbsp;<w23>+</w23>,&nbsp;<w0>i</w0>,&nbsp;<w3><h>#</h>1</w3>&nbsp;</span></li>
 </ol>
-<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb3>Globals&nbsp;:&nbsp;</gb3>{<w0>n</w0>,&nbsp;<w0>m</w0>,&nbsp;<w0>u1</w0>}&nbsp;<disj>&#8744;</disj>&nbsp;{<w0>i</w0>}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb2>def<sub><font class="block-name">B2</font></sub>&nbsp;:&nbsp;</gb2>{}&nbsp;<disj>&#8744;</disj>&nbsp;{<w0>i</w0>}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb4>Blocks(<gb5>i</gb5>)&nbsp;:&nbsp;</gb4>{<font class="block-name">B1</font>}&nbsp;<disj>&#8744;</disj>&nbsp;{<font class="block-name">B2</font>}<br><font class="block-name">B3</font><gb1>-block:</gb1><br>&nbsp;&nbsp;&nbsp;<gb2>def<sub><font class="block-name">B3</font></sub>&nbsp;:&nbsp;</gb2>{}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<ol class="mir-lines" start="5">
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb3>Globals&nbsp;:&nbsp;</gb3>{<w0>m</w0>,&nbsp;<w0>u1</w0>,&nbsp;<w0>n</w0>}&nbsp;<disj>&#8744;</disj>&nbsp;{<w0>i</w0>}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb2>def<sub><font class="block-name">B2</font></sub>&nbsp;:&nbsp;</gb2>{}&nbsp;<disj>&#8744;</disj>&nbsp;{<w0>i</w0>}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb4>Blocks(<gb5>i</gb5>)&nbsp;:&nbsp;</gb4>{<font class="block-name">B1</font>}&nbsp;<disj>&#8744;</disj>&nbsp;{<font class="block-name">B2</font>}<br><font class="block-name">B3</font><gb1>-block:</gb1><br>&nbsp;&nbsp;&nbsp;<gb2>def<sub><font class="block-name">B3</font></sub>&nbsp;:&nbsp;</gb2>{}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<ol class="mir-lines" start="5">
 <li><span><w0>a</w0>&nbsp;<w22>&xlarr;</w22>&nbsp;<w0>u2</w0>&nbsp;</span></li>
 </ol>
-<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb3>Globals&nbsp;:&nbsp;</gb3>{<w0>n</w0>,&nbsp;<w0>m</w0>,&nbsp;<w0>i</w0>,&nbsp;<w0>u1</w0>}&nbsp;<disj>&#8744;</disj>&nbsp;{<w0>u2</w0>}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb2>def<sub><font class="block-name">B3</font></sub>&nbsp;:&nbsp;</gb2>{}&nbsp;<disj>&#8744;</disj>&nbsp;{<w0>a</w0>}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb4>Blocks(<gb5>a</gb5>)&nbsp;:&nbsp;</gb4>{<font class="block-name">B1</font>}&nbsp;<disj>&#8744;</disj>&nbsp;{<font class="block-name">B3</font>}<br><font class="block-name">B4</font><gb1>-block:</gb1><br>&nbsp;&nbsp;&nbsp;<gb2>def<sub><font class="block-name">B4</font></sub>&nbsp;:&nbsp;</gb2>{}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<ol class="mir-lines" start="6">
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb3>Globals&nbsp;:&nbsp;</gb3>{<w0>m</w0>,&nbsp;<w0>u1</w0>,&nbsp;<w0>i</w0>,&nbsp;<w0>n</w0>}&nbsp;<disj>&#8744;</disj>&nbsp;{<w0>u2</w0>}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb2>def<sub><font class="block-name">B3</font></sub>&nbsp;:&nbsp;</gb2>{}&nbsp;<disj>&#8744;</disj>&nbsp;{<w0>a</w0>}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb4>Blocks(<gb5>a</gb5>)&nbsp;:&nbsp;</gb4>{<font class="block-name">B1</font>}&nbsp;<disj>&#8744;</disj>&nbsp;{<font class="block-name">B3</font>}<br><font class="block-name">B4</font><gb1>-block:</gb1><br>&nbsp;&nbsp;&nbsp;<gb2>def<sub><font class="block-name">B4</font></sub>&nbsp;:&nbsp;</gb2>{}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<ol class="mir-lines" start="6">
 <li><span><w0>j</w0>&nbsp;<w22>&xlarr;</w22>&nbsp;<w0>u3</w0>&nbsp;</span></li>
 </ol>
-<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb3>Globals&nbsp;:&nbsp;</gb3>{<w0>u2</w0>,&nbsp;<w0>m</w0>,&nbsp;<w0>n</w0>,&nbsp;<w0>i</w0>,&nbsp;<w0>u1</w0>}&nbsp;<disj>&#8744;</disj>&nbsp;{<w0>u3</w0>}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb2>def<sub><font class="block-name">B4</font></sub>&nbsp;:&nbsp;</gb2>{}&nbsp;<disj>&#8744;</disj>&nbsp;{<w0>j</w0>}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb4>Blocks(<gb5>j</gb5>)&nbsp;:&nbsp;</gb4>{<font class="block-name">B1</font>}&nbsp;<disj>&#8744;</disj>&nbsp;{<font class="block-name">B4</font>}<br><font class="block-name">B5</font><gb1>-block:</gb1><br>&nbsp;&nbsp;&nbsp;<gb2>def<sub><font class="block-name">B5</font></sub>&nbsp;:&nbsp;</gb2>{}<br><font class="block-name">Exit</font><gb1>-block:</gb1><br>&nbsp;&nbsp;&nbsp;<gb2>def<sub><font class="block-name">Exit</font></sub>&nbsp;:&nbsp;</gb2>{}</div></details>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb3>Globals&nbsp;:&nbsp;</gb3>{<w0>u1</w0>,&nbsp;<w0>m</w0>,&nbsp;<w0>n</w0>,&nbsp;<w0>i</w0>,&nbsp;<w0>u2</w0>}&nbsp;<disj>&#8744;</disj>&nbsp;{<w0>u3</w0>}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb2>def<sub><font class="block-name">B4</font></sub>&nbsp;:&nbsp;</gb2>{}&nbsp;<disj>&#8744;</disj>&nbsp;{<w0>j</w0>}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<gb4>Blocks(<gb5>j</gb5>)&nbsp;:&nbsp;</gb4>{<font class="block-name">B1</font>}&nbsp;<disj>&#8744;</disj>&nbsp;{<font class="block-name">B4</font>}<br><font class="block-name">B5</font><gb1>-block:</gb1><br>&nbsp;&nbsp;&nbsp;<gb2>def<sub><font class="block-name">B5</font></sub>&nbsp;:&nbsp;</gb2>{}<br><font class="block-name">Exit</font><gb1>-block:</gb1><br>&nbsp;&nbsp;&nbsp;<gb2>def<sub><font class="block-name">Exit</font></sub>&nbsp;:&nbsp;</gb2>{}</div></details>
 <div class="table-scroll"><table>
 <thead><tr>
 <th>var =</th>
@@ -1033,7 +1253,7 @@
 </details>
 <details id="title-12"><summary><h2 class="block-table-title"><span class="section-title">Phi Placement</span><small class="section-note">DF worklist</small></h2></summary>
 <details class="trace"><summary><p class="summary-span"><span>Trace</span><small class="section-note">derivation steps</small></p></summary><div class="trace-code">
-<l id="1">variable</l>&nbsp;<w0>u2</w0>:<br>&nbsp;&nbsp;&nbsp;<l id="2">WorkList</l> : {}<br><l id="1">variable</l>&nbsp;<w0>m</w0>:<br>&nbsp;&nbsp;&nbsp;<l id="2">WorkList</l> : {}<br><l id="1">variable</l>&nbsp;<w0>n</w0>:<br>&nbsp;&nbsp;&nbsp;<l id="2">WorkList</l> : {}<br><l id="1">variable</l>&nbsp;<w0>i</w0>:<br>&nbsp;&nbsp;&nbsp;<l id="2">WorkList</l> : {<font class="block-name">B1</font>,&nbsp;<font class="block-name">B2</font>}<br>&nbsp;&nbsp;&nbsp;<l id="3">insert</l>&nbsp;<phi>&phi;(<h>*</h><w0>i</w0>)</phi>&nbsp;in&nbsp;<font class="block-name">B2</font><gb1>-block:</gb1><br><l id="1">variable</l>&nbsp;<w0>u3</w0>:<br>&nbsp;&nbsp;&nbsp;<l id="2">WorkList</l> : {}<br><l id="1">variable</l>&nbsp;<w0>u1</w0>:<br>&nbsp;&nbsp;&nbsp;<l id="2">WorkList</l> : {}</div></details>
+<l id="1">variable</l>&nbsp;<w0>u1</w0>:<br>&nbsp;&nbsp;&nbsp;<l id="2">WorkList</l> : {}<br><l id="1">variable</l>&nbsp;<w0>m</w0>:<br>&nbsp;&nbsp;&nbsp;<l id="2">WorkList</l> : {}<br><l id="1">variable</l>&nbsp;<w0>n</w0>:<br>&nbsp;&nbsp;&nbsp;<l id="2">WorkList</l> : {}<br><l id="1">variable</l>&nbsp;<w0>i</w0>:<br>&nbsp;&nbsp;&nbsp;<l id="2">WorkList</l> : {<font class="block-name">B1</font>,&nbsp;<font class="block-name">B2</font>}<br>&nbsp;&nbsp;&nbsp;<l id="3">insert</l>&nbsp;<phi>&phi;(<h>*</h><w0>i</w0>)</phi>&nbsp;in&nbsp;<font class="block-name">B2</font><gb1>-block:</gb1><br><l id="1">variable</l>&nbsp;<w0>u3</w0>:<br>&nbsp;&nbsp;&nbsp;<l id="2">WorkList</l> : {}<br><l id="1">variable</l>&nbsp;<w0>u2</w0>:<br>&nbsp;&nbsp;&nbsp;<l id="2">WorkList</l> : {}</div></details>
 <div class="table-scroll"><table>
 <thead><tr>
 <th>block =</th>

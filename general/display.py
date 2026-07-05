@@ -6,6 +6,7 @@ import subprocess
 import sys
 from pathlib import Path
 
+from general.analysis_roadmap import render_analysis_roadmap
 from general.template_assets import ensure_output_assets, render_template
 
 
@@ -306,8 +307,8 @@ class Display:
         self.title_id += 1
 
     def show_hyperlinks(self):
-        links = '\n'.join([Display.href(self.titles[_id], "content", _id) for _id in range(len(self.titles))])
-        print(render_template('report_shell.html', links=links, blocks=self.n, sections=len(self.titles)))
+        roadmap = render_analysis_roadmap(self.titles, self.notes)
+        print(render_template('report_shell.html', blocks=self.n, sections=len(self.titles), roadmap=roadmap))
 
     @staticmethod
     def href(title: str, class_name: str, title_id: int):

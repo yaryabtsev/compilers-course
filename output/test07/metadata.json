@@ -5,9 +5,9 @@
   "source": "synthetic blocks / edges",
   "block_name": "B1",
   "blocks": 10,
-  "sections": 25,
+  "sections": 28,
   "region_steps": 7,
-  "processed_at": "2026-05-31T08:48:56Z",
-  "dumped_at": "2026-05-31T08:48:56Z",
+  "processed_at": "2026-07-04T13:26:11Z",
+  "dumped_at": "2026-07-04T13:26:11Z",
   "report": "index.html"
 }

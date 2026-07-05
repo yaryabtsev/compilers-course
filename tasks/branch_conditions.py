@@ -1,6 +1,8 @@
 from collections import defaultdict, deque
 from html import escape
 
+from tasks.z3_simplification import Z3FormulaSimplifier
+
 
 class SymbolicBranchDump:
     def __init__(self, lexemes, edges, name):
@@ -11,6 +13,7 @@ class SymbolicBranchDump:
         self.branches = self.find_branches()
         self.edge_conditions = self.build_edge_conditions()
         self.path_prefixes = self.collect_path_prefixes()
+        self.simplifier = Z3FormulaSimplifier()
 
     def table(self):
         rows = []
@@ -41,6 +44,55 @@ class SymbolicBranchDump:
                       'prefixes shown', 'path prefix', 'status'], [
             '<comment>Path prefixes are sampled syntactic acyclic prefixes. '
             'Cycles are cut and no SMT satisfiability check is performed.</comment>'
+        ]
+
+    def z3_table(self):
+        rows = []
+        for info in self.branches:
+            condition = self.simplifier.simplify_text(info['condition'])
+            raw_paths = self.path_prefixes.get(info['block'], [])
+            simplified_paths = self.simplify_paths(raw_paths)
+            rows.append([
+                self.name(info['block']),
+                info['condition'],
+                Z3FormulaSimplifier.html(condition.z3_input),
+                Z3FormulaSimplifier.html(condition.z3_simplified),
+                Z3FormulaSimplifier.html(condition.rendered),
+                self.format_paths(raw_paths),
+                simplified_paths,
+                str(condition.raw_ast_size),
+                str(condition.simplified_ast_size),
+                str(condition.raw_depth),
+                str(condition.simplified_depth),
+                str(condition.raw_ite_count),
+                str(condition.simplified_ite_count),
+                Z3FormulaSimplifier.status_text(condition),
+            ])
+        if not rows:
+            result = self.simplifier.simplify_text('true')
+            rows.append([
+                'No conditional branches',
+                'true',
+                Z3FormulaSimplifier.html(result.z3_input),
+                Z3FormulaSimplifier.html(result.z3_simplified),
+                Z3FormulaSimplifier.html(result.rendered),
+                'true',
+                Z3FormulaSimplifier.html(result.rendered),
+                str(result.raw_ast_size),
+                str(result.simplified_ast_size),
+                str(result.raw_depth),
+                str(result.simplified_depth),
+                str(result.raw_ite_count),
+                str(result.simplified_ite_count),
+                Z3FormulaSimplifier.status_text(result),
+            ])
+        return rows, ['block', 'raw MIR condition', 'Z3 input', 'Z3 simplified',
+                      'rendered', 'raw path prefix', 'rendered path prefix',
+                      'input AST nodes', 'simplified AST nodes', 'input depth',
+                      'simplified depth', 'ITE before', 'ITE after', 'status'], [
+            '<comment>Z3 simplification is display-only. It normalizes branch formulas already '
+            'found by the static dump and does not prune paths, change the CFG, request models, '
+            'or guide exploration.</comment>'
         ]
 
     def find_label_blocks(self):
@@ -122,6 +174,16 @@ class SymbolicBranchDump:
                 if successor not in path and len(prefixes[successor]) <= max_paths:
                     queue.append((successor, next_conditions, path + (successor,)))
         return prefixes
+
+    def simplify_paths(self, paths):
+        if not paths:
+            return Z3FormulaSimplifier.html(self.simplifier.simplify_text('true').simplified)
+        formatted = []
+        for path in paths:
+            expression = ' and '.join(path) if path else 'true'
+            result = self.simplifier.simplify_text(expression)
+            formatted.append(Z3FormulaSimplifier.html(result.rendered if result.rendered != 'None' else result.z3_simplified))
+        return '<br>'.join(formatted)
 
     def edge_condition(self, source, target):
         return self.edge_conditions.get((source, target), 'true')
@@ -217,5 +279,3 @@ class SymbolicBranchDump:
         if kind == 7:
             return 'pass'
         return escape(str(token))
-
-

@@ -35,6 +35,7 @@ def solve(input: str, output: str, block_name: str = 'A', blocks=None, edges=Non
     n = len(parser.lexemes)
     display.n = n
     display.titles = ['Base MIR', 'Control Flow Graph', 'Symbolic Branch Conditions',
+                      'Z3 Branch Simplification Preview',
                       'Q_add / Q_t Approximation', 'Quantified Pattern Preview',
                       'Symbolic Execution Scope Stubs',
                       'Local Value Tables', 'Input / Output Sets',
@@ -42,22 +43,29 @@ def solve(input: str, output: str, block_name: str = 'A', blocks=None, edges=Non
                       'Dominator Tree', 'Postdominators & Control Dependence',
                       'Globals & Blocks', 'Phi Placement', 'Phi-Inserted Code', 'Partially Truncated SSA Form',
                       'SSA Checks', 'Join Merge Preview', 'State Merge Decision Preview',
-                      'ITE-Cost Preview', 'Cycle-Based Region Reduction',
+                      'Z3 Merge Simplification Preview',
+                      'ITE-Cost Preview', 'Z3 ITE-Cost Simplification Preview',
+                      'Cycle-Based Region Reduction',
                       'Acyclic Region Summary Preview',
                       'Control Tree', 'Region Classification', 'Gen / Kill',
                       'Region Transfer Functions (Structural)']
-    display.notes = ['MIR / blocks', 'CFG edges', 'SE forks', 'QCE recurrence',
+    display.notes = ['MIR / blocks', 'CFG edges', 'SE forks', 'Z3 normalization',
+                     'QCE recurrence',
                      'node tree / pattern inference', 'unsupported papers',
                      'LVN table', 'local data-flow',
                      'dominators / DF', 'dom tree', 'postdom / CD',
                      'SSA globals', 'DF worklist', 'phi code', 'SSA rename',
                      'partial audit', 'state merging', 'QCE merge risk',
-                     'ite formula growth', 'cycle regions', 'veritesting idea',
+                     'Z3 merge formulas',
+                     'ite formula growth', 'Z3 ite formulas',
+                     'cycle regions', 'veritesting idea',
                      'region tree', 'area classes', 'reaching defs', 'structural transfer']
     display.show_hyperlinks()
     display.show_code(parser.lexemes)
     display.show_graph(parser.edges)
-    display.show_block_table(*SymbolicBranchDump(parser.lexemes, parser.edges, display.name).table())
+    branch_dump = SymbolicBranchDump(parser.lexemes, parser.edges, display.name)
+    display.show_block_table(*branch_dump.table())
+    display.show_block_table(*branch_dump.z3_table())
     hot_variables = HotVariableDump(parser.lexemes, parser.edges, display.name, beta=qadd_beta)
     display.show_block_table_group(hot_variables.tables(output))
     display.show_block_table_group(QuantifiedPatternPreview(parser.lexemes, parser.edges, display.name).tables())
@@ -87,8 +95,10 @@ def solve(input: str, output: str, block_name: str = 'A', blocks=None, edges=Non
     display.show_block_table(*JoinMergePreview(phi, dominator, display.name).table())
     display.show_block_table(*StateMergeDecisionPreview(
         phi, dominator, hot_variables, display.name).table())
-    display.show_block_table(*IteCostPreview(
-        phi, dominator, hot_variables, display.name).table())
+    ite_preview = IteCostPreview(phi, dominator, hot_variables, display.name)
+    display.show_block_table(*ite_preview.z3_merge_table())
+    display.show_block_table(*ite_preview.table())
+    display.show_block_table(*ite_preview.z3_table())
 
     regions = Regions(dominator, parser.lexemes)
     display.show_graphs(list(regions.find_regions()))

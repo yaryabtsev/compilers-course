@@ -24,6 +24,11 @@ ROADMAP = [
                         'description': 'syntactic path and fork preview',
                     },
                     {
+                        'section': 'Z3 Branch Simplification Preview',
+                        'label': 'Z3 Branches',
+                        'description': 'display-only branch normalization',
+                    },
+                    {
                         'section': 'Q_add / Q_t Approximation',
                         'label': 'Query Pressure',
                         'description': 'future branch-use estimates',
@@ -132,9 +137,19 @@ ROADMAP = [
                         'description': 'static overlap with future hot variables',
                     },
                     {
+                        'section': 'Z3 Merge Simplification Preview',
+                        'label': 'Z3 Merge',
+                        'description': 'simplified merge expressions',
+                    },
+                    {
                         'section': 'ITE-Cost Preview',
                         'label': 'ITE Cost',
                         'description': 'shallow formula-growth shape',
+                    },
+                    {
+                        'section': 'Z3 ITE-Cost Simplification Preview',
+                        'label': 'Z3 ITE Cost',
+                        'description': 'simplified ite and branch shapes',
                     },
                 ],
             },

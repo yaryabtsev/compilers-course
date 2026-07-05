@@ -2,6 +2,7 @@ from html import escape
 
 from tasks.branch_conditions import SymbolicBranchDump
 from tasks.query_cost_estimation import HotVariableDump
+from tasks.z3_simplification import Z3FormulaSimplifier
 
 
 class IteCostPreview:
@@ -12,13 +13,10 @@ class IteCostPreview:
         self.name = name
         self.max_expr_nodes = max_expr_nodes
         self.branches = SymbolicBranchDump(hot_variables.lexemes, hot_variables.edges, name)
+        self.simplifier = Z3FormulaSimplifier()
 
     def table(self):
-        rows = []
-        for block in range(self.dominator.N):
-            preds = sorted(self.dominator.pred_list[block])
-            for variable in sorted(self.phi.phi_args[block]):
-                rows.append(self.preview_row(block, preds, variable))
+        rows = [self.preview_row(record) for record in self.preview_records()]
         if not rows:
             rows.append(['No ITE previews', 'None', 'None', 'None', 'None',
                          '0', '0', '0', 'no merge candidates'])
@@ -29,16 +27,116 @@ class IteCostPreview:
             'path-insensitive and is not an SMT formula, simplifier, runtime benchmark, or solver-cost estimate.</comment>'
         ]
 
-    def preview_row(self, block, preds, variable):
+    def z3_merge_table(self):
+        rows = []
+        for record in self.preview_records():
+            raw = record.get('ite_rhs')
+            if not raw:
+                rows.append([
+                    record['site'],
+                    record['variable'],
+                    'None',
+                    'None',
+                    'None',
+                    'None',
+                    '0',
+                    '0',
+                    '0',
+                    '0',
+                    '0',
+                    record['status'],
+                ])
+                continue
+            result = self.simplifier.simplify_text(raw)
+            rows.append(self.z3_row(record['site'], record['variable'], raw, result))
+        if not rows:
+            rows.append(['No merge candidates', 'None', 'None', 'None', 'None', 'None',
+                         '0', '0', '0', '0', '0', '0', 'not applicable'])
+        return rows, ['join', 'variable', 'raw MIR expression', 'Z3 input', 'Z3 simplified',
+                      'rendered', 'input AST nodes', 'simplified AST nodes', 'input depth',
+                      'simplified depth', 'ITE before', 'ITE after', 'status'], [
+            '<comment>Z3 simplification is applied only to reconstructed merge expressions for display. '
+            'The dependency and hot-variable merge-risk decision is unchanged.</comment>'
+        ]
+
+    def z3_table(self):
+        rows = []
+        for record in self.preview_records():
+            raw_merge = record.get('ite_rhs')
+            if raw_merge:
+                rows.append(self.z3_row('merged value', record['site'], raw_merge,
+                                        self.simplifier.simplify_text(raw_merge), record['variable']))
+            raw_branch = record.get('expanded')
+            if raw_branch:
+                rows.append(self.z3_row('future branch', record['site'], raw_branch,
+                                        self.simplifier.simplify_text(raw_branch), record['variable']))
+        if not rows:
+            rows.append(['No Z3 formulas', 'None', 'None', 'None', 'None', 'None', 'None',
+                         '0', '0', '0', '0', '0', '0', 'not applicable'])
+        return rows, ['context', 'site', 'variable', 'raw MIR expression', 'Z3 input',
+                      'Z3 simplified', 'rendered', 'input AST nodes', 'simplified AST nodes',
+                      'input depth', 'simplified depth', 'ITE before', 'ITE after', 'status'], [
+            '<comment>Z3 simplification is a presentation layer over the existing ITE preview. '
+            'It does not build symbolic states, call satisfiability checks, estimate solver cost, '
+            'or change any QCE/CFG/SSA analysis result.</comment>'
+        ]
+
+    def z3_row(self, *args):
+        if len(args) == 4:
+            site, variable, raw, result = args
+            prefix = [site, variable]
+        else:
+            context, site, raw, result, variable = args
+            prefix = [context, site, variable]
+        return prefix + [
+            Z3FormulaSimplifier.html(raw),
+            Z3FormulaSimplifier.html(result.z3_input),
+            Z3FormulaSimplifier.html(result.z3_simplified),
+            Z3FormulaSimplifier.html(result.rendered),
+            str(result.raw_ast_size),
+            str(result.simplified_ast_size),
+            str(result.raw_depth),
+            str(result.simplified_depth),
+            str(result.raw_ite_count),
+            str(result.simplified_ite_count),
+            Z3FormulaSimplifier.status_text(result),
+        ]
+
+    def preview_records(self):
+        records = []
+        for block in range(self.dominator.N):
+            preds = sorted(self.dominator.pred_list[block])
+            for variable in sorted(self.phi.phi_args[block]):
+                records.append(self.preview_record(block, preds, variable))
+        return records
+
+    def preview_record(self, block, preds, variable):
+        base = {
+            'block': block,
+            'site': self.name(block),
+            'variable': escape(variable),
+            'ite_preview': 'None',
+            'ite_rhs': None,
+            'future_branch': 'None',
+            'expanded': None,
+            'metric_text': 'None',
+            'ite_ops': '0',
+            'ite_depth': '0',
+            'expr_size': '0',
+            'status': '',
+        }
         if len(preds) != 2:
-            return self.status_row(block, variable, 'unsupported arity', f'{len(preds)} predecessors')
+            base['status'] = f'unsupported arity: {len(preds)} predecessors'
+            return base
 
         incoming = [(pred, self.incoming_condition(pred), self.expression_at_block_exit(pred, variable))
                     for pred in preds]
         if any(expr is None for _, _, expr in incoming):
-            return self.status_row(block, variable, 'missing expression', 'source expression could not be reconstructed')
+            base['status'] = 'missing expression: source expression could not be reconstructed'
+            return base
 
-        ite_expr = f'{escape(variable)} = ite({incoming[0][1]}, {incoming[0][2]}, {incoming[1][2]})'
+        ite_rhs = f'ite({incoming[0][1]}, {incoming[0][2]}, {incoming[1][2]})'
+        ite_expr = f'{escape(variable)} = {ite_rhs}'
         future = self.future_branch(block, variable, ite_expr)
         metric_text = future['expanded'] or ite_expr
         ops, depth, size = self.metrics(metric_text)
@@ -47,16 +145,31 @@ class IteCostPreview:
             metric_text = self.truncate(metric_text)
             size = self.max_expr_nodes
             status = 'truncated'
+        base.update({
+            'ite_preview': self.truncate(ite_expr) if self.metrics(ite_expr)[2] > self.max_expr_nodes else ite_expr,
+            'ite_rhs': ite_rhs,
+            'future_branch': future['branch'] or 'None',
+            'expanded': future['expanded'],
+            'metric_text': metric_text if future['expanded'] else 'None',
+            'ite_ops': str(ops),
+            'ite_depth': str(depth),
+            'expr_size': str(size),
+            'status': status,
+        })
+        return base
+
+    @staticmethod
+    def preview_row(record):
         return [
-            self.name(block),
-            escape(variable),
-            self.truncate(ite_expr) if self.metrics(ite_expr)[2] > self.max_expr_nodes else ite_expr,
-            future['branch'] or 'None',
-            metric_text if future['expanded'] else 'None',
-            str(ops),
-            str(depth),
-            str(size),
-            status,
+            record['site'],
+            record['variable'],
+            record['ite_preview'],
+            record['future_branch'],
+            record['metric_text'],
+            record['ite_ops'],
+            record['ite_depth'],
+            record['expr_size'],
+            record['status'],
         ]
 
     def status_row(self, block, variable, status, reason):

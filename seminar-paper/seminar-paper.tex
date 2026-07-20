@@ -1,0 +1,1466 @@
+% COMSYS Seminar/Preseminar Paper Template
+% ----------------------------------------
+% Based on the original IEEE template package, includes annotations by COMSYS
+
+\documentclass[conference]{IEEEtran}
+
+%\IEEEoverridecommandlockouts
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{algorithmic}
+\usepackage[hidelinks]{hyperref}
+\hypersetup{hypertexnames=false}
+\usepackage[capitalize,nameinlink]{cleveref}
+\usepackage[sort]{cite}
+\usepackage[inline]{enumitem}
+\usepackage{graphicx}
+\usepackage{textcomp}
+\usepackage{array}
+\usepackage{tabularx}
+\usepackage{booktabs}
+\usepackage{float}
+\usepackage{xcolor}
+\usepackage{listings}
+\def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
+    T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
+
+\definecolor{listingbg}{RGB}{248,248,248}
+\definecolor{listingrule}{RGB}{185,185,185}
+\definecolor{listingnumber}{RGB}{100,100,100}
+\lstdefinelanguage{MIR}{
+  morekeywords={param,goto,return,ifTrue,ifFalse},
+  sensitive=true,
+  morecomment=[l]{//},
+  morestring=[b]"
+}
+\lstdefinelanguage{Pseudo}{
+  morekeywords={algorithm,for,each,every,if,else,return,repeat,until,while,where,with,from,to,in,not,and,or,continue,then},
+  sensitive=false,
+  morecomment=[l]{//},
+  morestring=[b]"
+}
+\lstdefinestyle{paperlisting}{
+  basicstyle=\ttfamily\scriptsize,
+  frame=tb,
+  framerule=0.4pt,
+  columns=fullflexible,
+  keepspaces=true,
+  showstringspaces=false,
+  breaklines=true,
+  breakatwhitespace=false,
+  tabsize=2,
+  xleftmargin=0em,
+  xrightmargin=0em,
+  aboveskip=0.6\baselineskip,
+  belowskip=0.6\baselineskip,
+  captionpos=b
+}
+\lstdefinestyle{numberedlisting}{
+  style=paperlisting,
+  numbers=left,
+  numberstyle=\tiny\color{listingnumber},
+  numbersep=5pt,
+  xleftmargin=1.6em,
+  framexleftmargin=1.6em
+}
+\lstdefinestyle{cfull}{style=numberedlisting,language=C}
+\lstdefinestyle{mirfull}{style=numberedlisting,language=MIR}
+\lstdefinestyle{csmall}{style=paperlisting,language=C}
+\lstdefinestyle{mir}{style=paperlisting,language=MIR}
+\lstdefinestyle{pseudo}{style=paperlisting,language=Pseudo}
+\crefname{lstlisting}{listing}{listings}
+\Crefname{lstlisting}{Listing}{Listings}
+
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+\newcommand{\tighttable}{\scriptsize\renewcommand{\arraystretch}{1.16}}
+
+% Treat the "if-then-else" selector as a single function-name token rather than
+% three italic letters, so it does not read like a product of variables.
+\newcommand{\ite}{\mathit{ite}}
+
+\begin{document}
+
+\title{Explaining State-Merging Techniques Through MIR Dumps}
+
+\author{\IEEEauthorblockN{Yaroslav Riabtsev}
+\IEEEauthorblockA{\textit{ Communication and Distributed Systems} \\
+\textit{RWTH Aachen University}\\
+Aachen, Germany \\
+yaroslav.riabtsev@rwth-aachen.de}
+}
+
+\maketitle
+
+\begin{abstract}
+This article explains state merging through inspectable MIR examples and dumps.
+Instead of evaluating a full symbolic executor by coverage, bugs found,
+generated tests, or solver runtime, it follows the intermediate structures that
+make merging decisions understandable: path splits and joins, conditional
+symbolic values, dependency sets, future-relevant variables, and compact
+summaries of repeated or regional control flow.
+
+The paper starts from dynamic symbolic execution and standard state merging,
+where merging reduces the number of states but moves complexity into
+disjunctions and \(\ite\)-expressions. It then uses small MIR examples to
+explain Query Count Estimation, hot variables, state similarity, Dynamic State
+Merging, Veritesting-style region summarization, and indexed loop summaries for
+regular path families.
+
+The central theme is the same throughout: a merge is useful when the
+formula complexity it introduces remains manageable. The MIR dumps make this
+trade-off visible by showing which path-dependent values reach future
+conditions, which variables become important for later queries, and which CFG
+or loop structures admit a compact summary.
+\end{abstract}
+
+
+\begin{IEEEkeywords}
+symbolic execution, dynamic symbolic execution, state merging, query count estimation, dynamic state merging, Veritesting, static symbolic execution, MIR, control-flow graph, path explosion
+\end{IEEEkeywords}
+
+\section{Introduction}
+\label{sec:introduction}
+
+KLEE is one of the most widely known practical systems for dynamic symbolic
+execution. It takes programs represented in LLVM IR, executes them over
+symbolic inputs, and maintains symbolic states corresponding to different
+possible executions of the program. This execution model is useful in automated
+test generation, coverage-oriented exploration, bug finding, and reachability
+analysis. For this reason, KLEE provides a convenient technical reference point
+for discussing more specialized symbolic-analysis techniques \cite{klee}.
+
+Several techniques considered in this article can be understood as extensions,
+modifications, or close relatives of a KLEE-like execution model. They preserve
+the same general view of a program as executable intermediate code with explicit
+control flow, but change how symbolic states, path predicates, program regions,
+or repeated path structures are represented and manipulated. The article
+therefore looks inside these techniques rather than treating them as black boxes,
+focusing on the local mechanics: which data an algorithm needs, which
+structures appear in the CFG, which expressions are constructed, which
+heuristics guide decisions, and which intermediate artifacts determine these
+steps.
+
+Throughout the article, a symbolic state is written as
+
+\[
+s = (\ell, \pi, \mu).
+\]
+
+Here, \(\ell\) is the current program location: an instruction, a basic block,
+or a point in the CFG. The component \(\pi\) is the path condition, i.e. the
+constraint accumulated along the current path. The component \(\mu\) is the
+symbolic store: a mapping from program variables to symbolic expressions.
+Accordingly, \(\mu(x)\) denotes the current symbolic value of variable \(x\).
+Different papers use different notation for this conceptual triple, such as
+location/path condition/store, instruction counter/path predicate/symbolic
+memory, or variants like \((\ell, \Pi, \Delta)\). This article uses
+\((\ell, \pi, \mu)\) consistently.
+
+KLEE operates on LLVM IR, but the experiments in this article use a smaller
+MIR-like representation. The representation contains only the constructs needed
+to demonstrate the techniques under discussion: parameters, assignments,
+arithmetic operations, conditional jumps, unconditional jumps, and returns. This
+level is sufficient to expose basic blocks, CFGs, join points, branch
+conditions, simple loops, variable dependencies, and candidate summaries.
+
+The examples and tables were produced using an existing MIR analysis project
+reused as a lightweight playground \cite{compilers-course}. The MIR experiments
+inspect static control-flow and dependency information; they do not perform
+path-feasibility solving or test generation. The article itself is
+self-contained: the dumps provide reproducibility artifacts, but the relevant
+listings, equations, and result tables are included in the text.
+
+\section{Motivation and Baseline}
+\label{sec:motivation}
+
+Symbolic execution occupies a useful position between concrete execution and
+static reasoning about program behavior. In a concrete run, a program receives
+specific input values and follows one specific path. In symbolic execution,
+some inputs are replaced with symbolic values, and program operations construct
+expressions over those symbols. As a result, a single analysis state can
+represent not just one execution, but a family of executions satisfying a
+particular condition.
+
+The practical motivation for such systems is usually described through the
+outputs of the analysis. If the condition for following a path is satisfiable,
+a solver can construct a concrete input that makes the original program follow
+the same path. This makes symbolic execution useful for automatic test
+generation, line and branch coverage improvement, bug finding, reachability
+checking, and reproducible bug reports. This connection to concrete inputs is
+one of the reasons symbolic execution remains attractive: an analysis result
+can often be turned into an actual program run.
+
+Another important layer is the SMT-solving layer. In practical symbolic
+execution systems, path conditions and symbolic expressions over inputs are
+translated into logical formulas. A solver is then used to check path
+feasibility, discard impossible branches, and construct models for concrete
+inputs. This layer accounts for a significant part of the practical cost of
+the analysis: even when the number of explored paths is moderate, the formulas
+themselves may become difficult for the solver.
+
+This article focuses on the algorithmic foundations that support both of these
+aspects. Test generation, coverage, verification, and bug reporting provide the
+external motivation rather than experimental metrics. Instead, the article
+studies the intermediate structures on which such systems rely: symbolic states,
+path conditions, symbolic stores, control-flow graphs, join points, conditional
+expressions, variable dependencies, and local indicators of future complexity.
+
+This level is especially useful for discussing state-merging techniques. These
+techniques are not reducible to a single formula or a single solver call. They
+use information from different parts of the analysis: where join points are
+located, which values differ across paths, whether those values may appear in
+future conditions, whether several paths can be represented by a regional
+summary, and whether a repeated pattern is present in a loop. Understanding
+the algorithms therefore requires looking at the intermediate artifacts on
+which their decisions are based.
+
+\subsection{Dynamic Symbolic Execution}
+\label{sec:dse}
+
+KLEE is a path-based symbolic execution engine that dynamically interprets LLVM IR over symbolic states. A program is executed step
+by step, but input values may be symbolic rather than concrete. Operations over
+symbolic values construct expressions, and conditional branches add constraints
+to the path condition of the current state.
+
+Consider the example in \Cref{lst:c-count-matches}:
+
+\begin{lstlisting}[style=cfull,caption={C loop with repeated symbolic branch.},label={lst:c-count-matches}]
+int count_matches(int i, int n, int target) {
+    int matches = 0;
+
+    while (i < n) {
+        if (target == i) {
+            matches = matches + 1;
+        } else {
+            matches = matches + 0;
+        }
+
+        i = i + 1;
+    }
+
+    return matches;
+}
+\end{lstlisting}
+
+Assume that \(i\), \(n\), and \(\mathit{target}\) are symbolic inputs. At line 4, the
+executor has to determine whether the loop continues. At line 5, it has to
+choose one of the two updates of \texttt{matches}.
+
+When a branch condition depends on symbolic data, KLEE performs a fork: the
+current state is cloned, and the analysis continues with two states. One state
+receives the constraint for the true branch, and the other receives the
+constraint for the false branch. For example, entering the loop and taking the
+true branch of the inner condition gives the path condition
+\(i < n \land \mathit{target} = i\). Taking the false branch instead produces another
+state with the condition \(i < n \land \lnot(\mathit{target} = i)\).
+
+After the update \texttt{i = i + 1}, control returns to the loop condition, and
+the same branch structure repeats for the next value of \(i\). If the loop is
+unrolled for \(k\) iterations and both continuations of the inner branch are
+kept as syntactic variants, then the inner branch alone defines up to \(2^k\)
+branch histories.
+
+For this concrete scalar example, an SMT-backed executor may prune many
+combinations, because \(\mathit{target} = i\) can be true for at most one loop
+iteration. The MIR-level experiments keep the syntactic path family induced by
+the CFG; this gives the structural path family before feasibility pruning.
+
+KLEE does not add such branches blindly. For each side of a conditional branch,
+it checks the satisfiability of the corresponding path condition. If
+\(\pi \land c\) is unsatisfiable, the true branch is discarded. If
+\(\pi \land \lnot c\) is unsatisfiable, the false branch is discarded. The SMT
+solver therefore partially limits the growth of states: a syntactically
+available branch may be infeasible and will not be explored further.
+
+The experiments use the MIR-like version of the same example, shown in
+\Cref{lst:mir-count-matches}.
+
+\begin{lstlisting}[style=mirfull,caption={MIR form of the repeated-branch loop.},label={lst:mir-count-matches}]
+param i
+param n
+param target
+matches <-- #0
+Lloop: ifFalse i < n goto Lend
+ifFalse target = i goto Lskip
+matches <-- +, matches, #1
+goto Lnext
+Lskip: matches <-- +, matches, #0
+Lnext: i <-- +, i, #1
+goto Lloop
+Lend: return matches
+\end{lstlisting}
+
+The MIR form makes basic blocks and transitions explicit: the loop condition
+becomes a conditional jump from \texttt{Lloop}, the inner condition becomes a
+second conditional jump, and the update of \texttt{i} returns control to the
+loop header. This structure is enough to inspect CFG-level path growth: if the
+CFG contains two syntactic continuations, both are visible as potential
+variants in the structural experiment.
+
+As a result, the experiment exposes path growth in its pure structural form.
+Each binary symbolic branch doubles the number of potential histories, and a
+repeated branch inside a loop produces an exponential family of paths. This is
+path explosion.
+
+\subsection{Standard State Merging}
+\label{sec:state-merging}
+
+Path explosion arises because dynamic symbolic execution keeps different
+branch histories as different states. If paths diverge permanently, this is
+natural: they describe genuinely different continuations of the execution.
+However, in many programs, branches later reconverge at the same program
+location. In that case, it becomes possible to continue the analysis not from
+several independent states, but from one merged state.
+
+The idea of standard state merging is to combine several states located at the
+same program point \cite{efficient-merging,multise}. For simplicity, the
+following equations assume that the two states are
+merge-compatible: they are located at the same program point and their stores
+are defined over the same variables relevant after the merge.
+
+Let two such states be
+
+\[
+s_1 = (\ell, \pi_1, \mu_1),
+\]
+
+\[
+s_2 = (\ell, \pi_2, \mu_2).
+\]
+
+Both states are at the same location \(\ell\), but they reached it through
+different paths. The merged state must preserve information about both paths.
+Therefore, its path condition becomes a disjunction:
+
+\begin{equation}
+\label{eq:merged-path-condition}
+\pi = \pi_1 \lor \pi_2.
+\end{equation}
+
+Variable values must also depend on the path from which the execution arrived.
+For this purpose, state merging uses conditional expressions of the form
+\(\ite\), meaning if-then-else. For a variable \(x\), the merged store can be
+written as
+
+\begin{equation}
+\label{eq:merged-store}
+\mu(x) = \ite(\pi_1, \mu_1(x), \mu_2(x)).
+\end{equation}
+
+That is, if the path condition of the first state holds, the value is taken
+from \(\mu_1(x)\); otherwise, it is taken from \(\mu_2(x)\). In general,
+merging reduces the number of states, but moves path differences into formulas.
+
+In the example from the previous subsection, this can be seen on the variable
+\texttt{matches}. In \Cref{lst:c-count-matches}, lines 5--9 select one of two
+updates: line 6 increments \texttt{matches}, while line 8 leaves it unchanged.
+
+After these branches, control reaches the same point before the update of
+\texttt{i}. Instead of keeping two separate states, the value of
+\texttt{matches} can be represented by one conditional expression:
+
+\[
+\mathit{matches}' =
+\ite(\mathit{target} = i,\ \mathit{matches} + 1,\ \mathit{matches} + 0).
+\]
+
+This representation follows the store shape in \Cref{eq:merged-store} and
+remains precise: both branches are still represented in the formula. At the
+same time, the number of active states decreases, because the later analysis
+can continue from one merged state.
+
+However, standard state merging does not remove complexity; it changes its
+form. Before merging, the complexity is visible as the number of states and
+paths. After merging, it appears inside the path condition and symbolic store:
+disjunctions and \(\ite\)-expressions are introduced. If such conditional values
+are later used in new branch conditions, solver queries may become harder.
+
+Thus, state merging is a trade-off. It can reduce path explosion at the level of
+the number of states, but it may increase formula complexity. The following
+parts of the article examine this trade-off: when merging looks useful, when it
+becomes risky, and which intermediate data helps make that decision.
+
+\paragraph{ITE-cost shape: conditional values in later branches}
+To make the cost of state merging visible, it is useful to look both at the
+fact that states are merged and at where the introduced \(\ite\)-expression
+flows afterwards. If a conditional value is not used in later branch
+conditions, the merge may look relatively safe. If the value reaches a future
+branch condition, then the complexity introduced by merging is pushed into a
+later query.
+
+Consider the MIR fragment in \Cref{lst:mir-ite-preview}:
+
+\begin{lstlisting}[style=mirfull,caption={MIR branch with a join and a later hot branch.},label={lst:mir-ite-preview}]
+param x
+param y
+ifTrue x < #0 goto Lneg
+a <-- +, x, #5
+goto Ljoin
+Lneg: neg <-- -, #0, x
+a <-- +, neg, #1
+Ljoin: t <-- +, a, y
+ifTrue t > #0 goto Lhot
+r <-- +, y, #1
+goto Lend
+Lhot: r <-- +, t, #1
+Lend: return r
+\end{lstlisting}
+
+The first branch splits execution on the condition \(x < 0\).
+
+At \texttt{Ljoin}, the variable \texttt{a} has different expressions depending
+on the selected branch:
+
+\[
+a =
+\begin{cases}
+1 - x, & x < 0,\\
+x + 5, & \lnot(x < 0).
+\end{cases}
+\]
+
+A state-merge-style representation of this value can be written as
+\(a = \ite(x < 0,\ 1 - x,\ x + 5)\). Immediately after the join block,
+the program computes \(t = a + y\), and then checks the condition \(t > 0\).
+The incoming path conditions are mutually exclusive, and the conditional value
+is interpreted under their disjunction.
+
+Substituting the shallow \(\ite\)-representation of \texttt{a} into this branch
+condition gives
+
+\[
+\ite(x < 0,\ 1 - x,\ x + 5) + y > 0.
+\]
+
+This is the important shape for the later analysis: the \(\ite\)-expression
+does not simply sit in the symbolic store; it reaches a future branch condition.
+That makes the merge candidate interesting and potentially risky.
+
+For the merge site \texttt{Ljoin} and the variable \texttt{a}, the experiment
+reconstructs the sequence
+\[
+  a = \ite(x < 0,\ 1-x,\ x+5), \qquad t = a + y,
+\]
+and then observes that the branch \texttt{t > \#0} depends on this conditional
+value. The formula is small, but it already demonstrates the mechanism:
+merging reduces the number of states while introducing a conditional value that
+enters the next branch condition.
+
+The final value \texttt{r} at \texttt{Lend} gives the contrasting case. An
+\(\ite\)-representation can be constructed for that value as well, but there is
+no later branch condition after that point. This candidate is less dangerous
+with respect to future branch queries: the conditional value exists, but it is
+not pushed into another condition.
+
+The important distinction is future use. The local existence of an
+\(\ite\)-expression is not enough to characterize merge cost; the relevant
+question is whether the path-dependent value reaches a later condition.
+
+\paragraph{Hash-consed expressions}
+Besides path explosion, state merging also creates pressure on memory usage and
+on the cost of traversing symbolic expressions. After a merge, the symbolic
+store contains \(\ite\)-nodes. After SSA/phi-style representation and variable
+versioning, the same subexpressions may appear in several merge candidates,
+future-branch substitutions, and \(\widehat{Q}_{\mathrm{add}}\)-dependencies. If every step constructs
+a fresh expression tree, identical fragments are duplicated even when they
+represent the same object.
+
+Here, hash-consing is background from prior symbolic-execution work: it shares
+expression structure by assigning each expression node a structural key
+consisting of the node kind, its local payload, and the identifiers of its
+children \cite{veritesting}:
+
+\[
+\operatorname{key}(e) =
+(\operatorname{kind}(e),\ \operatorname{payload}(e),\ \operatorname{id}(e_1),\ldots,\operatorname{id}(e_n)).
+\]
+
+The payload may contain an operator name, a constant, a variable name, a
+variable version, or the information that the node is an \(\ite\). Before a new
+node is created, the table of already constructed expressions is queried by
+this key. If such a node already exists, its identifier is reused; otherwise, a
+new node is allocated. As a result, symbolic expressions are stored as a shared
+DAG rather than as a collection of independent trees.
+
+For merged symbolic expressions, hash-consing reduces duplication and repeated
+traversal without changing the meaning of the formulas. Counts of
+\(\ite\)-nodes, expression size, phi-related merge candidates, versioned
+dependencies, and future-branch substitution can all be computed over one
+shared representation instead of over duplicated trees.
+
+\section{Query Count Estimation and Dynamic State Merging}
+\label{sec:qce}
+
+\subsection{Query Count Estimation}
+\label{sec:qce-theory}
+
+Efficient State Merging introduces Query Count Estimation as a way to estimate
+whether the expected benefit of merging outweighs the possible increase in the
+complexity of future solver queries. In the source paper, \(Q_t\) estimates
+the expected total number of future solver queries, \(Q_{\mathrm{add}}\)
+concerns additional queries caused when a value that differs between states
+becomes symbolic after merging, and \(Q_{\mathrm{ite}}\) concerns future
+queries affected by conditional expressions introduced by the merge
+\cite{efficient-merging}. Variable-specific estimates then support the
+identification of hot variables.
+
+The \(\ite\)-flow example in \Cref{sec:state-merging} illustrates the
+\(Q_{\mathrm{ite}}\) side of this cost: a conditional value introduced at a
+join reaches a later branch condition. Appendix~\ref{app:qce-manual-baseline}
+manually applies the source-paper \(q\) recurrence to the MIR graph and
+produces the oracle \(Q_t\) and \(Q_{\mathrm{add}}\) values used in the
+comparison below.
+
+The MIR experiment uses a separate hatted notation for the quantities computed
+automatically from the CFG and recovered dependencies. For each block \(\ell\),
+\(\widehat{Q}_t(\ell)\) is a CFG-derived estimate of future
+conditional-branch pressure. For a variable \(v\),
+\(\widehat{Q}_{\mathrm{add}}(\ell,v)\) is the part of that pressure attributed
+to \(v\) by the selected dependency approximation. The local dependency
+indicator \(C(\ell,v)\) is non-zero when the selected dependency approximation
+decides that the branch condition at \(\ell\) depends on \(v\). The
+experimental hot set is therefore
+
+\[
+\widehat{\operatorname{Hot}}(\ell)
+=
+\{v \mid
+\widehat{Q}_{\mathrm{add}}(\ell,v)
+> \alpha \cdot \widehat{Q}_t(\ell)\}.
+\]
+
+Conceptually, \(\beta\) controls how strongly a later branch influences
+earlier locations. A larger value propagates more of the future pressure
+backward through the CFG. The threshold \(\alpha\) controls how selective the
+experimental hot-variable set is: small values mark more variables as hot,
+while larger values keep only variables whose
+\(\widehat{Q}_{\mathrm{add}}\) is a substantial fraction of
+\(\widehat{Q}_t\).
+
+In the default configuration, \(\alpha=0.35\) and \(\beta=0.50\). For an acyclic branch
+graph, the MIR recurrence can be summarized as
+
+\[
+\widehat{Q}_t(\ell)=
+\begin{cases}
+1 + \beta \sum_{s \in succ(\ell)} \widehat{Q}_t(s), & \ell \text{ is conditional},\\
+\sum_{s \in succ(\ell)} \widehat{Q}_t(s), & \text{otherwise},
+\end{cases}
+\]
+
+and, for conditional blocks,
+
+\[
+\widehat{Q}_{\mathrm{add}}(\ell,v)=
+C(\ell,v) + \beta \sum_{s \in succ(\ell)} \widehat{Q}_{\mathrm{add}}(s,v).
+\]
+
+For non-conditional blocks, the local \(C(\ell,v)\) term is omitted and only
+successor pressure is propagated.
+
+The same fixed-point computation gives both hatted quantities; only the local
+cost function changes.
+
+\begin{lstlisting}[style=pseudo,caption={Fixed-point propagation used for the hatted MIR estimates.},label={lst:qce-solver}]
+algorithm SolveFutureCost(CFG, branch_successors, local_cost):
+    q[block] = 0 for every block
+
+    repeat until q changes by less than tolerance:
+        next_q = empty vector
+
+        for block in reverse block order:
+            if block is a conditional branch:
+                next_q[block] =
+                    local_cost(block)
+                    + beta * sum(q[s] for s in branch successors)
+            else if block has one successor:
+                next_q[block] = local_cost(block) + q[successor]
+            else:
+                next_q[block] =
+                    local_cost(block)
+                    + beta * sum(q[s] for s in successors)
+
+        q = next_q
+
+    return q
+\end{lstlisting}
+
+In the MIR example below, future conditional branches are used as the
+query-pressure signal, while variable dependencies determine which source
+values contribute to that pressure. For this acyclic graph, the automatic
+\(\widehat{Q}_t\) recurrence has the same control-flow shape as the
+source-paper \(Q_t\) oracle; the principal
+experimental approximation is the recovered dependence relation used for
+\(\widehat{Q}_{\mathrm{add}}\).
+
+\subsection{Dependency Approximation Experiment}
+\label{sec:qce-dependencies}
+
+The MIR graph in \Cref{lst:mir-ite-preview} contains the dependency chain that
+drives the QCE example. The later branch is written as \texttt{t > \#0};
+\texttt{t} is computed as \texttt{a + y}; and \texttt{a} is defined on both
+incoming paths from the earlier branch. Therefore, the source-level dependency
+of the later branch is \(x,y\), even though the branch expression contains only
+\texttt{t}.
+
+The Appendix~\ref{app:qce-manual-baseline} oracle uses the source-paper
+two-location relation \((\ell,v)\mathcal C(\ell',e)\): the value of \(v\) at
+location \(\ell\) may affect the expression \(e\) evaluated at the later
+location \(\ell'\). The four automatic dependency modes approximate this
+relation from MIR syntax and CFG structure; the manual oracle is not a fifth
+implemented mode.
+
+The modes expose progressively deeper representations of the same dependency
+chain rather than competing in an identical variable namespace. Syntactic mode
+retains the branch temporary \texttt{t}; local expansion reaches \texttt{a}
+and \texttt{y}; CFG propagation resolves \texttt{a} to the source variables
+\texttt{x} and \texttt{y}; and versioned propagation records the same sources
+with definition versions.
+
+The syntactic approximation reads variables directly from branch expressions.
+For \texttt{t > \#0}, it reports only \texttt{t}. This is a useful minimal
+baseline because it locates query pressure cheaply: the analysis can already
+see that block \(D\) contains a future branch. What it cannot explain is why
+that branch is relevant to a merge performed earlier. The temporary
+\texttt{t} is still a surface variable, not the source of the path-dependent
+value.
+
+The local approximation expands assignments inside the current block. Since
+\texttt{t = a + y} appears immediately before the branch, local expansion
+reports \texttt{a, y}. This removes the temporary \texttt{t} and exposes that
+\texttt{a} and \texttt{y} are the values consumed by the later condition. The
+important remaining gap is conceptual: the analysis knows that \texttt{a}
+matters, but not why \texttt{a} differs between the incoming paths.
+
+The CFG approximation carries dependency sets along CFG edges and unions them
+at joins. It resolves \texttt{a} through both predecessor definitions and
+therefore recovers \(x,y\), which matches the oracle source variables for this
+example. This is the point where the earlier branch on \(x\) becomes connected
+to the later branch on \(t\). The union at joins is path-insensitive, but for
+this graph it is precise enough to explain the merge candidate.
+
+The versioned approximation associates dependencies with source versions,
+giving \(x_0,y_0\). Its numerical result is the same here because \(x\) and
+\(y\) have one relevant source definition. The representation matters in
+examples with redefinitions: it distinguishes a source value that reaches a
+future branch from a later assignment to a variable with the same name. The
+comparison is summarized in \Cref{tab:qce-dependency-modes}.
+
+\subsection{QCE Results}
+\label{sec:qce-results}
+
+For the default configuration \((\alpha=0.35,\ \beta=0.50)\),
+Table~\ref{tab:qce-comparison} places the automatic MIR estimates beside the
+manually computed source-paper oracle. Table~\ref{tab:qce-comparison}(a)
+aggregates the fixed-point result for each dependency mode. \textit{Vars} counts variables
+with non-zero contribution, \textit{Blocks} counts blocks where future
+dependency information is visible, \textit{Total \(\widehat{Q}_{\mathrm{add}}\)}
+sums the variable-attributed pressure, and \textit{Hot refs} counts
+block-variable references that pass the \(\widehat{\operatorname{Hot}}\)
+threshold. The displayed hatted quantities, aggregate masses, and hot-reference
+counts come from the automatic MIR analysis. Table~\ref{tab:qce-comparison}(b)
+contains the manual oracle. \textit{Oracle \(L_1\)} is
+computed separately by projecting those estimates onto the source-variable
+domain of the manual oracle in Appendix~\ref{app:qce-manual-baseline}:
+
+\[
+L_{1,\mathrm{oracle}}(m)
+=
+\sum_{\ell}
+\sum_{v\in V_{\mathrm{oracle}}}
+\left|
+\widehat{Q}_{\mathrm{add}}^{\,m}(\ell,v)
+-
+Q_{\mathrm{add}}(\ell,v)
+\right|.
+\]
+
+For this example, \(V_{\mathrm{oracle}}=\{x,y\}\). Intermediate variables
+reported by shallower modes, such as \texttt{t} or \texttt{a}, are not treated
+as false positives; their effect appears as source-level attribution that has
+not yet been recovered. For the versioned mode, source-version names such as
+\(x_0\) and \(y_0\) are normalized to their corresponding source variables
+before computing the distance. This article-level metric is distinct from the
+dumper's internal \textit{\(L_1\Delta\) vs CFG} summary, which compares
+automatic modes against CFG mode inside their reported variable spaces.
+
+The main result is not the exact total mass but the recovered variable
+identity. Syntactic mode retains only surface variables. Local mode improves
+data-flow recovery inside the block, but still attributes relevance to the
+intermediate join value \texttt{a}. CFG mode matches the oracle for this
+example: it recovers the source variables \(x,y\), the per-block
+\(Q_{\mathrm{add}}\) values, and the oracle hot-variable set. Versioned mode
+has the same numerical agreement after normalizing \(x_0,y_0\) to \(x,y\).
+Syntactic and local modes preserve part of the dependency at intermediate
+program variables and therefore recover only part of the source-level
+attribution measured by the oracle. Increasing \(\beta\) gives later branches
+more influence over earlier blocks, but it does not change the qualitative
+comparison between dependency approximations.
+
+\subsection{Merge Decision}
+\label{sec:qce-merge-decision}
+
+The hatted estimates are then used for a lightweight merge-risk question:
+
+\begin{quote}
+If a join merges values from multiple predecessors, do those merged values flow
+into future hot branch conditions?
+\end{quote}
+
+For each join candidate, the experiment identifies the join, recovers values
+arriving from its predecessors, determines their source dependencies, compares
+those dependencies with the experimental future-hot set
+\(\widehat{\operatorname{Hot}}(\ell)\), and interprets the overlap. The
+comparison uses the CFG dependency mode as the default source of future-hot
+variables. The two relevant rows are shown in
+\Cref{tab:state-merge-decision}.
+
+There are two different sets involved in this comparison. The future-hot set
+describes variables that can affect later branch pressure after the join. The
+merged-source set describes variables behind values that actually differ
+between the incoming states. A merge is risky when these sets overlap. A
+future-hot variable that is not part of the path-specific difference is still
+important to the later query, but it is not the reason this particular merge
+introduces path-dependent structure.
+
+The labels in \Cref{tab:state-merge-decision} are experimental labels for this
+overlap test. The relevant comparison is
+\[
+\operatorname{DepsOfDifferingValue}
+\cap
+\widehat{\operatorname{Hot}}(\ell).
+\]
+A non-empty partial overlap is reported as \texttt{mixed}; a candidate after
+which \(\widehat{Q}_t=0\) is reported as \texttt{no-future-query}.
+
+The central row is \texttt{D}/\texttt{Ljoin}/\texttt{a}: branch-specific
+definitions of \(a\) are reconstructed as
+\(a=\ite(x<0,\ 1-x,\ x+5)\), the block computes \(t=a+y\), and the following
+branch checks \(t>0\).
+
+The merge of \texttt{a} at \texttt{Ljoin} has consequences beyond local SSA. The
+merged value can influence the later branch through \texttt{t}. Both incoming
+definitions of \(a\) depend on \(x\), so the path-specific difference being
+merged is traced back to \(x\). The later branch depends on \(x\) and \(y\);
+\(y\) is future-hot because it participates in \(t=a+y\), but it is not the
+path-specific difference introduced by the merge. The relevant overlap is
+therefore \(x\), which produces the \texttt{mixed} decision. The final-value
+merge at \texttt{G}/exit is different: \texttt{r} may have different incoming
+expressions, but no later condition consumes it, so no future branch pressure
+remains and the row is labeled \texttt{no-future-query}.
+
+The result supports the central state-merging point: a merge is potentially
+risky not just because it creates an \(\ite\), but because the differing
+value remains relevant to future branch conditions. This type of relevance
+information could complement runtime merge heuristics without requiring the
+full query model to be reconstructed statically.
+
+A one-off call to \texttt{z3.simplify} was used to check the displayed form of
+the reconstructed expression; the \(\ite\) structure remained unchanged
+\cite{z3}.
+
+\subsection{State Similarity and Dynamic State Merging}
+\label{sec:dsm}
+
+Dynamic State Merging uses QCE to define a similarity relation between states.
+Two states at compatible program locations need not have identical symbolic
+stores. If they differ only in variables that are cold with respect to future
+queries, merging them is less likely to increase later formula cost. If they
+differ in hot variables, merging is less attractive because those differences
+are likely to appear in future branch conditions or other solver queries.
+
+Thus, QCE supplies the relevance dimensions for comparing symbolic stores. The
+state similarity question is not simply whether two stores are equal, but
+whether they differ in variables that matter after the merge point. The
+\texttt{Ljoin} example illustrates this relation: the path-dependent value of
+\texttt{a} is relevant because it flows into \texttt{t > \#0}; a value that
+differs only after the last branch is less important for future query
+complexity.
+
+A compact way to express the similarity test is
+
+\[
+\begin{aligned}
+s_1 \sim_\ell s_2
+\iff {} & \forall v \in \operatorname{Hot}(\ell): \\
+& \mu_1(v)=\mu_2(v)
+\lor \mathit{Sym}_I(\mu_1(v)) \\
+& \lor \mathit{Sym}_I(\mu_2(v)).
+\end{aligned}
+\]
+
+Here, \(\mathit{Sym}_I(e)\) means that expression \(e\) is already symbolic
+with respect to the symbolic input set \(I\). Equality on hot variables is the
+clean case. A difference may also be acceptable when at least one side is
+already symbolic, because merging then does not newly turn that variable from a
+concrete value into a symbolic value. Cold variables do not disappear from the
+program state, but they do not dominate the similarity decision.
+
+The MIR dependency experiment supplies the relevance part of this relation:
+the hatted future-hot set indicates which variables should be compared.
+
+DSM then addresses the scheduling side of the same problem. In ordinary dynamic
+symbolic execution, active states are stored in a worklist, and
+\texttt{pickNext} selects which state should be continued next. This driving
+heuristic may optimize for depth, coverage, random-path behavior, or another
+exploration criterion \cite{efficient-merging}. States that would be profitable
+to merge may not naturally reach the same join point under that order.
+
+DSM preserves the underlying driving heuristic but temporarily gives priority
+to forwarding candidates. Predecessor history records recent states within a
+bounded distance. When an active state is similar to a recent predecessor of
+another active state, the algorithm treats this as a potential merge
+opportunity and places suitable states into a forwarding set. These candidates
+are not chosen because the normal search heuristic would necessarily prefer
+them globally; they are chosen because the history relation suggests that they
+may soon reach compatible locations. Forwarding ends naturally when states
+merge, when the opportunity no longer holds, or when the similarity condition
+stops applying. After that, exploration returns to the underlying search
+strategy.
+
+The dependency example illustrates the relevance information used by this
+similarity relation, while DSM describes how such information is used during
+exploration.
+
+\section{Static Symbolic Execution and Veritesting}
+\label{sec:veritesting}
+
+Dynamic symbolic execution explores a program path by path: each state
+corresponds to one branch history. Static Symbolic Execution uses a different
+analysis unit. Instead of maintaining a separate state for each path, SSE tries
+to construct a formula for an entire program fragment. For a small acyclic
+region, this can be written in a simplified form as
+
+\begin{equation}
+\label{eq:sse-summary}
+\operatorname{Summary}(R) =
+\bigvee_{p \in \operatorname{paths}(R)}
+PC_p \land \mathit{Update}_p.
+\end{equation}
+
+Here, \(PC_p\) describes the conditions required to follow path \(p\), and
+\(\mathit{Update}_p\) describes the corresponding symbolic-store update. This makes SSE
+a natural candidate for compressing local branch diamonds: several paths inside
+a region can be represented by one summary structure in the form of
+\Cref{eq:sse-summary}.
+
+Veritesting uses this idea as part of dynamic analysis. At a candidate point,
+the system recovers a local CFG from the current execution state, reduces that
+CFG, identifies transition points, and applies SSE to the reduced acyclic
+graph \cite{veritesting}. Branch contexts and symbolic stores are propagated
+inside the static region; at joins they are merged into a summary rather than
+materialized as one state per path. At transition points, DSE states are
+recreated and ordinary path exploration resumes.
+
+Transition points are the boundary between the two modes. They appear at exits
+of the static region, at unresolved jumps, at calls or system interactions
+that require the dynamic engine, and at loop-related cases handled through
+unrolling, back-edge redirection, or an Incomplete Loop transition. This
+alternation is what makes Veritesting different from using DSE or SSE alone:
+static summaries are used locally, while the dynamic engine remains responsible
+for the rest of the execution.
+
+Java Ranger gives method calls a more central role because Java programs often
+contain many small methods, and dynamically dispatched calls depend on runtime
+receiver types \cite{java-ranger}. Inheritance and object-oriented dispatch
+make method boundaries frequent and semantically important, so treating every
+method call as an unconditional boundary would fragment multi-path regions.
+Java Ranger therefore introduces Method Regions and Dynamic Method Region
+Inlining: after runtime type information identifies the applicable target, a
+method region can be instantiated and inlined into the regional summary.
+Exceptional or otherwise unsuitable behaviors may remain separate Single-Path
+Cases.
+
+The MIR examples below use a narrower direct acyclic-region preview. The
+preview asks:
+
+\begin{quote}
+Does this branch-shaped part of the CFG look like a small acyclic region that
+could be summarized?
+\end{quote}
+
+The preview uses conditional entries, common exits or immediate
+postdominators, the node set between them, back-edge presence, and directly
+acyclic path sketches. It isolates one structural ingredient of Veritesting:
+recognizing a region whose shape admits a summary.
+
+The direct acyclic-region preview is shown in
+\Cref{lst:acyclic-region-preview}.
+
+\begin{lstlisting}[style=pseudo,caption={Direct acyclic-region preview.},label={lst:acyclic-region-preview}]
+algorithm DirectAcyclicRegionPreview(CFG, branches, ipdom):
+    for entry in branches:
+        exit = ipdom(entry)
+        region = nodes reachable before exit
+
+        if region contains a cycle:
+            row(entry, exit, region, status = "not directly acyclic")
+        else:
+            paths = bounded acyclic paths(entry, exit)
+            row(entry, exit, region, paths)
+\end{lstlisting}
+
+The first test MIR graph contains two acyclic diamond structures
+(\Cref{lst:mir-acyclic-diamond}).
+
+\begin{lstlisting}[style=mirfull,caption={Acyclic diamond MIR input.},label={lst:mir-acyclic-diamond}]
+param x
+param y
+ifTrue x > #0 goto Lpos
+neg <-- -, #0, x
+a <-- +, neg, y
+goto Ljoin
+Lpos: a <-- +, x, y
+Ljoin: ifFalse y == #0 goto Lscale
+r <-- +, a, #1
+goto Lend
+Lscale: r <-- *, a, y
+Lend: return r
+\end{lstlisting}
+
+The preview identifies two regions that can be represented as compact acyclic
+path sketches, as shown in \Cref{tab:region-preview-outcomes}.
+
+Both regions have two syntactic branches and one common exit. This is the case
+where a Veritesting-style approach is natural: instead of keeping two separate
+DSE continuations, the local region can be viewed through a summary form.
+
+The second test reuses the loop example from earlier sections
+(\Cref{lst:mir-count-matches}). In that listing, line 5 is the loop header,
+line 6 is the inner branch, and lines 10--11 form the latch and back edge.
+
+Here there are two different candidate regions. One starts at the loop header
+and contains a back edge. The other is the inner branch diamond inside the loop
+body. The direct preview distinguishes these cases in
+\Cref{tab:region-preview-outcomes}.
+
+This behavior is important: the loop-shaped candidate is not directly acyclic
+in the original CFG because it contains the back edge. A full Veritesting
+treatment would require CFG reduction, unrolling, or a transition to dynamic
+handling. The inner branch inside the loop is still a directly acyclic diamond
+region and can be summarized separately.
+
+A manual check gives the same classification; the same table records the
+expected structural reason for each outcome.
+
+Thus, the MIR examples illustrate a region-shape preview connected to
+Veritesting. Directly acyclic branch diamonds are classified as summary-shaped
+candidates, while a selected fragment with a back edge is marked as not
+directly acyclic. The inner branch of the loop is still a directly acyclic
+region, which shows that the preview depends on the selected CFG fragment,
+rather than on whether the surrounding function contains a loop.
+
+\section{Pattern-Based and Quantified State Merging}
+\label{sec:quantified}
+
+The previous section considered region-level summarization for acyclic CFG
+fragments. Loops introduce a different kind of structure: not just several
+branches inside one diamond region, but a repeated family of similar paths. If
+the loop body contains a symbolic branch, ordinary DSE can represent different
+combinations of branch outcomes across iterations. Standard state merging can
+merge individual join points, but with many repetitions the resulting nested
+\(\ite\)-expressions may still grow.
+
+Quantified merging targets groups of execution-tree states whose histories do
+not differ arbitrarily, but instead follow a regular pattern. The typical
+source-paper shape is a family of leaves whose histories can be written as
+
+\[
+h(\pi(\mathit{leaf})) = \omega_1\omega_2^k\omega_3.
+\]
+
+The prefix \(\omega_1\) reaches the repeating fragment, \(\omega_2\) is the
+loop-body pattern repeated \(k\) times, and \(\omega_3\) exits the fragment.
+Compatible leaf states can then be partitioned into regular merging groups.
+For such a group, repeated path constraints are encoded with a bounded
+quantified schema whose \(k\) ranges over repetition counts represented by the
+selected compatible states rather than every arbitrary unseen count; in the MIR
+preview below, \(k\) is used as an explanatory loop-iteration index. Store
+values are synthesized as functions of the repetition count \(k\) where
+possible. Ordinary \(\ite\)-based merging remains available for variables whose
+terms cannot be synthesized, and for groups where the regular pattern is not
+applicable \cite{quantified-merging}.
+
+The MIR experiment uses a CFG-level indexed-family preview. It approaches the
+same regularity phenomenon from the CFG side: instead of constructing an
+execution-tree merging group, it searches the loop for the structural elements
+that would generate an indexed family: loop guard, induction update, inner
+branch, guarded accumulator update, and repeat edge.
+
+The loop/accumulator MIR example reuses \Cref{lst:mir-count-matches}. The
+pattern experiment uses the loop guard on line 5, the inner branch on line 6, the
+two \texttt{matches} updates on lines 7 and 9, and the induction/back-edge
+shape on lines 10--11.
+
+The corresponding source-level loop shape is the body of
+\Cref{lst:c-count-matches}, especially lines 2--12.
+
+The repeated inner branch is \(\mathit{target} = i\).
+
+If the loop starts at \(i_0\) and exits at \(n\), the preview can write the
+following compact indexed sketch:
+
+\begin{equation}
+\label{eq:quantified-matches}
+\mathit{matches}_{\mathrm{out}}
+=
+\mathit{matches}_{\mathrm{in}}
++
+\sum_{k=i_0}^{n-1}
+\ite(\mathit{target} = k,\ 1,\ 0).
+\end{equation}
+
+\Cref{eq:quantified-matches} shows the regularity exposed by the preview: the
+same conditional update is repeated over the loop index. The summation is an
+explanatory sketch of the indexed family for this MIR loop. The loop guard
+defines the range of \(k\), the induction update defines how \(k\) advances,
+the inner branch defines the repeated condition, and the accumulator update
+supplies the per-iteration contribution.
+
+The compact recognition sketch in \Cref{lst:cfg-indexed-family-preview} checks
+for the CFG components needed by this indexed view.
+
+\begin{lstlisting}[style=pseudo,caption={CFG-level indexed-family preview.},label={lst:cfg-indexed-family-preview}]
+algorithm CfgIndexedFamilyPreview(CFG, branches, assignments):
+    find a loop back edge latch -> header
+    recover nodes between header and latch
+
+    guard = branch condition at header
+    induction = linear update of the loop variable
+    accumulator = inner branch with two constant updates
+
+    if guard, induction, and accumulator are found:
+        rewrite the branch condition with iteration variable k
+        emit indexed sketch:
+            accumulator += ite(condition(k), true_delta, false_delta)
+\end{lstlisting}
+
+The sketch looks for one back edge, recovers the loop body, and then identifies
+three components: a guard, a linear induction update, and a guarded
+accumulator. If all components are found, the result is an indexed sketch for
+one iteration and for the range of \(k\).
+
+For this MIR graph, the bounded node tree is shown in
+\Cref{tab:quantified-node-tree}.
+
+From this tree, the pattern-inference and manual-check summary in
+\Cref{tab:quantified-pattern-inference} is extracted:
+
+The same result can be described as the small automaton in
+\Cref{lst:quantified-automaton}.
+
+\begin{lstlisting}[style=pseudo,caption={Finite automaton view of the recognized loop pattern.},label={lst:quantified-automaton}]
+S0 -- not(i < n) --------------------------> ACCEPT-EXIT
+S0 -- i < n -------------------------------> S1
+S1 -- target = i / matches += 1 -----------> S2
+S1 -- not(target = i) / matches += 0 ------> S2
+S2 -- i += 1; k += 1 ----------------------> S0
+S0 + S1 + S2 recognized -------------------> ACCEPT
+\end{lstlisting}
+
+The automaton and the bounded node tree serve the same purpose: they show how a
+parameterized family of repeated histories is generated from a small structural
+pattern. The finite cases are loop exit, loop entry, true/false arm of the
+inner branch, latch update, and repeat. Once these cases are recognized, the
+repeated branch family can be described by one indexed schema.
+
+A manual comparison with the target shape is included in the same table.
+
+On the small loop example, the recovered guard, induction update, inner branch,
+and accumulator update lead to an indexed sketch of the form
+
+\[
+\text{for}\; k \in [i_0,n) \colon
+\quad
+\mathit{matches} \mathrel{+\!=} \ite(\mathit{target} = k,\ 1,\ 0).
+\]
+
+Recognizing this structure before formula construction may help select cases
+where quantified merging's execution-tree pattern search is likely to find a
+regular group.
+
+Automatic partial loop summarization is related, but it operates dynamically:
+it observes loop executions, matches induction-variable and guard behavior,
+predicts and confirms a symbolic iteration count, and emits partial pre-loop
+and post-loop conditions. Quantified merging instead compresses regular groups
+of symbolic states and path histories.
+
+
+\section{Related Work}
+\label{sec:related-work}
+
+KLEE is the main baseline for the execution model used in this paper: it
+executes LLVM IR over symbolic states, forks states at symbolic branches,
+checks path feasibility with an SMT solver, and explores the resulting state
+space~\cite{klee}. SymCC is related as an alternative implementation strategy
+for symbolic execution, where instrumentation is compiled rather than
+interpreted~\cite{symcc}.
+
+Efficient State Merging is the closest reference for the QCE and DSM
+discussion~\cite{efficient-merging}. In that work, \(Q_t\), \(Q_{\mathrm{add}}\), and
+Dynamic State Merging guide real merge decisions during symbolic execution.
+QCE supplies the future-relevance model used to reason about hot variables,
+while DSM explains how state similarity can guide exploration toward merge
+points. MultiSE is related through value summaries, which also represent
+multiple path values inside one symbolic representation~\cite{multise}.
+
+Veritesting motivates the direct acyclic-region preview~\cite{veritesting}. It
+combines dynamic symbolic execution with static symbolic execution over
+reduced local regions. Java Ranger extends a similar region-summary idea to
+Java with Method Regions, Multi-Path Regions, dynamic method-region inlining,
+Early-Returns Summarization, and exceptional Single-Path Cases
+\cite{java-ranger}. The experiment in \Cref{sec:veritesting} examines one
+region-shape question behind those approaches.
+
+Quantified state merging motivates the CFG-level indexed-family
+preview~\cite{quantified-merging}. The experiment in \Cref{sec:quantified}
+examines whether a regular loop shape with a guard, induction update, inner
+branch, and guarded accumulator update can expose an indexed family.
+
+Loop summarization and compositional dynamic test generation provide broader
+context for summarizing repeated or reusable behavior
+\cite{loop-summarization,smart-summaries}. Heap-oriented symbolic execution
+and modular heap summaries address richer memory structures than the scalar MIR
+examples used in this paper~\cite{sep-logic-exec,heap-summaries}.
+CFM-SE is a concrete targeted control-flow melding transformation for reducing
+branching pressure~\cite{cfm-se}. Targeted program transformations for
+symbolic execution argue more broadly that such transformations should be
+first-class scalability components~\cite{targeted-transforms}.
+
+\section{Conclusion}
+\label{sec:conclusion}
+
+State merging trades state count for formula complexity. The examples in this
+paper show why future relevance matters: a conditional value is most important
+when it flows into later branch conditions, and dependency precision determines
+which variables appear hot. In the MIR example, CFG-level propagation is
+enough to recover the relevant source variables, while purely
+syntactic or block-local approximations lose part of the explanation.
+
+Hot variables connect QCE to Dynamic State Merging by defining the dimensions
+used for state similarity. Veritesting generalizes the merging idea from values
+at a join point to acyclic CFG regions, and quantified merging generalizes it
+again to regular loop-path families. Some of the required information resembles
+data already computed by control-flow and dependency analyses, but the main
+lesson is about state merging itself: merging is useful when the path
+differences that remain in formulas are controlled and future-relevant
+differences are handled carefully.
+
+
+\bibliographystyle{IEEEtran}
+\bibliography{seminar-paper}
+
+\clearpage
+\onecolumn
+
+\appendices
+\renewcommand{\theHtable}{appendix.\Alph{section}.\arabic{table}}
+\section{Tables}
+\label{app:tables}
+\begingroup
+\renewcommand{\tighttable}{\footnotesize\renewcommand{\arraystretch}{0.95}}
+\setlength{\tabcolsep}{3pt}
+\setlength{\floatsep}{4pt plus 1pt minus 1pt}
+\setlength{\textfloatsep}{4pt plus 1pt minus 1pt}
+\setlength{\intextsep}{4pt plus 1pt minus 1pt}
+\setlength{\abovecaptionskip}{2pt}
+\setlength{\belowcaptionskip}{2pt}
+
+\begin{table}[H]
+\caption{Dependency sets recovered by the four MIR dependency approximations.}
+\label{tab:qce-dependency-modes}
+\centering
+\tighttable
+\begin{tabularx}{\textwidth}{@{}lllY@{}}
+\toprule
+Mode & Direct branch variable & Recovered dependency & Note \\
+\midrule
+Syntactic
+& \texttt{t}
+& \texttt{t}
+& Reads variables directly present in the condition. \\
+Local
+& \texttt{t}
+& \texttt{a}, \texttt{y}
+& Expands the assignment \texttt{t = a + y}. \\
+CFG
+& \texttt{t}
+& \texttt{x}, \texttt{y}
+& Propagates dependencies through predecessor blocks. \\
+Versioned
+& \texttt{t}
+& \texttt{x0}, \texttt{y0}
+& Records source definitions explicitly. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\begin{table}[H]
+\caption{Automatic MIR estimates and manual source-paper QCE oracle.}
+\label{tab:qce-comparison}
+\centering
+\begin{minipage}[t]{0.58\textwidth}
+\centering
+{\footnotesize (a) Automatic MIR estimates}
+\vspace{1pt}
+
+\centering
+\tighttable
+\setlength{\tabcolsep}{2.5pt}
+\begin{tabular}{@{}lrrrrrr@{}}
+\toprule
+Mode & Vars & Blocks & \(\max\widehat{Q}_t\) & \(\Sigma\widehat{Q}_{\mathrm{add}}\) & Oracle \(L_1\) & Hot \\
+\midrule
+Syntactic & 2 & 2 & 2.00 & 7.00 & 10.00 & 7 \\
+Local & 3 & 2 & 2.00 & 12.00 & 5.00 & 12 \\
+CFG & 2 & 2 & 2.00 & 12.00 & 0.00 & 10 \\
+Versioned & 2 & 2 & 2.00 & 12.00 & 0.00 & 10 \\
+\bottomrule
+\end{tabular}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.38\textwidth}
+\centering
+{\footnotesize (b) Manual source-paper QCE oracle}
+\vspace{1pt}
+
+\centering
+\tighttable
+\setlength{\tabcolsep}{2.5pt}
+\begin{tabular}{@{}lrrrr@{}}
+\toprule
+Blocks & \(\beta\) & \(Q_t\) & \(Q_{\mathrm{add}}(x)\) & \(Q_{\mathrm{add}}(y)\) \\
+\midrule
+Entry, \(A\) & 0.50 & 2.00 & 2.00 & 1.00 \\
+Entry, \(A\) & 0.75 & 2.50 & 2.50 & 1.50 \\
+Entry, \(A\) & 0.90 & 2.80 & 2.80 & 1.80 \\
+\(B\), \(C\), \(D\) & any & 1.00 & 1.00 & 1.00 \\
+\(E\), \(F\), \(G\), Exit & any & 0.00 & 0.00 & 0.00 \\
+\bottomrule
+\end{tabular}
+\end{minipage}
+\end{table}
+
+\begin{table}[H]
+\caption{Merge-candidate overlap with experimental future-hot variables.}
+\label{tab:state-merge-decision}
+\centering
+\tighttable
+\begin{tabularx}{\textwidth}{@{}llllllY@{}}
+\toprule
+Join & Var & Source deps & Future hot & Overlap & Decision & Reason \\
+\midrule
+\texttt{D}/\texttt{Ljoin}
+& \texttt{a} & \texttt{x} & \texttt{x}, \texttt{y} & \texttt{x}
+& mixed
+& \texttt{a} flows into \texttt{t = a + y}; the later branch uses \texttt{t}. \\
+\texttt{G}/exit
+& \texttt{r} & \texttt{x}, \texttt{y} & none & none
+& no-future-query
+& No later branch pressure remains after this join. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\begin{table}[H]
+\caption{Direct acyclic-region preview results.}
+\label{tab:region-preview-outcomes}
+\centering
+\tighttable
+\begin{tabularx}{\textwidth}{@{}lllY Y@{}}
+\toprule
+Case & Entry--exit & Nodes & Observed outcome & Structural check \\
+\midrule
+First diamond
+& \texttt{A}\(\to\)\texttt{D} & \texttt{A,B,C}
+& 2 paths: \(\lnot(x > 0) \rightarrow D\), \(x > 0 \rightarrow D\)
+& Acyclic branch with common exit. \\
+Second diamond
+& \texttt{D}\(\to\)\texttt{G} & \texttt{D,E,F}
+& 2 paths: \(y = 0 \rightarrow G\), \(\lnot(y = 0) \rightarrow G\)
+& Acyclic branch with common exit. \\
+Loop header
+& \texttt{B}\(\to\)\texttt{G} & \texttt{B,C,D,E,F}
+& Not directly acyclic; no path sketch.
+& \texttt{F}\(\to\)\texttt{B} is a back edge. \\
+Inner branch
+& \texttt{C}\(\to\)\texttt{F} & \texttt{C,D,E}
+& 2 paths: \(\mathit{target} = i \rightarrow F\), \(\lnot(\mathit{target} = i) \rightarrow F\)
+& Loop-internal, but the selected region is acyclic. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\begin{table}[H]
+\caption{Bounded node tree for the CFG-level indexed-family preview.}
+\label{tab:quantified-node-tree}
+\centering
+\tighttable
+\begin{tabularx}{\textwidth}{@{}rllllY@{}}
+\toprule
+Depth & Node & Via & Next & Role & Detail \\
+\midrule
+0 & \texttt{B} & loop header & \texttt{C} / \texttt{G}
+& loop guard & branch on \(i < n\) \\
+1 & \texttt{C} & \(i < n\) & \texttt{D} / \texttt{E}
+& inner branch & branch on \(\mathit{target} = i\) \\
+2 & \texttt{D} / \texttt{E} & true / false arm & \texttt{F}
+& accumulator update & \texttt{matches += 1} or \texttt{matches += 0} \\
+3 & \texttt{F} & latch & \texttt{B}
+& induction update & \texttt{i += 1}; back edge to the loop header \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\begin{table}[H]
+\caption{CFG-level indexed-family components recovered from the MIR example.}
+\label{tab:quantified-pattern-inference}
+\centering
+\tighttable
+\begin{tabularx}{\textwidth}{@{}lY Y Y@{}}
+\toprule
+Pattern & Evidence & Inferred sketch & Manual check \\
+\midrule
+Loop guard
+& \texttt{B}
+& \(i < n\)
+& Matches the loop range guard. \\
+Induction update
+& \texttt{F}
+& \texttt{i = + i \#1}; \(i := i + 1\)
+& Linear constant-step update. \\
+Guarded accumulator
+& \texttt{D} / \texttt{E}
+& \texttt{matches += ite(target = k, 1, 0)}
+& Matches the per-iteration branch/update shape. \\
+Indexed sketch
+& loop \(\texttt{B} \leftarrow \texttt{F}\)
+& \texttt{for k in [i0,n): matches += ite(target = k,1,0)}
+& Range shape matches the indexed summation in the text. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+\endgroup
+
+\clearpage
+
+\section{Manual QCE Oracle from Efficient State Merging}
+\label{app:qce-manual-baseline}
+
+This appendix manually applies the original QCE recurrence from Efficient
+State Merging to \Cref{lst:mir-ite-preview} \cite{efficient-merging}. It uses
+a manually determined source-level dependence relation and produces the
+unhatted \(Q_t\) and \(Q_{\mathrm{add}}\) oracle used to evaluate the automatic
+MIR approximations in \Cref{sec:qce-results}.
+
+The source recurrence is
+
+\[
+q(\ell,c)=
+\begin{cases}
+\beta q(\operatorname{succ}(\ell),c)
++\beta q(\ell',c)
++c(\ell,e),
+& \operatorname{instr}(\ell)=\operatorname{if}(e)\operatorname{goto}\ell',
+\\
+0, & \operatorname{instr}(\ell)=\operatorname{halt},
+\\
+q(\operatorname{succ}(\ell),c), & \text{otherwise}.
+\end{cases}
+\]
+
+The two quantities used here are
+
+\[
+Q_t(\ell)=q\left(\ell,\lambda(\ell',e).1\right)
+\]
+
+and
+
+\[
+Q_{\mathrm{add}}(\ell_0,v)
+=
+q\left(
+\ell_0,
+\lambda(\ell',e).
+\ite\bigl((\ell_0,v)\mathcal C(\ell',e),1,0\bigr)
+\right).
+\]
+
+The relation \((\ell_0,v)\mathcal C(\ell',e)\) states that the value of
+variable \(v\) at location \(\ell_0\) may affect expression \(e\) evaluated at
+the later location \(\ell'\).
+
+The CFG successor relation is:
+Entry\(\to A\); \(A\) falls through to \(B\) and branches to \(C\);
+\(B\to D\); \(C\to D\); \(D\) falls through to \(E\) and branches to \(F\);
+\(E\to G\); \(F\to G\); \(G\to\)Exit; Exit is halt. The graph is acyclic, so
+no loop bound is needed.
+
+There are two conditional expressions. For \(e_A=(x<0)\), the value of \(x\)
+at Entry and \(A\) may affect \(e_A\). For \(e_D=(t>0)\), the source-level
+semantics before the branch is
+
+\[
+t = \ite(x < 0,\ 1 - x,\ x + 5) + y.
+\]
+
+Therefore, the value of \(x\) and the value of \(y\) at any of Entry, \(A\),
+\(B\), \(C\), and \(D\) may affect \(e_D\). No later conditional expression is
+reachable from \(E\), \(F\), \(G\), or Exit.
+
+At the final conditional block,
+
+\[
+Q_t(D)=1,\qquad
+Q_{\mathrm{add}}(D,x)=1,\qquad
+Q_{\mathrm{add}}(D,y)=1.
+\]
+
+Blocks \(B\) and \(C\) deterministically reach \(D\), so the same values
+propagate without a \(\beta\) factor:
+
+\[
+Q_t(B)=Q_t(C)=1,
+\quad
+Q_{\mathrm{add}}(B,x)=Q_{\mathrm{add}}(C,x)=1,
+\quad
+Q_{\mathrm{add}}(B,y)=Q_{\mathrm{add}}(C,y)=1.
+\]
+
+At block \(A\), the first branch contributes one local query, and both
+successors contribute with factor \(\beta\):
+
+\[
+Q_t(A)=1+\beta(Q_t(B)+Q_t(C))=1+2\beta.
+\]
+
+For \(x\), the branch at \(A\) contributes locally and the later branch at
+\(D\) contributes through both successors:
+
+\[
+Q_{\mathrm{add}}(A,x)
+=
+1+\beta(Q_{\mathrm{add}}(B,x)+Q_{\mathrm{add}}(C,x))
+=
+1+2\beta.
+\]
+
+For \(y\), there is no local contribution at \(A\), but the later condition at
+\(D\) depends on \(y\):
+
+\[
+Q_{\mathrm{add}}(A,y)
+=
+\beta(Q_{\mathrm{add}}(B,y)+Q_{\mathrm{add}}(C,y))
+=
+2\beta.
+\]
+
+Entry deterministically reaches \(A\), so Entry has the same values as \(A\).
+For \(E\), \(F\), \(G\), and Exit, no future conditional expression remains:
+\(Q_t=0\) and \(Q_{\mathrm{add}}(\ell,x)=Q_{\mathrm{add}}(\ell,y)=0\). The
+resulting oracle values for \(\beta \in \{0.50,\ 0.75,\ 0.90\}\) are reported
+in Table~\ref{tab:qce-comparison}(b), alongside the automatic MIR estimates in
+Table~\ref{tab:qce-comparison}(a).
+
+\end{document}
